@@ -1,0 +1,16 @@
+CHART:
+  - elasticsearch
+  - kibana
+ES_SUITE:
+  - default
+  - multi
+  - security
+  - 5.x
+KIBANA_SUITE:
+  - default
+  - security
+  - 5.x
+KUBERNETES_VERSION:
+  - '1.9'
+  - '1.10'
+  - '1.11'

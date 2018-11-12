@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name | quote }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: kibana
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      labels:
+        app: kibana
+        release: {{ .Release.Name | quote }}
+    spec:
+      {{- if .Values.secretMounts }}
+      volumes:
+        {{- range .Values.secretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .name }}
+        {{- end }}
+      {{- end }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+    {{- end }}
+      containers:
+      - name: kibana
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        env:
+          - name: ELASTICSEARCH_URL
+            value: "{{ .Values.elasticsearchURL }}"
+{{- if .Values.extraEnvs }}
+{{ toYaml .Values.extraEnvs | indent 10 }}
+{{- end }}
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}
+          exec:
+            command: 
+              - sh
+              - -c
+              - |
+                #!/usr/bin/env bash -e
+                http () {
+                    local path="${1}"
+                    if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
+                      BASIC_AUTH="-u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
+                    else
+                      BASIC_AUTH=''
+                    fi
+                    curl -XGET -s --fail ${BASIC_AUTH} 127.0.0.1:{{ .Values.httpPort }}${path}
+                }
+  
+                http "/app/kibana"
+        ports:
+        - containerPort: {{ .Values.httpPort }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        {{- if .Values.secretMounts }}
+        volumeMounts:
+          {{- range .Values.secretMounts }}
+          - name: {{ .name }}
+            mountPath: {{ .path }}
+          {{- end }}
+      {{- end }}

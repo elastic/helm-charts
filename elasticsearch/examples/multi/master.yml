@@ -1,0 +1,10 @@
+---
+
+clusterName: "multi"
+nodeGroup: "master"
+masterService: "multi-master"
+
+roles:
+  master: "true"
+  ingest: "false"
+  data: "false"

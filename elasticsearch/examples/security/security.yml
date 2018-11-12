@@ -1,0 +1,47 @@
+---
+clusterName: "security"
+nodeGroup: "master"
+masterService: "security-master"
+
+roles:
+  master: "true"
+  ingest: "true"
+  data: "true"
+
+protocol: https
+
+extraEnvs:
+  - name: 'xpack.security.enabled'
+    value: 'true'
+  - name: 'xpack.security.transport.ssl.enabled'
+    value: 'true'
+  - name: 'xpack.security.transport.ssl.verification_mode'
+    value: 'certificate'
+  - name: 'xpack.security.transport.ssl.keystore.path'
+    value: '/usr/share/elasticsearch/config/certs/elastic-certificates.p12'
+  - name: 'xpack.security.transport.ssl.truststore.path'
+    value: '/usr/share/elasticsearch/config/certs/elastic-certificates.p12'
+  - name: 'xpack.security.http.ssl.enabled'
+    value: 'true'
+  - name: 'xpack.security.http.ssl.truststore.path'
+    value: '/usr/share/elasticsearch/config/certs/elastic-certificates.p12'
+  - name: 'xpack.security.http.ssl.keystore.path'
+    value: '/usr/share/elasticsearch/config/certs/elastic-certificates.p12'
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: password
+  - name: ELASTIC_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: username
+
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certificates
+    path: /usr/share/elasticsearch/config/certs
+  - name: elastic-license
+    secretName: elastic-license
+    path: /usr/share/elasticsearch/config/license

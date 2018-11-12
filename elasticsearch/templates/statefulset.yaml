@@ -1,0 +1,168 @@
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ template "uname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app: "{{ template "uname" . }}"
+spec:
+  serviceName: {{ template "uname" . }}-headless
+  selector:
+    matchLabels:
+      app: "{{ template "uname" . }}"
+  replicas: {{ default .Values.replicas }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  updateStrategy:
+    type: {{ .Values.updateStrategy }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ template "uname" . }}
+    spec:
+{{ toYaml .Values.volumeClaimTemplate | indent 6 }}
+  template:
+    metadata:
+      name: "{{ template "uname" . }}"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        app: "{{ template "uname" . }}"
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.fsGroup }}
+      {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 6 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- if eq .Values.antiAffinity "hard" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - "{{ template "uname" .}}"
+            topologyKey: {{ .Values.antiAffinityTopologyKey }}
+      {{- else if eq .Values.antiAffinity "soft" }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: {{ .Values.antiAffinityTopologyKey }}
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - "{{ template "uname" . }}"
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      {{- if .Values.secretMounts }}
+      volumes:
+        {{- range .Values.secretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .name }}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end }}
+      initContainers:
+      - name: configure-sysctl
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
+      containers:
+      - name: "{{ template "name" . }}"
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}
+          exec:
+            command: 
+              - sh
+              - -c
+              - |
+                #!/usr/bin/env bash -e
+                # If the node is starting up wait for the cluster to be green
+                # Once it has started only check that the node itself is responding
+                START_FILE=/tmp/.es_start_file
+
+                http () {
+                    local path="${1}"
+                    if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
+                      BASIC_AUTH="-u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
+                    else
+                      BASIC_AUTH=''
+                    fi
+                    curl -XGET -s -k --fail ${BASIC_AUTH} {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}${path}
+                }
+  
+                if [ -f "${START_FILE}" ]; then
+                    echo 'Elasticsearch is already running, lets check the node is healthy'
+                    http "/"
+                else
+                    echo 'Waiting for elasticsearch cluster to become green'
+                    if http "/_cluster/health?wait_for_status=green&timeout=1s" ; then
+                        touch ${START_FILE}
+                        exit 0
+                    else
+                        echo 'Cluster is not yet green'
+                        exit 1
+                    fi
+                fi
+        ports:
+        - name: http
+          containerPort: {{ .Values.httpPort }}
+        - name: transport
+          containerPort: {{ .Values.transportPort }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        env:
+          - name: node.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: discovery.zen.ping.unicast.hosts
+            value: "{{ .Values.masterService }}-headless"
+          - name: cluster.name
+            value: "{{ .Values.clusterName }}"
+          - name: discovery.zen.minimum_master_nodes 
+            value: "{{ .Values.minimumMasterNodes }}"
+          - name: network.host
+            value: "{{ .Values.networkHost }}"
+          - name: ES_JAVA_OPTS
+            value: "{{ .Values.esJavaOpts }}"
+          - name: node.master
+            value: "{{ .Values.roles.master }}"
+          - name: node.data
+            value: "{{ .Values.roles.data }}"
+          - name: node.ingest
+            value: "{{ .Values.roles.ingest }}"
+{{- if .Values.extraEnvs }}
+{{ toYaml .Values.extraEnvs | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: "{{ template "uname" . }}"
+            mountPath: /usr/share/elasticsearch/data
+          {{- range .Values.secretMounts }}
+          - name: {{ .name }}
+            mountPath: {{ .path }}
+            {{- if .subPath }}
+            subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}

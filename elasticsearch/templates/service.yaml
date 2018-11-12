@@ -1,0 +1,38 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "uname" . }}
+spec:
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app: "{{ template "uname" . }}"
+  ports:
+  - name: http
+    protocol: TCP
+    port: {{ .Values.httpPort }}
+  - name: transport
+    protocol: TCP
+    port: {{ .Values.transportPort }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "uname" . }}-headless
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app: "{{ template "uname" . }}"
+  annotations:
+    # Create endpoints also if the related pod isn't ready
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  clusterIP: None # This is needed for statefulset hostnames like elasticsearch-0 to resolve
+  selector:
+    app: "{{ template "uname" . }}"
+  ports:
+  - name: http
+    port: {{ .Values.httpPort }}

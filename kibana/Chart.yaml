@@ -1,0 +1,10 @@
+description: Kibana
+home: https://github.com/elastic/helm-charts
+maintainers:
+- email: michael.russell@elastic.co
+  name: Michael Russell
+name: kibana
+version: 6.4.3
+appVersion: 6.4.3
+sources:
+  - https://github.com/elastic/kibana

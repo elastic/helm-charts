@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+[[ -n $DEBUG ]] && set -o xtrace
+
+make build
+
+docker run --rm --interactive \
+	--env GOOGLE_CREDENTIALS='credentials.json' \
+	--env VAULT_TOKEN=${VAULT_TOKEN} \
+	--env VAULT_ADDR=${VAULT_ADDR} \
+	--env HOME=/app \
+	--volume "${PWD}/../../:/app" \
+	--user "$(id -u):$(id -g)" \
+	--workdir "/app/helpers/terraform/" \
+	"helm-charts" "$@"

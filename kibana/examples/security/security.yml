@@ -1,0 +1,26 @@
+---
+
+elasticsearchURL: "https://security-master:9200"
+
+extraEnvs:
+  - name: 'xpack.security.encryptionKey'
+    value: 'something_at_least_32_characters'
+  - name: 'ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES'
+    value: '/usr/share/kibana/config/certs/elastic-certificate.pem'
+  - name: 'ELASTICSEARCH_SSL_VERIFICATIONMODE'
+    value: 'certificate'
+  - name: 'ELASTICSEARCH_USERNAME'
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: username
+  - name: 'ELASTICSEARCH_PASSWORD'
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: password
+
+secretMounts:
+  - name: elastic-certificate-pem
+    secretName: elastic-certificate-pem
+    path: /usr/share/kibana/config/certs
