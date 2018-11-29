@@ -37,6 +37,7 @@ def test_defaults():
     assert 'nodeSelector' not in r['deployment'][name]['spec']['template']['spec']
     assert 'ingress' not in r
 
+    assert r['deployment'][name]['spec']['strategy']['type'] == 'Recreate'
 
 def test_overriding_the_elasticsearch_url():
     config = '''
@@ -136,3 +137,17 @@ ingress:
     assert i['rules'][0]['http']['paths'][0]['path'] == '/'
     assert i['rules'][0]['http']['paths'][0]['backend']['serviceName'] == name
     assert i['rules'][0]['http']['paths'][0]['backend']['servicePort'] == 5601
+
+def test_override_the_default_update_strategy():
+    config = '''
+updateStrategy:
+  type: "RollingUpdate"
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 1
+'''
+
+    r = helm_template(config)
+    assert r['deployment'][name]['spec']['strategy']['type'] == 'RollingUpdate'
+    assert r['deployment'][name]['spec']['strategy']['rollingUpdate']['maxUnavailable'] == 1
+    assert r['deployment'][name]['spec']['strategy']['rollingUpdate']['maxSurge'] == 1

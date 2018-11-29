@@ -46,6 +46,9 @@ httpPort: 5601
 # of your pods to be unavailable during maintenance
 maxUnavailable: 1
 
+updateStrategy:
+  type: "Recreate"
+
 service:
   type: ClusterIP
   port: 5601
