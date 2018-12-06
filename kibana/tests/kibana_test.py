@@ -5,7 +5,7 @@ from helpers import helm_template
 import yaml
 
 name = 'RELEASE-NAME-kibana'
-version = '6.5.0'
+version = '6.5.2'
 elasticsearchURL = 'http://elasticsearch-master:9200'
 
 
