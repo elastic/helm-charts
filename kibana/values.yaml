@@ -20,7 +20,7 @@ secretMounts:
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "6.5.0"
+imageTag: "6.5.2"
 imagePullPolicy: "IfNotPresent"
 
 resources:

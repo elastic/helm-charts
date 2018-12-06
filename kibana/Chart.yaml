@@ -4,7 +4,7 @@ maintainers:
 - email: michael.russell@elastic.co
   name: Michael Russell
 name: kibana
-version: 6.5.0
-appVersion: 6.5.0
+version: 6.5.2-alpha1
+appVersion: 6.5.2
 sources:
   - https://github.com/elastic/kibana
