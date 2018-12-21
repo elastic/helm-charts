@@ -62,12 +62,19 @@ spec:
                 #!/usr/bin/env bash -e
                 http () {
                     local path="${1}"
+                    set -- -XGET -s --fail
+
                     if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
-                      BASIC_AUTH="-u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
-                    else
-                      BASIC_AUTH=''
+                      set -- "$@" -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
                     fi
-                    curl -XGET -s --fail ${BASIC_AUTH} 127.0.0.1:{{ .Values.httpPort }}${path}
+
+                    if [ "${SERVER_SSL_ENABLED}" = "true" ] ; then
+                      set -- "$@" --cacert "${SERVER_SSL_CERTIFICATE}" --resolve "{{ .Values.kibanaSSLHostname }}:{{ .Values.httpPort }}:127.0.0.1"
+                      URL="https://{{ .Values.kibanaSSLHostname }}:{{ .Values.httpPort }}${path}"
+                    else
+                      URL="http://localhost:{{ .Values.httpPort }}${path}"
+                    fi
+                    curl "$@" "${URL}"
                 }
   
                 http "/app/kibana"

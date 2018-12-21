@@ -53,6 +53,10 @@ service:
   type: ClusterIP
   port: 5601
 
+# Set this if you are setting server.ssl.enabled in Kibana.
+# This value is a hostname accepted by the SSL certificate provided to kibana.
+kibanaSSLHostname: localhost
+
 ingress:
   enabled: false
   annotations: {}
