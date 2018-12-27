@@ -127,9 +127,13 @@ A cluster with X-Pack security enabled
   wget https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz && gunzip logs.jsonl.gz && curl -u elastic:changeme -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
   ```
 
-### Minikube
+### Local development environments
 
-This chart also works successfully on minikube in addition to typical hosted Kubernetes environments.
+This chart is designed to run on production scale Kubernetes clusters with multiple nodes, lots of memory and persistent storage. For that reason it can be a bit tricky to run them against local Kubernetes environments such as minikube. Below are some examples of how to get this working locally. 
+
+#### Minikube
+
+This chart also works successfully on [minikube](https://kubernetes.io/docs/setup/minikube/) in addition to typical hosted Kubernetes environments.
 An example `values.yaml` file for minikube is provided under `examples/`.
 
 In order to properly support the required persistent volume claims for the Elasticsearch `StatefulSet`, the `default-storageclass` and `storage-provisioner` minikube addons must be enabled.
@@ -142,6 +146,16 @@ make
 ```
 
 Note that if `helm` or `kubectl` timeouts occur, you may consider creating a minikube VM with more CPU cores or memory allocated.
+
+
+#### Docker for Mac - Kubernetes
+
+It is also possible to run this chart with the built in Kubernetes cluster that comes with [docker-for-mac](https://docs.docker.com/docker-for-mac/kubernetes/).
+
+```
+cd examples/docker-for-mac
+make
+```
 
 ## Clustering and Node Discovery
 

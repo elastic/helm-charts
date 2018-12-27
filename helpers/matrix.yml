@@ -11,6 +11,5 @@ KIBANA_SUITE:
   - security
   - 5.x
 KUBERNETES_VERSION:
-  - '1.9'
   - '1.10'
   - '1.11'
