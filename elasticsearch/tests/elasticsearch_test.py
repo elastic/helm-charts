@@ -48,6 +48,12 @@ def test_defaults():
             }
         },
         {
+            'name': 'cluster.initial_master_nodes',
+            'value': 'elasticsearch-master-0.elasticsearch-master-headless:9300,' +
+                     'elasticsearch-master-1.elasticsearch-master-headless:9300,' +
+                     'elasticsearch-master-2.elasticsearch-master-headless:9300,'
+        },
+        {
             'name': 'discovery.zen.minimum_master_nodes',
             'value': '2'
         },
@@ -202,6 +208,16 @@ roles:
     env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
     assert {'name': 'discovery.zen.ping.unicast.hosts',
             'value': 'hostservice-headless'} in env
+
+def test_dont_set_initial_master_nodes_if_not_master():
+    config = '''
+roles: 
+  master: "false"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+    for e in env:
+        assert e['name'] != 'cluster.initial_master_nodes'
 
 
 def test_adding_extra_env_vars():

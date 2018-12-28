@@ -137,6 +137,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
+          {{- if eq .Values.roles.master "true" }}
+          - name: cluster.initial_master_nodes
+            value: "{{ template "endpoints" .Values }}"
+          {{- end }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ .Values.masterService }}-headless"
           - name: cluster.name
