@@ -134,10 +134,8 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         env:
           - name: node.name
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          {{- if eq .Values.roles.master "true" }}
+            value: "${HOSTNAME}.{{ template "uname" . }}-headless"
+          {{- if and (eq .Values.roles.master "true") .Values.zen2Discovery }}
           - name: cluster.initial_master_nodes
             value: "{{ template "endpoints" .Values }}"
           {{- end }}

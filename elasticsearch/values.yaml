@@ -16,6 +16,9 @@ roles:
 replicas: 3
 minimumMasterNodes: 2
 
+# Used in Elasticsearch versions >= 7
+zen2Discovery: false
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here

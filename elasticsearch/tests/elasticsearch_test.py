@@ -41,17 +41,7 @@ def test_defaults():
     env_vars = [
         {
             'name': 'node.name',
-            'valueFrom': {
-                'fieldRef': {
-                    'fieldPath': 'metadata.name'
-                }
-            }
-        },
-        {
-            'name': 'cluster.initial_master_nodes',
-            'value': 'elasticsearch-master-0.elasticsearch-master-headless:9300,' +
-                     'elasticsearch-master-1.elasticsearch-master-headless:9300,' +
-                     'elasticsearch-master-2.elasticsearch-master-headless:9300,'
+            'value': '${HOSTNAME}.elasticsearch-master-headless'
         },
         {
             'name': 'discovery.zen.minimum_master_nodes',
@@ -209,8 +199,25 @@ roles:
     assert {'name': 'discovery.zen.ping.unicast.hosts',
             'value': 'hostservice-headless'} in env
 
-def test_dont_set_initial_master_nodes_if_not_master():
+
+def test_set_initial_master_zones_when_using_zen2():
     config = '''
+zen2Discovery: true
+roles: 
+  master: "true"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+    assert {
+            'name': 'cluster.initial_master_nodes',
+            'value': 'elasticsearch-master-0.elasticsearch-master-headless,' +
+                     'elasticsearch-master-1.elasticsearch-master-headless,' +
+                     'elasticsearch-master-2.elasticsearch-master-headless,'
+        } in env
+
+def test_dont_set_initial_master_nodes_if_not_master_when_using_zen2():
+    config = '''
+zen2Discovery: true
 roles: 
   master: "false"
 '''
