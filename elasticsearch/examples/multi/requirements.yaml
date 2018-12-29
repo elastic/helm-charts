@@ -1,0 +1,9 @@
+dependencies:
+  - name: elasticsearch
+    repository: file://../../
+    version: 6.5.4-alpha1
+    alias: es-data
+  - name: elasticsearch
+    repository: file://../../
+    version: 6.5.4-alpha1
+    alias: es-master

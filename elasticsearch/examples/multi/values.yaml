@@ -1,0 +1,25 @@
+# The data nodes
+es-data:
+  <<: *defaults # include with the default settings
+  nodeGroup: "data"
+
+  roles:
+    master: "false"
+    ingest: "true"
+    data: "true"
+
+# The master nodes
+es-master:
+  <<: *defaults # include with the default settings
+  nodeGroup: "master"
+
+  roles:
+    master: "true"
+    ingest: "false"
+    data: "false"
+
+# To define common settings, it may be useful to use YAML anchors to use the same 
+# base settings for both node types (data + master)
+es-defaults: &defaults
+  clusterName: "multi"
+  masterService: "multi-master"

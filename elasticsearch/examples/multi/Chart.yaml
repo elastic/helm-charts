@@ -1,0 +1,10 @@
+description: Example elasticsearch with separate data and master nodes implemented with child charts.
+home: https://github.com/elastic/helm-charts
+maintainers:
+- email: helm-charts@elastic.co
+  name: Elastic
+name: elasticsearch
+version: 6.5.4-alpha1
+appVersion: 6.5.4
+sources:
+  - https://github.com/elastic/elasticsearch
