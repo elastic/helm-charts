@@ -55,6 +55,7 @@ service:
 
 # Set this if you are setting server.ssl.enabled in Kibana.
 # This value is a hostname accepted by the SSL certificate provided to kibana.
+# Configuring this allows the readinessProbe to successfully check Kibana over HTTPS.
 kibanaSSLHostname: localhost
 
 ingress:
