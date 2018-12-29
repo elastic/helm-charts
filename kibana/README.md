@@ -42,6 +42,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
 | `nodeSelector`            | Configurable [nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) so that you can target specific nodes for your Kibana instances                                                                       | `{}`                                                                                                                      |
 | `tolerations`             | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                | `[]`                                                                                                                      |
 | `ingress`                 | Configurable [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) to expose the Kibana service. See [`values.yaml`](./values.yaml) for an example                                                                           | `enabled: false`                                                                                                          |
+| `kibanaSSLHostname`       | A hostname matched by the SSL certificate used in Kibana. Note: This only matters if you have enabled SSL in Kibana by setting `SERVER_SSL_ENABLED=true` in `extraEnvs`.  | `localhost`
 
 
 ## Examples
