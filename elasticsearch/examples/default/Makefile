@@ -1,6 +1,6 @@
-include ../../../helpers/examples.mk
-
 default: test
+
+include ../../../helpers/examples.mk
 
 RELEASE := helm-es-default
 GOSS_CONTAINER := elasticsearch-master-0
@@ -11,7 +11,7 @@ install:
 restart:
 	helm upgrade --set terminationGracePeriod=121 --wait --timeout=600 --install $(RELEASE) ../../ ; \
 
-test: goss install
+test: install goss
 
 purge:
 	helm del --purge $(RELEASE)

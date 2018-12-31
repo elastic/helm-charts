@@ -1,7 +1,9 @@
-
 default: test
 
+include ../../../helpers/examples.mk
+
 RELEASE := helm-es-fivex
+GOSS_CONTAINER := fivex-master-0
 
 install:
 	helm upgrade --wait --timeout=600 --install $(RELEASE) --values ./values.yaml ../../ ; \
@@ -16,7 +18,4 @@ secrets:
 	kubectl delete secrets elastic-fivex-credentials || true
 	kubectl create secret generic elastic-fivex-credentials --from-literal=password=changeme --from-literal=username=elastic
 
-health:
-	kubectl exec -ti $$(kubectl get pods -l release=$(RELEASE) -o name | awk -F'/' '{ print $$NF }' | shuf -n 1) -- curl --fail -u elastic:changeme -k 'http://localhost:9200/'
-
-test: secrets install health
+test: secrets install goss
