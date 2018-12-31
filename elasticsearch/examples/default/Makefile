@@ -11,7 +11,7 @@ install:
 restart:
 	helm upgrade --set terminationGracePeriod=121 --wait --timeout=600 --install $(RELEASE) ../../ ; \
 
-test: install goss
+test: goss install
 
 purge:
 	helm del --purge $(RELEASE)
