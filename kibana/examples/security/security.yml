@@ -19,8 +19,17 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+  - name: 'SERVER_SSL_KEY'
+    value: /usr/share/kibana/config/certs/kibana/kibana.key
+  - name: 'SERVER_SSL_CERTIFICATE'
+    value: /usr/share/kibana/config/certs/kibana/kibana.crt
+  - name: 'SERVER_SSL_ENABLED'
+    value: "true"
 
 secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/kibana/config/certs
+  - name: kibana-certificates
+    secretName: kibana-certificates
+    path: /usr/share/kibana/config/certs/kibana
