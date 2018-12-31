@@ -151,3 +151,11 @@ updateStrategy:
     assert r['deployment'][name]['spec']['strategy']['type'] == 'RollingUpdate'
     assert r['deployment'][name]['spec']['strategy']['rollingUpdate']['maxUnavailable'] == 1
     assert r['deployment'][name]['spec']['strategy']['rollingUpdate']['maxSurge'] == 1
+
+def test_using_a_name_override():
+    config = '''
+nameOverride: overrider
+'''
+
+    r = helm_template(config)
+    assert 'overrider-kibana' in r['deployment']
