@@ -1,0 +1,33 @@
+http:
+  https://localhost:9200/_cluster/health:
+    status: 200
+    timeout: 2000
+    allow-insecure: true
+    username: 'elastic'
+    password: 'changeme'
+    body:
+      - 'green'
+      - '"number_of_nodes":3'
+      - '"number_of_data_nodes":3'
+
+  https://localhost:9200/:
+    status: 200
+    timeout: 2000
+    allow-insecure: true
+    username: 'elastic'
+    password: 'changeme'
+    body:
+      - '"number" : "6.5.4"'
+      - '"cluster_name" : "security"'
+      - '"name" : "security-master-0"'
+      - 'You Know, for Search'
+
+  https://localhost:9200/_xpack/license:
+    status: 200
+    timeout: 2000
+    allow-insecure: true
+    username: 'elastic'
+    password: 'changeme'
+    body:
+      - 'active'
+      - 'platinum'
