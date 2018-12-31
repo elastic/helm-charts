@@ -173,7 +173,7 @@ This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templat
 
 ```
 pip install -r ../requirements.txt
-make test
+make pytest
 ```
 
 You can also use `helm template` to look at the YAML being generated
@@ -186,5 +186,15 @@ It is possible to run all of the tests and linting inside of a docker container
 
 ```
 make test
+```
+
+## Integration Testing
+
+Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](examples/default/test/goss.yaml) for an example of what the tests look like.
+
+To run the goss tests against the default example:
+```
+cd examples/default
+make goss
 ```
 
