@@ -29,7 +29,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
   ```
 * Install it 
   ```
-  helm install --name elasticsearch elastic/elasticsearch --version 6.5.3-alpha1
+  helm install --name elasticsearch elastic/elasticsearch --version 6.5.4-alpha1
   ```
 
 
@@ -46,7 +46,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 | `extraEnvs`               | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                         | `{}`                                                                                                                      |
 | `secretMounts`            | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `{}`                                                                                                                      |
 | `image`                   | The Elasticsearch docker image                                                                                                                                                                                                                                                                                             | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `6.5.3`                                                                                                                   |
+| `imageTag`                | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `6.5.4`                                                                                                                   |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `esJavaOpts`              | [Java options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html) for Elasticsearch. This is where you should configure the [jvm heap size](https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html)                                                                 | `-Xmx1g -Xms1g`                                                                                                           |
 | `resources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                               | `requests.cpu: 100m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                             |
@@ -127,9 +127,13 @@ A cluster with X-Pack security enabled
   wget https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz && gunzip logs.jsonl.gz && curl -u elastic:changeme -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
   ```
 
-### Minikube
+### Local development environments
 
-This chart also works successfully on minikube in addition to typical hosted Kubernetes environments.
+This chart is designed to run on production scale Kubernetes clusters with multiple nodes, lots of memory and persistent storage. For that reason it can be a bit tricky to run them against local Kubernetes environments such as minikube. Below are some examples of how to get this working locally. 
+
+#### Minikube
+
+This chart also works successfully on [minikube](https://kubernetes.io/docs/setup/minikube/) in addition to typical hosted Kubernetes environments.
 An example `values.yaml` file for minikube is provided under `examples/`.
 
 In order to properly support the required persistent volume claims for the Elasticsearch `StatefulSet`, the `default-storageclass` and `storage-provisioner` minikube addons must be enabled.
@@ -142,6 +146,16 @@ make
 ```
 
 Note that if `helm` or `kubectl` timeouts occur, you may consider creating a minikube VM with more CPU cores or memory allocated.
+
+
+#### Docker for Mac - Kubernetes
+
+It is also possible to run this chart with the built in Kubernetes cluster that comes with [docker-for-mac](https://docs.docker.com/docker-for-mac/kubernetes/).
+
+```
+cd examples/docker-for-mac
+make
+```
 
 ## Clustering and Node Discovery
 
