@@ -204,7 +204,7 @@ roles:
             'value': 'hostservice-headless'} in env
 
 
-def test_set_initial_master_zones_when_using_zen2():
+def test_set_initial_master_nodes_when_using_v_7():
     config = '''
 esMajorVersion: 7
 roles: 
