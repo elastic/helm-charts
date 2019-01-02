@@ -41,7 +41,11 @@ def test_defaults():
     env_vars = [
         {
             'name': 'node.name',
-            'value': '${HOSTNAME}.elasticsearch-master-headless'
+            'valueFrom': {
+                'fieldRef': {
+                    'fieldPath': 'metadata.name'
+                }
+            }
         },
         {
             'name': 'discovery.zen.minimum_master_nodes',
@@ -202,7 +206,7 @@ roles:
 
 def test_set_initial_master_zones_when_using_zen2():
     config = '''
-esDiscoveryModule: zen2
+esMajorVersion: 7
 roles: 
   master: "true"
 '''
@@ -210,17 +214,17 @@ roles:
     env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
     assert {
             'name': 'cluster.initial_master_nodes',
-            'value': 'elasticsearch-master-0.elasticsearch-master-headless,' +
-                     'elasticsearch-master-1.elasticsearch-master-headless,' +
-                     'elasticsearch-master-2.elasticsearch-master-headless,'
+            'value': 'elasticsearch-master-0,' +
+                     'elasticsearch-master-1,' +
+                     'elasticsearch-master-2,'
         } in env
 
     for e in env:
         assert e['name'] != 'discovery.zen.minimum_master_nodes'
 
-def test_dont_set_initial_master_nodes_if_not_master_when_using_zen2():
+def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
     config = '''
-esDiscoveryModule: zen2
+esMajorVersion: 7
 roles: 
   master: "false"
 '''

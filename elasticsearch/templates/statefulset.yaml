@@ -134,12 +134,14 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         env:
           - name: node.name
-            value: "${HOSTNAME}.{{ template "uname" . }}-headless"
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           {{- if eq .Values.roles.master "true" }}
-          {{- if eq .Values.esDiscoveryModule "zen2" }}
+          {{- if ge (int .Values.esMajorVersion) 7 }}
           - name: cluster.initial_master_nodes
             value: "{{ template "endpoints" .Values }}"
-          {{- else if eq .Values.esDiscoveryModule "zen" }}
+          {{- else }}
           - name: discovery.zen.minimum_master_nodes
             value: "{{ .Values.minimumMasterNodes }}"
           {{- end }}

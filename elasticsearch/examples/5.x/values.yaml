@@ -3,6 +3,7 @@
 clusterName: "fivex"
 masterService: "fivex-master"
 imageTag: "5.6.12"
+esMajorVersion: 5
 
 extraEnvs:
   - name: ELASTIC_PASSWORD
