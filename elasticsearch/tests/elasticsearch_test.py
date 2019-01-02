@@ -202,7 +202,7 @@ roles:
 
 def test_set_initial_master_zones_when_using_zen2():
     config = '''
-zen2Discovery: true
+esDiscoveryModule: zen2
 roles: 
   master: "true"
 '''
@@ -215,9 +215,12 @@ roles:
                      'elasticsearch-master-2.elasticsearch-master-headless,'
         } in env
 
+    for e in env:
+        assert e['name'] != 'discovery.zen.minimum_master_nodes'
+
 def test_dont_set_initial_master_nodes_if_not_master_when_using_zen2():
     config = '''
-zen2Discovery: true
+esDiscoveryModule: zen2
 roles: 
   master: "false"
 '''
