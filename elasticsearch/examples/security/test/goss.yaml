@@ -3,8 +3,8 @@ http:
     status: 200
     timeout: 2000
     allow-insecure: true
-    username: 'elastic'
-    password: 'changeme'
+    username: '{{ .Env.ELASTIC_USERNAME }}'
+    password: '{{ .Env.ELASTIC_PASSWORD }}'
     body:
       - 'green'
       - '"number_of_nodes":3'
@@ -14,8 +14,8 @@ http:
     status: 200
     timeout: 2000
     allow-insecure: true
-    username: 'elastic'
-    password: 'changeme'
+    username: '{{ .Env.ELASTIC_USERNAME }}'
+    password: '{{ .Env.ELASTIC_PASSWORD }}'
     body:
       - '"number" : "6.5.4"'
       - '"cluster_name" : "security"'
@@ -26,8 +26,8 @@ http:
     status: 200
     timeout: 2000
     allow-insecure: true
-    username: 'elastic'
-    password: 'changeme'
+    username: '{{ .Env.ELASTIC_USERNAME }}'
+    password: '{{ .Env.ELASTIC_PASSWORD }}'
     body:
       - 'active'
       - 'platinum'
