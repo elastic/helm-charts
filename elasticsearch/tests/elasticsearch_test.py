@@ -204,6 +204,36 @@ roles:
             'value': 'hostservice-headless'} in env
 
 
+def test_set_initial_master_nodes_when_using_v_7():
+    config = '''
+esMajorVersion: 7
+roles: 
+  master: "true"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+    assert {
+            'name': 'cluster.initial_master_nodes',
+            'value': 'elasticsearch-master-0,' +
+                     'elasticsearch-master-1,' +
+                     'elasticsearch-master-2,'
+        } in env
+
+    for e in env:
+        assert e['name'] != 'discovery.zen.minimum_master_nodes'
+
+def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
+    config = '''
+esMajorVersion: 7
+roles: 
+  master: "false"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+    for e in env:
+        assert e['name'] != 'cluster.initial_master_nodes'
+
+
 def test_adding_extra_env_vars():
     config = '''
 extraEnvs: 

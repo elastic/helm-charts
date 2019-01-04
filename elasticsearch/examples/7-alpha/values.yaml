@@ -1,0 +1,6 @@
+---
+
+clusterName: "seven"
+masterService: "seven-master"
+imageTag: "7.0.0-alpha2"
+esMajorVersion: 7
