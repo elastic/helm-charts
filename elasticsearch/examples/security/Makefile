@@ -1,7 +1,10 @@
-
 default: test
 
+include ../../../helpers/examples.mk
+
 RELEASE := helm-es-security
+
+GOSS_CONTAINER := security-master-0
 
 install:
 	# This starts a command in the background to install the license once the cluster has formed
@@ -13,12 +16,8 @@ purge:
 
 license:
 	kubectl exec -ti $$(kubectl get pods -l release=$(RELEASE) -o name | awk -F'/' '{ print $$NF }' | shuf -n 1) -- curl --fail -k -XPUT 'https://localhost:9200/_xpack/license' -H "Content-Type: application/json" -d @/usr/share/elasticsearch/config/license/license.json
-
-health:
-	kubectl exec -ti $$(kubectl get pods -l release=$(RELEASE) -o name | awk -F'/' '{ print $$NF }' | shuf -n 1) -- curl --fail -u elastic:changeme -k 'https://localhost:9200/'
-	kubectl exec -ti $$(kubectl get pods -l release=$(RELEASE) -o name | awk -F'/' '{ print $$NF }' | shuf -n 1) -- curl --fail -u elastic:changeme -k 'https://localhost:9200/_xpack/license' | grep platinum
 	
-test: secrets install health
+test: secrets install goss
 
 secrets:
 	kubectl delete secrets elastic-credentials elastic-license elastic-certificates elastic-certificate-pem || true && \
