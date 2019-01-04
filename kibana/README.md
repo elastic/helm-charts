@@ -17,7 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
   ```
 * Install it
   ```
-  helm install --name kibana elastic/kibana --version 6.5.3-alpha1
+  helm install --name kibana elastic/kibana --version 6.5.4-alpha1
   ```
 
 ## Configuration
@@ -29,7 +29,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
 | `extraEnvs`               | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container | `{}`                                                                                                                      |
 | `secretMounts`            | Allows you easily mount a secret as a file inside the deployment. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                              | `{}`                                                                                                                      |
 | `image`                   | The Kibana docker image                                                                                                                                                                                                                            | `docker.elastic.co/kibana/kibana`                                                                                         |
-| `imageTag`                | The Kibana docker image tag                                                                                                                                                                                                                        | `6.5.3`                                                                                                                   |
+| `imageTag`                | The Kibana docker image tag                                                                                                                                                                                                                        | `6.5.4`                                                                                                                   |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                     | `IfNotPresent`                                                                                                            |
 | `resources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                       | `requests.cpu: 100m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                             |
 | `antiAffinityTopologyKey` | The [anti-affinity topology key](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity). By default this will prevent multiple Kibana instances from running on the same Kubernetes node                   | `kubernetes.io/hostname`                                                                                                  |
@@ -42,6 +42,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
 | `nodeSelector`            | Configurable [nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) so that you can target specific nodes for your Kibana instances                                                                       | `{}`                                                                                                                      |
 | `tolerations`             | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                | `[]`                                                                                                                      |
 | `ingress`                 | Configurable [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) to expose the Kibana service. See [`values.yaml`](./values.yaml) for an example                                                                           | `enabled: false`                                                                                                          |
+| `kibanaSSLHostname`       | A hostname matched by the SSL certificate used in Kibana. Note: This only matters if you have enabled SSL in Kibana by setting `SERVER_SSL_ENABLED=true` in `extraEnvs`.  | `localhost`
 
 
 ## Examples

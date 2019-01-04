@@ -2,17 +2,17 @@
 
 clusterName: "fivex"
 masterService: "fivex-master"
-imageTag: "5.6.12"
+imageTag: "5.6.14"
 esMajorVersion: 5
 
 extraEnvs:
   - name: ELASTIC_PASSWORD
     valueFrom:
       secretKeyRef:
-        name: elastic-credentials
+        name: elastic-fivex-credentials
         key: password
   - name: ELASTIC_USERNAME
     valueFrom:
       secretKeyRef:
-        name: elastic-credentials
+        name: elastic-fivex-credentials
         key: username

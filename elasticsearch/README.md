@@ -29,7 +29,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
   ```
 * Install it 
   ```
-  helm install --name elasticsearch elastic/elasticsearch --version 6.5.3-alpha1
+  helm install --name elasticsearch elastic/elasticsearch --version 6.5.4-alpha1
   ```
 
 
@@ -47,7 +47,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 | `extraEnvs`               | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                         | `{}`                                                                                                                      |
 | `secretMounts`            | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `{}`                                                                                                                      |
 | `image`                   | The Elasticsearch docker image                                                                                                                                                                                                                                                                                             | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `6.5.3`                                                                                                                   |
+| `imageTag`                | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `6.5.4`                                                                                                                   |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `esJavaOpts`              | [Java options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html) for Elasticsearch. This is where you should configure the [jvm heap size](https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html)                                                                 | `-Xmx1g -Xms1g`                                                                                                           |
 | `resources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                               | `requests.cpu: 100m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                             |
@@ -174,7 +174,7 @@ This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templat
 
 ```
 pip install -r ../requirements.txt
-make test
+make pytest
 ```
 
 You can also use `helm template` to look at the YAML being generated
@@ -187,5 +187,15 @@ It is possible to run all of the tests and linting inside of a docker container
 
 ```
 make test
+```
+
+## Integration Testing
+
+Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](examples/default/test/goss.yaml) for an example of what the tests look like.
+
+To run the goss tests against the default example:
+```
+cd examples/default
+make goss
 ```
 
