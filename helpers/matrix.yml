@@ -10,6 +10,7 @@ ES_SUITE:
 KIBANA_SUITE:
   - default
   - security
+  - 7-alpha
   - 5.x
 KUBERNETES_VERSION:
   - '1.10'
