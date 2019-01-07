@@ -3,7 +3,6 @@ default: test
 include ../../../helpers/examples.mk
 
 RELEASE := helm-es-default
-GOSS_CONTAINER := elasticsearch-master-0
 
 install:
 	helm upgrade --wait --timeout=600 --install $(RELEASE) ../../ ; \
