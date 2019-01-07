@@ -154,12 +154,10 @@ spec:
             value: "{{ .Values.networkHost }}"
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
-          - name: node.master
-            value: "{{ .Values.roles.master }}"
-          - name: node.data
-            value: "{{ .Values.roles.data }}"
-          - name: node.ingest
-            value: "{{ .Values.roles.ingest }}"
+          {{- range $role, $enabled := .Values.roles }}
+          - name: node.{{ $role }}
+            value: "{{ $enabled }}"
+          {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
