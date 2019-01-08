@@ -8,4 +8,4 @@ version: 6.5.0
 appVersion: 6.5.0
 sources:
   - https://github.com/elastic/elasticsearch
-icon: https://www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+icon: https://helm.elastic.co/icons/elasticsearch.svg

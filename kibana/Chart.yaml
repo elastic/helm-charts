@@ -8,4 +8,4 @@ version: 6.5.0
 appVersion: 6.5.0
 sources:
   - https://github.com/elastic/kibana
-icon: https://www.elastic.co/assets/bltf11265439e44d327/logo-elastic-kibana-lt.svg
+icon: https://helm.elastic.co/icons/kibana.svg
