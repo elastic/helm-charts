@@ -8,3 +8,4 @@ version: 6.5.4-alpha1
 appVersion: 6.5.4
 sources:
   - https://github.com/elastic/kibana
+icon: https://helm.elastic.co/icons/kibana.svg
