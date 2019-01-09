@@ -233,6 +233,17 @@ roles:
     for e in env:
         assert e['name'] != 'cluster.initial_master_nodes'
 
+def test_enabling_machine_learning_role():
+    config = '''
+roles:
+  ml: "true"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+
+    assert {'name': 'node.ml',
+            'value': 'true'} in env
+
 
 def test_adding_extra_env_vars():
     config = '''
