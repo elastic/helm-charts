@@ -2,14 +2,15 @@ default: test
 
 include ../../../helpers/examples.mk
 
-RELEASE := helm-es-multi
+PREFIX := helm-es-multi
+RELEASE := helm-es-multi-master
 
 install:
-	helm upgrade --wait --timeout=600 --install --values ./master.yml $(RELEASE)-master ../../
-	helm upgrade --wait --timeout=600 --install --values ./data.yml $(RELEASE)-data ../../
+	helm upgrade --wait --timeout=600 --install --values ./master.yml $(PREFIX)-master ../../
+	helm upgrade --wait --timeout=600 --install --values ./data.yml $(PREFIX)-data ../../
 
 test: install goss
 
 purge:
-	helm del --purge $(RELEASE)-master
-	helm del --purge $(RELEASE)-data
+	helm del --purge $(PREFIX)-master
+	helm del --purge $(PREFIX)-data
