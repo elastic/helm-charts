@@ -17,7 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
   ```
 * Install it
   ```
-  helm install --name kibana elastic/kibana --version 6.5.4-alpha2
+  helm install --name kibana elastic/kibana --version 6.5.4-alpha3
   ```
 
 ## Configuration
