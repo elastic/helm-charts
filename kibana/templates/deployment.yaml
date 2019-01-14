@@ -19,6 +19,18 @@ spec:
         app: kibana
         release: {{ .Release.Name | quote }}
     spec:
+      {{- if .Values.securityContext }}
+      securityContext: 
+        {{- if .Values.securityContext.runAsUser }}
+        runAsUser: {{ .Values.Values.securityContext.runAsUser }}
+        {{- end }}
+        {{- if .Values.securityContext.fsGroup }}
+        fsGroup: {{ .Values.Values.securityContext.fsGroup }}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.serviceAccount }}
+      serviceAccount: {{ .Values.serviceAccount }}
+      {{- end }}
       {{- if .Values.secretMounts }}
       volumes:
         {{- range .Values.secretMounts }}
