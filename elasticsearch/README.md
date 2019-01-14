@@ -29,7 +29,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
   ```
 * Install it 
   ```
-  helm install --name elasticsearch elastic/elasticsearch --version 6.5.4-alpha1
+  helm install --name elasticsearch elastic/elasticsearch --version 6.5.4-alpha2
   ```
 
 
