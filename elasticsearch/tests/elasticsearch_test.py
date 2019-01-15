@@ -359,3 +359,35 @@ protocol: https
     r = helm_template(config)
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
     assert 'https://127.0.0.1:9200' in c['readinessProbe']['exec']['command'][-1]
+
+def test_adding_in_es_config():
+    config = '''
+esConfig:
+  elasticsearch.yml: |
+    key:
+      nestedkey: value
+    dot.notation: test
+
+  log4j2.properties: |
+    appender.rolling.name = rolling
+'''
+    r = helm_template(config)
+    c = r['configmap'][uname + '-config']['data']
+
+    assert 'elasticsearch.yml' in c
+    assert 'log4j2.properties' in c
+
+    assert 'nestedkey: value' in c['elasticsearch.yml']
+    assert 'dot.notation: test' in c['elasticsearch.yml']
+
+    assert 'appender.rolling.name = rolling' in c['log4j2.properties']
+
+    s = r['statefulset'][uname]['spec']['template']['spec']
+
+    assert {'configMap': {'name': 'elasticsearch-master-config'}, 'name': 'esconfig'} in s['volumes']
+    assert {'mountPath': '/usr/share/elasticsearch/config/elasticsearch.yml', 'name': 'esconfig', 'subPath': 'elasticsearch.yml'} in s['containers'][0]['volumeMounts']
+    assert {'mountPath': '/usr/share/elasticsearch/config/log4j2.properties', 'name': 'esconfig', 'subPath': 'log4j2.properties'} in s['containers'][0]['volumeMounts']
+
+    assert 'configchecksum' in r['statefulset'][uname]['spec']['template']['metadata']['annotations']
+
+

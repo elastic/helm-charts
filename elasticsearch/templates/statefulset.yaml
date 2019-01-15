@@ -30,6 +30,11 @@ spec:
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         app: "{{ template "uname" . }}"
+      annotations:
+        {{/* This forces a restart if the configmap has changed */}}
+        {{- if .Values.esConfig }}
+        configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
     spec:
       securityContext:
         fsGroup: {{ .Values.fsGroup }}
@@ -67,14 +72,17 @@ spec:
                   - "{{ template "uname" . }}"
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
-      {{- if .Values.secretMounts }}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
           secret:
             secretName: {{ .name }}
         {{- end }}
-      {{- end }}
+        {{- if .Values.esConfig }}
+        - name: esconfig
+          configMap:
+            name: {{ template "uname" . }}-config
+        {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
@@ -171,3 +179,8 @@ spec:
             subPath: {{ .subPath }}
             {{- end }}
           {{- end }}
+          {{- range $path, $config := .Values.esConfig }}
+          - name: esconfig
+            mountPath: /usr/share/elasticsearch/config/{{ $path }}
+            subPath: {{ $path }}
+          {{- end -}}
