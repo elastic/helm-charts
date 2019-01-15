@@ -1,8 +1,6 @@
 default: test
 include ../../../helpers/examples.mk
 
-GOSS_CONTAINER := seven-master-0
-
 RELEASE := helm-es-seven
 
 install:

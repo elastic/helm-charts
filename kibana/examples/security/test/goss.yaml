@@ -1,0 +1,7 @@
+http:
+  https://localhost:5601/app/kibana:
+    status: 200
+    timeout: 2000
+    allow-insecure: true
+    username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
+    password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
