@@ -32,11 +32,11 @@ resources:
     memory: "1Gi"
 
 # If Pod Security Policy in use it may be required to specify security context as well as service account
-securityContext:
+#podSecurityContext:
   #runAsUser: "place the user id here"
   #fsGroup: "place the group id here"
  
-serviceAccount: "default"
+#serviceAccount:
 
 # By default this will make sure two pods don't end up on the same node
 # Changing this to a region would allow you to spread pods across regions

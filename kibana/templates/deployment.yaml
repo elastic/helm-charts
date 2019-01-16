@@ -19,15 +19,10 @@ spec:
         app: kibana
         release: {{ .Release.Name | quote }}
     spec:
-      {{- if .Values.securityContext }}
-      securityContext: 
-        {{- if .Values.securityContext.runAsUser }}
-        runAsUser: {{ .Values.Values.securityContext.runAsUser }}
-        {{- end }}
-        {{- if .Values.securityContext.fsGroup }}
-        fsGroup: {{ .Values.Values.securityContext.fsGroup }}
-        {{- end }}
-      {{- end }}
+{{- if .Values.podSecurityContext }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+{{- end }}
       {{- if .Values.serviceAccount }}
       serviceAccount: {{ .Values.serviceAccount }}
       {{- end }}
