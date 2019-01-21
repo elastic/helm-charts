@@ -19,6 +19,14 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{ .Values.clusterName }}-{{ .Values.nodeGroup }}
 {{- end -}}
 
+{{- define "masterService" -}}
+{{- if empty .Values.masterService -}}
+{{ template "uname" . }}
+{{- else -}}
+{{ .Values.masterService }}
+{{- end -}}
+{{- end -}}
+
 {{- define "endpoints" -}}
 {{- $replicas := .replicas | int }}
 {{- $uname := printf "%s-%s" .clusterName .nodeGroup }}

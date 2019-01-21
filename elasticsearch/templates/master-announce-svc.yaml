@@ -1,0 +1,29 @@
+{{ if eq .Values.roles.master "true" }}
+{{- range $i := until (int .Values.replicas) }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "uname" $ }}-announce-{{ $i }}
+  labels:
+    heritage: {{ $.Release.Service | quote }}
+    release: {{ $.Release.Name | quote }}
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+    app: "{{ template "uname" $ }}"
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  type: ClusterIP
+  publishNotReadyAddresses: true
+  ports:
+  - name: transport
+    port: 9300
+    targetPort: transport
+  selector:
+    heritage: {{ $.Release.Service | quote }}
+    release: {{ $.Release.Name | quote }}
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+    app: "{{ template "uname" $ }}"
+    statefulset.kubernetes.io/pod-name: {{ template "masterService" $ }}-{{ $i }}
+{{ end }}
+{{ end }}

@@ -78,6 +78,8 @@ spec:
           secret:
             secretName: {{ .name }}
         {{- end }}
+        - name: config
+          emptyDir: {}
         {{- if .Values.esConfig }}
         - name: esconfig
           configMap:
@@ -94,6 +96,39 @@ spec:
           privileged: true
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
+      - name: init-config
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        command:
+        - /bin/bash
+        - -c
+        - |-
+          shopt -s nullglob dotglob
+          files=(/tmp/config/*)
+          if [ ${#files[@]} -gt 0 ]; then
+            cp -r /tmp/config/* /usr/share/elasticsearch/config/
+          fi
+
+          HOSTNAME="$(hostname)"
+          INDEX="${HOSTNAME##*-}"
+
+          ENV_VAR_PREFIX=`echo {{ template "masterService" . }}-|awk '{print toupper($0)}'|sed 's/-/_/g'`
+          HOSTVAR="${ENV_VAR_PREFIX}ANNOUNCE_${INDEX}_SERVICE_HOST"
+          HOST="${!HOSTVAR}"
+
+          if [ ! -f /usr/share/elasticsearch/config/elasticsearch.yml ]; then
+              echo "" > /usr/share/elasticsearch/config/elasticsearch.yml
+          fi;
+          echo "network.publish_host: ${HOST}" >> /usr/share/elasticsearch/config/elasticsearch.yml;
+        volumeMounts:
+        - name: config
+          mountPath: /usr/share/elasticsearch/config
+        {{- if .Values.esConfig }}
+        - name: esconfig
+          mountPath: /tmp/config
+        {{- end }}
       containers:
       - name: "{{ template "name" . }}"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -101,7 +136,7 @@ spec:
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
-            command: 
+            command:
               - sh
               - -c
               - |
@@ -119,7 +154,7 @@ spec:
                     fi
                     curl -XGET -s -k --fail ${BASIC_AUTH} {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}${path}
                 }
-  
+
                 if [ -f "${START_FILE}" ]; then
                     echo 'Elasticsearch is already running, lets check the node is healthy'
                     http "/"
@@ -155,7 +190,7 @@ spec:
           {{- end }}
           {{- end }}
           - name: discovery.zen.ping.unicast.hosts
-            value: "{{ .Values.masterService }}-headless"
+            value: "{{ template "masterService" . }}-headless"
           - name: cluster.name
             value: "{{ .Values.clusterName }}"
           - name: network.host
@@ -180,7 +215,18 @@ spec:
             {{- end }}
           {{- end }}
           {{- range $path, $config := .Values.esConfig }}
-          - name: esconfig
+          - name: config
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
             subPath: {{ $path }}
+          {{- end }}
+          {{- if not (empty .Values.esConfig) }}
+          {{- if not (hasKey .Values.esConfig "elasticsearch.yml") }}
+          - name: config
+            mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+            subPath: elasticsearch.yml
+          {{- end -}}
+          {{- else if (empty .Values.esConfig) }}
+          - name: config
+            mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+            subPath: elasticsearch.yml
           {{- end -}}
