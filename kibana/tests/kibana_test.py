@@ -159,3 +159,20 @@ nameOverride: overrider
 
     r = helm_template(config)
     assert 'overrider-kibana' in r['deployment']
+
+def test_setting_a_custom_service_account():
+    config = '''
+serviceAccount: notdefault
+'''
+    r = helm_template(config)
+    assert r['deployment'][name]['spec']['template']['spec']['serviceAccount'] == 'notdefault'
+
+def test_setting_pod_security_context():
+    config = '''
+podSecurityContext:
+  runAsUser: 1001
+  fsGroup: 1002
+'''
+    r = helm_template(config)
+    assert r['deployment'][name]['spec']['template']['spec']['securityContext']['runAsUser'] == 1001
+    assert r['deployment'][name]['spec']['template']['spec']['securityContext']['fsGroup'] == 1002
