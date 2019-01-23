@@ -19,6 +19,13 @@ spec:
         app: kibana
         release: {{ .Release.Name | quote }}
     spec:
+{{- if .Values.podSecurityContext }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+{{- end }}
+      {{- if .Values.serviceAccount }}
+      serviceAccount: {{ .Values.serviceAccount }}
+      {{- end }}
       {{- if .Values.secretMounts }}
       volumes:
         {{- range .Values.secretMounts }}
