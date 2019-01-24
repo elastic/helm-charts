@@ -176,3 +176,33 @@ podSecurityContext:
     r = helm_template(config)
     assert r['deployment'][name]['spec']['template']['spec']['securityContext']['runAsUser'] == 1001
     assert r['deployment'][name]['spec']['template']['spec']['securityContext']['fsGroup'] == 1002
+
+def test_adding_in_kibana_config():
+    config = '''
+kibanaConfig:
+  kibana.yml: |
+    key:
+      nestedkey: value
+    dot.notation: test
+
+  other-config.yml: |
+    hello = world
+'''
+    r = helm_template(config)
+    c = r['configmap'][name + '-config']['data']
+
+    assert 'kibana.yml' in c
+    assert 'other-config.yml' in c
+
+    assert 'nestedkey: value' in c['kibana.yml']
+    assert 'dot.notation: test' in c['kibana.yml']
+
+    assert 'hello = world' in c['other-config.yml']
+
+    d = r['deployment'][name]['spec']['template']['spec']
+
+    assert {'configMap': {'name': name + '-config'}, 'name': 'kibanaconfig'} in d['volumes']
+    assert {'mountPath': '/usr/share/kibana/config/kibana.yml', 'name': 'kibanaconfig', 'subPath': 'kibana.yml'} in d['containers'][0]['volumeMounts']
+    assert {'mountPath': '/usr/share/kibana/config/other-config.yml', 'name': 'kibanaconfig', 'subPath': 'other-config.yml'} in d['containers'][0]['volumeMounts']
+
+    assert 'configchecksum' in r['deployment'][name]['spec']['template']['metadata']['annotations']
