@@ -206,3 +206,11 @@ kibanaConfig:
     assert {'mountPath': '/usr/share/kibana/config/other-config.yml', 'name': 'kibanaconfig', 'subPath': 'other-config.yml'} in d['containers'][0]['volumeMounts']
 
     assert 'configchecksum' in r['deployment'][name]['spec']['template']['metadata']['annotations']
+
+def test_changing_the_protocol():
+    config = '''
+protocol: https
+'''
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert 'https://' in c['readinessProbe']['exec']['command'][-1]

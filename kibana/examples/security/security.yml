@@ -25,6 +25,8 @@ kibanaConfig:
       certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem
       verificationMode: certificate
 
+protocol: https
+
 secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem

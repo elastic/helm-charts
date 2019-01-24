@@ -83,13 +83,7 @@ spec:
                       set -- "$@" -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
                     fi
 
-                    if [ "${SERVER_SSL_ENABLED}" = "true" ] ; then
-                      set -- "$@" --cacert "${SERVER_SSL_CERTIFICATE}" --resolve "{{ .Values.kibanaSSLHostname }}:{{ .Values.httpPort }}:127.0.0.1"
-                      URL="https://{{ .Values.kibanaSSLHostname }}:{{ .Values.httpPort }}${path}"
-                    else
-                      URL="http://localhost:{{ .Values.httpPort }}${path}"
-                    fi
-                    curl "$@" "${URL}"
+                    curl -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}"
                 }
   
                 http "/app/kibana"
