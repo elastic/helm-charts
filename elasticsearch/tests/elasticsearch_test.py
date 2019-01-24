@@ -195,7 +195,7 @@ imageTag: 6.2.4
 def test_use_discovery_hosts_if_not_master():
     config = '''
 masterService: "hostservice"
-roles: 
+roles:
   master: "false"
 '''
     r = helm_template(config)
@@ -207,7 +207,7 @@ roles:
 def test_set_initial_master_nodes_when_using_v_7():
     config = '''
 esMajorVersion: 7
-roles: 
+roles:
   master: "true"
 '''
     r = helm_template(config)
@@ -225,7 +225,7 @@ roles:
 def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
     config = '''
 esMajorVersion: 7
-roles: 
+roles:
   master: "false"
 '''
     r = helm_template(config)
@@ -247,7 +247,7 @@ roles:
 
 def test_adding_extra_env_vars():
     config = '''
-extraEnvs: 
+extraEnvs:
   - name: hello
     value: world
 '''
@@ -323,6 +323,35 @@ nodeSelector:
 '''
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
+
+
+def test_adding_a_node_affinity():
+    config = '''
+nodeAffinity:
+  preferredDuringSchedulingIgnoredDuringExecution:
+  - weight: 100
+    preference:
+      matchExpressions:
+      - key: mylabel
+        operator: In
+        values:
+        - myvalue
+'''
+    r = helm_template(config)
+    assert r['statefulset'][uname]['spec']['template']['spec']['affinity']['nodeAffinity'] == {
+        'preferredDuringSchedulingIgnoredDuringExecution': [{
+            'weight': 100,
+            'preference': {
+                'matchExpressions': [{
+                    'key': 'mylabel',
+                    'operator': 'In',
+                    'values': [
+                        'myvalue'
+                    ]
+                }]
+            }
+        }]
+    }
 
 
 def test_adding_an_ingress_rule():

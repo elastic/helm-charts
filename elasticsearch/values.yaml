@@ -73,6 +73,10 @@ antiAffinityTopologyKey: "kubernetes.io/hostname"
 # and that they will never end up on the same node. Setting this to soft will do this "best effort"
 antiAffinity: "hard"
 
+# This is the node affinity settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
+nodeAffinity: {}
+
 # The default is to deploy all pods serially. By setting this to parallel all pods are started at
 # the same time when bootstrapping the cluster
 podManagementPolicy: "Parallel"
