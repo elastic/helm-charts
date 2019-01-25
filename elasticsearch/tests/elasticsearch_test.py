@@ -324,6 +324,29 @@ nodeSelector:
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
 
+def test_adding_resources_to_initcontainer():
+    config = '''
+initResources:
+  limits:
+    cpu: "25m"
+    memory: "128Mi"
+  requests:
+    cpu: "25m"
+    memory: "128Mi"
+'''
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][0]
+
+    assert i['resources'] == {
+        'requests': {
+            'cpu': '25m',
+            'memory': '128Mi'
+        },
+        'limits': {
+            'cpu': '25m',
+            'memory': '128Mi'
+        }
+    }
 
 def test_adding_a_node_affinity():
     config = '''
@@ -418,5 +441,3 @@ esConfig:
     assert {'mountPath': '/usr/share/elasticsearch/config/log4j2.properties', 'name': 'esconfig', 'subPath': 'log4j2.properties'} in s['containers'][0]['volumeMounts']
 
     assert 'configchecksum' in r['statefulset'][uname]['spec']['template']['metadata']['annotations']
-
-

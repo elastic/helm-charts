@@ -99,6 +99,8 @@ spec:
           privileged: true
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
+        resources:
+{{ toYaml .Values.initResources | indent 10 }}
       containers:
       - name: "{{ template "name" . }}"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -106,7 +108,7 @@ spec:
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
-            command: 
+            command:
               - sh
               - -c
               - |
@@ -124,7 +126,7 @@ spec:
                     fi
                     curl -XGET -s -k --fail ${BASIC_AUTH} {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}${path}
                 }
-  
+
                 if [ -f "${START_FILE}" ]; then
                     echo 'Elasticsearch is already running, lets check the node is healthy'
                     http "/"
