@@ -3,6 +3,7 @@ CLUSTER_NAME := helm-elasticsearch-test
 KUBERNETES_VERSION := 1.9.7-gke.6
 CHART := elasticsearch
 SUITE := default
+NAMESPACE := helm-charts-testing
 
 export TF_VAR_cluster_name=$(CLUSTER_NAME)
 export TF_VAR_project=$(GOOGLE_PROJECT)
@@ -43,12 +44,14 @@ apply: init fmt
 	terraform apply -input=false -auto-approve
 
 .PHONY: destroy
-destroy: init credentials.json
+destroy: init credentials.json creds
+	kubectl delete namespace $(NAMESPACE)
 	terraform destroy -input=false --force
 
 creds: credentials.json
 	gcloud auth activate-service-account --key-file=${GOOGLE_CREDENTIALS}
 	gcloud --project=$(GOOGLE_PROJECT) container clusters get-credentials $(CLUSTER_NAME) --zone us-central1-a
+	kubectl config set-context $(kubectl config current-context) --namespace=$(NAMESPACE)
 
 k8s: apply creds
 	kubectl get cs
