@@ -51,6 +51,7 @@ destroy: init credentials.json creds
 creds: credentials.json
 	gcloud auth activate-service-account --key-file=${GOOGLE_CREDENTIALS}
 	gcloud --project=$(GOOGLE_PROJECT) container clusters get-credentials $(CLUSTER_NAME) --zone us-central1-a
+	kubectl create namespace $(NAMESPACE) || true
 	kubectl config set-context $(kubectl config current-context) --namespace=$(NAMESPACE)
 
 k8s: apply creds
