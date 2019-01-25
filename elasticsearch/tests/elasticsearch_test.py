@@ -195,7 +195,7 @@ imageTag: 6.2.4
 def test_use_discovery_hosts_if_not_master():
     config = '''
 masterService: "hostservice"
-roles: 
+roles:
   master: "false"
 '''
     r = helm_template(config)
@@ -207,7 +207,7 @@ roles:
 def test_set_initial_master_nodes_when_using_v_7():
     config = '''
 esMajorVersion: 7
-roles: 
+roles:
   master: "true"
 '''
     r = helm_template(config)
@@ -225,7 +225,7 @@ roles:
 def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
     config = '''
 esMajorVersion: 7
-roles: 
+roles:
   master: "false"
 '''
     r = helm_template(config)
@@ -247,7 +247,7 @@ roles:
 
 def test_adding_extra_env_vars():
     config = '''
-extraEnvs: 
+extraEnvs:
   - name: hello
     value: world
 '''
@@ -324,6 +324,29 @@ nodeSelector:
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
 
+def test_adding_resources_to_initcontainer():
+    config = '''
+initResources:
+  limits:
+    cpu: "25m"
+    memory: "128Mi"
+  requests:
+    cpu: "25m"
+    memory: "128Mi"
+'''
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][0]
+
+    assert i['resources'] == {
+        'requests': {
+            'cpu': '25m',
+            'memory': '128Mi'
+        },
+        'limits': {
+            'cpu': '25m',
+            'memory': '128Mi'
+        }
+    }
 
 def test_adding_an_ingress_rule():
     config = '''
@@ -389,5 +412,3 @@ esConfig:
     assert {'mountPath': '/usr/share/elasticsearch/config/log4j2.properties', 'name': 'esconfig', 'subPath': 'log4j2.properties'} in s['containers'][0]['volumeMounts']
 
     assert 'configchecksum' in r['statefulset'][uname]['spec']['template']['metadata']['annotations']
-
-
