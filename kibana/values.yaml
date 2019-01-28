@@ -31,6 +31,15 @@ resources:
     cpu: "1000m"
     memory: "1Gi"
 
+protocol: http
+
+# Allows you to add any config files in /usr/share/kibana/config/
+# such as kibana.yml
+# kibanaConfig:
+#   kibana.yml: |
+#     key:
+#       nestedkey: value
+
 # If Pod Security Policy in use it may be required to specify security context as well as service account
 #podSecurityContext:
   #runAsUser: "place the user id here"
@@ -59,11 +68,6 @@ updateStrategy:
 service:
   type: ClusterIP
   port: 5601
-
-# Set this if you are setting server.ssl.enabled in Kibana.
-# This value is a hostname accepted by the SSL certificate provided to kibana.
-# Configuring this allows the readinessProbe to successfully check Kibana over HTTPS.
-kibanaSSLHostname: localhost
 
 ingress:
   enabled: false

@@ -18,6 +18,11 @@ spec:
       labels:
         app: kibana
         release: {{ .Release.Name | quote }}
+      annotations:
+        {{/* This forces a restart if the configmap has changed */}}
+        {{- if .Values.kibanaConfig }}
+        configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
     spec:
 {{- if .Values.podSecurityContext }}
       securityContext:
@@ -26,14 +31,17 @@ spec:
       {{- if .Values.serviceAccount }}
       serviceAccount: {{ .Values.serviceAccount }}
       {{- end }}
-      {{- if .Values.secretMounts }}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
           secret:
             secretName: {{ .name }}
         {{- end }}
-      {{- end }}
+        {{- if .Values.kibanaConfig }}
+        - name: kibanaconfig
+          configMap:
+            name: {{ template "fullname" . }}-config
+        {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
@@ -75,13 +83,7 @@ spec:
                       set -- "$@" -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
                     fi
 
-                    if [ "${SERVER_SSL_ENABLED}" = "true" ] ; then
-                      set -- "$@" --cacert "${SERVER_SSL_CERTIFICATE}" --resolve "{{ .Values.kibanaSSLHostname }}:{{ .Values.httpPort }}:127.0.0.1"
-                      URL="https://{{ .Values.kibanaSSLHostname }}:{{ .Values.httpPort }}${path}"
-                    else
-                      URL="http://localhost:{{ .Values.httpPort }}${path}"
-                    fi
-                    curl "$@" "${URL}"
+                    curl -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}"
                 }
   
                 http "/app/kibana"
@@ -89,10 +91,13 @@ spec:
         - containerPort: {{ .Values.httpPort }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-        {{- if .Values.secretMounts }}
         volumeMounts:
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
           {{- end }}
-      {{- end }}
+          {{- range $path, $config := .Values.kibanaConfig }}
+          - name: kibanaconfig
+            mountPath: /usr/share/kibana/config/{{ $path }}
+            subPath: {{ $path }}
+          {{- end -}}
