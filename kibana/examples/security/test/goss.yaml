@@ -5,3 +5,16 @@ http:
     allow-insecure: true
     username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
     password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
+
+file:
+  /usr/share/kibana/config/kibana.yml:
+    exists: true
+    contains:
+      - 'server.ssl:'
+      - '  enabled: true'
+      - '  key: /usr/share/kibana/config/certs/kibana/kibana.key'
+      - '  certificate: /usr/share/kibana/config/certs/kibana/kibana.crt'
+      - 'xpack.security.encryptionKey: something_at_least_32_characters'
+      - 'elasticsearch.ssl:'
+      - '  certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem'
+      - '  verificationMode: certificate'

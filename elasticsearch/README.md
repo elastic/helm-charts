@@ -18,7 +18,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 * The default storage class for GKE is `standard` which by default will give you `pd-ssd` type persistent volumes. This is network attached storage and will not perform as well as local storage. If you are using Kubernetes version 1.10 or greater you can use [Local PersistentVolumes](https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/local-ssd) for increased performance
 * The chart deploys a statefulset and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. If you prefer to update manually you can set [`updateStrategy: OnDelete`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#on-delete)
 * It is important to verify that the JVM heap size in `esJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
-* To simplify chart and maintenance each set of node groups is deployed as a separate helm release. Take a look at the [multi](./examples/multi) example to get an idea for how this works. Without doing this it isn't possible to resize persistent volumes in a statefulset. By setting it up this way it makes it possible to add more nodes with a new storage size then drain the old ones. It also solves the problem of allowing the user to determine which node groups to update first when doing upgrades or changes. 
+* To simplify chart and maintenance each set of node groups is deployed as a separate helm release. Take a look at the [multi](./examples/multi) example to get an idea for how this works. Without doing this it isn't possible to resize persistent volumes in a statefulset. By setting it up this way it makes it possible to add more nodes with a new storage size then drain the old ones. It also solves the problem of allowing the user to determine which node groups to update first when doing upgrades or changes.
 * We have designed this chart to be very un-opinionated about how to configure Elasticsearch. It exposes ways to set environment variables and mount secrets inside of the container. Doing this makes it much easier for this chart to support multiple versions with minimal changes.
 
 ## Installing
@@ -27,7 +27,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
   ```
   helm repo add elastic https://helm.elastic.co
   ```
-* Install it 
+* Install it
   ```
   helm install --name elasticsearch elastic/elasticsearch --version 6.5.4-alpha3
   ```
@@ -52,10 +52,12 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `esJavaOpts`              | [Java options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html) for Elasticsearch. This is where you should configure the [jvm heap size](https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html)                                                                 | `-Xmx1g -Xms1g`                                                                                                           |
 | `resources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                               | `requests.cpu: 100m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                             |
+| `initResources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the initContainer in the statefulset                                                                                                                                                                               | {}                             |
 | `networkHost`             | Value for the [network.host Elasticsearch setting](https://www.elastic.co/guide/en/elasticsearch/reference/current/network.host.html)                                                                                                                                                                                      | `0.0.0.0`                                                                                                                 |
 | `volumeClaimTemplate`     | Configuration for the [volumeClaimTemplate for statefulsets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage). You will want to adjust the storage (default `30Gi`) and the `storageClassName` if you are using a different storage class                                            | `accessModes: [ "ReadWriteOnce" ]`<br>`storageClassName: standard`<br>`resources.requests.storage: 30Gi`                  |
 | `antiAffinityTopologyKey` | The [anti-affinity topology key](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity). By default this will prevent multiple Elasticsearch nodes from running on the same Kubernetes node                                                                                        | `kubernetes.io/hostname`                                                                                                  |
-| `antiAffinity`            | Setting this to hard enforces the [anti-affinity rules](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity). If it is set to soft it will be done "best effort"                                                                                                                 | `hard`                                                                                                                    |
+| `antiAffinity`            | Setting this to hard enforces the [anti-affinity rules](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity). If it is set to soft it will be done "best effort". Other values will be ignored.                                                                                  | `hard`                                                                                                                    |
+| `nodeAffinity`            | Value for the [node affinity settings](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature)                                                                                                                                                                                      | `{}`                                                                                                                      |
 | `podManagementPolicy`     | By default Kubernetes [deploys statefulsets serially](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies). This deploys them in parralel so that they can discover eachother                                                                                                   | `Parallel`                                                                                                                |
 | `protocol`                | The protocol that will be used for the readinessProbe. Change this to `https` if you have `xpack.security.http.ssl.enabled` set                                                                                                                                                                                            | `http`                                                                                                                    |
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#_settings_2) in `extraEnvs`                                                                        | `9200`                                                                                                                    |
@@ -114,7 +116,7 @@ A cluster with X-Pack security enabled
   ```
   kubectl exec -ti $(kubectl get pods -l release=helm-es-security -o name | awk -F'/' '{ print $NF }' | head -n 1) bash
   ```
-  
+
 * Install the X-Pack license
   ```
   curl -XPUT 'http://localhost:9200/_xpack/license' -H "Content-Type: application/json" -d @/usr/share/elasticsearch/config/license/license.json
@@ -131,7 +133,7 @@ A cluster with X-Pack security enabled
 
 ### Local development environments
 
-This chart is designed to run on production scale Kubernetes clusters with multiple nodes, lots of memory and persistent storage. For that reason it can be a bit tricky to run them against local Kubernetes environments such as minikube. Below are some examples of how to get this working locally. 
+This chart is designed to run on production scale Kubernetes clusters with multiple nodes, lots of memory and persistent storage. For that reason it can be a bit tricky to run them against local Kubernetes environments such as minikube. Below are some examples of how to get this working locally.
 
 #### Minikube
 
@@ -199,4 +201,3 @@ To run the goss tests against the default example:
 cd examples/default
 make goss
 ```
-
