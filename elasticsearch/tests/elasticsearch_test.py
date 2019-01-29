@@ -315,6 +315,14 @@ tolerations:
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['tolerations'][0]['key'] == 'key1'
 
+def test_adding_pod_annotations():
+    config = '''
+podAnnotations:
+  iam.amazonaws.com/role: es-role
+'''
+    r = helm_template(config)
+    assert r['statefulset'][uname]['spec']['template']['metadata']['annotations']['iam.amazonaws.com/role'] == 'es-role'
+
 
 def test_adding_a_node_selector():
     config = '''
