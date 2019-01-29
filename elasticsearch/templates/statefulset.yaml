@@ -126,7 +126,7 @@ spec:
           HOST="${!HOSTVAR}"
 
           if [ ! -f /usr/share/elasticsearch/config/elasticsearch.yml ]; then
-              echo "" > /usr/share/elasticsearch/config/elasticsearch.yml
+              touch /usr/share/elasticsearch/config/elasticsearch.yml
           fi;
           echo "network.publish_host: ${HOST}" >> /usr/share/elasticsearch/config/elasticsearch.yml;
         volumeMounts:
