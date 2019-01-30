@@ -17,7 +17,7 @@ http:
     username: '{{ .Env.ELASTIC_USERNAME }}'
     password: '{{ .Env.ELASTIC_PASSWORD }}'
     body:
-      - '"number" : "6.5.4"'
+      - '"number" : "6.6.0"'
       - '"cluster_name" : "security"'
       - '"name" : "security-master-0"'
       - 'You Know, for Search'
