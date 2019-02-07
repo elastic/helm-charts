@@ -6,6 +6,7 @@ PREFIX := helm-es-multi
 RELEASE := helm-es-multi-master
 
 install:
+	helm init --client-only
 	helm dep update
 	helm upgrade --wait --timeout=600 --install $(RELEASE) .
 
