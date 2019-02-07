@@ -132,6 +132,44 @@ A cluster with X-Pack security enabled
   wget https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz && gunzip logs.jsonl.gz && curl -u elastic:changeme -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
   ```
 
+### FAQ
+
+#### How to install plugins?
+
+The [recommended](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_c_customized_image) way to install plugins into our docker images is to create a custom docker image. 
+
+The Dockerfile would look something like:
+
+```
+ARG elasticsearch_version
+FROM docker.elastic.co/elasticsearch/elasticsearch:${elasticsearch_version}
+
+RUN bin/elasticsearch-plugin install --batch repository-gcs
+```
+
+And then updating the `image` in values to point to your custom image. 
+
+There are a couple reasons we recommend this.
+
+1. Tying the availability of Elasticsearch to the download service to install plugins is not a great idea or something that we recommend. Especially in Kubernetes where it is normal and expected for a container to be moved to another host at random times.
+2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure. 
+
+#### How to use the keystore?
+
+1. Create a Kubernetes secret containing the [keystore](https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html)
+    ```
+    $ kubectl create secret generic elasticsearch-keystore --from-file=./elasticsearch.keystore
+    ```
+2. Mount it into the container via `secretMounts`
+    ```
+    secretMounts:
+    - name: elasticsearch-keystore
+      secretName: elasticsearch-keystore
+      path: /usr/share/elasticsearch/config/elasticsearch.keystore
+      subPath: elasticsearch.keystore
+    ```
+
+
 ### Local development environments
 
 This chart is designed to run on production scale Kubernetes clusters with multiple nodes, lots of memory and persistent storage. For that reason it can be a bit tricky to run them against local Kubernetes environments such as minikube. Below are some examples of how to get this working locally.
