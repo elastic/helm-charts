@@ -35,7 +35,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.esConfig }}
+        {{- if (or .Values.esConfig .Values.settings.node) }}
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
@@ -86,11 +86,9 @@ spec:
           secret:
             secretName: {{ .name }}
         {{- end }}
-        {{- if .Values.esConfig }}
         - name: esconfig
           configMap:
             name: {{ template "uname" . }}-config
-        {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
@@ -188,6 +186,11 @@ spec:
             {{- if .subPath }}
             subPath: {{ .subPath }}
             {{- end }}
+          {{- end }}
+          {{- if .Values.settings.node }}
+          - name: esconfig
+            mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+            subPath: elasticsearch.yml
           {{- end }}
           {{- range $path, $config := .Values.esConfig }}
           - name: esconfig

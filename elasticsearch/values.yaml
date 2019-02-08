@@ -18,6 +18,24 @@ minimumMasterNodes: 2
 
 esMajorVersion: 6
 
+# Settings for your nodes, clusters, and indices.
+settings:
+  # These settings become part of elasticsearch.yml on the node.
+  # It should be structured, not a text block.
+  node: {}
+    # Example, to enable Elasticsearch Security
+    #xpack.security.enabled: true
+
+  # These settings are published using the /_cluster/settings endpoint
+  # TODO(sissel): Not implemented yet.
+  cluster: {}
+
+  # These settings are published using the /_settings endpoint
+  # This can be useful to set cluster-wide index settings
+  # such as node_left delayed allocation
+  # TODO(sissel): Not implemented yet.
+  index: {}
+
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
 esConfig:
