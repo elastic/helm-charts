@@ -1,0 +1,9 @@
+dependencies:
+  - name: secure-elasticsearch
+    repository: file://../secure-elasticsearch/
+    version: 6.6.0-alpha1
+    alias: es-data
+  - name: secure-elasticsearch
+    repository: file://../secure-elasticsearch/
+    version: 6.6.0-alpha1
+    alias: es-master

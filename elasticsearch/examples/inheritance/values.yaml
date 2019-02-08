@@ -1,0 +1,25 @@
+# The data nodes
+es-data:
+  elasticsearch: # TODO(sissel): maybe there's a way to import-values to avoid this level?
+    nodeGroup: "data"
+
+    roles:
+      master: "false"
+      ingest: "true"
+      data: "true"
+
+    # Give data nodes 100GB of persistent storage
+    volumeClaimTemplate:
+      resources:
+        requests:
+          storage: 100Gi
+
+# The master nodes
+es-master:
+  elasticsearch:
+    nodeGroup: "master"
+
+    roles:
+      master: "true"
+      ingest: "false"
+      data: "false"

@@ -1,0 +1,10 @@
+description: Elasticsearch with Security enabled.
+home: https://github.com/elastic/helm-charts
+maintainers:
+- email: helm-charts@elastic.co
+  name: Elastic
+name: secure-elasticsearch
+version: 6.6.0-alpha1
+appVersion: 6.6.0
+sources:
+  - https://github.com/elastic/elasticsearch

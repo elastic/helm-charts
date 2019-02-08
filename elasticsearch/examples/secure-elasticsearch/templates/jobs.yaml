@@ -1,0 +1,130 @@
+{{- /* Try to only deploy maintenance/setup jobs when the role is master.
+     * This keeps us from trying to deploy the same job twice if we have
+     * separate master and data nodes defined */ -}}
+{{- if (eq .Values.elasticsearch.roles.master "true") }}
+---
+# This job deploys the Elastic license payload to the cluster once it has formed.
+# Job: {{ .Values.elasticsearch.roles.master }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-deploy-license
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: deploy-license 
+        image: centos:7
+        command: 
+        - sh
+        - -c
+        - |
+          # Apologies for parsing JSON with shell ;)
+          # This code finds the string after the `"uid":` name.
+          # { ... "uid": "the value we want" ... }
+          license_id() {
+            tr -d '\n' | grep -Eo '"uid"\s*:\s*"[^"]+"' | awk -F'"' '{print $4}'
+          }
+
+          uid="$(echo "$license" | license_id)"
+
+          # Load curl's args into "$@"
+          set -- --max-time 10 --fail -D- --cacert /certs/elastic-certificate.pem -u "$username:$password"
+          baseurl="https://{{ .Values.elasticsearch.masterService }}:9200"
+          while true; do
+            current="$(curl "$@" -XGET "$baseurl/_xpack/license" | license_id)"
+            if [ "$?" -ne 0 ] ; then
+              echo "Failure trying to query Elasticsearch's current license."
+              sleep 10
+              continue
+            fi
+            if [ "$current" != "$uid" ] ; then
+              echo "Activating Elastic License (uid = $uid)."
+              echo "$license" | \
+
+              curl "$@" -XPUT --data-binary @- -H "Content-Type: application/json" "$baseurl/_xpack/license"
+              if [ "$?" -ne 0 ]; then
+                echo "Installing license failed. Will retry."
+                sleep 10
+              else
+                echo
+                echo "👍 License install successful."
+                break
+              fi
+            else
+              echo
+              echo "👍 License already active on this cluster."
+              break
+            fi
+          done
+        env:
+        - name: 'username'
+          valueFrom: { secretKeyRef: { name: elastic-credentials, key: username } }
+        - name: 'password'
+          valueFrom: { secretKeyRef: { name: elastic-credentials, key: password } }
+        - name: 'license'
+          valueFrom: { secretKeyRef: { name: elastic-license, key: license } }
+        volumeMounts:
+        - name: elastic-certificate-pem
+          mountPath: /certs
+      volumes:
+      - name: elastic-certificate-pem
+        secret:
+          secretName: elastic-certificate-pem
+---
+# This job pushes cluster and index settings
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-cluster-settings
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: cluster-settings
+        image: centos:7
+        command:
+        - sh
+        - -c
+        - |
+
+          # Load curl's args into "$@"
+          set -- --max-time 10 --fail -D- --cacert /certs/elastic-certificate.pem -u "$username:$password"
+
+          set -- "$@" -XPUT -H "Content-Type: application/json"
+          baseurl="https://{{ .Values.elasticsearch.masterService }}:9200"
+
+          try() {
+            while ! "$@" ; do sleep 10; done
+          }
+
+          {{- if .Values.elasticsearch.settings.cluster }}
+          # Deploy cluster settings
+          settings='{ "persistent": {{ .Values.elasticsearch.settings.cluster | toJson }} }'
+          echo "Cluster settings: " "$settings"
+          try curl "$@" "$baseurl/_cluster/settings" --data-binary "$settings"
+          {{- end }}
+
+          {{- if .Values.elasticsearch.settings.index }}
+          # Deploy _all indices settings
+          settings='{ "settings": {{ .Values.elasticsearch.settings.index | toJson }} }'
+          echo "Index (_all) settings:" "$settings"
+          try curl "$@" "$baseurl/_all/_settings" --data-binary "$settings"
+          {{- end }}
+        env:
+        - name: 'username'
+          valueFrom: { secretKeyRef: { name: elastic-credentials, key: username } }
+        - name: 'password'
+          valueFrom: { secretKeyRef: { name: elastic-credentials, key: password } }
+        - name: 'license'
+          valueFrom: { secretKeyRef: { name: elastic-license, key: license } }
+        volumeMounts:
+        - name: elastic-certificate-pem
+          mountPath: /certs
+      volumes:
+      - name: elastic-certificate-pem
+        secret:
+          secretName: elastic-certificate-pem
+{{- end }}

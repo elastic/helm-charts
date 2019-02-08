@@ -1,0 +1,4 @@
+dependencies:
+  - name: elasticsearch
+    repository: file://../../
+    version: 6.6.0-alpha1

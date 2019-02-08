@@ -1,0 +1,10 @@
+description: Example elasticsearch cluster with inherited settings from a child chart.
+home: https://github.com/elastic/helm-charts
+maintainers:
+- email: helm-charts@elastic.co
+  name: Elastic
+name: inheritance
+version: 6.6.0-alpha1
+appVersion: 6.6.0
+sources:
+  - https://github.com/elastic/elasticsearch

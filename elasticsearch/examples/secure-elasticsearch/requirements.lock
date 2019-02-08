@@ -1,0 +1,6 @@
+dependencies:
+- name: elasticsearch
+  repository: file://../../
+  version: 6.6.0-alpha1
+digest: sha256:bbc2cadba968089f7b6e613084eba77337bdf0e8379ef74c54ef39ab404fb6ed
+generated: 2019-02-07T21:59:13.922332946-08:00

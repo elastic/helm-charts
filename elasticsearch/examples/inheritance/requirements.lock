@@ -1,0 +1,9 @@
+dependencies:
+- name: secure-elasticsearch
+  repository: file://../secure-elasticsearch/
+  version: 6.6.0-alpha1
+- name: secure-elasticsearch
+  repository: file://../secure-elasticsearch/
+  version: 6.6.0-alpha1
+digest: sha256:d5f1aab92b2b9bc5632c99cef5f3611399c5237a343d2f3ddf1f1e0fa0c6c232
+generated: 2019-02-07T21:53:59.040204192-08:00
