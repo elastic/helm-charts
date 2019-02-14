@@ -68,7 +68,8 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 | `fsGroup`                 | The Group ID (GID) for [securityContext.fsGroup](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) so that the Elasticsearch user can read from the persistent volume                                                                                                                            | `1000`                                                                                                                    |
 | `terminationGracePeriod`  | The [terminationGracePeriod](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods) in seconds used when trying to stop the pod                                                                                                                                                                      | `120`                                                                                                                     |
 | `sysctlVmMaxMapCount`     | Sets the [sysctl vm.max_map_count](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html#vm-max-map-count) needed for Elasticsearch                                                                                                                                                        | `262144`                                                                                                                  |
-| `readinessProbe`          | Configuration for the [readinessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                                      | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
+| `readinessProbe`          | Configuration fields for the [readinessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                                     | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
+| `minClusterHealthStatus`          | The [Elasticsearch cluster health status value to wait for](https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params) that will be used in the readinessProbe command                                                                                                                                                                            | `green` |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                       | `[]`                                                                                                                      |
 | `nodeSelector`            | Configurable [nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) so that you can target specific nodes for your Elasticsearch cluster                                                                                                                                          | `{}`                                                                                                                      |
 | `tolerations`             | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                                                                                        | `[]`                                                                                                                      |
@@ -136,7 +137,7 @@ A cluster with X-Pack security enabled
 
 #### How to install plugins?
 
-The [recommended](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_c_customized_image) way to install plugins into our docker images is to create a custom docker image. 
+The [recommended](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_c_customized_image) way to install plugins into our docker images is to create a custom docker image.
 
 The Dockerfile would look something like:
 
@@ -147,12 +148,12 @@ FROM docker.elastic.co/elasticsearch/elasticsearch:${elasticsearch_version}
 RUN bin/elasticsearch-plugin install --batch repository-gcs
 ```
 
-And then updating the `image` in values to point to your custom image. 
+And then updating the `image` in values to point to your custom image.
 
 There are a couple reasons we recommend this.
 
 1. Tying the availability of Elasticsearch to the download service to install plugins is not a great idea or something that we recommend. Especially in Kubernetes where it is normal and expected for a container to be moved to another host at random times.
-2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure. 
+2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure.
 
 #### How to use the keystore?
 
