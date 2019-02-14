@@ -109,14 +109,14 @@ spec:
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         readinessProbe:
-{{ toYaml .Values.readinessProbe.config | indent 10 }}
+{{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
             command:
               - sh
               - -c
               - |
                 #!/usr/bin/env bash -e
-                # If the node is starting up wait for the cluster to be at least {{ .Values.minClusterHealthStatus }}
+                # If the node is starting up wait for the cluster to be ready (request params: '{{ .Values.clusterHealthCheckParams }}' )
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
 
@@ -134,12 +134,12 @@ spec:
                     echo 'Elasticsearch is already running, lets check the node is healthy'
                     http "/"
                 else
-                    echo 'Waiting for elasticsearch cluster to become at least {{ .Values.minClusterHealthStatus }}'
-                    if http "/_cluster/health?wait_for_status={{ .Values.minClusterHealthStatus }}&timeout=1s" ; then
+                    echo 'Waiting for elasticsearch cluster to become cluster to be ready (request params: "{{ .Values.clusterHealthCheckParams }}" )'
+                    if http "/_cluster/health?{{ .Values.clusterHealthCheckParams }}" ; then
                         touch ${START_FILE}
                         exit 0
                     else
-                        echo 'Cluster is not yet at least {{ .Values.minClusterHealthStatus }}'
+                        echo 'Cluster is not yet ready (request params: "{{ .Values.clusterHealthCheckParams }}" )'
                         exit 1
                     fi
                 fi

@@ -422,11 +422,11 @@ protocol: https
 
 def test_changing_the_cluster_health_status():
     config = '''
-minClusterHealthStatus: yellow
+clusterHealthCheckParams: 'wait_for_no_initializing_shards=true&timeout=60s'
 '''
     r = helm_template(config)
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
-    assert '/_cluster/health?wait_for_status=yellow&timeout=1s' in c['readinessProbe']['exec']['command'][-1]
+    assert '/_cluster/health?wait_for_no_initializing_shards=true&timeout=60s' in c['readinessProbe']['exec']['command'][-1]
 
 def test_adding_in_es_config():
     config = '''

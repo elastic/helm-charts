@@ -119,7 +119,7 @@ readinessProbe:
   timeoutSeconds: 5
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params wait_for_status
-minClusterHealthStatus: green
+clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
 
 imagePullSecrets: []
 nodeSelector: {}
