@@ -420,6 +420,14 @@ protocol: https
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
     assert 'https://127.0.0.1:9200' in c['readinessProbe']['exec']['command'][-1]
 
+def test_changing_the_cluster_health_status():
+    config = '''
+clusterHealthCheckParams: 'wait_for_no_initializing_shards=true&timeout=60s'
+'''
+    r = helm_template(config)
+    c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
+    assert '/_cluster/health?wait_for_no_initializing_shards=true&timeout=60s' in c['readinessProbe']['exec']['command'][-1]
+
 def test_adding_in_es_config():
     config = '''
 esConfig:

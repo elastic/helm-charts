@@ -116,7 +116,7 @@ spec:
               - -c
               - |
                 #!/usr/bin/env bash -e
-                # If the node is starting up wait for the cluster to be green
+                # If the node is starting up wait for the cluster to be ready (request params: '{{ .Values.clusterHealthCheckParams }}' )
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
 
@@ -134,12 +134,12 @@ spec:
                     echo 'Elasticsearch is already running, lets check the node is healthy'
                     http "/"
                 else
-                    echo 'Waiting for elasticsearch cluster to become green'
-                    if http "/_cluster/health?wait_for_status=green&timeout=1s" ; then
+                    echo 'Waiting for elasticsearch cluster to become cluster to be ready (request params: "{{ .Values.clusterHealthCheckParams }}" )'
+                    if http "/_cluster/health?{{ .Values.clusterHealthCheckParams }}" ; then
                         touch ${START_FILE}
                         exit 0
                     else
-                        echo 'Cluster is not yet green'
+                        echo 'Cluster is not yet ready (request params: "{{ .Values.clusterHealthCheckParams }}" )'
                         exit 1
                     fi
                 fi

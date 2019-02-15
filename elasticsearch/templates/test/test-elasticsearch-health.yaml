@@ -14,5 +14,5 @@ spec:
       - "-c"
       - |
         #!/usr/bin/env bash -e
-        curl -XGET --fail '{{ template "uname" . }}:{{ .Values.httpPort }}/_cluster/health?wait_for_status=green&timeout=1s'
+        curl -XGET --fail '{{ template "uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
   restartPolicy: Never
