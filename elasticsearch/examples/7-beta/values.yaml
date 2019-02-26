@@ -2,5 +2,5 @@
 
 clusterName: "seven"
 masterService: "seven-master"
-imageTag: "7.0.0-alpha2"
+imageTag: "7.0.0-beta1"
 esMajorVersion: 7

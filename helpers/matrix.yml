@@ -5,12 +5,12 @@ ES_SUITE:
   - default
   - multi
   - security
-  - 7-alpha
+  - 7-beta
   - 5.x
 KIBANA_SUITE:
   - default
   - security
-  - 7-alpha
+  - 7-beta
   - 5.x
 KUBERNETES_VERSION:
   - '1.11'
