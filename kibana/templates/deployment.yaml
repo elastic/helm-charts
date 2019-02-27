@@ -64,6 +64,8 @@ spec:
         env:
           - name: ELASTICSEARCH_URL
             value: "{{ .Values.elasticsearchURL }}"
+          - name: ELASTICSEARCH_HOSTS
+            value: "{{ .Values.elasticsearchURL }}"
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
