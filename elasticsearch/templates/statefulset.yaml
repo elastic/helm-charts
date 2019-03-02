@@ -20,6 +20,10 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: {{ template "uname" . }}
+    {{- with .Values.persistence.annotations  }}
+      annotations:
+    {{ toYaml . | indent 4 }}
+    {{- end }}
     spec:
 {{ toYaml .Values.volumeClaimTemplate | indent 6 }}
   template:
@@ -91,6 +95,9 @@ spec:
           configMap:
             name: {{ template "uname" . }}-config
         {{- end }}
+      {{- if .Values.extraVolumes }}
+{{ tpl .Values.extraVolumes . | indent 6 }}
+      {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
@@ -104,6 +111,9 @@ spec:
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
         resources:
 {{ toYaml .Values.initResources | indent 10 }}
+      {{- if .Values.extraInitContainers }}
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- end }}
       containers:
       - name: "{{ template "name" . }}"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -194,3 +204,6 @@ spec:
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
+        {{- if .Values.extraVolumeMounts }}
+{{ tpl .Values.extraVolumeMounts . | indent 10 }}
+        {{- end }}
