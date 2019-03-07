@@ -58,7 +58,7 @@ def test_overriding_the_elasticsearch_url():
     r = helm_template(config)
 
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['env'][1]['name'] == 'ELASTICSEARCH_URL'
+    assert c['env'][0]['name'] == 'ELASTICSEARCH_URL'
     assert c['env'][0]['value'] == 'http://hello.world'
 
 
