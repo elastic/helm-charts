@@ -59,7 +59,7 @@ k8s: apply creds
 
 up: k8s
 	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
-	helm init --wait --upgrade
+	for i in 1 2 3 4 5; do helm init --wait --upgrade && break || sleep 5; done
 
 integration: creds
 	cd ../../$(CHART)/examples/$(SUITE) && \
