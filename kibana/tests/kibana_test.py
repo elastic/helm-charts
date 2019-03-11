@@ -39,6 +39,17 @@ def test_defaults():
 
     assert r['deployment'][name]['spec']['strategy']['type'] == 'Recreate'
 
+def test_overriding_the_elasticsearch_hosts():
+    config = '''
+    elasticsearchHosts: 'http://hello.world'
+    '''
+
+    r = helm_template(config)
+
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['env'][0]['name'] == 'ELASTICSEARCH_HOSTS'
+    assert c['env'][0]['value'] == 'http://hello.world'
+
 def test_overriding_the_elasticsearch_url():
     config = '''
     elasticsearchURL: 'http://hello.world'

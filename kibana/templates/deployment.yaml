@@ -62,8 +62,14 @@ spec:
       - name: kibana
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         env:
+          {{- if .Values.elasticsearchHosts }}
+          - name: ELASTICSEARCH_HOSTS
+            value: "{{ .Values.elasticsearchHosts }}"
+          {{- end }}
+          {{- if .Values.elasticsearchURL }}
           - name: ELASTICSEARCH_URL
             value: "{{ .Values.elasticsearchURL }}"
+          {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}

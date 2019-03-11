@@ -11,7 +11,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.0.0-alpha2"'
+      - '"number" : "7.0.0-beta1"'
       - '"cluster_name" : "seven"'
       - '"name" : "seven-master-0"'
       - 'You Know, for Search'
