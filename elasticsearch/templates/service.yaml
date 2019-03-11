@@ -36,3 +36,5 @@ spec:
   ports:
   - name: http
     port: {{ .Values.httpPort }}
+  - name: transport
+    port: {{ .Values.transportPort }}
