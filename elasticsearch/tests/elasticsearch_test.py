@@ -158,7 +158,12 @@ def test_defaults():
         'name': 'transport', 'port': 9300, 'protocol': 'TCP'}
 
     # Headless Service
-    assert r['service'][uname + '-headless']['spec']['clusterIP'] == 'None'
+    h = r['service'][uname + '-headless']
+    assert h['spec']['clusterIP'] == 'None'
+    assert h['spec']['ports'][0]['name'] == 'http'
+    assert h['spec']['ports'][0]['port'] == 9200
+    assert h['spec']['ports'][1]['name'] == 'transport'
+    assert h['spec']['ports'][1]['port'] == 9300
 
     # Empty customizable defaults
     assert 'imagePullSecrets' not in r['statefulset'][uname]['spec']['template']['spec']
