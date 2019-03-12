@@ -6,11 +6,13 @@ ES_SUITE:
   - multi
   - security
   - 7.0.x
+  - 7.1.x
   - 5.x
 KIBANA_SUITE:
   - default
   - security
   - 7.0.x
+  - 7.1.x
   - 5.x
 KUBERNETES_VERSION:
   - '1.10'
