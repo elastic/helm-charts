@@ -13,4 +13,6 @@ KIBANA_SUITE:
   - 7.0.x
   - 5.x
 KUBERNETES_VERSION:
+  - '1.10'
   - '1.11'
+  - '1.12'
