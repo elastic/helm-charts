@@ -197,16 +197,33 @@ imageTag: 6.2.4
     assert r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['image'] == 'customImage:6.2.4'
 
 
-def test_use_discovery_hosts_if_not_master():
+def test_set_discovery_hosts_to_custom_master_service():
     config = '''
-masterService: "hostservice"
-roles:
-  master: "false"
+masterService: "elasticsearch-custommaster"
 '''
     r = helm_template(config)
     env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
     assert {'name': 'discovery.zen.ping.unicast.hosts',
-            'value': 'hostservice-headless'} in env
+            'value': 'elasticsearch-custommaster-headless'} in env
+
+def test_set_master_service_to_default_nodegroup_name_if_not_set():
+    config = '''
+nodeGroup: "data"
+'''
+    r = helm_template(config)
+    env = r['statefulset']['elasticsearch-data']['spec']['template']['spec']['containers'][0]['env']
+    assert {'name': 'discovery.zen.ping.unicast.hosts',
+            'value': 'elasticsearch-master-headless'} in env
+
+def test_set_master_service_to_default_nodegroup_name_with_custom_cluster_name():
+    config = '''
+clusterName: "custom"
+nodeGroup: "data"
+'''
+    r = helm_template(config)
+    env = r['statefulset']['custom-data']['spec']['template']['spec']['containers'][0]['env']
+    assert {'name': 'discovery.zen.ping.unicast.hosts',
+            'value': 'custom-master-headless'} in env
 
 
 def test_set_initial_master_nodes_when_using_v_7():
