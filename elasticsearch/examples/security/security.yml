@@ -1,7 +1,6 @@
 ---
 clusterName: "security"
 nodeGroup: "master"
-masterService: "security-master"
 
 roles:
   master: "true"
