@@ -165,7 +165,7 @@ spec:
           {{- end }}
           {{- end }}
           - name: discovery.zen.ping.unicast.hosts
-            value: "{{ .Values.masterService }}-headless"
+            value: "{{ template "masterService" . }}-headless"
           - name: cluster.name
             value: "{{ .Values.clusterName }}"
           - name: network.host
