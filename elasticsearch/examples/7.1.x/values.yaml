@@ -1,0 +1,6 @@
+---
+
+clusterName: "seven-one"
+masterService: "seven-one-master"
+imageTag: "7.1.0-SNAPSHOT"
+esMajorVersion: 7
