@@ -1,7 +1,7 @@
 ---
 
 clusterName: "fivex"
-imageTag: "5.6.14"
+imageTag: "5.6.15"
 esMajorVersion: 5
 
 extraEnvs:
