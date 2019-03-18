@@ -1,0 +1,25 @@
+---
+- job:
+    name: elastic+helm-charts+master+template-testing
+    display-name: elastic / helm-charts - master - template testing
+    description: Master - template testing
+    scm:
+    - git:
+        wipe-workspace: 'True'
+    axes:
+    - axis:
+        type: slave
+        name: label
+        values:
+        - docker&&virtual
+    - axis:
+        type: yaml
+        name: CHART
+        filename: helpers/matrix.yml
+    builders:
+    - shell: |-
+        #!/usr/local/bin/runbld
+        set -euo pipefail
+
+        cd ${CHART}
+        make test
