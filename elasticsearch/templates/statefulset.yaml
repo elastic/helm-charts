@@ -112,7 +112,7 @@ spec:
         command:
           - /bin/sh
           - -c
-          - >
+          - |
             # https://github.com/elastic/helm-charts/issues/63#issuecomment-471096950
             # Run ES as a background task, and forward SIGTERM to it, then wait for it to exit
             trap 'kill $(jobs -p)' SIGTERM
