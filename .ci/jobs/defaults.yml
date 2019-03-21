@@ -35,7 +35,6 @@
         basedir: ''
         wipe-workspace: 'True'
     vault:
-      url: https://secrets.elastic.co:8200
       role_id: cff5d4e0-61bf-2497-645f-fcf019d10c13
     wrappers:
     - ansicolor
