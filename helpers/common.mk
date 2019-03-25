@@ -3,7 +3,7 @@ default: test
 .ONESHELL:
 
 lint:
-	helm lint ./
+	helm lint --strict ./
 
 template:
 	helm template ./
@@ -15,10 +15,10 @@ build:
 pytest:
 	pytest -sv --color=yes
 
+test-all: template lint pytest
+
 test: build
-	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make template
-	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make lint
-	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make pytest
+	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make test-all
 
 helm:
 	kubectl get cs
