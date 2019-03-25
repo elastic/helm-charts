@@ -116,11 +116,12 @@ spec:
             # https://github.com/elastic/helm-charts/issues/63#issuecomment-471096950
             # Run ES as a background task, and forward SIGTERM to it, then wait for it to exit
             trap 'kill $(jobs -p)' SIGTERM
-            /usr/local/bin/docker-entrypoint.sh elasticsearch &
+            /usr/local/bin/docker-entrypoint.sh elasticsearch $@ &
             wait
-            # now keep the pod alive for 30s after ES dies so that we will refuse connections from
+            # now keep the pod alive for specific seconds after ES dies so that we will refuse connections from
             # the new master rather than them needing to time  out
-            sleep 30
+            sleep {{ .Values.sleepSecondsOnTermination }}
+          - elasticsearch
         {{- end }}
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}

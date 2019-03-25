@@ -49,6 +49,8 @@ imagePullPolicy: "IfNotPresent"
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
+sleepSecondsOnTermination: 30
+
 esJavaOpts: "-Xmx1g -Xms1g"
 
 resources:
