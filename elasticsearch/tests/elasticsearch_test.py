@@ -277,6 +277,16 @@ extraEnvs:
     env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
     assert {'name': 'hello', 'value': 'world'} in env
 
+def test_adding_extra_env_vars_with_template():
+    config = '''
+extraEnvs:
+  - name: hello
+    value: "{{ .Release.Name }}-world"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+    assert {'name': 'hello', 'value': 'RELEASE-NAME-world'} in env
+
 
 def test_adding_a_secret_mount():
     config = '''

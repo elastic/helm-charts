@@ -177,7 +177,7 @@ spec:
             value: "{{ $enabled }}"
           {{- end }}
 {{- if .Values.extraEnvs }}
-{{ toYaml .Values.extraEnvs | indent 10 }}
+{{ tpl (toYaml .Values.extraEnvs) . | indent 10 | }}
 {{- end }}
         volumeMounts:
           - name: "{{ template "uname" . }}"
