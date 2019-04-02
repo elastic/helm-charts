@@ -47,7 +47,7 @@ The process will involve a re-sync and a rolling restart of all of your data nod
   kubectl scale statefulsets my-release-elasticsearch-data --replicas=0
   ```
 * Wait for the cluster to be green again.
-* OK. We now have all data nodes running in the new cluster. Time to replace the masters by firstly scaling down the masters from 3 to 2. Between each step make sure to wait for the cluster to become green again. During this process we will always make sure to keep at least 2 master nodes.
+* OK. We now have all data nodes running in the new cluster. Time to replace the masters by firstly scaling down the masters from 3 to 2. Between each step make sure to wait for the cluster to become green again, and check with `curl localhost:9200/_cat/nodes` that you see the correct amount of master nodes. During this process we will always make sure to keep at least 2 master nodes as to not lose quorum.
   ```
   kubectl scale statefulsets my-release-elasticsearch-master --replicas=2
   ```
