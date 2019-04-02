@@ -83,4 +83,4 @@ The process will involve a re-sync and a rolling restart of all of your data nod
   ```
   kubectl scale deployment my-release-elasticsearch-client --replicas=0
   ```
-* The migration should now be complete. After verifying that everything is working correctly you can cleanup and leftover resources from your old cluster.
+* The migration should now be complete. After verifying that everything is working correctly you can cleanup leftover resources from your old cluster.
