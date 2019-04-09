@@ -4,7 +4,7 @@ nodeGroup: "master"
 
 # The service that non master groups will try to connect to when joining the cluster
 # This should be set to clusterName + "-" + nodeGroup for your master group
-# masterService: "elasticsearch-master"
+masterService: ""
 
 # Elasticsearch roles that will be applied to this nodeGroup
 # These will be set as environment variables. E.g. node.master=true
@@ -20,7 +20,7 @@ esMajorVersion: 6
 
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
-esConfig:
+esConfig: {}
 #  elasticsearch.yml: |
 #    key:
 #      nestedkey: value
@@ -30,14 +30,14 @@ esConfig:
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs:
+extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security and for mounting
 # the X-Pack license
-secretMounts:
+secretMounts: []
 #  - name: elastic-certificates
 #    secretName: elastic-certificates
 #    path: /usr/share/elasticsearch/config/certs
@@ -141,3 +141,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+nameOverride: ""
+fullnameOverride: ""
