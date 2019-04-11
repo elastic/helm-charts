@@ -1,4 +1,4 @@
 ---
 
-imageTag: 7.0.0-beta1
+imageTag: 7.0.0
 elasticsearchHosts: "http://seven-master:9200"
