@@ -278,6 +278,46 @@ extraEnvs:
     assert {'name': 'hello', 'value': 'world'} in env
 
 
+def test_adding_a_extra_volume_with_volume_mount():
+    config = '''
+extraVolumes: |
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts: |
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+'''
+    r = helm_template(config)
+    extraVolume = r['statefulset'][uname]['spec']['template']['spec']['volumes']
+    assert {'name': 'extras', 'emptyDir': {}} in extraVolume
+    extraVolumeMounts = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['volumeMounts']
+    assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
+
+
+def test_adding_a_extra_init_container():
+    config = '''
+extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+'''
+    r = helm_template(config)
+    extraInitContainer = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
+    assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraInitContainer
+
+
+def test_adding_storageclass_annotation_to_volumeclaimtemplate():
+    config = '''
+persistence:
+  annotations:
+    volume.beta.kubernetes.io/storage-class: id
+'''
+    r = helm_template(config)
+    annotations = r['statefulset'][uname]['spec']['volumeClaimTemplates'][0]['metadata']['annotations']
+    assert {'volume.beta.kubernetes.io/storage-class': 'id'} == annotations
+
+
 def test_adding_a_secret_mount():
     config = '''
 secretMounts:
