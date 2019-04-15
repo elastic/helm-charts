@@ -21,6 +21,10 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 * To simplify chart and maintenance each set of node groups is deployed as a separate helm release. Take a look at the [multi](./examples/multi) example to get an idea for how this works. Without doing this it isn't possible to resize persistent volumes in a statefulset. By setting it up this way it makes it possible to add more nodes with a new storage size then drain the old ones. It also solves the problem of allowing the user to determine which node groups to update first when doing upgrades or changes.
 * We have designed this chart to be very un-opinionated about how to configure Elasticsearch. It exposes ways to set environment variables and mount secrets inside of the container. Doing this makes it much easier for this chart to support multiple versions with minimal changes.
 
+## Migration from helm/charts stable
+
+If you currently have a cluster deployed with the [helm/charts stable](https://github.com/helm/charts/tree/master/stable/elasticsearch) chart you can follow the [migration guide](/elasticsearch/examples/migration/README.md)
+
 ## Installing
 
 * Add the elastic helm charts repo
