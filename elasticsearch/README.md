@@ -104,7 +104,7 @@ make
 
 A cluster with X-Pack security enabled
 
-* Generate SSL certificates following the [official docs]( https://www.elastic.co/guide/en/elasticsearch/reference/6.4/configuring-tls.html#node-certificates)
+* Generate SSL certificates following the [official docs]( https://www.elastic.co/guide/en/elasticsearch/reference/6.7/configuring-tls.html#node-certificates)
 * Make sure you have a copy of your [license](https://www.elastic.co/subscriptions) handy.
 * Create Kubernetes secrets for authentication credentials, X-Pack license and certificates
   ```
