@@ -8,7 +8,7 @@ import fileinput
 os.chdir('../')
 
 versions = {
-    5: '5.6.17',
+    5: '5.6.16',
     6: '6.7.1',
     7: '7.0.0',
 }
