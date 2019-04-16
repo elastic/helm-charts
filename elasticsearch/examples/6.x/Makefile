@@ -1,7 +1,7 @@
 default: test
 include ../../../helpers/examples.mk
 
-RELEASE := helm-es-seven
+RELEASE := helm-es-six
 
 install:
 	helm upgrade --wait --timeout=600 --install $(RELEASE) --values ./values.yaml ../../ ; \

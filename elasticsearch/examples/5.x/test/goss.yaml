@@ -15,7 +15,7 @@ http:
     username: '{{ .Env.ELASTIC_USERNAME }}'
     password: '{{ .Env.ELASTIC_PASSWORD }}'
     body:
-      - '"number" : "5.6.15"'
+      - '"number" : "5.6.17"'
       - '"cluster_name" : "fivex"'
       - '"name" : "fivex-master-0"'
       - 'You Know, for Search'
