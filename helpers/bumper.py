@@ -14,11 +14,11 @@ versions = {
 }
 
 file_patterns = [
-    '*/examples/*/test/goss.yaml',
-    '*/examples/*/*.yaml',
+    '*/examples/*/test/goss.y*ml',
+    '*/examples/*/*.y*ml',
     '*/README.md',
-    '*/values.yaml',
-    '*/Chart.yaml',
+    '*/values.y*ml',
+    '*/Chart.y*ml',
 ]
 
 for major, version in versions.iteritems():
