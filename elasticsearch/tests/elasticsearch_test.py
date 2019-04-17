@@ -128,7 +128,6 @@ def test_defaults():
     assert v['metadata']['name'] == uname
     assert v['spec']['accessModes'] == ['ReadWriteOnce']
     assert v['spec']['resources']['requests']['storage'] == '30Gi'
-    assert v['spec']['storageClassName'] == 'standard'
 
     # Init container
     i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][0]
