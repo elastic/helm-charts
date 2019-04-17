@@ -1,7 +1,7 @@
 ---
 
-elasticsearchURL: "http://elasticsearch-master:9200"
-elasticsearchHosts: "" # "http://elasticsearch-master:9200"
+elasticsearchURL: "" # "http://elasticsearch-master:9200"
+elasticsearchHosts: "http://elasticsearch-master:9200"
 
 replicas: 1
 
@@ -21,7 +21,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "6.6.2"
+imageTag: "7.0.0"
 imagePullPolicy: "IfNotPresent"
 
 resources:
@@ -45,12 +45,12 @@ kibanaConfig: {}
 podSecurityContext: {}
   #runAsUser: "place the user id here"
   #fsGroup: "place the group id here"
- 
+
 serviceAccount: ""
 
 # By default this will make sure two pods don't end up on the same node
 # Changing this to a region would allow you to spread pods across regions
-antiAffinityTopologyKey: "kubernetes.io/hostname" 
+antiAffinityTopologyKey: "kubernetes.io/hostname"
 
 # Hard means that by default pods will only be scheduled if there are enough nodes for them
 # and that they will never end up on the same node. Setting this to soft will do this "best effort"

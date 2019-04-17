@@ -5,8 +5,7 @@ from helpers import helm_template
 import yaml
 
 name = 'RELEASE-NAME-kibana'
-version = '6.6.2'
-elasticsearchURL = 'http://elasticsearch-master:9200'
+elasticsearchHosts = 'http://elasticsearch-master:9200'
 
 
 def test_defaults():
@@ -25,11 +24,11 @@ def test_defaults():
 
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['name'] == 'kibana'
-    assert c['image'] == 'docker.elastic.co/kibana/kibana:' + version
+    assert c['image'].startswith('docker.elastic.co/kibana/kibana:')
     assert c['ports'][0]['containerPort'] == 5601
 
-    assert c['env'][0]['name'] == 'ELASTICSEARCH_URL'
-    assert c['env'][0]['value'] == elasticsearchURL
+    assert c['env'][0]['name'] == 'ELASTICSEARCH_HOSTS'
+    assert c['env'][0]['value'] == elasticsearchHosts
 
     # Empty customizable defaults
     assert 'imagePullSecrets' not in r['deployment'][name]['spec']['template']['spec']

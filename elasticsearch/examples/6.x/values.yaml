@@ -1,0 +1,5 @@
+---
+
+clusterName: "six"
+imageTag: "6.7.1"
+esMajorVersion: 6

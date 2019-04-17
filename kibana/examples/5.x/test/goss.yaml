@@ -3,7 +3,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"version":"5.6.15"'
+      - '"version":"5.6.16"'
     username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
     password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
 
