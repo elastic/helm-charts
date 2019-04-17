@@ -5,7 +5,7 @@ import glob
 import subprocess
 import fileinput
 
-os.chdir('../')
+os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
 versions = {
     5: '5.6.16',
