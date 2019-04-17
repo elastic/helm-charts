@@ -5,7 +5,7 @@ maintainers:
   name: Elastic
 name: elasticsearch
 version: 6.6.2-alpha1
-appVersion: 6.7.1
+appVersion: 6.6.2
 sources:
   - https://github.com/elastic/elasticsearch
 icon: https://helm.elastic.co/icons/elasticsearch.png
