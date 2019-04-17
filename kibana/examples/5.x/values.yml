@@ -1,6 +1,6 @@
 ---
 
-imageTag: 5.6.15
+imageTag: 5.6.16
 elasticsearchURL: "http://fivex-master:9200"
 
 extraEnvs:

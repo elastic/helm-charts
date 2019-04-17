@@ -11,7 +11,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.1.0-SNAPSHOT"'
-      - '"cluster_name" : "seven-one"'
-      - '"name" : "seven-one-master-0"'
+      - '"number" : "6.7.1"'
+      - '"cluster_name" : "six"'
+      - '"name" : "six-master-0"'
       - 'You Know, for Search'

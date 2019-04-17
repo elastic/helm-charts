@@ -1,7 +1,7 @@
 default: test
 include ../../../helpers/examples.mk
 
-RELEASE := helm-kibana-seven
+RELEASE := helm-kibana-six
 
 install:
 	helm upgrade --wait --timeout=600 --install --values ./values.yml $(RELEASE) ../../ ; \

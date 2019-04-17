@@ -48,8 +48,10 @@ def test_defaults():
             }
         },
         {
-            'name': 'discovery.zen.minimum_master_nodes',
-            'value': '2'
+            'name': 'cluster.initial_master_nodes',
+            'value': uname + '-0,' +
+                     uname + '-1,' +
+                     uname + '-2,'
         },
         {
             'name': 'discovery.zen.ping.unicast.hosts',

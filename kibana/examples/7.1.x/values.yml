@@ -1,4 +1,0 @@
----
-
-imageTag: 7.1.0-SNAPSHOT
-elasticsearchHosts: "http://seven-one-master:9200"
