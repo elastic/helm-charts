@@ -5,7 +5,7 @@ import os
 import subprocess
 import yaml
 
-os.chdir('..')
+os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
 bucket = 'gs://' + os.environ['GCS_BUCKET']
 
