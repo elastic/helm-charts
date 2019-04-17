@@ -174,8 +174,10 @@ spec:
             value: "{{ .Values.minimumMasterNodes }}"
           {{- end }}
           {{- end }}
+          {{- if le (int .Values.esMajorVersion) 7 }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ template "masterService" . }}-headless"
+          {{- end }}
           - name: cluster.name
             value: "{{ .Values.clusterName }}"
           - name: network.host
