@@ -34,6 +34,8 @@ resources:
 
 protocol: http
 
+healthCheckPath: "/app/kibana"
+
 # Allows you to add any config files in /usr/share/kibana/config/
 # such as kibana.yml
 kibanaConfig: {}
