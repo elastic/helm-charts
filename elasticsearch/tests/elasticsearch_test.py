@@ -54,7 +54,7 @@ def test_defaults():
                      uname + '-2,'
         },
         {
-            'name': 'discovery.zen.ping.unicast.hosts',
+            'name': 'discovery.seed_hosts',
             'value': uname + '-headless'
 
         },
@@ -200,6 +200,7 @@ imageTag: 6.2.4
 
 def test_set_discovery_hosts_to_custom_master_service():
     config = '''
+esMajorVersion: 6
 masterService: "elasticsearch-custommaster"
 '''
     r = helm_template(config)
@@ -207,8 +208,10 @@ masterService: "elasticsearch-custommaster"
     assert {'name': 'discovery.zen.ping.unicast.hosts',
             'value': 'elasticsearch-custommaster-headless'} in env
 
+
 def test_set_master_service_to_default_nodegroup_name_if_not_set():
     config = '''
+esMajorVersion: 6
 nodeGroup: "data"
 '''
     r = helm_template(config)
@@ -216,8 +219,10 @@ nodeGroup: "data"
     assert {'name': 'discovery.zen.ping.unicast.hosts',
             'value': 'elasticsearch-master-headless'} in env
 
+
 def test_set_master_service_to_default_nodegroup_name_with_custom_cluster_name():
     config = '''
+esMajorVersion: 6
 clusterName: "custom"
 nodeGroup: "data"
 '''
@@ -245,6 +250,7 @@ roles:
     for e in env:
         assert e['name'] != 'discovery.zen.minimum_master_nodes'
 
+
 def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
     config = '''
 esMajorVersion: 7
@@ -255,6 +261,24 @@ roles:
     env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
     for e in env:
         assert e['name'] != 'cluster.initial_master_nodes'
+
+
+def test_set_discovery_seed_host_when_using_v_7():
+    config = '''
+esMajorVersion: 7
+roles:
+  master: "true"
+'''
+    r = helm_template(config)
+    env = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['env']
+    assert {
+            'name': 'discovery.seed_hosts',
+            'value': 'elasticsearch-master-headless'
+        } in env
+
+    for e in env:
+        assert e['name'] != 'discovery.zen.ping.unicast.hosts'
+
 
 def test_enabling_machine_learning_role():
     config = '''
