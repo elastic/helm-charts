@@ -91,7 +91,7 @@ spec:
                     curl -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}"
                 }
   
-                http "/app/kibana"
+                http "{{ .Values.healthCheckPath }}"
         ports:
         - containerPort: {{ .Values.httpPort }}
         resources:

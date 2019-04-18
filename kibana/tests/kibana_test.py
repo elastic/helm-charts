@@ -30,6 +30,8 @@ def test_defaults():
     assert c['env'][0]['name'] == 'ELASTICSEARCH_HOSTS'
     assert c['env'][0]['value'] == elasticsearchHosts
 
+    assert 'http "/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
+
     # Empty customizable defaults
     assert 'imagePullSecrets' not in r['deployment'][name]['spec']['template']['spec']
     assert 'tolerations' not in r['deployment'][name]['spec']['template']['spec']
@@ -224,3 +226,12 @@ protocol: https
     r = helm_template(config)
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert 'https://' in c['readinessProbe']['exec']['command'][-1]
+
+def test_changing_the_health_check_path():
+    config = '''
+healthCheckPath: "/kibana/app/kibana"
+'''
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+
+    assert 'http "/kibana/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
