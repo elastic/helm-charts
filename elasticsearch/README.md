@@ -49,7 +49,7 @@ Examples of installing older major versions can be found in the [examples](./exa
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.0.0` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.0.0
+helm install --name elasticsearch elastic/elasticsearch --version 7.0.0-alpha1 --set imageTag=7.0.0
 ```
 
 
