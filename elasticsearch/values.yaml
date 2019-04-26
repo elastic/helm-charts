@@ -92,6 +92,10 @@ extraInitContainers: []
   #   image: busybox
   #   command: ['do', 'something']
 
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: {}
+
 # By default this will make sure two pods don't end up on the same node
 # Changing this to a region would allow you to spread pods across regions
 antiAffinityTopologyKey: "kubernetes.io/hostname"
