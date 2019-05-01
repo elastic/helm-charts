@@ -4,7 +4,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
 import yaml
 
-name = 'RELEASE-NAME-kibana'
+name = 'release-name-kibana'
 elasticsearchHosts = 'http://elasticsearch-master:9200'
 
 

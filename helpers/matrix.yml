@@ -5,6 +5,7 @@ ES_SUITE:
   - default
   - multi
   - security
+  - upgrade
   - 5.x
   - 6.x
 KIBANA_SUITE:
