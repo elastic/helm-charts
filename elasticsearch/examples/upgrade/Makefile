@@ -16,7 +16,10 @@ install:
 	helm upgrade --wait --timeout=600 --set terminationGracePeriod=121 --install $(RELEASE) ../../ --set clusterName=upgrade ; \
 	kubectl rollout status sts/upgrade-master --timeout=600s
 
-test: install goss
+init:
+	helm init --client-only
+
+test: init install goss
 
 purge:
 	helm del --purge $(RELEASE)
