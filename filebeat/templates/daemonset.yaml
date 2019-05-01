@@ -47,7 +47,7 @@ spec:
       {{- if .Values.filebeatConfig }}
       - name: filebeat-config
         configMap:
-          defaultmode: 0600
+          defaultMode: 0600
           name: {{ template "name" . }}-config
       {{- end }}
       - name: data
