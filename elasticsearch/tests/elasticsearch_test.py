@@ -544,3 +544,12 @@ esConfig:
     assert {'mountPath': '/usr/share/elasticsearch/config/log4j2.properties', 'name': 'esconfig', 'subPath': 'log4j2.properties'} in s['containers'][0]['volumeMounts']
 
     assert 'configchecksum' in r['statefulset'][uname]['spec']['template']['metadata']['annotations']
+
+def test_dont_add_data_volume_when_persistance_is_disabled():
+    config = '''
+persistence:
+  enabled: false
+'''
+    r = helm_template(config)
+    assert 'volumeClaimTemplates' not in r['statefulset'][uname]['spec']
+    assert r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['volumeMounts'] == None

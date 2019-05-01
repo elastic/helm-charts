@@ -76,6 +76,7 @@ volumeClaimTemplate:
       storage: 30Gi
 
 persistence:
+  enabled: true
   annotations: {}
 
 extraVolumes: []
