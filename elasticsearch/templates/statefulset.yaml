@@ -17,6 +17,7 @@ spec:
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
+  {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
       name: {{ template "uname" . }}
@@ -26,6 +27,7 @@ spec:
     {{- end }}
     spec:
 {{ toYaml .Values.volumeClaimTemplate | indent 6 }}
+  {{- end }}
   template:
     metadata:
       name: "{{ template "uname" . }}"
@@ -195,8 +197,10 @@ spec:
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
         volumeMounts:
+          {{- if .Values.persistence.enabled }}
           - name: "{{ template "uname" . }}"
             mountPath: /usr/share/elasticsearch/data
+          {{- end }}
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}

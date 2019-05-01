@@ -18,3 +18,6 @@ volumeClaimTemplate:
   resources:
     requests:
       storage: 1Gi # Currently needed till pvcs are made optional
+
+persistence:
+  enabled: false
