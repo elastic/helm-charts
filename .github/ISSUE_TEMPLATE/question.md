@@ -1,5 +1,6 @@
 ---
 name: Question
+about: Questions should be asked on https://discuss.elastic.co/
 ---
 
 Hey, stop right there!
