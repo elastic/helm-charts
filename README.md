@@ -10,6 +10,7 @@ Please look in the chart directories for the documentation for each chart. These
 
 * [Elasticsearch](./elasticsearch/README.md) - [docker image docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 * [Kibana](./kibana/README.md) - [docker image docs](https://www.elastic.co/guide/en/kibana/current/docker.html)
+* [Filebeat](./filebeat/README.md) - [docker image docs](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html)
 
 ## Kubernetes versions
 
