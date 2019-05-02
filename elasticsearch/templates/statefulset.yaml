@@ -217,7 +217,7 @@ spec:
 {{ tpl .Values.extraVolumeMounts . | indent 10 }}
         {{- end }}
       {{- if eq .Values.roles.master "true" }}
-      - name: graceful-termination-handler
+      - name: elasticsearch-graceful-termination-handler
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command:
