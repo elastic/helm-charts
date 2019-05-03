@@ -1,9 +1,11 @@
 CHART:
   - elasticsearch
   - kibana
+  - filebeat
 ES_SUITE:
   - default
   - multi
+  - oss
   - security
   - upgrade
   - 5.x
@@ -13,6 +15,9 @@ KIBANA_SUITE:
   - security
   - 5.x
   - 6.x
+FILEBEAT_SUITE:
+  - default
+  - oss
 KUBERNETES_VERSION:
   - '1.11'
   - '1.12'

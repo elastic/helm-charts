@@ -76,12 +76,23 @@ spec:
         - "-E"
         - "http.enabled=true"
         livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |
+              #!/usr/bin/env bash -e
+              curl --fail 127.0.0.1:5066
 {{ toYaml .Values.livenessProbe | indent 10 }}
-          httpGet:
-            port: monitor
-        ports:
-        - name: monitor
-          containerPort: 5066
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |
+              #!/usr/bin/env bash -e
+              filebeat test output
+{{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
