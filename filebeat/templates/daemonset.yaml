@@ -48,7 +48,7 @@ spec:
       - name: filebeat-config
         configMap:
           defaultMode: 0600
-          name: {{ template "name" . }}-config
+          name: {{ template "fullname" . }}-config
       {{- end }}
       - name: data
         hostPath:
