@@ -114,8 +114,8 @@ httpPort: 9200
 transportPort: 9300
 
 service:
-  annotations: {}
   type: ClusterIP
+  annotations: {}
 
 updateStrategy: RollingUpdate
 
