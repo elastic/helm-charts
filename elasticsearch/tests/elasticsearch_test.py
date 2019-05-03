@@ -152,6 +152,8 @@ def test_defaults():
     # Service
     s = r['service'][uname]
     assert s['metadata']['name'] == uname
+    assert s['metadata']['annotations'] == {}
+    assert s['spec']['type'] == 'ClusterIP'
     assert len(s['spec']['ports']) == 2
     assert s['spec']['ports'][0] == {
         'name': 'http', 'port': 9200, 'protocol': 'TCP'}
@@ -161,6 +163,7 @@ def test_defaults():
     # Headless Service
     h = r['service'][uname + '-headless']
     assert h['spec']['clusterIP'] == 'None'
+    assert s['spec']['publishNotReadyAddresses'] == true
     assert h['spec']['ports'][0]['name'] == 'http'
     assert h['spec']['ports'][0]['port'] == 9200
     assert h['spec']['ports'][1]['name'] == 'transport'
