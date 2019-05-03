@@ -113,6 +113,10 @@ protocol: http
 httpPort: 9200
 transportPort: 9300
 
+service:
+  annotations: {}
+  type: ClusterIP
+
 updateStrategy: RollingUpdate
 
 # This is the max unavailable setting for the pod disruption budget
