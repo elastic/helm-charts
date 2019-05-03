@@ -242,7 +242,7 @@ spec:
           cleanup () {
             while true ; do
               local master="$(http "/_cat/master?h=node")"
-              if [[ $master == "{{ template "uname" . }}"* && $master != "${NODE_NAME}" ]]; then
+              if [[ $master && $master != "${NODE_NAME}" ]]; then
                 echo "This node is not master."
                 break
               fi
