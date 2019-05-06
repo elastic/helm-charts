@@ -26,10 +26,12 @@
         - name: elastic+helm-charts+master+integration-elasticsearch
           current-parameters: true
     - multijob:
-        name: kibana integration testing
+        name: integration testing
         condition: ALWAYS
         projects:
         - name: elastic+helm-charts+master+integration-kibana
+          current-parameters: true
+        - name: elastic+helm-charts+master+integration-filebeat
           current-parameters: true
     publishers:
     - trigger-parameterized-builds:
