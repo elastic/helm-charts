@@ -241,7 +241,7 @@ spec:
 
           cleanup () {
             while true ; do
-              local master="$(http "/_cat/master?h=node")"
+              local master="$(http "/_cat/master?h=node" || echo "")"
               if [[ $master && $master != "${NODE_NAME}" ]]; then
                 echo "This node is not master."
                 break
