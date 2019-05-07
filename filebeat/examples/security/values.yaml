@@ -15,16 +15,11 @@ filebeatConfig:
       hosts: ["security-master:9200"]
       ssl.certificate_authorities: 
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
-      ssl.certificate: /usr/share/filebeat/config/certs/elastic-certificate.pem
-      ssl.key: /usr/share/filebeat/config/certs/filebeat/elastic-certificates.p12
 
 secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/filebeat/config/certs
-  - name: elastic-certificates
-    secretName: elastic-certificates
-    path: /usr/share/filebeat/config/certs/filebeat
 
 extraEnvs:
   - name: 'ELASTICSEARCH_USERNAME'
