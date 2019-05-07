@@ -17,7 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
   ```
 * Install it
   ```
-  helm install --name filebeat elastic/filebeat --version 7.0.0-alpha1
+  helm install --name filebeat elastic/filebeat --version 7.0.1-alpha1
   ```
 
 ## Compatibility
@@ -26,14 +26,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 5.x    | 6.x   | 7.x   |
 | ------ | ----- | ----- |
-| 5.6.16 | 6.7.1 | 7.0.0 |
+| 5.6.16 | 6.7.2 | 7.0.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.0.0` of Filebeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.0.1` of Filebeat it would look like this:
 
 ```
-helm install --name filebeat elastic/filebeat --version 7.0.0-alpha1 --set imageTag=7.0.0
+helm install --name filebeat elastic/filebeat --version 7.0.1-alpha1 --set imageTag=7.0.1
 ```
 
 
@@ -46,7 +46,7 @@ helm install --name filebeat elastic/filebeat --version 7.0.0-alpha1 --set image
 | `extraVolumes`           | Any extra volumes to define for the pod                                                                                                                                                                                                                                             | `[]`                                                                                                                      |
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Filebeat registry data                                                                                                                                       | `/var/lib`                                                                                                                |
 | `image`                  | The Filebeat docker image                                                                                                                                                                                                                                                           | `docker.elastic.co/beats/filebeat`                                                                                        |
-| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                                       | `7.0.0`                                                                                                                   |
+| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                                       | `7.0.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                      | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                               | `true`                                                                                                                    |

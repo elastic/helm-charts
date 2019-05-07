@@ -1,5 +1,5 @@
 ---
 
 clusterName: "six"
-imageTag: "6.7.1"
+imageTag: "6.7.2"
 esMajorVersion: 6

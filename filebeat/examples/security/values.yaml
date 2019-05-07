@@ -13,7 +13,7 @@ filebeatConfig:
       password: '${ELASTICSEARCH_PASSWORD}'
       protocol: https
       hosts: ["security-master:9200"]
-      ssl.certificate_authorities: 
+      ssl.certificate_authorities:
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
 
 secretMounts:

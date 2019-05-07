@@ -26,7 +26,7 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 5.x    | 6.x   | 7.x   |
 | ------ | ----- | ----- |
-| 5.6.16 | 6.7.1 | 7.0.1 |
+| 5.6.16 | 6.7.2 | 7.0.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 

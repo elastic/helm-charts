@@ -19,4 +19,4 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'filebeat-7.0.0'
+      - 'filebeat-7.0.1'

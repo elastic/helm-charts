@@ -3,7 +3,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number":"6.7.1"'
+      - '"number":"6.7.2"'
 
   http://localhost:5601/app/kibana:
     status: 200
