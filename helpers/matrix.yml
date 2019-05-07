@@ -18,6 +18,8 @@ KIBANA_SUITE:
 FILEBEAT_SUITE:
   - default
   - oss
+  - security
+  - 6.x
 KUBERNETES_VERSION:
   - '1.11'
   - '1.12'
