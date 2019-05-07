@@ -163,7 +163,7 @@ def test_defaults():
     # Headless Service
     h = r['service'][uname + '-headless']
     assert h['spec']['clusterIP'] == 'None'
-    assert s['spec']['publishNotReadyAddresses'] == true
+    assert h['spec']['publishNotReadyAddresses'] == true
     assert h['spec']['ports'][0]['name'] == 'http'
     assert h['spec']['ports'][0]['port'] == 9200
     assert h['spec']['ports'][1]['name'] == 'transport'
