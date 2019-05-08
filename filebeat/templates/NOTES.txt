@@ -1,4 +1,2 @@
-1. Watch all cluster members come up.
+1. Watch all containers come up.
   $ kubectl get pods --namespace={{ .Release.Namespace }} -l app={{ template "fullname" . }} -w
-2. Test cluster health using Helm test.
-  $ helm test {{ .Release.Name }}
