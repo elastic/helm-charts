@@ -12,6 +12,7 @@ ES_SUITE:
   - 6.x
 KIBANA_SUITE:
   - default
+  - oss
   - security
   - 5.x
   - 6.x
