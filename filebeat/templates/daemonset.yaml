@@ -52,7 +52,7 @@ spec:
       {{- end }}
       - name: data
         hostPath:
-          path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-data
+          path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-{{ .Release.Namespace }}-data
           type: DirectoryOrCreate
       - name: varlibdockercontainers
         hostPath:

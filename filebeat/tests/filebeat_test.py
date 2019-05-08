@@ -35,6 +35,15 @@ def test_defaults():
 
     assert r['daemonset'][name]['spec']['template']['spec']['serviceAccountName'] == name
 
+    volumes = r['daemonset'][name]['spec']['template']['spec']['volumes']
+    assert {
+            'name': 'data',
+                'hostPath': {
+                'path': '/var/lib/release-name-filebeat-default-data',
+                'type': 'DirectoryOrCreate'
+                }
+           } in volumes
+
 
 def test_adding_envs():
     config = '''
