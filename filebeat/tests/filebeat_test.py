@@ -33,6 +33,8 @@ def test_defaults():
 
     assert r['daemonset'][name]['spec']['updateStrategy']['type'] == 'RollingUpdate'
 
+    assert r['daemonset'][name]['spec']['template']['spec']['serviceAccountName'] == name
+
 
 def test_adding_envs():
     config = '''
@@ -133,3 +135,41 @@ filebeatConfig:
     assert {'mountPath': '/usr/share/filebeat/other-config.yml', 'name': project + '-config', 'subPath': 'other-config.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
 
     assert 'configChecksum' in r['daemonset'][name]['spec']['template']['metadata']['annotations']
+
+
+def test_adding_a_secret_mount():
+    config = '''
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certificates
+    path: /usr/share/filebeat/config/certs
+'''
+    r = helm_template(config)
+    s = r['daemonset'][name]['spec']['template']['spec']
+    assert s['containers'][0]['volumeMounts'][0] == {
+        'mountPath': '/usr/share/filebeat/config/certs',
+        'name': 'elastic-certificates'
+    }
+    assert s['volumes'][0] == {
+        'name': 'elastic-certificates',
+        'secret': {
+            'secretName': 'elastic-certificates'
+        }
+    }
+
+
+def test_adding_a_extra_volume_with_volume_mount():
+    config = '''
+extraVolumes: |
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts: |
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+'''
+    r = helm_template(config)
+    extraVolume = r['daemonset'][name]['spec']['template']['spec']['volumes']
+    assert {'name': 'extras', 'emptyDir': {}} in extraVolume
+    extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
+    assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts

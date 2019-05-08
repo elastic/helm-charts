@@ -74,8 +74,8 @@ resources:
     cpu: "1000m"
     memory: "200Mi"
 
-# Service account that the pod will use
-serviceAccount: filebeat
+# Custom service account override that the pod will use
+serviceAccount: ""
 
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security other sensitive values
