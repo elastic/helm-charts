@@ -2,6 +2,7 @@ CHART:
   - elasticsearch
   - kibana
   - filebeat
+  - metricbeat
 ES_SUITE:
   - default
   - multi
@@ -19,6 +20,8 @@ FILEBEAT_SUITE:
   - oss
   - security
   - 6.x
+METRICBEAT_SUITE:
+  - default
 KUBERNETES_VERSION:
   - '1.11'
   - '1.12'
