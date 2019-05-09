@@ -48,6 +48,9 @@
         - name: elastic+helm-charts+pull-request+integration-filebeat
           current-parameters: true
           predefined-parameters: branch_specifier=${ghprbActualCommit}
+        - name: elastic+helm-charts+pull-request+integration-metricbeat
+          current-parameters: true
+          predefined-parameters: branch_specifier=${ghprbActualCommit}
     publishers:
     - trigger-parameterized-builds:
       - project: elastic+helm-charts+pull-request+cluster-cleanup
