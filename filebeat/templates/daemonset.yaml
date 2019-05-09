@@ -36,7 +36,7 @@ spec:
       tolerations:
 {{ toYaml . | indent 6 }}
       {{- end }}
-      serviceAccountName: {{ .Values.serviceAccount }}
+      serviceAccountName: {{ template "serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       volumes:
       {{- range .Values.secretMounts }}
@@ -48,11 +48,11 @@ spec:
       - name: filebeat-config
         configMap:
           defaultMode: 0600
-          name: {{ template "name" . }}-config
+          name: {{ template "fullname" . }}-config
       {{- end }}
       - name: data
         hostPath:
-          path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-data
+          path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-{{ .Release.Namespace }}-data
           type: DirectoryOrCreate
       - name: varlibdockercontainers
         hostPath:
@@ -68,7 +68,7 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       containers:
-      - name: "{{ template "name" . }}"
+      - name: "filebeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         args:
@@ -76,12 +76,23 @@ spec:
         - "-E"
         - "http.enabled=true"
         livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |
+              #!/usr/bin/env bash -e
+              curl --fail 127.0.0.1:5066
 {{ toYaml .Values.livenessProbe | indent 10 }}
-          httpGet:
-            port: monitor
-        ports:
-        - name: monitor
-          containerPort: 5066
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |
+              #!/usr/bin/env bash -e
+              filebeat test output
+{{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:

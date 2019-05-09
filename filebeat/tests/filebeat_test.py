@@ -5,7 +5,7 @@ from helpers import helm_template
 import yaml
 
 project = 'filebeat'
-name = 'RELEASE-NAME-' + project
+name = 'release-name-' + project
 
 
 def test_defaults():
@@ -19,18 +19,30 @@ def test_defaults():
     c = r['daemonset'][name]['spec']['template']['spec']['containers'][0]
     assert c['name'] == project
     assert c['image'].startswith('docker.elastic.co/beats/' + project + ':')
-    assert c['ports'][0]['containerPort'] == 5066 # internal filebeat monitoring REST API
 
     assert c['env'][0]['name'] == 'POD_NAMESPACE'
     assert c['env'][0]['valueFrom']['fieldRef']['fieldPath'] == 'metadata.namespace'
 
-    assert c['livenessProbe']['httpGet']['port'] == 'monitor'
+    assert 'curl --fail 127.0.0.1:5066' in c['livenessProbe']['exec']['command'][-1]
+
+    assert 'filebeat test output' in c['readinessProbe']['exec']['command'][-1]
 
     # Empty customizable defaults
     assert 'imagePullSecrets' not in r['daemonset'][name]['spec']['template']['spec']
     assert 'tolerations' not in r['daemonset'][name]['spec']['template']['spec']
 
     assert r['daemonset'][name]['spec']['updateStrategy']['type'] == 'RollingUpdate'
+
+    assert r['daemonset'][name]['spec']['template']['spec']['serviceAccountName'] == name
+
+    volumes = r['daemonset'][name]['spec']['template']['spec']['volumes']
+    assert {
+            'name': 'data',
+                'hostPath': {
+                'path': '/var/lib/release-name-filebeat-default-data',
+                'type': 'DirectoryOrCreate'
+                }
+           } in volumes
 
 
 def test_adding_envs():
@@ -115,7 +127,7 @@ filebeatConfig:
     hello = world
 '''
     r = helm_template(config)
-    c = r['configmap'][project + '-config']['data']
+    c = r['configmap'][name + '-config']['data']
 
     assert 'filebeat.yml' in c
     assert 'other-config.yml' in c
@@ -127,8 +139,46 @@ filebeatConfig:
 
     d = r['daemonset'][name]['spec']['template']['spec']
 
-    assert {'configMap': {'name': project + '-config', 'defaultMode': 0600}, 'name': project + '-config'} in d['volumes']
+    assert {'configMap': {'name': name + '-config', 'defaultMode': 0600}, 'name': project + '-config'} in d['volumes']
     assert {'mountPath': '/usr/share/filebeat/filebeat.yml', 'name': project + '-config', 'subPath': 'filebeat.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
     assert {'mountPath': '/usr/share/filebeat/other-config.yml', 'name': project + '-config', 'subPath': 'other-config.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
 
     assert 'configChecksum' in r['daemonset'][name]['spec']['template']['metadata']['annotations']
+
+
+def test_adding_a_secret_mount():
+    config = '''
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certificates
+    path: /usr/share/filebeat/config/certs
+'''
+    r = helm_template(config)
+    s = r['daemonset'][name]['spec']['template']['spec']
+    assert s['containers'][0]['volumeMounts'][0] == {
+        'mountPath': '/usr/share/filebeat/config/certs',
+        'name': 'elastic-certificates'
+    }
+    assert s['volumes'][0] == {
+        'name': 'elastic-certificates',
+        'secret': {
+            'secretName': 'elastic-certificates'
+        }
+    }
+
+
+def test_adding_a_extra_volume_with_volume_mount():
+    config = '''
+extraVolumes: |
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts: |
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+'''
+    r = helm_template(config)
+    extraVolume = r['daemonset'][name]['spec']['template']['spec']['volumes']
+    assert {'name': 'extras', 'emptyDir': {}} in extraVolume
+    extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
+    assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
