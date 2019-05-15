@@ -553,3 +553,19 @@ persistence:
     r = helm_template(config)
     assert 'volumeClaimTemplates' not in r['statefulset'][uname]['spec']
     assert r['statefulset'][uname]['spec']['template']['spec']['containers'][0]['volumeMounts'] == None
+
+
+def test_priority_class_name():
+    config = '''
+priorityClassName: ""
+'''
+    r = helm_template(config)
+    spec = r['statefulset'][uname]['spec']['template']['spec']
+    assert 'priorityClassName' not in spec
+
+    config = '''
+priorityClassName: "highest"
+'''
+    r = helm_template(config)
+    priority_class_name = r['statefulset'][uname]['spec']['template']['spec']['priorityClassName']
+    assert priority_class_name == "highest"
