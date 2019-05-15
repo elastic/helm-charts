@@ -13,6 +13,7 @@ spec:
     - port: {{ .Values.service.port }}
       protocol: TCP
       name: http
+      targetPort: {{ .Values.httpPort }}
   selector:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name | quote }}
