@@ -104,6 +104,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
+{{- if .Values.sysctlInitContainer.enabled }}
       initContainers:
       - name: configure-sysctl
         securityContext:
@@ -116,6 +117,7 @@ spec:
       {{- if .Values.extraInitContainers }}
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- end }}
+{{- end }}
       containers:
       - name: "{{ template "name" . }}"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
