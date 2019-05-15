@@ -159,3 +159,6 @@ ingress:
 
 nameOverride: ""
 fullnameOverride: ""
+
+sysctlInitContainer:
+  enabled: false
