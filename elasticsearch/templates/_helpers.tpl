@@ -27,6 +27,14 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 {{- end -}}
 
+{{- define "masterHeadlessService" -}}
+{{- if contains "." (include "masterService" .) -}}
+{{ template "masterService" . }}
+{{- else -}}
+{{ template "masterService" . }}-headless
+{{- end -}}
+{{- end -}}
+
 {{- define "endpoints" -}}
 {{- $replicas := .replicas | int }}
 {{- $uname := printf "%s-%s" .clusterName .nodeGroup }}

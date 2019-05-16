@@ -181,10 +181,10 @@ spec:
           {{- end }}
           {{- if lt (int .Values.esMajorVersion) 7 }}
           - name: discovery.zen.ping.unicast.hosts
-            value: "{{ template "masterService" . }}-headless"
+            value: "{{ template "masterHeadlessService" . }}"
           {{- else }}
           - name: discovery.seed_hosts
-            value: "{{ template "masterService" . }}-headless"
+            value: "{{ template "masterHeadlessService" . }}"
           {{- end }}
           - name: cluster.name
             value: "{{ .Values.clusterName }}"
