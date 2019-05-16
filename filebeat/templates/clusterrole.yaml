@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: {{ .Values.serviceAccount }}-cluster-role
+  name: {{ template "serviceAccount" . }}-cluster-role
   labels:
     app: "{{ template "fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

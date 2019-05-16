@@ -9,7 +9,7 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
 versions = {
     5: '5.6.16',
-    6: '6.7.1',
+    6: '6.7.2',
     7: '7.0.1',
 }
 
@@ -21,10 +21,17 @@ file_patterns = [
     '*/Chart.y*ml',
 ]
 
+# Anything matching this regex won't have version bumps changed
+# This was happening because strings like 127.0.0.1 match for 7.0.0
+blacklist = re.compile(r".*127.0.0.1.*")
+
 for major, version in versions.iteritems():
     r = re.compile(r"{0}\.[0-9]*\.[0-9]*".format(major))
     for pattern in file_patterns:
         for f in glob.glob(pattern):
             print(f)
             for line in fileinput.input([f], inplace=True):
-                print r.sub(version, line.rstrip())
+                if re.match(blacklist, line):
+                    print(line.rstrip())
+                else:
+                    print(r.sub(version, line.rstrip()))

@@ -1,10 +1,18 @@
 ---
 # Allows you to add any config files in /usr/share/filebeat
 # such as filebeat.yml
-filebeatConfig: {}
-#  filebeat.yml: |
-#    key:
-#      nestedkey: value
+filebeatConfig:
+  filebeat.yml: |
+    filebeat.inputs:
+    - type: docker
+      containers.ids:
+      - '*'
+      processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+
+    output.elasticsearch:
+      hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
@@ -26,11 +34,17 @@ extraVolumes: []
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.0.0"
+imageTag: "7.0.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
 livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+
+readinessProbe:
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
@@ -60,8 +74,8 @@ resources:
     cpu: "1000m"
     memory: "200Mi"
 
-# Service account that the pod will use
-serviceAccount: filebeat
+# Custom service account override that the pod will use
+serviceAccount: ""
 
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security other sensitive values

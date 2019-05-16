@@ -235,3 +235,19 @@ healthCheckPath: "/kibana/app/kibana"
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
 
     assert 'http "/kibana/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
+
+
+def test_priority_class_name():
+    config = '''
+priorityClassName: ""
+'''
+    r = helm_template(config)
+    spec = r['deployment'][name]['spec']['template']['spec']
+    assert 'priorityClassName' not in spec
+
+    config = '''
+priorityClassName: "highest"
+'''
+    r = helm_template(config)
+    priority_class_name = r['deployment'][name]['spec']['template']['spec']['priorityClassName']
+    assert priority_class_name == "highest"
