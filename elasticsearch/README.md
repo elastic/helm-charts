@@ -128,11 +128,9 @@ make
 A cluster with X-Pack security enabled
 
 * Generate SSL certificates following the [official docs]( https://www.elastic.co/guide/en/elasticsearch/reference/6.7/configuring-tls.html#node-certificates)
-* Make sure you have a copy of your [license](https://www.elastic.co/subscriptions) handy.
-* Create Kubernetes secrets for authentication credentials, X-Pack license and certificates
+* Create Kubernetes secrets for authentication credentials and certificates
   ```
-  kubectl create secret generic elastic-credentials  --from-literal=password=changeme --from-literal=username=elastic
-  kubectl create secret generic elastic-license --from-file=license.json
+  kubectl create secret generic elastic-credentials --from-literal=password=changeme --from-literal=username=elastic
   kubectl create secret generic elastic-certificates --from-file=elastic-certificates.p12
   ```
 * Deploy!
@@ -145,10 +143,6 @@ A cluster with X-Pack security enabled
   kubectl exec -ti $(kubectl get pods -l release=helm-es-security -o name | awk -F'/' '{ print $NF }' | head -n 1) bash
   ```
 
-* Install the X-Pack license
-  ```
-  curl -XPUT 'http://localhost:9200/_xpack/license' -H "Content-Type: application/json" -d @/usr/share/elasticsearch/config/license/license.json
-  ```
 * Test that authentication is now enabled
   ```
   curl 'http://localhost:9200/' # This one will fail
