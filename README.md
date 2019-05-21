@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/)
 
-This functionality is in alpha status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but alpha features are not subject to the support SLA of official GA features.
+This functionality is in beta status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but beta features are not subject to the support SLA of official GA features.
 
 ## Charts
 

@@ -9,8 +9,8 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
 versions = {
     5: '5.6.16',
-    6: '6.7.2',
-    7: '7.0.1',
+    6: '6.8.0',
+    7: '7.1.0',
 }
 
 file_patterns = [

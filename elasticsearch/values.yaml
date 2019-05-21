@@ -43,7 +43,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.0.1"
+imageTag: "7.1.0"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
