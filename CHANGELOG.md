@@ -1,5 +1,34 @@
 ## Unreleased - XXXX/XX/XX
 
+### Metricbeat (WIP)
+
+* [#128](https://github.com/elastic/helm-charts/pull/128) - @Crazybus - Add ci jobs for metricbeat
+* [#127](https://github.com/elastic/helm-charts/pull/127) - @Crazybus - WIP add metricbeat chart
+
+---
+## 7.1.0 - 2019/05/21
+
+* 7.1.0 as the default stack version
+* Promotion from alpha to beta status
+* Filebeat chart added
+
+### Elasticsearch
+
+* [#119](https://github.com/elastic/helm-charts/pull/119) - @kimxogus - Wait for new master election before stopping the pod to prevent master status being temporarily lost during rolling upgrades #63
+* [#109](https://github.com/elastic/helm-charts/pull/109) - @lancespeelmon - Add support for k8s priorityclass
+
+### Kibana
+
+* [#109](https://github.com/elastic/helm-charts/pull/109) - @lancespeelmon - Add support for k8s priorityclass
+* [#134](https://github.com/elastic/helm-charts/pull/134) - @Crazybus - Explicitly set the targetPort to the defined http port
+
+### Filebeat
+
+* [#117](https://github.com/elastic/helm-charts/pull/117) - @tylerjl - Add initial filebeat chart
+* [#122](https://github.com/elastic/helm-charts/pull/122) - @Crazybus - Add ci jobs for filebeat
+* [#121](https://github.com/elastic/helm-charts/pull/121) - @Crazybus - Add integration tests and other tweaks
+* [#129](https://github.com/elastic/helm-charts/pull/129) - @tylerjl - Add usage notes for filebeat
+
 ---
 ## 7.0.1-alpha1 - 2019/05/01
 

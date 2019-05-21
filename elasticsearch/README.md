@@ -1,6 +1,6 @@
 # Elasticsearch Helm Chart
 
-This functionality is in alpha status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but alpha features are not subject to the support SLA of official GA features.
+This functionality is in beta status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but beta features are not subject to the support SLA of official GA features.
 
 This helm chart is a lightweight way to configure and run our official [Elasticsearch docker image](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 
@@ -33,7 +33,7 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   ```
 * Install it
   ```
-  helm install --name elasticsearch elastic/elasticsearch --version 7.0.1-alpha1
+  helm install --name elasticsearch elastic/elasticsearch --version 7.1.0
   ```
 
 ## Compatibility
@@ -42,14 +42,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 5.x    | 6.x   | 7.x   |
 | ------ | ----- | ----- |
-| 5.6.16 | 6.7.2 | 7.0.1 |
+| 5.6.16 | 6.8.0 | 7.1.0 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.0.1` of Elasticsearch it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.1.0` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --version 7.0.1-alpha1 --set imageTag=7.0.1
+helm install --name elasticsearch elastic/elasticsearch --version 7.1.0 --set imageTag=7.1.0
 ```
 
 
@@ -71,7 +71,7 @@ helm install --name elasticsearch elastic/elasticsearch --version 7.0.1-alpha1 -
 | `extraInitContainers`      | Additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                                              |                                                                                                                           |
 | `secretMounts`             | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `[]`                                                                                                                      |
 | `image`                    | The Elasticsearch docker image                                                                                                                                                                                                                                                                                             | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                 | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.0.1`                                                                                                                   |
+| `imageTag`                 | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.1.0`                                                                                                                   |
 | `imagePullPolicy`          | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `podAnnotations`           | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Elasticsearch pods                                                                                                                                                                               | `{}`                                                                                                                      |
 | `esJavaOpts`               | [Java options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html) for Elasticsearch. This is where you should configure the [jvm heap size](https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html)                                                                 | `-Xmx1g -Xms1g`                                                                                                           |
@@ -128,11 +128,9 @@ make
 A cluster with X-Pack security enabled
 
 * Generate SSL certificates following the [official docs]( https://www.elastic.co/guide/en/elasticsearch/reference/6.7/configuring-tls.html#node-certificates)
-* Make sure you have a copy of your [license](https://www.elastic.co/subscriptions) handy.
-* Create Kubernetes secrets for authentication credentials, X-Pack license and certificates
+* Create Kubernetes secrets for authentication credentials and certificates
   ```
-  kubectl create secret generic elastic-credentials  --from-literal=password=changeme --from-literal=username=elastic
-  kubectl create secret generic elastic-license --from-file=license.json
+  kubectl create secret generic elastic-credentials --from-literal=password=changeme --from-literal=username=elastic
   kubectl create secret generic elastic-certificates --from-file=elastic-certificates.p12
   ```
 * Deploy!
@@ -145,10 +143,6 @@ A cluster with X-Pack security enabled
   kubectl exec -ti $(kubectl get pods -l release=helm-es-security -o name | awk -F'/' '{ print $NF }' | head -n 1) bash
   ```
 
-* Install the X-Pack license
-  ```
-  curl -XPUT 'http://localhost:9200/_xpack/license' -H "Content-Type: application/json" -d @/usr/share/elasticsearch/config/license/license.json
-  ```
 * Test that authentication is now enabled
   ```
   curl 'http://localhost:9200/' # This one will fail

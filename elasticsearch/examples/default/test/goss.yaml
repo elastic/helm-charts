@@ -21,7 +21,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.0.1"'
+      - '"number" : "7.1.0"'
       - '"cluster_name" : "elasticsearch"'
       - '"name" : "elasticsearch-master-0"'
       - 'You Know, for Search'

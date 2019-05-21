@@ -1,6 +1,6 @@
 # Kibana Helm Chart
 
-This functionality is in alpha status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but alpha features are not subject to the support SLA of official GA features.
+This functionality is in beta status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but beta features are not subject to the support SLA of official GA features.
 
 This helm chart is a lightweight way to configure and run our official [Kibana docker image](https://www.elastic.co/guide/en/kibana/current/docker.html)
 
@@ -17,7 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
   ```
 * Install it
   ```
-  helm install --name kibana elastic/kibana --version 7.0.1-alpha1
+  helm install --name kibana elastic/kibana --version 7.1.0
   ```
 
 ## Compatibility
@@ -26,14 +26,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 5.x    | 6.x   | 7.x   |
 | ------ | ----- | ----- |
-| 5.6.16 | 6.7.2 | 7.0.1 |
+| 5.6.16 | 6.8.0 | 7.1.0 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.0.1` of Kibana it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.1.0` of Kibana it would look like this:
 
 ```
-helm install --name kibana elastic/kibana --version 7.0.1-alpha1 --set imageTag=7.0.1
+helm install --name kibana elastic/kibana --version 7.1.0 --set imageTag=7.1.0
 ```
 
 ## Configuration
@@ -46,7 +46,7 @@ helm install --name kibana elastic/kibana --version 7.0.1-alpha1 --set imageTag=
 | `extraEnvs`               | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                                                             | `[]`                                                                                                                      |
 | `secretMounts`            | Allows you easily mount a secret as a file inside the deployment. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                                                          | `[]`                                                                                                                      |
 | `image`                   | The Kibana docker image                                                                                                                                                                                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`                                                                                         |
-| `imageTag`                | The Kibana docker image tag                                                                                                                                                                                                                                                                                                                                    | `7.0.1`                                                                                                                   |
+| `imageTag`                | The Kibana docker image tag                                                                                                                                                                                                                                                                                                                                    | `7.1.0`                                                                                                                   |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                                                                 | `IfNotPresent`                                                                                                            |
 | `resources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                                                                   | `requests.cpu: 100m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                             |
 | `protocol`                | The protocol that will be used for the readinessProbe. Change this to `https` if you have `server.ssl.enabled: true` set                                                                                                                                                                                                                                       | `http`                                                                                                                    |
