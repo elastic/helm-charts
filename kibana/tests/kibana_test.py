@@ -186,11 +186,9 @@ def test_setting_pod_security_context():
     config = '''
 podSecurityContext:
   runAsUser: 1001
-  fsGroup: 1002
 '''
     r = helm_template(config)
     assert r['deployment'][name]['spec']['template']['spec']['securityContext']['runAsUser'] == 1001
-    assert r['deployment'][name]['spec']['template']['spec']['securityContext']['fsGroup'] == 1002
 
 def test_adding_in_kibana_config():
     config = '''

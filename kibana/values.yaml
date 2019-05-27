@@ -46,7 +46,6 @@ kibanaConfig: {}
 # If Pod Security Policy in use it may be required to specify security context as well as service account
 podSecurityContext: {}
   #runAsUser: "place the user id here"
-  #fsGroup: "place the group id here"
 
 serviceAccount: ""
 
