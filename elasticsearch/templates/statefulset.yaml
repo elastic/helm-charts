@@ -45,6 +45,9 @@ spec:
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
+      {{- if .Values.serviceAccount }}
+      serviceAccount: {{ .Values.serviceAccount }}
+      {{- end }} 
       securityContext:
         fsGroup: {{ .Values.fsGroup }}
       {{- with .Values.tolerations }}
