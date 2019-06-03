@@ -190,6 +190,13 @@ There are a couple reasons we recommend this.
       subPath: elasticsearch.keystore
     ```
 
+#### How to enable snapshotting?
+
+1. Install your [snapshot plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/repository.html) into a custom docker image following the [how to install plugins guide](/elasticsearch/README.md#how-to-install-plugins)
+2. Add any required secrets or credentials into an Elasticsearch keystore following the [how to use the keystore guide](/elasticsearch/README.md#how-to-use-the-keystore)
+3. Configure the [snapshot repository](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html) as you normally would.
+4. To automate snapshots you can use a tool like [curator](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/snapshot.html). In the future there are plans to have Elasticsearch manage automated snapshots with [Snapshot Lifecycle Management](https://github.com/elastic/elasticsearch/issues/38461).
+
 
 ### Local development environments
 
