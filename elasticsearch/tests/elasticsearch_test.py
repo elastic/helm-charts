@@ -569,3 +569,15 @@ priorityClassName: "highest"
     r = helm_template(config)
     priority_class_name = r['statefulset'][uname]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
+
+
+def test_scheduler_name():
+    r = helm_template('')
+    spec = r['statefulset'][uname]['spec']['template']['spec']
+    assert 'schedulerName' not in spec
+
+    config = '''
+schedulerName: "stork"
+'''
+    r = helm_template(config)
+    assert r['statefulset'][uname]['spec']['template']['spec']['schedulerName'] == "stork"
