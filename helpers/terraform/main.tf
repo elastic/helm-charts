@@ -23,4 +23,10 @@ resource "google_container_cluster" "cluster" {
   node_config = {
     machine_type = "${var.machine_type}"
   }
+
+  timeouts {
+    create = "30m"
+    delete = "30m"
+    update = "30m"
+  }
 }
