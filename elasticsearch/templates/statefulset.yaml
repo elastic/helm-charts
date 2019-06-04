@@ -111,6 +111,14 @@ spec:
           configMap:
             name: {{ template "uname" . }}-config
         {{- end }}
+{{ if .Values.keystore }}
+        - name: keystore
+          emptyDir: {}
+{{ end }}
+        {{- range .Values.keystore }}
+        - name: keystore-{{ .secretName }}
+          secret: {{ toYaml . | nindent 12 }}
+        {{- end }}
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 8 }}
       {{- end }}
@@ -129,6 +137,38 @@ spec:
         resources:
 {{ toYaml .Values.initResources | indent 10 }}
       {{- end }}
+{{ if .Values.keystore }}
+      - name: keystore
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        command:
+        - sh
+        - -c
+        - |
+          #!/usr/bin/env bash
+          set -euo pipefail
+
+          elasticsearch-keystore create
+
+          for i in /tmp/keystoreSecrets/*/*; do
+            key=$(basename $i)
+            echo "Adding file $i to keystore key $key"
+            elasticsearch-keystore add-file "$key" "$i"
+          done
+
+          # Add the bootstrap password since otherwise the Elasticsearch entrypoint tries to do this on startup
+          [ ! -z "$ELASTIC_PASSWORD" ] && echo $ELASTIC_PASSWORD | elasticsearch-keystore add -x bootstrap.password
+
+          cp -a /usr/share/elasticsearch/config/elasticsearch.keystore /tmp/keystore/
+        env: {{ toYaml .Values.extraEnvs | nindent 10 }}
+        resources: {{ toYaml .Values.initResources | nindent 10 }}
+        volumeMounts:
+          - name: keystore
+            mountPath: /tmp/keystore
+          {{- range .Values.keystore }}
+          - name: keystore-{{ .secretName }}
+            mountPath: /tmp/keystoreSecrets/{{ .secretName }}
+          {{- end }}
+{{ end }}
       {{- if .Values.extraInitContainers }}
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- end }}
@@ -219,6 +259,11 @@ spec:
           - name: "{{ template "uname" . }}"
             mountPath: /usr/share/elasticsearch/data
           {{- end }}
+{{ if .Values.keystore }}
+          - name: keystore
+            mountPath: /usr/share/elasticsearch/config/elasticsearch.keystore
+            subPath: elasticsearch.keystore
+{{ end }}
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
