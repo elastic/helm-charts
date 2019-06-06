@@ -41,6 +41,9 @@ def test_defaults():
 
     assert r['deployment'][name]['spec']['strategy']['type'] == 'Recreate'
 
+    # Make sure that the default 'annotation' dictionary is empty
+    assert not r['service'][name]['metadata']['annotations']
+
 def test_overriding_the_elasticsearch_hosts():
     config = '''
     elasticsearchHosts: 'http://hello.world'
@@ -252,3 +255,23 @@ priorityClassName: "highest"
     r = helm_template(config)
     priority_class_name = r['deployment'][name]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
+
+
+def test_service_annotatations():
+    config = '''
+service:
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
+    '''
+    r = helm_template(config)
+    s = r['service'][name]['metadata']['annotations']['cloud.google.com/load-balancer-type']
+    assert s == "Internal"
+
+    config = '''
+service:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+    '''
+    r = helm_template(config)
+    s = r['service'][name]['metadata']['annotations']['service.beta.kubernetes.io/aws-load-balancer-internal']
+    assert s == "0.0.0.0/0"
