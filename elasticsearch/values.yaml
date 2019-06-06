@@ -145,7 +145,7 @@ clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
 ## Use an alternate scheduler.
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
-# schedulerName:
+schedulerName: ""
 
 imagePullSecrets: []
 nodeSelector: {}
