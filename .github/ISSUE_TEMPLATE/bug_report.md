@@ -11,10 +11,11 @@ about: Create a report to help us improve
 
 **Helm Version:**
 
-**Values.yaml:**
+**`helm get release` output**
+
+e.g. `helm get elasticsearch` (replace `elasticsearch` with the name of your helm release)
 
 ```
-key: value
 ```
 
 **Describe the bug:**
