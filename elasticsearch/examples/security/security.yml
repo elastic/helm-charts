@@ -36,6 +36,3 @@ secretMounts:
   - name: elastic-certificates
     secretName: elastic-certificates
     path: /usr/share/elasticsearch/config/certs
-  - name: elastic-license
-    secretName: elastic-license
-    path: /usr/share/elasticsearch/config/license

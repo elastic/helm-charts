@@ -1,6 +1,6 @@
 # Filebeat Helm Chart
 
-This functionality is in alpha status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but alpha features are not subject to the support SLA of official GA features.
+This functionality is in beta status and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but beta features are not subject to the support SLA of official GA features.
 
 This helm chart is a lightweight way to configure and run our official [Filebeat docker image](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html).
 
@@ -21,7 +21,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
   ```
 * Install it
   ```
-  helm install --name filebeat elastic/filebeat --version 7.0.1-alpha1
+  helm install --name filebeat elastic/filebeat --version 7.1.1
   ```
 
 ## Compatibility
@@ -30,14 +30,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 5.x    | 6.x   | 7.x   |
 | ------ | ----- | ----- |
-| 5.6.16 | 6.7.2 | 7.0.1 |
+| 5.6.16 | 6.8.0 | 7.1.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.0.1` of Filebeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.1.1` of Filebeat it would look like this:
 
 ```
-helm install --name filebeat elastic/filebeat --version 7.0.1-alpha1 --set imageTag=7.0.1
+helm install --name filebeat elastic/filebeat --version 7.1.1 --set imageTag=7.1.1
 ```
 
 
@@ -50,12 +50,12 @@ helm install --name filebeat elastic/filebeat --version 7.0.1-alpha1 --set image
 | `extraVolumes`           | Any extra volumes to define for the pod                                                                                                                                                                                                                                     | `[]`                                                                                                                      |
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Filebeat registry data                                                                                                                               | `/var/lib`                                                                                                                |
 | `image`                  | The Filebeat docker image                                                                                                                                                                                                                                                   | `docker.elastic.co/beats/filebeat`                                                                                        |
-| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.0.1`                                                                                                                   |
+| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.1.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |
 | `podAnnotations`         | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Filebeat pods                                                                                                                                     | `{}`                                                                                                                      |
-| `podSecurityContext`     | Configurable [podSecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for Filebeat pod execution environment                                                                                                                        | `fsGroup: 1000`<br>`runAsUser: 0`<br>`privileged: false`                                                                  |
+| `podSecurityContext`     | Configurable [podSecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for Filebeat pod execution environment                                                                                                                        | `runAsUser: 0`<br>`privileged: false`                                                                  |
 | `livenessProbe`          | Parameters to pass to [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                    | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `readinessProbe`         | Parameters to pass to [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                   | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `resources`              | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the `DaemonSet`                                                                                                                                | `requests.cpu: 100m`<br>`requests.memory: 100Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 200Mi`                         |

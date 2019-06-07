@@ -21,6 +21,7 @@ def test_defaults():
     assert s['ports'][0]['port'] == 5601
     assert s['ports'][0]['name'] == 'http'
     assert s['ports'][0]['protocol'] == 'TCP'
+    assert s['ports'][0]['targetPort'] == 5601
 
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['name'] == 'kibana'
@@ -72,6 +73,8 @@ def test_overriding_the_port():
 
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['ports'][0]['containerPort'] == 5602
+
+    assert r['service'][name]['spec']['ports'][0]['targetPort'] == 5602
 
 
 def test_adding_image_pull_secrets():
@@ -183,11 +186,9 @@ def test_setting_pod_security_context():
     config = '''
 podSecurityContext:
   runAsUser: 1001
-  fsGroup: 1002
 '''
     r = helm_template(config)
     assert r['deployment'][name]['spec']['template']['spec']['securityContext']['runAsUser'] == 1001
-    assert r['deployment'][name]['spec']['template']['spec']['securityContext']['fsGroup'] == 1002
 
 def test_adding_in_kibana_config():
     config = '''

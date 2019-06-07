@@ -29,7 +29,7 @@ http:
     password: '{{ .Env.ELASTIC_PASSWORD }}'
     body:
       - 'active'
-      - 'platinum'
+      - 'basic'
 
 file:
   /usr/share/elasticsearch/config/elasticsearch.yml:

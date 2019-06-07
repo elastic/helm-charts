@@ -1,4 +1,4 @@
 ---
 
-imageTag: 6.7.2
+imageTag: 6.8.0
 elasticsearchHosts: "http://six-master:9200"

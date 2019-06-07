@@ -1,5 +1,52 @@
 ## Unreleased - XXXX/XX/XX
 
+### Metricbeat (WIP)
+
+* [#128](https://github.com/elastic/helm-charts/pull/128) - @Crazybus - Add ci jobs for metricbeat
+* [#127](https://github.com/elastic/helm-charts/pull/127) - @Crazybus - WIP add metricbeat chart
+
+---
+## 7.1.1 - 2019/06/07
+
+* 7.1.1 as the default stack version
+* Helm 2.14.0 as the tested version. Helm 2.14.0 has some extra validation built in which caused an issue with an [invalid field in the filebeat chart](https://github.com/elastic/helm-charts/issues/136).
+
+### Elasticsearch
+
+* [#146](https://github.com/elastic/helm-charts/pull/146) - @Crazybus - Add instructions for how to enable snapshots
+
+### Kibana
+
+* [#151](https://github.com/elastic/helm-charts/pull/151) - @natebwangsut - Added an option to add annotations(s) to service resource
+
+### Filebeat
+
+* [#140](https://github.com/elastic/helm-charts/pull/140) - @Crazybus - Remove fsGroup from container level security context
+
+---
+## 7.1.0 - 2019/05/21
+
+* 7.1.0 as the default stack version
+* Promotion from alpha to beta status
+* Filebeat chart added
+
+### Elasticsearch
+
+* [#119](https://github.com/elastic/helm-charts/pull/119) - @kimxogus - Wait for new master election before stopping the pod to prevent master status being temporarily lost during rolling upgrades #63
+* [#109](https://github.com/elastic/helm-charts/pull/109) - @lancespeelmon - Add support for k8s priorityclass
+
+### Kibana
+
+* [#109](https://github.com/elastic/helm-charts/pull/109) - @lancespeelmon - Add support for k8s priorityclass
+* [#134](https://github.com/elastic/helm-charts/pull/134) - @Crazybus - Explicitly set the targetPort to the defined http port
+
+### Filebeat
+
+* [#117](https://github.com/elastic/helm-charts/pull/117) - @tylerjl - Add initial filebeat chart
+* [#122](https://github.com/elastic/helm-charts/pull/122) - @Crazybus - Add ci jobs for filebeat
+* [#121](https://github.com/elastic/helm-charts/pull/121) - @Crazybus - Add integration tests and other tweaks
+* [#129](https://github.com/elastic/helm-charts/pull/129) - @tylerjl - Add usage notes for filebeat
+
 ---
 ## 7.0.1-alpha1 - 2019/05/01
 
