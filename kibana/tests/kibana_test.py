@@ -42,7 +42,7 @@ def test_defaults():
     assert r['deployment'][name]['spec']['strategy']['type'] == 'Recreate'
 
     # Make sure that the default 'annotation' dictionary is empty
-    assert not r['service'][name]['metadata']['annotations']
+    assert 'annotations' not in r['service'][name]['metadata']
 
 def test_overriding_the_elasticsearch_hosts():
     config = '''
