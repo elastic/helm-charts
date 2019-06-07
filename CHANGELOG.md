@@ -6,7 +6,7 @@
 * [#127](https://github.com/elastic/helm-charts/pull/127) - @Crazybus - WIP add metricbeat chart
 
 ---
-## 7.1.1 - 2019/06/06
+## 7.1.1 - 2019/06/07
 
 * 7.1.1 as the default stack version
 * Helm 2.14.0 as the tested version. Helm 2.14.0 has some extra validation built in which caused an issue with an [invalid field in the filebeat chart](https://github.com/elastic/helm-charts/issues/136).
@@ -14,6 +14,10 @@
 ### Elasticsearch
 
 * [#146](https://github.com/elastic/helm-charts/pull/146) - @Crazybus - Add instructions for how to enable snapshots
+
+### Kibana
+
+* [#151](https://github.com/elastic/helm-charts/pull/151) - @natebwangsut - Added an option to add annotations(s) to service resource
 
 ### Filebeat
 
