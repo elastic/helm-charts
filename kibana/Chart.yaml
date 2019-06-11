@@ -1,4 +1,4 @@
-description: Kibana
+description: Official Elastic helm chart for Kibana
 home: https://github.com/elastic/helm-charts
 maintainers:
 - email: helm-charts@elastic.co
