@@ -46,8 +46,7 @@ metricbeatConfig:
     output.elasticsearch:
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
-metricbeatKubeStateMetricsConfig:
-  metricbeat.yml: |
+  kube-state-metrics-metricbeat.yml: |
     metricbeat.modules:
     - module: kubernetes
       enabled: true

@@ -1,0 +1,4 @@
+dependencies:
+  - name: 'kube-state-metrics'
+    version: '1.6.0'
+    repository: '@stable'
