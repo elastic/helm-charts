@@ -21,6 +21,9 @@ spec:
   - name: http
     protocol: TCP
     port: {{ .Values.httpPort }}
+{{- if .Values.service.nodePort }}
+    nodePort: {{ .Values.service.nodePort }}
+{{- end }}
   - name: transport
     protocol: TCP
     port: {{ .Values.transportPort }}
