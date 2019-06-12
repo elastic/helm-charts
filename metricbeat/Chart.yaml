@@ -1,4 +1,4 @@
-description: Metricbeat
+description: Official Elastic helm chart for Metricbeat
 home: https://github.com/elastic/helm-charts
 maintainers:
 - email: helm-charts@elastic.co
