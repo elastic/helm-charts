@@ -13,6 +13,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
   * 1GB of RAM for the JVM heap
 
 ## Usage notes and getting started
+
 * This repo includes a number of [example](./examples) configurations which can be used as a reference. They are also used in the automated testing of this chart
 * Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine). If you are using a different Kubernetes provider you will likely need to adjust the `storageClassName` in the `volumeClaimTemplate`
 * The default storage class for GKE is `standard` which by default will give you `pd-ssd` type persistent volumes. This is network attached storage and will not perform as well as local storage. If you are using Kubernetes version 1.10 or greater you can use [Local PersistentVolumes](https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/local-ssd) for increased performance
@@ -52,7 +53,6 @@ While only the latest releases are tested, it is possible to easily install old 
 helm install --name elasticsearch elastic/elasticsearch --version 7.1.1 --set imageTag=7.1.1
 ```
 
-
 ## Configuration
 
 | Parameter                  | Description                                                                                                                                                                                                                                                                                                                | Default                                                                                                                   |
@@ -89,6 +89,8 @@ helm install --name elasticsearch elastic/elasticsearch --version 7.1.1 --set im
 | `protocol`                 | The protocol that will be used for the readinessProbe. Change this to `https` if you have `xpack.security.http.ssl.enabled` set                                                                                                                                                                                            | `http`                                                                                                                    |
 | `httpPort`                 | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#_settings) in `extraEnvs`                                                                          | `9200`                                                                                                                    |
 | `transportPort`            | The transport port that Kubernetes will use for the service. If you change this you will also need to set [transport port configuration](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#_transport_settings) in `extraEnvs`                                                        | `9300`                                                                                                                    |
+| `service.type`             | Type of elasticsearch service. [Service Types](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)                                                                                                                                                                         | `ClusterIP`                                                                                                               |
+| `service.annotations`      | Annotations that Kubernetes will use for the service. This will configure load balancer if `service.type` is `LoadBalancer` [Annotations](https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws)                                                                                             | `{}`                                                                                                                      |
 | `updateStrategy`           | The [updateStrategy](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets) for the statefulset. By default Kubernetes will wait for the cluster to be green after upgrading each pod. Setting this to `OnDelete` will allow you to manually delete each pod during upgrades | `RollingUpdate`                                                                                                           |
 | `maxUnavailable`           | The [maxUnavailable](https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget) value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                | `1`                                                                                                                       |
 | `fsGroup`                  | The Group ID (GID) for [securityContext.fsGroup](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) so that the Elasticsearch user can read from the persistent volume                                                                                                                            | `1000`                                                                                                                    |
@@ -128,7 +130,7 @@ make
 
 A cluster with X-Pack security enabled
 
-* Generate SSL certificates following the [official docs]( https://www.elastic.co/guide/en/elasticsearch/reference/6.7/configuring-tls.html#node-certificates)
+* Generate SSL certificates following the [official docs](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/configuring-tls.html#node-certificates)
 * Create Kubernetes secrets for authentication credentials and certificates
   ```
   kubectl create secret generic elastic-credentials --from-literal=password=changeme --from-literal=username=elastic
@@ -140,6 +142,7 @@ A cluster with X-Pack security enabled
   make
   ```
 * Attach into one of the containers
+
   ```
   kubectl exec -ti $(kubectl get pods -l release=helm-es-security -o name | awk -F'/' '{ print $NF }' | head -n 1) bash
   ```
@@ -179,17 +182,17 @@ There are a couple reasons we recommend this.
 #### How to use the keystore?
 
 1. Create a Kubernetes secret containing the [keystore](https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html)
-    ```
-    $ kubectl create secret generic elasticsearch-keystore --from-file=./elasticsearch.keystore
-    ```
+   ```
+   $ kubectl create secret generic elasticsearch-keystore --from-file=./elasticsearch.keystore
+   ```
 2. Mount it into the container via `secretMounts`
-    ```
-    secretMounts:
-    - name: elasticsearch-keystore
-      secretName: elasticsearch-keystore
-      path: /usr/share/elasticsearch/config/elasticsearch.keystore
-      subPath: elasticsearch.keystore
-    ```
+   ```
+   secretMounts:
+   - name: elasticsearch-keystore
+     secretName: elasticsearch-keystore
+     path: /usr/share/elasticsearch/config/elasticsearch.keystore
+     subPath: elasticsearch.keystore
+   ```
 
 #### How to enable snapshotting?
 
@@ -197,7 +200,6 @@ There are a couple reasons we recommend this.
 2. Add any required secrets or credentials into an Elasticsearch keystore following the [how to use the keystore guide](/elasticsearch/README.md#how-to-use-the-keystore)
 3. Configure the [snapshot repository](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html) as you normally would.
 4. To automate snapshots you can use a tool like [curator](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/snapshot.html). In the future there are plans to have Elasticsearch manage automated snapshots with [Snapshot Lifecycle Management](https://github.com/elastic/elasticsearch/issues/38461).
-
 
 ### Local development environments
 
@@ -218,7 +220,6 @@ make
 ```
 
 Note that if `helm` or `kubectl` timeouts occur, you may consider creating a minikube VM with more CPU cores or memory allocated.
-
 
 #### Docker for Mac - Kubernetes
 
@@ -267,6 +268,7 @@ make test
 Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](examples/default/test/goss.yaml) for an example of what the tests look like.
 
 To run the goss tests against the default example:
+
 ```
 cd examples/default
 make goss
