@@ -10,7 +10,7 @@ template:
 
 build:
 	cd ../helpers/helm-tester && \
-	docker build -t helm-tester .
+	for i in {1..5}; do docker build -t helm-tester . && break || sleep 15; done
 
 pytest:
 	pytest -sv --color=yes

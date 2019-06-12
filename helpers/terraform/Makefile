@@ -66,4 +66,4 @@ integration: creds
 	make
 
 build: 
-	docker build -t helm-charts .
+	for i in {1..5}; do docker build -t helm-charts . && break || sleep 15; done
