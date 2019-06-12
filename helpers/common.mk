@@ -3,6 +3,7 @@ default: test
 .ONESHELL:
 
 lint:
+	grep 'charts/' ./.helmignore || echo 'charts/' >> ./.helmignore
 	helm lint --strict ./
 
 template:
@@ -15,7 +16,11 @@ build:
 pytest:
 	pytest -sv --color=yes
 
-test-all: template lint pytest
+deps:
+	sed --in-place '/charts\//d' ./.helmignore
+	helm dependency update
+
+test-all: lint deps template pytest
 
 test: build
 	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make test-all

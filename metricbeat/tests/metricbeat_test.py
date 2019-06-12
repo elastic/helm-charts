@@ -7,7 +7,6 @@ import yaml
 project = 'metricbeat'
 name = 'release-name-' + project
 
-
 def test_defaults():
     config = '''
     '''
@@ -39,7 +38,7 @@ def test_defaults():
     assert {
             'name': 'data',
                 'hostPath': {
-                'path': '/var/lib/release-name-metricbeat-default-data',
+                'path': '/var/lib/' + name + '-default-data',
                 'type': 'DirectoryOrCreate'
                 }
            } in volumes
@@ -98,9 +97,9 @@ def test_self_managing_rbac_resources():
 managedServiceAccount: false
 '''
     r = helm_template(config)
-    assert 'serviceaccount' not in r
-    assert 'clusterrole' not in r
-    assert 'clusterrolebinding' not in r
+    assert name not in r['serviceaccount']
+    assert name not in r['clusterrole']
+    assert name not in r['clusterrolebinding']
 
 def test_setting_pod_security_context():
     config = '''

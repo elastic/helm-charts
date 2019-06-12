@@ -61,6 +61,10 @@ metricbeatConfig:
     output.elasticsearch:
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
+# Replicas being used for the kube-state-metrics metricbeat deployment
+
+replicas: 1
+
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
