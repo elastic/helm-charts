@@ -584,3 +584,20 @@ schedulerName: "stork"
 '''
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['schedulerName'] == "stork"
+
+
+def test_adding_a_nodePort():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'nodePort' not in r['service'][uname]['spec']['ports'][0]
+
+    config = '''
+    service:
+      nodePort: 30001
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][uname]['spec']['ports'][0]['nodePort'] == 30001
