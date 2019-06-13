@@ -275,3 +275,19 @@ service:
     r = helm_template(config)
     s = r['service'][name]['metadata']['annotations']['service.beta.kubernetes.io/aws-load-balancer-internal']
     assert s == "0.0.0.0/0"
+
+def test_adding_a_nodePort():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'nodePort' not in r['service'][name]['spec']['ports'][0]
+
+    config = '''
+    service:
+      nodePort: 30001
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][name]['spec']['ports'][0]['nodePort'] == 30001

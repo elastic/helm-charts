@@ -74,6 +74,7 @@ updateStrategy:
 service:
   type: ClusterIP
   port: 5601
+  nodePort:
   annotations: {}
     # cloud.google.com/load-balancer-type: "Internal"
     # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
