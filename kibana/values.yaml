@@ -44,8 +44,17 @@ kibanaConfig: {}
 #       nestedkey: value
 
 # If Pod Security Policy in use it may be required to specify security context as well as service account
-podSecurityContext: {}
-  #runAsUser: "place the user id here"
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  # readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
 
 serviceAccount: ""
 
