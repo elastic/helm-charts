@@ -1,18 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ include "kibana.fullname" . }}
   labels:
-    app: {{ .Chart.Name }}
-    release: {{ .Release.Name | quote }}
+{{ include "kibana.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   selector:
     matchLabels:
-      app: kibana
-      release: {{ .Release.Name | quote }}
+      app.kubernetes.io/name: {{ include "kibana.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
@@ -78,7 +77,7 @@ spec:
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
-            command: 
+            command:
               - sh
               - -c
               - |
@@ -93,7 +92,7 @@ spec:
 
                     curl -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}"
                 }
-  
+
                 http "{{ .Values.healthCheckPath }}"
         ports:
         - containerPort: {{ .Values.httpPort }}

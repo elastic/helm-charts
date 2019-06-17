@@ -1,12 +1,10 @@
 {{- if .Values.kibanaConfig }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "fullname" . }}-config
+  name: {{ include "kibana.fullname" . }}-config
   labels:
-    app: {{ .Chart.Name }}
-    release: {{ .Release.Name | quote }}
+{{ include "kibana.labels" . | indent 4 }}
 data:
 {{- range $path, $config := .Values.kibanaConfig }}
   {{ $path }}: |
