@@ -34,3 +34,9 @@ secretMounts:
   - name: kibana-certificates
     secretName: kibana-certificates
     path: /usr/share/kibana/config/certs/kibana
+
+port:
+  tcp:5601:
+    listening: true
+    ip:
+    - '0.0.0.0'

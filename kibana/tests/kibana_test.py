@@ -31,6 +31,9 @@ def test_defaults():
     assert c['env'][0]['name'] == 'ELASTICSEARCH_HOSTS'
     assert c['env'][0]['value'] == elasticsearchHosts
 
+    assert c['env'][1]['name'] == 'SERVER_HOST'
+    assert c['env'][1]['value'] == '0.0.0.0'
+
     assert 'http "/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
 
     # Empty customizable defaults
@@ -291,3 +294,14 @@ def test_adding_a_nodePort():
     r = helm_template(config)
 
     assert r['service'][name]['spec']['ports'][0]['nodePort'] == 30001
+
+def test_override_the_serverHost():
+    config = '''
+    serverHost: "localhost"
+    '''
+
+    r = helm_template(config)
+
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['env'][1]['name'] == 'SERVER_HOST'
+    assert c['env'][1]['value'] == 'localhost'
