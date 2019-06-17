@@ -24,3 +24,4 @@ FILEBEAT_SUITE:
 KUBERNETES_VERSION:
   - '1.11'
   - '1.12'
+  - '1.13'
