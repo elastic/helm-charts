@@ -129,33 +129,29 @@ make
 
 ### Security
 
-A cluster with X-Pack security enabled
+A cluster with security enabled
 
-* Generate SSL certificates following the [official docs](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/configuring-tls.html#node-certificates)
-* Create Kubernetes secrets for authentication credentials and certificates
+* Generate SSL certificates following the [official docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#node-certificates)
+* Create Kubernetes secrets for authentication credentials and certificates. Replace `$YOUR_SECRET_PASSWORD` with your own password.
   ```
-  kubectl create secret generic elastic-credentials --from-literal=password=changeme --from-literal=username=elastic
+  kubectl create secret generic elastic-credentials --from-literal=password=$YOUR_SECRET_PASSWORD --from-literal=username=elastic
   kubectl create secret generic elastic-certificates --from-file=elastic-certificates.p12
   ```
 * Deploy!
   ```
   cd examples/security
-  make
+  helm upgrade --wait --timeout=600 --install --values ./security.yml elasticsearch ../../
   ```
 * Attach into one of the containers
 
   ```
-  kubectl exec -ti $(kubectl get pods -l release=helm-es-security -o name | awk -F'/' '{ print $NF }' | head -n 1) bash
+  kubectl exec -ti $(kubectl get --no-headers=true pods -l release=elasticsearch -o custom-columns=:metadata.name | head -n 1 ) bash
   ```
 
 * Test that authentication is now enabled
   ```
-  curl 'http://localhost:9200/' # This one will fail
-  curl -u elastic:changeme 'http://localhost:9200/'
-  ```
-* Install some test data to play around with
-  ```
-  wget https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz && gunzip logs.jsonl.gz && curl -u elastic:changeme -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
+  curl -k 'https://localhost:9200/' # This one will fail
+  curl -k -u $ELASTIC_USERNAME:$ELASTIC_PASSWORD https://localhost:9200/
   ```
 
 ### FAQ
