@@ -17,7 +17,7 @@ spec:
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
-  {{- if .Values.persistence.enabled }}
+{{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
       name: {{ template "uname" . }}
@@ -27,7 +27,7 @@ spec:
     {{- end }}
     spec:
 {{ toYaml .Values.volumeClaimTemplate | indent 6 }}
-  {{- end }}
+{{- end }}
   template:
     metadata:
       name: "{{ template "uname" . }}"
