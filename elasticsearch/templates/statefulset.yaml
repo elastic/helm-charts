@@ -115,7 +115,7 @@ spec:
         securityContext:
           runAsUser: 0
           privileged: true
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
         resources:
 {{ toYaml .Values.initResources | indent 10 }}
@@ -124,8 +124,8 @@ spec:
       {{- end }}
       containers:
       - name: "{{ template "name" . }}"
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: "{{ .Values.image.PullPolicy }}"
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
@@ -226,8 +226,8 @@ spec:
       # This sidecar will prevent slow master re-election
       # https://github.com/elastic/helm-charts/issues/63
       - name: elasticsearch-master-graceful-termination-handler
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: "{{ .Values.image.PullPolicy }}"
         command:
         - "sh"
         - -c
