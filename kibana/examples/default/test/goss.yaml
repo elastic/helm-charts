@@ -12,3 +12,9 @@ http:
   http://helm-kibana-default-kibana:5601/app/kibana:
     status: 200
     timeout: 2000
+
+port:
+  tcp:5601:
+    listening: true
+    ip:
+    - '0.0.0.0'
