@@ -1,48 +1,40 @@
----
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: {{ template "uname" . }}
+  name: {{ include "elasticsearch.fullname" . }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: "{{ template "uname" . }}"
+{{ include "elasticsearch.labels" . | indent 4 }}
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
-  selector:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: "{{ template "uname" . }}"
   ports:
-  - name: http
-    protocol: TCP
-    port: {{ .Values.httpPort }}
-{{- if .Values.service.nodePort }}
-    nodePort: {{ .Values.service.nodePort }}
-{{- end }}
-  - name: transport
-    protocol: TCP
-    port: {{ .Values.transportPort }}
+    - name: http
+      protocol: TCP
+      port: {{ .Values.httpPort }}
+  {{- if .Values.service.nodePort }}
+      nodePort: {{ .Values.service.nodePort }}
+  {{- end }}
+    - name: transport
+      protocol: TCP
+      port: {{ .Values.transportPort }}
+  selector:
+    app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ template "uname" . }}-headless
+  name: {{ include "elasticsearch.fullname" . }}-headless
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: "{{ template "uname" . }}"
+{{ include "elasticsearch.labels" . | indent 4 }}
 spec:
   clusterIP: None # This is needed for statefulset hostnames like elasticsearch-0 to resolve
   # Create endpoints also if the related pod isn't ready
   publishNotReadyAddresses: true
   selector:
-    app: "{{ template "uname" . }}"
+    app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
   ports:
   - name: http
     port: {{ .Values.httpPort }}

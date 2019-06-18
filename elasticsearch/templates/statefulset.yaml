@@ -2,17 +2,15 @@
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: {{ template "uname" . }}
+  name: {{ include "elasticsearch.fullname" . }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: "{{ template "uname" . }}"
+{{ include "elasticsearch.labels" . | indent 4 }}
 spec:
-  serviceName: {{ template "uname" . }}-headless
+  serviceName: {{ include "elasticsearch.fullname" . }}-headless
   selector:
     matchLabels:
-      app: "{{ template "uname" . }}"
+      app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   replicas: {{ default .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
@@ -20,7 +18,7 @@ spec:
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
-      name: {{ template "uname" . }}
+      name: {{ include "elasticsearch.fullname" . }}
     {{- with .Values.persistence.annotations  }}
       annotations:
     {{ toYaml . | indent 4 }}
@@ -30,12 +28,9 @@ spec:
   {{- end }}
   template:
     metadata:
-      name: "{{ template "uname" . }}"
+      name: {{ include "elasticsearch.fullname" . }}
       labels:
-        heritage: {{ .Release.Service | quote }}
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        app: "{{ template "uname" . }}"
+    {{ include "elasticsearch.labels" . | indent 4 }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
@@ -72,7 +67,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - "{{ template "uname" .}}"
+                - "{{ include "elasticsearch.fullname" . }}"
             topologyKey: {{ .Values.antiAffinityTopologyKey }}
       {{- else if eq .Values.antiAffinity "soft" }}
         podAntiAffinity:
@@ -85,7 +80,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - "{{ template "uname" . }}"
+                  - "{{ include "elasticsearch.fullname" . }}"
       {{- end }}
       {{- with .Values.nodeAffinity }}
         nodeAffinity:
@@ -101,7 +96,7 @@ spec:
         {{- if .Values.esConfig }}
         - name: esconfig
           configMap:
-            name: {{ template "uname" . }}-config
+            name: {{ include "elasticsearch.fullname" . }}-config
         {{- end }}
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 6 }}
@@ -204,7 +199,7 @@ spec:
 {{- end }}
         volumeMounts:
           {{- if .Values.persistence.enabled }}
-          - name: "{{ template "uname" . }}"
+          - name: "{{ include "elasticsearch.fullname" . }}"
             mountPath: /usr/share/elasticsearch/data
           {{- end }}
           {{- range .Values.secretMounts }}

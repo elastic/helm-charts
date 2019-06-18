@@ -1,14 +1,10 @@
 {{- if .Values.esConfig }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "uname" . }}-config
+  name: {{ include "elasticsearch.fullname" . }}-config
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: "{{ template "uname" . }}"
+{{ include "elasticsearch.labels" . | indent 4 }}
 data:
 {{- range $path, $config := .Values.esConfig }}
   {{ $path }}: |

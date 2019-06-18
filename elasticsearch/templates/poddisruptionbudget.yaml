@@ -1,12 +1,14 @@
----
 {{- if .Values.maxUnavailable }}
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: "{{ template "uname" . }}-pdb"
+  name: {{ include "elasticsearch.fullname" . }}
+  labels:
+{{ include "elasticsearch.labels" . | indent 4 }}
 spec:
   maxUnavailable: {{ .Values.maxUnavailable }}
   selector:
     matchLabels:
-      app: "{{ template "uname" . }}"
+      app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
