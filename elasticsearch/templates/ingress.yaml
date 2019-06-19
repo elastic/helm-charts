@@ -1,5 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "elasticsearch.fullname" . -}}
+{{- $servicePort := .Values.httpPort -}}
+{{- $ingressPath := .Values.ingress.path -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -26,11 +28,9 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-        {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ $ingressPath }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
-        {{- end }}
+              servicePort: {{ $servicePort }}
   {{- end }}
 {{- end }}
