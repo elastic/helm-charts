@@ -41,9 +41,9 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
 
 This chart is tested with the latest supported versions. The currently tested versions are:
 
-| 5.x    | 6.x   | 7.x   |
-| ------ | ----- | ----- |
-| 5.6.16 | 6.8.0 | 7.1.1 |
+| 6.x   | 7.x   |
+| ----- | ----- |
+| 6.8.0 | 7.1.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
