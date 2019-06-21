@@ -1,20 +1,14 @@
 http:
-  http://localhost:5601/api/status:
+  http://0.0.0.0:5601/api/status:
     status: 200
     timeout: 2000
     body:
       - '"number":"7.1.1"'
 
-  http://localhost:5601/app/kibana:
+  http://0.0.0.0:5601/app/kibana:
     status: 200
     timeout: 2000
 
   http://helm-kibana-default-kibana:5601/app/kibana:
     status: 200
     timeout: 2000
-
-port:
-  tcp:5601:
-    listening: true
-    ip:
-    - '0.0.0.0'

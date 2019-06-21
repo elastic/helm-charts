@@ -25,8 +25,8 @@ resource "google_container_cluster" "cluster" {
   }
 
   timeouts {
-    create = "30m"
-    delete = "30m"
-    update = "30m"
+    create = "180m"
+    delete = "180m"
+    update = "180m"
   }
 }

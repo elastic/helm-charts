@@ -8,13 +8,11 @@ ES_SUITE:
   - oss
   - security
   - upgrade
-  - 5.x
   - 6.x
 KIBANA_SUITE:
   - default
   - oss
   - security
-  - 5.x
   - 6.x
 FILEBEAT_SUITE:
   - default
@@ -24,3 +22,4 @@ FILEBEAT_SUITE:
 KUBERNETES_VERSION:
   - '1.11'
   - '1.12'
+  - '1.13'
