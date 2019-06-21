@@ -10,7 +10,7 @@ http:
       - '"number_of_nodes":3'
       - '"number_of_data_nodes":3'
 
-  https://0.0.0.0:9200/:
+  https://localhost:9200/:
     status: 200
     timeout: 2000
     allow-insecure: true
@@ -21,7 +21,7 @@ http:
       - '"name" : "security-master-0"'
       - 'You Know, for Search'
 
-  https://0.0.0.0:9200/_xpack/license:
+  https://localhost:9200/_xpack/license:
     status: 200
     timeout: 2000
     allow-insecure: true
