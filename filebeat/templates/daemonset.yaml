@@ -42,7 +42,7 @@ spec:
       {{- range .Values.secretMounts }}
       - name: {{ .name }}
         secret:
-          secretName: {{ .name }}
+          secretName: {{ .secretName }}
       {{- end }}
       {{- if .Values.filebeatConfig }}
       - name: filebeat-config
@@ -65,7 +65,8 @@ spec:
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{ toYaml .Values.imagePull
+s | indent 8 }}
       {{- end }}
       containers:
       - name: "filebeat"
