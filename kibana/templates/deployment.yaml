@@ -38,7 +38,7 @@ spec:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
           secret:
-            secretName: {{ .name }}
+            secretName: {{ .secretName }}
         {{- end }}
         {{- if .Values.kibanaConfig }}
         - name: kibanaconfig
