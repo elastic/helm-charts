@@ -65,8 +65,7 @@ spec:
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.imagePull
-s | indent 8 }}
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       containers:
       - name: "filebeat"
