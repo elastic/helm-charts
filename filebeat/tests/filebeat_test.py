@@ -148,7 +148,7 @@ def test_adding_a_secret_mount():
     config = '''
 secretMounts:
   - name: elastic-certificates
-    secretName: elastic-certificates
+    secretName: elastic-certs
     path: /usr/share/filebeat/config/certs
 '''
     r = helm_template(config)
