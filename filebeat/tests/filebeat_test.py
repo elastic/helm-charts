@@ -160,7 +160,7 @@ secretMounts:
     assert s['volumes'][0] == {
         'name': 'elastic-certificates',
         'secret': {
-            'secretName': 'elastic-certificates'
+            'secretName': 'elastic-certs'
         }
     }
 
