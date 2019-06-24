@@ -23,7 +23,7 @@ spec:
       name: {{ template "uname" . }}
     {{- with .Values.persistence.annotations  }}
       annotations:
-    {{ toYaml . | indent 4 }}
+{{ toYaml . | indent 8 }}
     {{- end }}
     spec:
 {{ toYaml .Values.volumeClaimTemplate | indent 6 }}

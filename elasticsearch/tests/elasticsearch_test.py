@@ -343,7 +343,20 @@ persistence:
 '''
     r = helm_template(config)
     annotations = r['statefulset'][uname]['spec']['volumeClaimTemplates'][0]['metadata']['annotations']
-    assert {'volume.beta.kubernetes.io/storage-class': 'id'} == annotations
+    assert annotations['volume.beta.kubernetes.io/storage-class'] == 'id'
+
+def test_adding_multiple_persistence_annotations():
+    config = '''
+    persistence:
+      annotations:
+        hello: world
+        world: hello
+    '''
+    r = helm_template(config)
+    annotations = r['statefulset'][uname]['spec']['volumeClaimTemplates'][0]['metadata']['annotations']
+
+    assert annotations['hello'] == 'world'
+    assert annotations['world'] == 'hello'
 
 
 def test_adding_a_secret_mount():
