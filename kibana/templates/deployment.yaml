@@ -27,10 +27,8 @@ spec:
 {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
 {{- end }}
-{{- if .Values.podSecurityContext }}
       securityContext:
 {{ toYaml .Values.podSecurityContext | indent 8 }}
-{{- end }}
       {{- if .Values.serviceAccount }}
       serviceAccount: {{ .Values.serviceAccount }}
       {{- end }}
@@ -63,6 +61,8 @@ spec:
     {{- end }}
       containers:
       - name: kibana
+        securityContext:
+{{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         env:
           {{- if .Values.elasticsearchURL }}
@@ -80,7 +80,7 @@ spec:
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
-            command: 
+            command:
               - sh
               - -c
               - |
@@ -95,7 +95,7 @@ spec:
 
                     curl -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}"
                 }
-  
+
                 http "{{ .Values.healthCheckPath }}"
         ports:
         - containerPort: {{ .Values.httpPort }}
