@@ -21,7 +21,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{- define "masterService" -}}
 {{- if empty .Values.masterService -}}
-{{ .Values.clusterName }}-master
+{{ .Values.clusterName }}-{{ .Values.nodeGroup }}
 {{- else -}}
 {{ .Values.masterService }}
 {{- end -}}
