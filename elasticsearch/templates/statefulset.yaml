@@ -263,6 +263,8 @@ spec:
 
           sleep infinity &
           wait $!
+        resources:
+{{ toYaml .Values.sidecarResources | indent 10 }}
         env:
           - name: NODE_NAME
             valueFrom:

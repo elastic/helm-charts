@@ -67,6 +67,14 @@ initResources: {}
   #   cpu: "25m"
   #   memory: "128Mi"
 
+sidecarResources: {}
+  # limits:
+  #   cpu: "25m"
+  #   # memory: "128Mi"
+  # requests:
+  #   cpu: "25m"
+  #   memory: "128Mi"
+
 networkHost: "0.0.0.0"
 
 volumeClaimTemplate:
