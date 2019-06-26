@@ -461,7 +461,7 @@ initResources:
 
 def test_adding_resources_to_sidecar_container():
     config = '''
-initResources:
+sidecarResources:
   limits:
     cpu: "100m"
     memory: "128Mi"
@@ -470,7 +470,7 @@ initResources:
     memory: "128Mi"
 '''
     r = helm_template(config)
-    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][0]
+    i = r['statefulset'][uname]['spec']['template']['spec']['containers'][1]
 
     assert i['resources'] == {
         'requests': {
