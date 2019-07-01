@@ -22,6 +22,7 @@ FILEBEAT_SUITE:
   - 6.x
 METRICBEAT_SUITE:
   - default
+  - oss
   - 6.x
 KUBERNETES_VERSION:
   - '1.11'
