@@ -85,7 +85,7 @@ extraVolumes: []
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "7.0.1"
+imageTag: "7.2.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
