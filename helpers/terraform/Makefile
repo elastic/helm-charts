@@ -63,6 +63,7 @@ up: k8s
 
 integration: creds
 	cd ../../$(CHART)/ && \
+	helm init --client-only && \
 	helm dependency update && \
 	cd ./examples/$(SUITE) && \
 	make
