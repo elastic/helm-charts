@@ -173,3 +173,6 @@ ingress:
 
 nameOverride: ""
 fullnameOverride: ""
+
+# https://github.com/elastic/helm-charts/issues/63
+masterTerminationFix: false

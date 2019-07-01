@@ -614,3 +614,19 @@ def test_adding_a_nodePort():
     r = helm_template(config)
 
     assert r['service'][uname]['spec']['ports'][0]['nodePort'] == 30001
+
+def test_master_termination_fixed_enabled():
+    config = ''
+
+    r = helm_template(config)
+
+    assert len(r['statefulset'][uname]['spec']['template']['spec']['containers']) == 1
+
+    config = '''
+    masterTerminationFix: true
+    '''
+
+    r = helm_template(config)
+
+    c = r['statefulset'][uname]['spec']['template']['spec']['containers'][1]
+    assert c['name'] == 'elasticsearch-master-graceful-termination-handler'
