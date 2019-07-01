@@ -113,7 +113,6 @@ podAnnotations: {}
 # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
 # - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
 podSecurityContext:
-  fsGroup: 1000
   runAsUser: 0
   privileged: false
 

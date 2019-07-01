@@ -105,13 +105,11 @@ def test_setting_pod_security_context():
     config = '''
 podSecurityContext:
   runAsUser: 1001
-  fsGroup: 1002
   privileged: false
 '''
     r = helm_template(config)
     c = r['daemonset'][name]['spec']['template']['spec']['containers'][0]
     assert c['securityContext']['runAsUser'] == 1001
-    assert c['securityContext']['fsGroup'] == 1002
     assert c['securityContext']['privileged'] == False
 
 def test_adding_in_metricbeat_config():
@@ -149,7 +147,7 @@ def test_adding_a_secret_mount():
     config = '''
 secretMounts:
   - name: elastic-certificates
-    secretName: elastic-certificates
+    secretName: elastic-certificates-name
     path: /usr/share/metricbeat/config/certs
 '''
     r = helm_template(config)
@@ -161,7 +159,7 @@ secretMounts:
     assert s['volumes'][0] == {
         'name': 'elastic-certificates',
         'secret': {
-            'secretName': 'elastic-certificates'
+            'secretName': 'elastic-certificates-name'
         }
     }
 
