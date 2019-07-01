@@ -5,8 +5,6 @@ port:
     - '127.0.0.1'
 
 mount:
-  /usr/share/metricbeat/data:
-    exists: true
   /usr/share/metricbeat/kube-state-metrics-metricbeat.yml:
     exists: true
     opts:

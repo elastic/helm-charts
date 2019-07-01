@@ -39,8 +39,6 @@ spec:
       serviceAccountName: {{ template "serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       volumes:
-      - name: data
-        mountPath: /usr/share/metricbeat/data
       {{- range .Values.secretMounts }}
       - name: {{ .name }}
         secret:
@@ -103,8 +101,6 @@ spec:
 {{ toYaml .Values.podSecurityContext | indent 10 }}
 {{- end }}
         volumeMounts:
-        - name: data
-          mountPath: /usr/share/metricbeat/data
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
           mountPath: {{ .path }}
