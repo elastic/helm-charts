@@ -459,6 +459,30 @@ initResources:
         }
     }
 
+def test_adding_resources_to_sidecar_container():
+    config = '''
+sidecarResources:
+  limits:
+    cpu: "100m"
+    memory: "128Mi"
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+'''
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['containers'][1]
+
+    assert i['resources'] == {
+        'requests': {
+            'cpu': '100m',
+            'memory': '128Mi'
+        },
+        'limits': {
+            'cpu': '100m',
+            'memory': '128Mi'
+        }
+    }
+
 def test_adding_a_node_affinity():
     config = '''
 nodeAffinity:
