@@ -363,7 +363,7 @@ def test_adding_a_secret_mount():
     config = '''
 secretMounts:
   - name: elastic-certificates
-    secretName: elastic-certificates
+    secretName: elastic-certs
     path: /usr/share/elasticsearch/config/certs
 '''
     r = helm_template(config)
@@ -375,7 +375,7 @@ secretMounts:
     assert s['volumes'] == [{
         'name': 'elastic-certificates',
         'secret': {
-            'secretName': 'elastic-certificates'
+            'secretName': 'elastic-certs'
         }
     }]
 
@@ -384,7 +384,7 @@ def test_adding_a_secret_mount_with_subpath():
     config = '''
 secretMounts:
   - name: elastic-certificates
-    secretName: elastic-certificates
+    secretName: elastic-certs
     path: /usr/share/elasticsearch/config/certs
     subPath: cert.crt
 '''
