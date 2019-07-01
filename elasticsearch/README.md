@@ -34,7 +34,7 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   ```
 * Install it
   ```
-  helm install --name elasticsearch elastic/elasticsearch --version 7.1.1
+  helm install --name elasticsearch elastic/elasticsearch --version 7.2.0
   ```
 
 ## Compatibility
@@ -43,14 +43,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.0 | 7.1.1 |
+| 6.8.1 | 7.2.0 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.1.1` of Elasticsearch it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.2.0` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --version 7.1.1 --set imageTag=7.1.1
+helm install --name elasticsearch elastic/elasticsearch --version 7.2.0 --set imageTag=7.2.0
 ```
 
 ## Configuration
@@ -71,7 +71,7 @@ helm install --name elasticsearch elastic/elasticsearch --version 7.1.1 --set im
 | `extraInitContainers`      | Additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                                              |                                                                                                                           |
 | `secretMounts`             | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `[]`                                                                                                                      |
 | `image`                    | The Elasticsearch docker image                                                                                                                                                                                                                                                                                             | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                 | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.1.1`                                                                                                                   |
+| `imageTag`                 | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.2.0`                                                                                                                   |
 | `imagePullPolicy`          | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `podAnnotations`           | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Elasticsearch pods                                                                                                                                                                               | `{}`                                                                                                                      |
 | `esJavaOpts`               | [Java options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html) for Elasticsearch. This is where you should configure the [jvm heap size](https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html)                                                                 | `-Xmx1g -Xms1g`                                                                                                           |
@@ -105,6 +105,7 @@ helm install --name elasticsearch elastic/elasticsearch --version 7.1.1 --set im
 | `tolerations`              | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                                                                                        | `[]`                                                                                                                      |
 | `ingress`                  | Configurable [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) to expose the Elasticsearch service. See [`values.yaml`](./values.yaml) for an example                                                                                                                                            | `enabled: false`                                                                                                          |
 | `schedulerName`            | Name of the [alternate scheduler](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods)                                                                                                                                                                          | `nil`                                                                                                                     |
+| `masterTerminationFix`     | A workaround needed for Elasticsearch < 7.2.0 to prevent master status being lost during restarts [#63](https://github.com/elastic/helm-charts/issues/63)                                                                                                                                                                  | `false`                                                                                                                   |
 
 ## Try it out
 
