@@ -137,7 +137,7 @@ filebeatConfig:
 
     d = r['daemonset'][name]['spec']['template']['spec']
 
-    assert {'configMap': {'name': name + '-config', 'defaultMode': 0600}, 'name': project + '-config'} in d['volumes']
+    assert {'configMap': {'name': name + '-config', 'defaultMode': 0o600}, 'name': project + '-config'} in d['volumes']
     assert {'mountPath': '/usr/share/filebeat/filebeat.yml', 'name': project + '-config', 'subPath': 'filebeat.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
     assert {'mountPath': '/usr/share/filebeat/other-config.yml', 'name': project + '-config', 'subPath': 'other-config.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
 
