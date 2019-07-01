@@ -461,6 +461,7 @@ initResources:
 
 def test_adding_resources_to_sidecar_container():
     config = '''
+masterTerminationFix: true
 sidecarResources:
   limits:
     cpu: "100m"
