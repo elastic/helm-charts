@@ -1,5 +1,3 @@
-{{- if .Values.esConfig }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,8 +8,15 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: "{{ template "uname" . }}"
 data:
+{{- if .Values.esConfig }}
 {{- range $path, $config := .Values.esConfig }}
   {{ $path }}: |
 {{ $config | indent 4 -}}
 {{- end -}}
 {{- end -}}
+{{- if .Values.hooks }}
+{{- range $path, $config := .Values.hooks }}
+  {{ $path }}: |
+{{ $config | indent 4 -}}
+{{- end -}}
+{{- end }}
