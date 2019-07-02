@@ -242,6 +242,7 @@ spec:
         - |
           #!/usr/bin/env bash
           set -eo pipefail
+
           http () {
               local path="${1}"
               if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
@@ -251,6 +252,7 @@ spec:
               fi
               curl -XGET -s -k --fail ${BASIC_AUTH} {{ .Values.protocol }}://{{ template "masterService" . }}:{{ .Values.httpPort }}${path}
           }
+
           cleanup () {
             while true ; do
               local master="$(http "/_cat/master?h=node" || echo "")"
@@ -261,9 +263,12 @@ spec:
               echo "This node is still master, waiting gracefully for it to step down"
               sleep 1
             done
+
             exit 0
           }
+
           trap cleanup SIGTERM
+
           sleep infinity &
           wait $!
         resources:
