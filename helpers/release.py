@@ -5,6 +5,11 @@ import os
 import subprocess
 import yaml
 
+try:
+    raw_input
+except NameError:  # Python 3
+    raw_input = input
+
 os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
 bucket = 'gs://' + os.environ['GCS_BUCKET']
