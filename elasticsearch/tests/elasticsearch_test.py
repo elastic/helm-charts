@@ -655,3 +655,20 @@ def test_master_termination_fixed_enabled():
 
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][1]
     assert c['name'] == 'elasticsearch-master-graceful-termination-handler'
+
+def test_lifecycle_hooks():
+    config = ''
+    r = helm_template(config)
+    c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
+    assert 'lifecycle' not in c
+
+    config = '''
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/bash","/preStop"]
+    '''
+    r = helm_template(config)
+    c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
+
+    assert c['lifecycle']['preStop']['exec']['command'] == ["/bin/bash","/preStop"]

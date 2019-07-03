@@ -27,14 +27,6 @@ esConfig: {}
 #  log4j2.properties: |
 #    key = value
 
-# Add custom preStop, postStart lifecycle hooks
-hooks: {}
-  ## (string) Script to execute prior the pod stops.
-  # preStop: |-
-
-  ## (string) Script to execute after the pod starts.
-  # postStart: |-
-
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
@@ -197,6 +189,14 @@ lifecycle: {}
   # preStop:
   #   exec:
   #     command: ["/bin/bash","/preStop"]
-  # preStop:
+  # postStart:
   #   exec:
-  #     command: ["/bin/bash","/preStop"]
+  #     command: ["/bin/bash","/postStart"]
+
+# Add custom preStop, postStart lifecycle hooks
+hooks: {}
+  ## (string) Script to execute prior the pod stops.
+  # preStop: |-
+
+  ## (string) Script to execute after the pod starts.
+  # postStart: |-
