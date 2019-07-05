@@ -188,7 +188,7 @@ masterTerminationFix: false
 lifecycle: {}
   # preStop:
   #   exec:
-  #     command: ["/bin/bash","/preStop"]
+  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
   # postStart:
   #   exec:
-  #     command: ["/bin/bash","/postStart"]
+  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
