@@ -194,9 +194,3 @@ lifecycle: {}
   #     command: ["/bin/bash","/postStart"]
 
 # Add custom preStop, postStart lifecycle hooks
-hooks: {}
-  ## (string) Script to execute prior the pod stops.
-  # preStop: |-
-
-  ## (string) Script to execute after the pod starts.
-  # postStart: |-

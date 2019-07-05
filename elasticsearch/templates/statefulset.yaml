@@ -98,8 +98,8 @@ spec:
           secret:
             secretName: {{ .secretName }}
         {{- end }}
-        {{- if or .Values.esConfig .Values.hooks }}
-        - name: config
+        {{- if .Values.esConfig }}
+        - name: esconfig
           configMap:
             name: {{ template "uname" . }}-config
         {{- end }}
@@ -215,17 +215,10 @@ spec:
             {{- end }}
           {{- end }}
           {{- range $path, $config := .Values.esConfig }}
-          - name: config
+          - name: esconfig
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
-  {{- if .Values.hooks }}
-          {{- range $path, $config := .Values.hooks }}
-          - name: config
-            mountPath: /{{ $path }}
-            subPath: {{ $path }}
-          {{- end -}}
-  {{- end }}
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 10 }}
         {{- end }}
