@@ -3,10 +3,10 @@ include ../../../helpers/examples.mk
 
 RELEASE := helm-kibana-security
 
-install: secrets
+install:
 	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../ ; \
 
-test: install goss
+test: secrets install goss
 	
 purge:
 	helm del --purge $(RELEASE)

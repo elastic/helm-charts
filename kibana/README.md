@@ -92,7 +92,7 @@ In [examples/](./examples) you will find some example configurations. These exam
 * Deploy Kibana with the security example
   ```
   cd examples/security
-  make
+  make install
   ```
 * You can now setup a port forward and access Kibana at http://localhost:5601 with the credentials `elastic:changeme`
   ```
