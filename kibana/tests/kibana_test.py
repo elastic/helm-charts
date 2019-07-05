@@ -333,3 +333,18 @@ def test_override_the_serverHost():
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['env'][1]['name'] == 'SERVER_HOST'
     assert c['env'][1]['value'] == 'localhost'
+
+def test_override_imagePullPolicy():
+    config = ''
+
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['imagePullPolicy'] == 'IfNotPresent'
+
+    config = '''
+    imagePullPolicy: Always
+    '''
+
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['imagePullPolicy'] == 'Always'
