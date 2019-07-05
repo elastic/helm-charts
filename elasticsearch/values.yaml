@@ -137,8 +137,20 @@ updateStrategy: RollingUpdate
 # of your pods to be unavailable during maintenance
 maxUnavailable: 1
 
- # GroupID for the elasticsearch user. The official elastic docker images always have the id of 1000
-fsGroup: 1000
+podSecurityContext:
+  fsGroup: 1000
+
+# The following value is deprecated,
+# please use the above podSecurityContext.fsGroup instead
+fsGroup: ""
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  # readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
 
 # How long to wait for elasticsearch to stop gracefully
 terminationGracePeriod: 120

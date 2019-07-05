@@ -49,7 +49,10 @@ spec:
       schedulerName: "{{ .Values.schedulerName }}"
       {{- end }}
       securityContext:
-        fsGroup: {{ .Values.fsGroup }}
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+        {{- if .Values.fsGroup }}
+        fsGroup: {{ .Values.fsGroup }} # Deprecated value, please use .Values.podSecurityContext.fsGroup
+        {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 6 }}
@@ -124,6 +127,8 @@ spec:
       {{- end }}
       containers:
       - name: "{{ template "name" . }}"
+        securityContext:
+{{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         readinessProbe:
