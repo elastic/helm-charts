@@ -196,3 +196,11 @@ fullnameOverride: ""
 
 # https://github.com/elastic/helm-charts/issues/63
 masterTerminationFix: false
+
+lifecycle: {}
+  # preStop:
+  #   exec:
+  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+  # postStart:
+  #   exec:
+  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]

@@ -1,5 +1,4 @@
 {{- if .Values.esConfig }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
