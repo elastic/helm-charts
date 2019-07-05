@@ -2,4 +2,3 @@
 
 clusterName: "six"
 imageTag: "6.8.1"
-esMajorVersion: 6
