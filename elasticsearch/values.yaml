@@ -192,5 +192,3 @@ lifecycle: {}
   # postStart:
   #   exec:
   #     command: ["/bin/bash","/postStart"]
-
-# Add custom preStop, postStart lifecycle hooks
