@@ -59,6 +59,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
     {{- end }}
+      serviceAccountName: {{ template "kibana.serviceAccountName" . }}
       containers:
       - name: kibana
         securityContext:
