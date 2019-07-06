@@ -113,6 +113,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
+      serviceAccountName: {{ template "elasticsearch.serviceAccountName" . }}
       initContainers:
       - name: configure-sysctl
         securityContext:

@@ -46,6 +46,13 @@ image: "docker.elastic.co/elasticsearch/elasticsearch"
 imageTag: "7.2.0"
 imagePullPolicy: "IfNotPresent"
 
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
