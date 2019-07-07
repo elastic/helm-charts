@@ -19,6 +19,9 @@ spec:
         app: kibana
         release: {{ .Release.Name | quote }}
       annotations:
+        {{- range $key, $value := .Values.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
         {{- if .Values.kibanaConfig }}
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
