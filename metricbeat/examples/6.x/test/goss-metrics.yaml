@@ -1,0 +1,43 @@
+port:
+  tcp:5066:
+    listening: true
+    ip:
+    - '127.0.0.1'
+
+mount:
+  /usr/share/metricbeat/kube-state-metrics-metricbeat.yml:
+    exists: true
+    opts:
+      - ro
+
+user:
+  metricbeat:
+    exists: true
+    uid: 1000
+    gid: 1000
+
+http:
+  http://six-master:9200/_cat/indices:
+    status: 200
+    timeout: 2000
+    body:
+      - 'metricbeat-6.8.1'
+  http://six-master:9200/_search?q=metricset.name:state_deployment:
+    status: 200
+    timeout: 2000
+    body:
+      - 'metricbeat-6.8.1'
+
+file:
+  /usr/share/metricbeat/metricbeat.yml:
+    exists: true
+    contains:
+      - 'add_kubernetes_metadata'
+      - 'output.elasticsearch'
+
+command:
+  cd /usr/share/metricbeat && metricbeat test output:
+    exit-status: 0
+    stdout:
+      - 'elasticsearch: http://six-master:9200'
+      - 'version: 6.8.1'

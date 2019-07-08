@@ -1,0 +1,147 @@
+---
+# Allows you to add any config files in /usr/share/metricbeat
+# such as metricbeat.yml
+metricbeatConfig:
+  metricbeat.yml: |
+    system:
+      hostfs: /hostfs
+    metricbeat.modules:
+    - module: kubernetes
+      metricsets:
+        - container
+        - node
+        - pod
+        - system
+        - volume
+      period: 10s
+      hosts: ["localhost:10255"]
+      processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+    - module: kubernetes
+      enabled: true
+      metricsets:
+        - event
+    - module: system
+      period: 10s
+      metricsets:
+        - cpu
+        - load
+        - memory
+        - network
+        - process
+        - process_summary
+      processes: ['.*']
+      process.include_top_n:
+        by_cpu: 5
+        by_memory: 5
+    - module: system
+      period: 1m
+      metricsets:
+        - filesystem
+        - fsstat
+      processors:
+      - drop_event.when.regexp:
+          system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
+    output.elasticsearch:
+      hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+
+  kube-state-metrics-metricbeat.yml: |
+    metricbeat.modules:
+    - module: kubernetes
+      enabled: true
+      metricsets:
+        - state_node
+        - state_deployment
+        - state_replicaset
+        - state_pod
+        - state_container
+      period: 10s
+      hosts: ["${KUBE_STATE_METRICS_HOSTS:kube-state-metrics:8080}"]
+    output.elasticsearch:
+      hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+
+# Replicas being used for the kube-state-metrics metricbeat deployment
+
+replicas: 1
+
+# Extra environment variables to append to the DaemonSet pod spec.
+# This will be appended to the current 'env:' key. You can use any of the kubernetes env
+# syntax here
+extraEnvs: []
+#  - name: MY_ENVIRONMENT_VAR
+#    value: the_value_goes_here
+
+extraVolumeMounts: []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+
+extraVolumes: []
+  # - name: extras
+  #   emptyDir: {}
+
+# Root directory where metricbeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
+hostPathRoot: /var/lib
+
+image: "docker.elastic.co/beats/metricbeat"
+imageTag: "7.2.0"
+imagePullPolicy: "IfNotPresent"
+imagePullSecrets: []
+
+livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+
+# Whether this chart should self-manage its service account, role, and associated role binding.
+managedServiceAccount: true
+
+podAnnotations: {}
+  # iam.amazonaws.com/role: es-cluster
+
+# Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
+#
+# - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
+# - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
+# - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
+podSecurityContext:
+  runAsUser: 0
+  privileged: false
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "100Mi"
+  limits:
+    cpu: "1000m"
+    memory: "200Mi"
+
+# Custom service account override that the pod will use
+serviceAccount: ""
+
+# A list of secrets and their paths to mount inside the pod
+# This is useful for mounting certificates for security other sensitive values
+secretMounts: []
+#  - name: metricbeat-certificates
+#    secretName: metricbeat-certificates
+#    path: /usr/share/metricbeat/certs
+
+# How long to wait for metricbeat pods to stop gracefully
+terminationGracePeriod: 30
+
+tolerations: []
+
+updateStrategy: RollingUpdate
+
+# Override various naming aspects of this chart
+# Only edit these if you know what you're doing
+nameOverride: ""
+fullnameOverride: ""

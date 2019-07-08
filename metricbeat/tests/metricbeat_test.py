@@ -4,9 +4,8 @@ sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
 import yaml
 
-project = 'filebeat'
+project = 'metricbeat'
 name = 'release-name-' + project
-
 
 def test_defaults():
     config = '''
@@ -25,7 +24,7 @@ def test_defaults():
 
     assert 'curl --fail 127.0.0.1:5066' in c['livenessProbe']['exec']['command'][-1]
 
-    assert 'filebeat test output' in c['readinessProbe']['exec']['command'][-1]
+    assert 'metricbeat test output' in c['readinessProbe']['exec']['command'][-1]
 
     # Empty customizable defaults
     assert 'imagePullSecrets' not in r['daemonset'][name]['spec']['template']['spec']
@@ -39,7 +38,7 @@ def test_defaults():
     assert {
             'name': 'data',
                 'hostPath': {
-                'path': '/var/lib/release-name-filebeat-default-data',
+                'path': '/var/lib/' + name + '-default-data',
                 'type': 'DirectoryOrCreate'
                 }
            } in volumes
@@ -98,9 +97,9 @@ def test_self_managing_rbac_resources():
 managedServiceAccount: false
 '''
     r = helm_template(config)
-    assert 'serviceaccount' not in r
-    assert 'clusterrole' not in r
-    assert 'clusterrolebinding' not in r
+    assert name not in r['serviceaccount']
+    assert name not in r['clusterrole']
+    assert name not in r['clusterrolebinding']
 
 def test_setting_pod_security_context():
     config = '''
@@ -113,10 +112,10 @@ podSecurityContext:
     assert c['securityContext']['runAsUser'] == 1001
     assert c['securityContext']['privileged'] == False
 
-def test_adding_in_filebeat_config():
+def test_adding_in_metricbeat_config():
     config = '''
-filebeatConfig:
-  filebeat.yml: |
+metricbeatConfig:
+  metricbeat.yml: |
     key:
       nestedkey: value
     dot.notation: test
@@ -127,19 +126,19 @@ filebeatConfig:
     r = helm_template(config)
     c = r['configmap'][name + '-config']['data']
 
-    assert 'filebeat.yml' in c
+    assert 'metricbeat.yml' in c
     assert 'other-config.yml' in c
 
-    assert 'nestedkey: value' in c['filebeat.yml']
-    assert 'dot.notation: test' in c['filebeat.yml']
+    assert 'nestedkey: value' in c['metricbeat.yml']
+    assert 'dot.notation: test' in c['metricbeat.yml']
 
     assert 'hello = world' in c['other-config.yml']
 
     d = r['daemonset'][name]['spec']['template']['spec']
 
-    assert {'configMap': {'name': name + '-config', 'defaultMode': 0o600}, 'name': project + '-config'} in d['volumes']
-    assert {'mountPath': '/usr/share/filebeat/filebeat.yml', 'name': project + '-config', 'subPath': 'filebeat.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
-    assert {'mountPath': '/usr/share/filebeat/other-config.yml', 'name': project + '-config', 'subPath': 'other-config.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
+    assert {'configMap': {'name': name + '-config', 'defaultMode': 0600}, 'name': project + '-config'} in d['volumes']
+    assert {'mountPath': '/usr/share/metricbeat/metricbeat.yml', 'name': project + '-config', 'subPath': 'metricbeat.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
+    assert {'mountPath': '/usr/share/metricbeat/other-config.yml', 'name': project + '-config', 'subPath': 'other-config.yml', 'readOnly': True} in d['containers'][0]['volumeMounts']
 
     assert 'configChecksum' in r['daemonset'][name]['spec']['template']['metadata']['annotations']
 
@@ -148,19 +147,19 @@ def test_adding_a_secret_mount():
     config = '''
 secretMounts:
   - name: elastic-certificates
-    secretName: elastic-certs
-    path: /usr/share/filebeat/config/certs
+    secretName: elastic-certificates-name
+    path: /usr/share/metricbeat/config/certs
 '''
     r = helm_template(config)
     s = r['daemonset'][name]['spec']['template']['spec']
     assert s['containers'][0]['volumeMounts'][0] == {
-        'mountPath': '/usr/share/filebeat/config/certs',
+        'mountPath': '/usr/share/metricbeat/config/certs',
         'name': 'elastic-certificates'
     }
     assert s['volumes'][0] == {
         'name': 'elastic-certificates',
         'secret': {
-            'secretName': 'elastic-certs'
+            'secretName': 'elastic-certificates-name'
         }
     }
 
@@ -180,11 +179,3 @@ extraVolumeMounts: |
     assert {'name': 'extras', 'emptyDir': {}} in extraVolume
     extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
     assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
-
-def test_adding_pod_labels():
-    config = '''
-labels:
-  app.kubernetes.io/name: filebeat
-'''
-    r = helm_template(config)
-    assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'filebeat'

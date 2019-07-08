@@ -8,9 +8,6 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-    {{- range $key, $value := .Values.labels }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
 spec:
   selector:
     matchLabels:
@@ -25,7 +22,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.filebeatConfig }}
+        {{- if .Values.metricbeatConfig }}
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
       name: "{{ template "fullname" . }}"
@@ -47,8 +44,8 @@ spec:
         secret:
           secretName: {{ .secretName }}
       {{- end }}
-      {{- if .Values.filebeatConfig }}
-      - name: filebeat-config
+      {{- if .Values.metricbeatConfig }}
+      - name: metricbeat-config
         configMap:
           defaultMode: 0600
           name: {{ template "fullname" . }}-config
@@ -71,7 +68,7 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       containers:
-      - name: "filebeat"
+      - name: "metricbeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         args:
@@ -94,7 +91,7 @@ spec:
             - -c
             - |
               #!/usr/bin/env bash -e
-              filebeat test output
+              metricbeat test output
 {{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
@@ -118,19 +115,19 @@ spec:
           subPath: {{ .subPath }}
           {{- end }}
         {{- end }}
-        {{- range $path, $config := .Values.filebeatConfig }}
-        - name: filebeat-config
-          mountPath: /usr/share/filebeat/{{ $path }}
+        {{- range $path, $config := .Values.metricbeatConfig }}
+        - name: metricbeat-config
+          mountPath: /usr/share/metricbeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
         {{- end }}
         - name: data
-          mountPath: /usr/share/filebeat/data
+          mountPath: /usr/share/metricbeat/data
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
           readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
-        # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
+        # See: https://www.elastic.co/guide/en/beats/metricbeat/master/configuration-autodiscover.html
         - name: varrundockersock
           mountPath: /var/run/docker.sock
           readOnly: true

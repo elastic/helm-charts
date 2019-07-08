@@ -1,17 +1,13 @@
-# Filebeat Helm Chart
+# Metricbeat Helm Chart
 
 This functionality is in beta and is subject to change. The design and code is less mature than official GA features and is being provided as-is with no warranties. Beta features are not subject to the support SLA of official GA features.
 
-This helm chart is a lightweight way to configure and run our official [Filebeat docker image](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html).
+This helm chart is a lightweight way to configure and run our official [Metricbeat docker image](https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html).
 
 ## Requirements
 
 * Kubernetes >= 1.8
 * [Helm](https://helm.sh/) >= 2.8.0
-
-## Usage notes and getting started
-* The default Filebeat configuration file for this chart is configured to use an Elasticsearch endpoint. Without any additional changes, Filebeat will send documents to the service URL that the Elasticsearch helm chart sets up by default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in `extraEnvs` to override this endpoint or modify the default `filebeatConfig` to change this behavior.
-* The default Filebeat configuration file is also configured to capture container logs and enrich them with Kubernetes metadata by default. This will capture all container logs in the cluster.
 
 ## Installing
 
@@ -21,7 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
   ```
 * Install it
   ```
-  helm install --name filebeat elastic/filebeat --version 7.2.0
+  helm install --name metricbeat elastic/metricbeat --version 7.2.0
   ```
 
 ## Compatibility
@@ -34,37 +30,37 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.2.0` of Filebeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.2.0` of metricbeat it would look like this:
 
 ```
-helm install --name filebeat elastic/filebeat --version 7.2.0 --set imageTag=7.2.0
+helm install --name metricbeat elastic/metricbeat --version 7.2.0 --set imageTag=7.2.0
 ```
 
 
 ## Configuration
 | Parameter                | Description                                                                                                                                                                                                                                                                 | Default                                                                                                                   |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `filebeatConfig`         | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`. See [values.yaml](./values.yaml) for an example of the formatting with the default configuration.                                                                                       | see [values.yaml](./values.yaml)                                                                                          |
+| `metricbeatConfig`       | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml`. See [values.yaml](./values.yaml) for an example of the formatting with the default configuration.                                                                                   | see [values.yaml](./values.yaml)                                                                                          |
 | `extraEnvs`              | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                          | `[]`                                                                                                                      |
-| `extraVolumeMounts`      | Any extra volumes mounts to define for the Filebeat container                                                                                                                                                                                                               | `[]`                                                                                                                      |
+| `extraVolumeMounts`      | Any extra volumes mounts to define for the Metricbeat container                                                                                                                                                                                                             | `[]`                                                                                                                      |
 | `extraVolumes`           | Any extra volumes to define for the pod                                                                                                                                                                                                                                     | `[]`                                                                                                                      |
-| `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Filebeat registry data                                                                                                                               | `/var/lib`                                                                                                                |
-| `image`                  | The Filebeat docker image                                                                                                                                                                                                                                                   | `docker.elastic.co/beats/filebeat`                                                                                        |
-| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.2.0`                                                                                                                   |
+| `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Metricbeat registry data                                                                                                                             | `/var/lib`                                                                                                                |
+| `image`                  | The Metricbeat docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/beats/metricbeat`                                                                                      |
+| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.2.0`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |
-| `podAnnotations`         | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Filebeat pods                                                                                                                                     | `{}`                                                                                                                      |
-| `labels`                 | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Filebeat pods                                                                                                                                     | `{}`                                                                                                                      |
-| `podSecurityContext`     | Configurable [podSecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for Filebeat pod execution environment                                                                                                                        | `runAsUser: 0`<br>`privileged: false`                                                                  |
+| `podAnnotations`         | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Metricbeat pods                                                                                                                                   | `{}`                                                                                                                      |
+| `podSecurityContext`     | Configurable [podSecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for Metricbeat pod execution environment                                                                                                                      | `runAsUser: 0`<br>`privileged: false`                                                                                     |
 | `livenessProbe`          | Parameters to pass to [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                    | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `readinessProbe`         | Parameters to pass to [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                   | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `resources`              | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the `DaemonSet`                                                                                                                                | `requests.cpu: 100m`<br>`requests.memory: 100Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 200Mi`                         |
-| `serviceAccount`         | Custom [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that Filebeat will use during execution. By default will use the service account created by this chart.                                                        | `""`                                                                                                                      |
+| `serviceAccount`         | Custom [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that Metricbeat will use during execution. By default will use the service account created by this chart.                                                      | `""`                                                                                                                      |
 | `secretMounts`           | Allows you easily mount a secret as a file inside the `DaemonSet`. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                      | `[]`                                                                                                                      |
-| `terminationGracePeriod` | Termination period (in seconds) to wait before killing Filebeat pod process on pod shutdown                                                                                                                                                                                 | `30`                                                                                                                      |
+| `terminationGracePeriod` | Termination period (in seconds) to wait before killing Metricbeat pod process on pod shutdown                                                                                                                                                                               | `30`                                                                                                                      |
 | `tolerations`            | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                                         | `[]`                                                                                                                      |
 | `updateStrategy`         | The [updateStrategy](https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy) for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually. | `RollingUpdate`                                                                                                           |
+| `replicas`               | The replica count for the metricbeat deployment talking to kube-state-metrics                                                                                                                                                                                               | `1`                                                                                                                       |
 
 ## Examples
 
@@ -73,12 +69,12 @@ In [examples/](./examples) you will find some example configurations. These exam
 ### Default
 
 * Deploy the [default Elasticsearch helm chart](../elasticsearch/README.md#default)
-* Deploy Filebeat with the default values
+* Deploy Metricbeat with the default values
   ```
   cd examples/default
   make
   ```
-* You can now setup a port forward for Elasticsearch to observe Filebeat indices
+* You can now setup a port forward for Elasticsearch to observe Metricbeat indices
   ```
   kubectl port-forward svc/elasticsearch-master 9200
   curl localhost:9200/_cat/indices

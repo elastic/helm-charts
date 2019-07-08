@@ -341,3 +341,18 @@ podAnnotations:
 '''
     r = helm_template(config)
     assert r['deployment'][name]['spec']['template']['metadata']['annotations']['iam.amazonaws.com/role'] == 'es-role'
+
+def test_override_imagePullPolicy():
+    config = ''
+
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['imagePullPolicy'] == 'IfNotPresent'
+
+    config = '''
+    imagePullPolicy: Always
+    '''
+
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['imagePullPolicy'] == 'Always'

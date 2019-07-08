@@ -1,23 +1,21 @@
 ---
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: '{{ template "fullname" . }}-metrics'
   labels:
-    app: "{{ template "fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    {{- range $key, $value := .Values.labels }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+    app: '{{ template "fullname" . }}-metrics'
+    chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    heritage: '{{ .Release.Service }}'
+    release: '{{ .Release.Name }}'
 spec:
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: "{{ template "fullname" . }}"
-      release: {{ .Release.Name | quote }}
-  updateStrategy:
-    type: {{ .Values.updateStrategy }}
+      app: '{{ template "fullname" . }}-metrics'
+      chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+      heritage: '{{ .Release.Service }}'
+      release: '{{ .Release.Name }}'
   template:
     metadata:
       annotations:
@@ -25,15 +23,14 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.filebeatConfig }}
+        {{- if .Values.metricbeatConfig }}
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
-      name: "{{ template "fullname" . }}"
       labels:
-        app: "{{ template "fullname" . }}"
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        heritage: {{ .Release.Service | quote }}
-        release: {{ .Release.Name | quote }}
+        app: '{{ template "fullname" . }}-metrics'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+        heritage: '{{ .Release.Service }}'
+        release: '{{ .Release.Name }}'
     spec:
       {{- with .Values.tolerations }}
       tolerations:
@@ -47,22 +44,12 @@ spec:
         secret:
           secretName: {{ .secretName }}
       {{- end }}
-      {{- if .Values.filebeatConfig }}
-      - name: filebeat-config
+      {{- if .Values.metricbeatConfig }}
+      - name: metricbeat-config
         configMap:
           defaultMode: 0600
           name: {{ template "fullname" . }}-config
       {{- end }}
-      - name: data
-        hostPath:
-          path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-{{ .Release.Namespace }}-data
-          type: DirectoryOrCreate
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
-      - name: varrundockersock
-        hostPath:
-          path: /var/run/docker.sock
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 6 }}
       {{- end }}
@@ -71,13 +58,15 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       containers:
-      - name: "filebeat"
+      - name: "metricbeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         args:
-        - "-e"
-        - "-E"
-        - "http.enabled=true"
+          - "-c"
+          - "/usr/share/metricbeat/kube-state-metrics-metricbeat.yml"
+          - "-e"
+          - "-E"
+          - "http.enabled=true"
         livenessProbe:
           exec:
             command:
@@ -86,7 +75,6 @@ spec:
             - |
               #!/usr/bin/env bash -e
               curl --fail 127.0.0.1:5066
-{{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
           exec:
             command:
@@ -94,7 +82,7 @@ spec:
             - -c
             - |
               #!/usr/bin/env bash -e
-              filebeat test output
+              metricbeat test output
 {{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
@@ -103,6 +91,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: KUBE_STATE_METRICS_HOSTS
+          value: "$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_HOST):$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_PORT_HTTP)"
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 8 }}
 {{- end }}
@@ -118,22 +108,12 @@ spec:
           subPath: {{ .subPath }}
           {{- end }}
         {{- end }}
-        {{- range $path, $config := .Values.filebeatConfig }}
-        - name: filebeat-config
-          mountPath: /usr/share/filebeat/{{ $path }}
+        {{- range $path, $config := .Values.metricbeatConfig }}
+        - name: metricbeat-config
+          mountPath: /usr/share/metricbeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
         {{- end }}
-        - name: data
-          mountPath: /usr/share/filebeat/data
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
-        # Necessary when using autodiscovery; avoid mounting it otherwise
-        # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
-        - name: varrundockersock
-          mountPath: /var/run/docker.sock
-          readOnly: true
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 8 }}
         {{- end }}

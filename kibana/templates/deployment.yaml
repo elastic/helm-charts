@@ -67,6 +67,7 @@ spec:
         securityContext:
 {{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         env:
           {{- if .Values.elasticsearchURL }}
           - name: ELASTICSEARCH_URL
