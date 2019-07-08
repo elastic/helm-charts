@@ -24,6 +24,9 @@ image: "docker.elastic.co/kibana/kibana"
 imageTag: "7.2.0"
 imagePullPolicy: "IfNotPresent"
 
+podAnnotations: {}
+  # iam.amazonaws.com/role: es-cluster
+
 resources:
   requests:
     cpu: "100m"

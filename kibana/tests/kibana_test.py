@@ -334,6 +334,14 @@ def test_override_the_serverHost():
     assert c['env'][1]['name'] == 'SERVER_HOST'
     assert c['env'][1]['value'] == 'localhost'
 
+def test_adding_pod_annotations():
+    config = '''
+podAnnotations:
+  iam.amazonaws.com/role: es-role
+'''
+    r = helm_template(config)
+    assert r['deployment'][name]['spec']['template']['metadata']['annotations']['iam.amazonaws.com/role'] == 'es-role'
+
 def test_override_imagePullPolicy():
     config = ''
 
