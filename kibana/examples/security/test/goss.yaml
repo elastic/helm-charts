@@ -21,7 +21,7 @@ file:
       - '  enabled: true'
       - '  key: /usr/share/kibana/config/certs/elastic-certificate.pem'
       - '  certificate: /usr/share/kibana/config/certs/elastic-certificate.pem'
-      - 'xpack.security.encryptionKey: something_at_least_32_characters'
+      - 'xpack.security.encryptionKey:'
       - 'elasticsearch.ssl:'
       - '  certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem'
       - '  verificationMode: certificate'
