@@ -62,7 +62,10 @@ up: k8s
 	for i in 1 2 3 4 5; do helm init --wait --upgrade && break || sleep 5; done
 
 integration: creds
-	cd ../../$(CHART)/examples/$(SUITE) && \
+	cd ../../$(CHART)/ && \
+	helm init --client-only && \
+	helm dependency update && \
+	cd ./examples/$(SUITE) && \
 	make
 
 build: 
