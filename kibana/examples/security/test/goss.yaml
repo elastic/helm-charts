@@ -19,8 +19,8 @@ file:
     contains:
       - 'server.ssl:'
       - '  enabled: true'
-      - '  key: /usr/share/kibana/config/certs/kibana/kibana.key'
-      - '  certificate: /usr/share/kibana/config/certs/kibana/kibana.crt'
+      - '  key: /usr/share/kibana/config/certs/elastic-certificate.pem'
+      - '  certificate: /usr/share/kibana/config/certs/elastic-certificate.pem'
       - 'xpack.security.encryptionKey: something_at_least_32_characters'
       - 'elasticsearch.ssl:'
       - '  certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem'

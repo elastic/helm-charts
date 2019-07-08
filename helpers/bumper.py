@@ -15,6 +15,7 @@ versions = {
 file_patterns = [
     '*/examples/*/test/goss*.y*ml',
     '*/examples/*/*.y*ml',
+    'helpers/examples.mk',
     '*/README.md',
     '*/values.y*ml',
     '*/Chart.y*ml',

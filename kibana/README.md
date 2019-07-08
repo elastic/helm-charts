@@ -92,13 +92,14 @@ In [examples/](./examples) you will find some example configurations. These exam
 * Deploy Kibana with the security example
   ```
   cd examples/security
-  make install
+  make
   ```
-* You can now setup a port forward and access Kibana at http://localhost:5601 with the credentials `elastic:changeme`
+* Setup a port forward and access Kibana at https://localhost:5601
   ```
+  # Get the auto generated password
+  kubectl get secret elastic-credentials -o jsonpath='{.data.password}' | base64 --decode
   kubectl port-forward deployment/helm-kibana-default-kibana 5601
   ```
-
 
 ## Testing
 
