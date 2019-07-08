@@ -53,6 +53,9 @@ readinessProbe:
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
+# additionals labels
+labels: {}
+
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 

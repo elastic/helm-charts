@@ -180,3 +180,11 @@ extraVolumeMounts: |
     assert {'name': 'extras', 'emptyDir': {}} in extraVolume
     extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
     assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
+
+def test_adding_pod_labels():
+    config = '''
+labels:
+  app.kubernetes.io/name: filebeat
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'filebeat'
