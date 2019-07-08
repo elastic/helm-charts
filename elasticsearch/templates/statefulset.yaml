@@ -8,6 +8,8 @@ metadata:
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: "{{ template "uname" . }}"
+  annotations:
+    esMajorVersion: "{{ include "esMajorVersion" . }}"
 spec:
   serviceName: {{ template "uname" . }}-headless
   selector:
@@ -179,7 +181,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.name
           {{- if eq .Values.roles.master "true" }}
-          {{- if ge (int .Values.esMajorVersion) 7 }}
+          {{- if ge (int (include "esMajorVersion" .)) 7 }}
           - name: cluster.initial_master_nodes
             value: "{{ template "endpoints" .Values }}"
           {{- else }}
@@ -187,7 +189,7 @@ spec:
             value: "{{ .Values.minimumMasterNodes }}"
           {{- end }}
           {{- end }}
-          {{- if lt (int .Values.esMajorVersion) 7 }}
+          {{- if lt (int (include "esMajorVersion" .)) 7 }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ template "masterService" . }}-headless"
           {{- else }}

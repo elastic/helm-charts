@@ -672,3 +672,52 @@ def test_lifecycle_hooks():
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
 
     assert c['lifecycle']['preStop']['exec']['command'] == ["/bin/bash","/preStop"]
+
+def test_esMajorVersion_detect_default_version():
+    config = ''
+
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '7'
+
+def test_esMajorVersion_default_to_7_if_not_elastic_image():
+    config = '''
+    image: notElastic
+    imageTag: 1.0.0
+    '''
+
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '7'
+
+def test_esMajorVersion_default_to_7_if_no_version_is_found():
+    config = '''
+    imageTag: not_a_number
+    '''
+
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '7'
+
+def test_esMajorVersion_set_to_6_based_on_image_tag():
+    config = '''
+    imageTag: 6.8.1
+    '''
+
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '6'
+
+def test_esMajorVersion_always_wins():
+    config = '''
+    esMajorVersion: 7
+    imageTag: 6.0.0
+    '''
+
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '7'
+
+def test_esMajorVersion_parse_image_tag_for_oss_image():
+    config = '''
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss
+    imageTag: 6.3.2
+    '''
+
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '6'

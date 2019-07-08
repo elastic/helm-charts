@@ -16,7 +16,7 @@ roles:
 replicas: 3
 minimumMasterNodes: 2
 
-esMajorVersion: 7
+esMajorVersion: ""
 
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
