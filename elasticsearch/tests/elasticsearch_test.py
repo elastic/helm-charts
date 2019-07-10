@@ -721,3 +721,50 @@ def test_esMajorVersion_parse_image_tag_for_oss_image():
 
     r = helm_template(config)
     assert r['statefulset'][uname]['metadata']['annotations']['esMajorVersion'] == '6'
+
+def test_set_pod_security_context():
+    config = ''
+    r = helm_template(config)
+    assert r['statefulset'][uname]['spec']['template']['spec']['securityContext']['fsGroup'] == 1000
+
+    config = '''
+    podSecurityContext:
+      fsGroup: 1001
+      other: test
+    '''
+
+    r = helm_template(config)
+
+    assert r['statefulset'][uname]['spec']['template']['spec']['securityContext']['fsGroup'] == 1001
+    assert r['statefulset'][uname]['spec']['template']['spec']['securityContext']['other'] == 'test'
+
+def test_fsGroup_backwards_compatability():
+    config = '''
+    fsGroup: 1001
+    '''
+
+    r = helm_template(config)
+
+    assert r['statefulset'][uname]['spec']['template']['spec']['securityContext']['fsGroup'] == 1001
+
+def test_set_container_security_context():
+    config = ''
+
+    r = helm_template(config)
+    c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
+    assert c['securityContext']['capabilities']['drop'] == ['ALL']
+    assert c['securityContext']['runAsNonRoot'] == True
+    assert c['securityContext']['runAsUser'] == 1000
+
+    config = '''
+    securityContext:
+      runAsUser: 1001
+      other: test
+    '''
+
+    r = helm_template(config)
+    c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
+    assert c['securityContext']['capabilities']['drop'] == ['ALL']
+    assert c['securityContext']['runAsNonRoot'] == True
+    assert c['securityContext']['runAsUser'] == 1001
+    assert c['securityContext']['other'] == 'test'

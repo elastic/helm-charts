@@ -69,4 +69,4 @@ integration: creds
 	make
 
 build: 
-	for i in {1..5}; do docker build -t helm-charts . && break || sleep 15; done
+	for i in 1 2 3 4 5; do docker build -t helm-charts . && break || sleep 5; done
