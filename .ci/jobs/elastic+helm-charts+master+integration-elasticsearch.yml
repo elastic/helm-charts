@@ -28,7 +28,7 @@
         source /usr/local/bin/bash_standard_lib.sh
 
         set +x
-        VAULT_TOKEN=$(retry 5 retry 5 vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
+        VAULT_TOKEN=$(retry 5 vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
         export VAULT_TOKEN
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
