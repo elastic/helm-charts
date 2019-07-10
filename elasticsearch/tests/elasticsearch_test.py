@@ -82,6 +82,10 @@ def test_defaults():
             'name': 'node.ingest',
             'value': 'true'
         },
+        {
+            'name': 'sysctlInitContainer.enabled',
+            'value': 'true'
+        },
     ]
 
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]

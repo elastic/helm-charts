@@ -116,6 +116,7 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       initContainers:
+      {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl
         securityContext:
           runAsUser: 0
@@ -124,6 +125,7 @@ spec:
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
         resources:
 {{ toYaml .Values.initResources | indent 10 }}
+      {{- end }}
       {{- if .Values.extraInitContainers }}
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- end }}
