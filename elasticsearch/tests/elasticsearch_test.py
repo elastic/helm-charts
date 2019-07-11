@@ -82,10 +82,6 @@ def test_defaults():
             'name': 'node.ingest',
             'value': 'true'
         },
-        {
-            'name': 'sysctlInitContainer.enabled',
-            'value': 'true'
-        },
     ]
 
     c = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
@@ -338,6 +334,23 @@ extraInitContainers: |
     extraInitContainer = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
     assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraInitContainer
 
+def test_sysctl_init_container_disabled():
+    config = '''
+sysctlInitContainer:
+  enabled: false
+'''
+    r = helm_template(config)
+    initContainers = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
+    assert initContainers is None
+
+def test_sysctl_init_container_enabled():
+    config = '''
+sysctlInitContainer:
+  enabled: true
+'''
+    r = helm_template(config)
+    initContainers = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
+    assert initContainers[0]['name'] == 'configure-sysctl'
 
 def test_adding_storageclass_annotation_to_volumeclaimtemplate():
     config = '''
