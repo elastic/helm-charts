@@ -96,9 +96,17 @@ In [examples/](./examples) you will find some example configurations. These exam
   ```
 * Setup a port forward and access Kibana at https://localhost:5601
   ```
+  # Setup the port forward
+  kubectl port-forward deployment/helm-kibana-security-kibana 5601
+
+  # Run this in a seperate terminal
   # Get the auto generated password
-  kubectl get secret elastic-credentials -o jsonpath='{.data.password}' | base64 --decode
-  kubectl port-forward deployment/helm-kibana-default-kibana 5601
+  password=$(kubectl get secret elastic-credentials -o jsonpath='{.data.password}' | base64 --decode)
+  echo $password
+
+  # Test Kibana is working with curl or access it with your browser at https://localhost:5601
+  # The example certificate is self signed so you may see a warning about the certificate
+  curl -I -k -u elastic:$password https://localhost:5601/app/kibana
   ```
 
 ## Testing

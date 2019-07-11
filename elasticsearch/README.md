@@ -140,6 +140,9 @@ A cluster with node to node security and https enabled. This example uses autoge
   ```
   cd examples/security
   make
+
+  # Run a curl command to interact with the cluster
+  kubectl exec -ti security-master-0 -- sh -c 'curl -u $ELASTIC_USERNAME:$ELASTIC_PASSWORD -k https://localhost:9200/_cluster/health?pretty'
   ```
 
 ### FAQ

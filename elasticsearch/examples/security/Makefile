@@ -16,7 +16,7 @@ test: secrets install goss
 secrets:
 	docker rm -f elastic-helm-charts-certs || true
 	rm -f elastic-certificates.p12 elastic-certificate.pem elastic-stack-ca.p12 || true
-	password=$$([ ! -z "$$ELASTIC_PASSWORD" ] && echo $$ELASTIC_PASSWORD || echo $$(docker run --rm docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) /bin/sh -c "< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c20")) && \
+	password=$$([ ! -z "$$ELASTIC_PASSWORD" ] && echo $$ELASTIC_PASSWORD || echo $$(docker run --rm docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) /bin/sh -c "< /dev/urandom tr -cd '[:alnum:]' | head -c20")) && \
 	docker run --name elastic-helm-charts-certs -i -w /app \
 		docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) \
 		/bin/sh -c " \
