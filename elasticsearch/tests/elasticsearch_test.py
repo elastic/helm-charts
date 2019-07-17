@@ -785,3 +785,11 @@ def test_set_container_security_context():
     assert c['securityContext']['runAsNonRoot'] == True
     assert c['securityContext']['runAsUser'] == 1001
     assert c['securityContext']['other'] == 'test'
+
+def test_adding_pod_labels():
+    config = '''
+labels:
+  app.kubernetes.io/name: elasticsearch
+'''
+    r = helm_template(config)
+    assert r['statefulset'][uname]['metadata']['labels']['app.kubernetes.io/name'] == 'elasticsearch'
