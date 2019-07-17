@@ -356,3 +356,11 @@ def test_override_imagePullPolicy():
     r = helm_template(config)
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['imagePullPolicy'] == 'Always'
+
+  def test_adding_pod_labels():
+     config = '''
+labels:
+  app.kubernetes.io/name: kibana
+'''
+     r = helm_template(config)
+     assert r['deployment'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
