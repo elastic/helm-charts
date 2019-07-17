@@ -17,7 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
   ```
 * Install it
   ```
-  helm install --name kibana elastic/kibana --version 7.2.0
+  helm install --name kibana elastic/kibana
   ```
 
 ## Compatibility
@@ -33,7 +33,7 @@ Examples of installing older major versions can be found in the [examples](./exa
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.2.0` of Kibana it would look like this:
 
 ```
-helm install --name kibana elastic/kibana --version 7.2.0 --set imageTag=7.2.0
+helm install --name kibana elastic/kibana --set imageTag=7.2.0
 ```
 
 ## Configuration
