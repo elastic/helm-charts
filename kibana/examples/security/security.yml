@@ -13,14 +13,19 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+  - name: 'KIBANA_ENCRYPTION_KEY'
+    valueFrom:
+      secretKeyRef:
+        name: kibana
+        key: encryptionkey
 
 kibanaConfig:
   kibana.yml: |
     server.ssl:
       enabled: true
-      key: /usr/share/kibana/config/certs/kibana/kibana.key
-      certificate: /usr/share/kibana/config/certs/kibana/kibana.crt
-    xpack.security.encryptionKey: something_at_least_32_characters
+      key: /usr/share/kibana/config/certs/elastic-certificate.pem
+      certificate: /usr/share/kibana/config/certs/elastic-certificate.pem
+    xpack.security.encryptionKey: ${KIBANA_ENCRYPTION_KEY}
     elasticsearch.ssl:
       certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem
       verificationMode: certificate
@@ -31,6 +36,3 @@ secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/kibana/config/certs
-  - name: kibana-certificates
-    secretName: kibana-certificates
-    path: /usr/share/kibana/config/certs/kibana
