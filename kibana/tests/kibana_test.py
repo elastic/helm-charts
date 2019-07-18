@@ -357,7 +357,7 @@ def test_override_imagePullPolicy():
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['imagePullPolicy'] == 'Always'
 
-  def test_adding_pod_labels():
+def test_adding_pod_labels():
      config = '''
 labels:
   app.kubernetes.io/name: kibana
