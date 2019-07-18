@@ -1,9 +1,34 @@
-## Unreleased - XXXX/XX/XX
+# Changelog
 
-### Metricbeat (WIP)
+---
+## 7.2.1-0 - 2019/07/01
 
+* [#195](https://github.com/elastic/helm-charts/pull/195) - @cclauss - Initial steps started to move all python2 code to python3
+* [#205](https://github.com/elastic/helm-charts/pull/205) - @Crazybus - Fixup and improve security example documentation
+
+
+### Elasticsearch
+
+* [#171](https://github.com/elastic/helm-charts/pull/171) - @naseemkullah - Run Elasticsearch as a non-root user
+* [#197](https://github.com/elastic/helm-charts/pull/197) - @tetianakravchenko - Add option to provide custom start/stop hooks
+* [#206](https://github.com/elastic/helm-charts/pull/206) - @Crazybus - Automatically detect esMajorVersion for default images
+* [#203](https://github.com/elastic/helm-charts/pull/203) - @Crazybus - Add testing for security context
+* [#220](https://github.com/elastic/helm-charts/pull/220) - @JorisAndrade -  Add option to disable sysctlInitContainer
+
+### Kibana
+
+* [#204](https://github.com/elastic/helm-charts/pull/204) - @Crazybus - Make imagePullPolicy actually do something
+* [#210](https://github.com/elastic/helm-charts/pull/210) - @cliedeman - Add Kibana pod annotations
+* [#217](https://github.com/elastic/helm-charts/pull/217) - @Crazybus - Update healthCheckPath to mention basePath usage
+
+### Filebeat
+
+* [#214](https://github.com/elastic/helm-charts/pull/214) - @dugouchet - Add additional labels
+
+### Metricbeat
+
+* [#127](https://github.com/elastic/helm-charts/pull/127) - @Crazybus - Add metricbeat chart
 * [#128](https://github.com/elastic/helm-charts/pull/128) - @Crazybus - Add ci jobs for metricbeat
-* [#127](https://github.com/elastic/helm-charts/pull/127) - @Crazybus - WIP add metricbeat chart
 
 ---
 ## 7.2.0 - 2019/07/01
