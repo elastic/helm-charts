@@ -8,6 +8,9 @@ metadata:
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: "{{ template "uname" . }}"
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
   annotations:
     esMajorVersion: "{{ include "esMajorVersion" . }}"
 spec:
