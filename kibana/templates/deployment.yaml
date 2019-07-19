@@ -5,6 +5,9 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
