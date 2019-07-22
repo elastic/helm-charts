@@ -112,6 +112,9 @@ spec:
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
+            {{- if .subPath }}
+            subPath: {{ .subPath }}
+            {{- end }}
           {{- end }}
           {{- range $path, $config := .Values.kibanaConfig }}
           - name: kibanaconfig
