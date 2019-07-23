@@ -364,3 +364,33 @@ labels:
 '''
      r = helm_template(config)
      assert r['deployment'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
+
+def test_adding_a_secret_mount_with_subpath():
+    config = '''
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certs
+    path: /usr/share/elasticsearch/config/certs
+    subPath: cert.crt
+'''
+    r = helm_template(config)
+    d = r['deployment'][name]['spec']['template']['spec']
+    assert d['containers'][0]['volumeMounts'][-1] == {
+        'mountPath': '/usr/share/elasticsearch/config/certs',
+        'subPath': 'cert.crt',
+        'name': 'elastic-certificates'
+    }
+
+def test_adding_a_secret_mount_without_subpath():
+    config = '''
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certs
+    path: /usr/share/elasticsearch/config/certs
+'''
+    r = helm_template(config)
+    d = r['deployment'][name]['spec']['template']['spec']
+    assert d['containers'][0]['volumeMounts'][-1] == {
+        'mountPath': '/usr/share/elasticsearch/config/certs',
+        'name': 'elastic-certificates'
+    }
