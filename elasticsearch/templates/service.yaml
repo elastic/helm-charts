@@ -37,6 +37,8 @@ metadata:
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: "{{ template "uname" . }}"
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
 spec:
   clusterIP: None # This is needed for statefulset hostnames like elasticsearch-0 to resolve
   # Create endpoints also if the related pod isn't ready
