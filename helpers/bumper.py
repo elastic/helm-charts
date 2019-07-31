@@ -7,11 +7,11 @@ import fileinput
 
 os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
-chart_version = '7.2.1-0'
+chart_version = '7.3.0'
 
 versions = {
     6: '6.8.1',
-    7: '7.2.0',
+    7: '7.3.0',
 }
 
 file_patterns = [
@@ -28,7 +28,7 @@ file_patterns = [
 blacklist = re.compile(r".*127.0.0.1.*")
 
 for major, version in versions.iteritems():
-    r = re.compile(r"^({0})\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$".format(major))
+    r = re.compile(r"{0}\.[0-9]*\.[0-9]*-?[0-9]?".format(major))
     for pattern in file_patterns:
         for f in glob.glob(pattern):
             print(f)

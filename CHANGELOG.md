@@ -1,7 +1,23 @@
 # Changelog
 
+## 7.3.0 - 2019/07/31
+
+* 7.3.0 as the default stack version
+
+### Elasticsearch
+| PR                                                      | Author                                                     | Title                                                                     |
+| ------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
+| [#226](https://github.com/elastic/helm-charts/pull/226) | [@MichaelMarieJulie](https://github.com/MichaelMarieJulie) | Add configurable pods labels                                              |
+| [#237](https://github.com/elastic/helm-charts/pull/237) | [@MichaelSp](https://github.com/MichaelSp)                 | Add back `service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"` |
+
+### Kibana
+| PR                                                      | Author                                     | Title                               |
+| ------------------------------------------------------- | ------------------------------------------ | ----------------------------------- |
+| [#225](https://github.com/elastic/helm-charts/pull/225) | [@plumcraft](https://github.com/plumcraft) | Add configurable pod labels         |
+| [#230](https://github.com/elastic/helm-charts/pull/230) | [@Crazybus](https://github.com/Crazybus)   | Add subPath support to secretMounts |
+
 ---
-## 7.2.1-0 - 2019/07/01
+## 7.2.1-0 - 2019/07/18
 
 * [#195](https://github.com/elastic/helm-charts/pull/195) - @cclauss - Initial steps started to move all python2 code to python3
 * [#205](https://github.com/elastic/helm-charts/pull/205) - @Crazybus - Fixup and improve security example documentation
