@@ -90,6 +90,10 @@ terminationGracePeriod: 30
 
 tolerations: []
 
+nodeSelector: {}
+
+affinity: {}
+
 updateStrategy: RollingUpdate
 
 # Override various naming aspects of this chart

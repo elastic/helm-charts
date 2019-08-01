@@ -179,3 +179,31 @@ extraVolumeMounts: |
     assert {'name': 'extras', 'emptyDir': {}} in extraVolume
     extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
     assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
+
+
+def test_adding_a_node_selector():
+    config = '''
+nodeSelector:
+  disktype: ssd
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
+
+
+def test_adding_an_affinity_rule():
+    config = '''
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - metricbeat
+      topologyKey: kubernetes.io/hostname
+'''
+
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
+        'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
