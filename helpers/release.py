@@ -30,6 +30,9 @@ for release in glob.glob('*/*.tgz'):
 for filepath in glob.iglob('*/Chart.yaml'):
     chart = os.path.split(os.path.dirname(filepath))[-1]
 
+    # Download dependencies
+    run(['helm', 'dependency', 'update', chart])
+
     # Package up the chart
     run(['helm', 'package', chart, '--destination', chart])
 
