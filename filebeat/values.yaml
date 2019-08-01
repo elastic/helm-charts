@@ -21,12 +21,12 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-extraVolumeMounts: []
+extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraVolumes: []
+extraVolumes: ""
   # - name: extras
   #   emptyDir: {}
 
