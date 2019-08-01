@@ -67,7 +67,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - "{{ template "uname" .}}"
+                - kibana
             topologyKey: {{ .Values.antiAffinityTopologyKey }}
       {{- else if eq .Values.antiAffinity "soft" }}
         podAntiAffinity:
@@ -80,7 +80,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - "{{ template "uname" . }}"
+                  - kibana
       {{- end }}
       {{- with .Values.nodeAffinity }}
         nodeAffinity:
