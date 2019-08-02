@@ -188,3 +188,31 @@ labels:
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'filebeat'
+
+
+def test_adding_a_node_selector():
+    config = '''
+nodeSelector:
+  disktype: ssd
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
+
+
+def test_adding_an_affinity_rule():
+    config = '''
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - filebeat
+      topologyKey: kubernetes.io/hostname
+'''
+
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
+        'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
