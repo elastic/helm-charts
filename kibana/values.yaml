@@ -1,7 +1,16 @@
----
+image:
+  repository: "docker.elastic.co/kibana/kibana"
+  tag: "7.3.0"
+  pullPolicy: "IfNotPresent"
+  pullSecrets: []
 
-elasticsearchURL: "" # "http://elasticsearch-master:9200"
+# Kibana from version 6.6.0
 elasticsearchHosts: "http://elasticsearch-master:9200"
+# Kibana up to version 6.5.x (here for compatibility reasons)
+elasticsearchURL: "http://elasticsearch-master:9200"
+
+nameOverride: ""
+fullnameOverride: ""
 
 replicas: 1
 
@@ -21,23 +30,23 @@ secretMounts: []
 #    path: /usr/share/kibana/data/kibana.keystore
 #    subPath: kibana.keystore # optional
 
-image: "docker.elastic.co/kibana/kibana"
-imageTag: "7.3.0"
-imagePullPolicy: "IfNotPresent"
-
 # additionals labels
 labels: {}
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
-resources:
-  requests:
-    cpu: "100m"
-    memory: "500m"
-  limits:
-    cpu: "1000m"
-    memory: "1Gi"
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # requests:
+  #   cpu: "100m"
+  #   memory: "500m"
+  # limits:
+  #   cpu: "1000m"
+  #   memory: "1Gi"
 
 protocol: http
 
@@ -120,10 +129,20 @@ readinessProbe:
   successThreshold: 3
   timeoutSeconds: 5
 
-imagePullSecrets: []
+
 nodeSelector: {}
 tolerations: []
 affinity: {}
 
-nameOverride: ""
-fullnameOverride: ""
+# To export a dashboard from a running Kibana 6.3.x use:
+# curl --user <username>:<password> -XGET https://kibana.yourdomain.com:5601/api/kibana/dashboards/export?dashboard=<some-dashboard-uuid> > my-dashboard.json
+# A dashboard is defined by a name and a string with the json payload or the download url
+dashboardImport:
+  enabled: false
+  timeout: 60
+  xpackauth:
+    enabled: false
+    username: myuser
+    password: mypass
+  dashboards: {}
+    # k8s: https://raw.githubusercontent.com/monotek/kibana-dashboards/master/k8s-fluentd-elasticsearch.json

@@ -1,10 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "kibana.fullname" . }}
   labels:
-    app: {{ .Chart.Name }}
-    release: {{ .Release.Name | quote }}
+{{ include "kibana.labels" . | indent 4 }}
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
@@ -14,13 +13,13 @@ spec:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   selector:
     matchLabels:
-      app: kibana
-      release: {{ .Release.Name | quote }}
+      app.kubernetes.io/name: {{ include "kibana.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: kibana
-        release: {{ .Release.Name | quote }}
+        app.kubernetes.io/name: {{ include "kibana.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
@@ -47,8 +46,17 @@ spec:
         {{- if .Values.kibanaConfig }}
         - name: kibanaconfig
           configMap:
-            name: {{ template "fullname" . }}-config
+            name: {{ template "kibana.fullname" . }}-config
         {{- end }}
+{{- if .Values.dashboardImport.enabled }}
+        - name: {{ template "kibana.fullname" . }}-dashboards
+          configMap:
+            name: {{ template "kibana.fullname" . }}-dashboards
+        - name: {{ template "kibana.fullname" . }}-importscript
+          configMap:
+            name: {{ template "kibana.fullname" . }}-importscript
+            defaultMode: 0777
+{{- end }}        
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
@@ -61,21 +69,21 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    {{- if .Values.imagePullSecrets }}
+    {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{ toYaml .Values.image.pullSecrets | indent 8 }}
     {{- end }}
       containers:
       - name: kibana
         securityContext:
 {{ toYaml .Values.securityContext | indent 10 }}
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: "{{ .Values.image.pullPolicy }}"
         env:
-          {{- if .Values.elasticsearchURL }}
+          {{- if semverCompare "< 6.6.0" .Values.image.tag }}
           - name: ELASTICSEARCH_URL
             value: "{{ .Values.elasticsearchURL }}"
-          {{- else if .Values.elasticsearchHosts }}
+          {{- else }}
           - name: ELASTICSEARCH_HOSTS
             value: "{{ .Values.elasticsearchHosts }}"
           {{- end }}
@@ -121,3 +129,29 @@ spec:
             mountPath: /usr/share/kibana/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
+{{- if .Values.dashboardImport.enabled }}
+      initContainers:
+      - name: {{ .Chart.Name }}-dashboardimport
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        securityContext:
+{{ toYaml .Values.securityContext | indent 10 }}
+        command: ["/bin/bash"]
+        args:
+          - "-c"
+          - "/tmp/dashboardImport.sh"
+        env:
+          {{- if semverCompare "< 6.6.0" .Values.image.tag }}
+          - name: ELASTICSEARCH_URL
+            value: "{{ .Values.elasticsearchURL }}"
+          {{- else }}
+          - name: ELASTICSEARCH_HOSTS
+            value: "{{ .Values.elasticsearchHosts }}"
+          {{- end }}    
+        volumeMounts:
+        - name: {{ template "kibana.fullname" . }}-dashboards
+          mountPath: "/kibanadashboards"
+        - name: {{ template "kibana.fullname" . }}-importscript
+          mountPath: "/tmp/dashboardImport.sh"
+          subPath: dashboardImport.sh
+{{- end }}
