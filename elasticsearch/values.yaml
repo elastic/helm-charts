@@ -90,16 +90,16 @@ persistence:
   enabled: true
   annotations: {}
 
-extraVolumes: []
+extraVolumes: ""
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: []
+extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraInitContainers: []
+extraInitContainers: ""
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
