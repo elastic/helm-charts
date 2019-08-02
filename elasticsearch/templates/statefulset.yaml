@@ -112,7 +112,7 @@ spec:
             name: {{ template "uname" . }}-config
         {{- end }}
       {{- if .Values.extraVolumes }}
-{{ tpl .Values.extraVolumes . | indent 6 }}
+{{ tpl .Values.extraVolumes . | indent 8 }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
