@@ -41,6 +41,9 @@ spec:
       {{- with .Values.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName  }}
+      {{- end }}
       {{- with .Values.affinity }}
       affinity: {{ toYaml . | nindent 8 -}}
       {{- end }}

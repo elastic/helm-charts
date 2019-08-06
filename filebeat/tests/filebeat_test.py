@@ -216,3 +216,18 @@ affinity:
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
         'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+
+def test_priority_class_name():
+    config = '''
+priorityClassName: ""
+'''
+    r = helm_template(config)
+    spec = r['daemonset'][name]['spec']['template']['spec']
+    assert 'priorityClassName' not in spec
+
+    config = '''
+priorityClassName: "highest"
+'''
+    r = helm_template(config)
+    priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
+    assert priority_class_name == "highest"
