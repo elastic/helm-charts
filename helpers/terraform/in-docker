@@ -11,5 +11,6 @@ docker run --rm --interactive \
 	--env HOME=/app \
 	--volume "${PWD}/../../:/app" \
 	--user "$(id -u):$(id -g)" \
+	-v /var/run/docker.sock:/var/run/docker.sock \
 	--workdir "/app/helpers/terraform/" \
 	"helm-charts" "$@"

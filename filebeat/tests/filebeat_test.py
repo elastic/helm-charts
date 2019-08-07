@@ -180,3 +180,54 @@ extraVolumeMounts: |
     assert {'name': 'extras', 'emptyDir': {}} in extraVolume
     extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
     assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
+
+def test_adding_pod_labels():
+    config = '''
+labels:
+  app.kubernetes.io/name: filebeat
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'filebeat'
+
+
+def test_adding_a_node_selector():
+    config = '''
+nodeSelector:
+  disktype: ssd
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
+
+
+def test_adding_an_affinity_rule():
+    config = '''
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - filebeat
+      topologyKey: kubernetes.io/hostname
+'''
+
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
+        'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+
+def test_priority_class_name():
+    config = '''
+priorityClassName: ""
+'''
+    r = helm_template(config)
+    spec = r['daemonset'][name]['spec']['template']['spec']
+    assert 'priorityClassName' not in spec
+
+    config = '''
+priorityClassName: "highest"
+'''
+    r = helm_template(config)
+    priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
+    assert priority_class_name == "highest"

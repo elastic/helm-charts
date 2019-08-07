@@ -16,7 +16,7 @@ roles:
 replicas: 3
 minimumMasterNodes: 2
 
-esMajorVersion: 7
+esMajorVersion: ""
 
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
@@ -43,11 +43,14 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.2.0"
+imageTag: "7.3.0"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
+
+# additionals labels
+labels: {}
 
 esJavaOpts: "-Xmx1g -Xms1g"
 
@@ -87,16 +90,16 @@ persistence:
   enabled: true
   annotations: {}
 
-extraVolumes: []
+extraVolumes: ""
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: []
+extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraInitContainers: []
+extraInitContainers: ""
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
@@ -204,3 +207,6 @@ lifecycle: {}
   # postStart:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+
+sysctlInitContainer:
+  enabled: true

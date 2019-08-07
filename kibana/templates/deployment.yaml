@@ -5,6 +5,9 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
@@ -19,6 +22,9 @@ spec:
         app: kibana
         release: {{ .Release.Name | quote }}
       annotations:
+        {{- range $key, $value := .Values.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
         {{- if .Values.kibanaConfig }}
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
@@ -65,6 +71,7 @@ spec:
         securityContext:
 {{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         env:
           {{- if .Values.elasticsearchURL }}
           - name: ELASTICSEARCH_URL
@@ -106,6 +113,9 @@ spec:
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
+            {{- if .subPath }}
+            subPath: {{ .subPath }}
+            {{- end }}
           {{- end }}
           {{- range $path, $config := .Values.kibanaConfig }}
           - name: kibanaconfig

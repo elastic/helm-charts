@@ -3,18 +3,15 @@ include ../../../helpers/examples.mk
 
 RELEASE := helm-kibana-security
 
-install: secrets
+install:
 	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../ ; \
 
-test: install goss
+test: secrets install goss
 	
 purge:
+	kubectl delete secret kibana || true
 	helm del --purge $(RELEASE)
 
 secrets:
-	kubectl delete secret kibana-certificates || true
-	vault read -field=kibana.crt secret/devops-ci/helm-charts/kibana/security/certificates | base64 --decode > kibana.crt
-	vault read -field=kibana.key secret/devops-ci/helm-charts/kibana/security/certificates | base64 --decode > kibana.key
-	kubectl create secret generic kibana-certificates --from-file=kibana.crt --from-file=kibana.key && \
-	rm -f kibana.crt kibana.key
-
+	encryptionkey=$$(echo $$(docker run --rm docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) /bin/sh -c "< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c50")) && \
+	kubectl create secret generic kibana --from-literal=encryptionkey=$$encryptionkey

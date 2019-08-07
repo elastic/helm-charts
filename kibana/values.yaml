@@ -16,13 +16,20 @@ extraEnvs: []
 # This is useful for mounting certificates for security and for mounting
 # the X-Pack license
 secretMounts: []
-#  - name: elastic-certificates
-#    secretName: elastic-certificates
-#    path: /usr/share/elasticsearch/config/certs
+#  - name: kibana-keystore
+#    secretName: kibana-keystore
+#    path: /usr/share/kibana/data/kibana.keystore
+#    subPath: kibana.keystore # optional
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "7.2.0"
+imageTag: "7.3.0"
 imagePullPolicy: "IfNotPresent"
+
+# additionals labels
+labels: {}
+
+podAnnotations: {}
+  # iam.amazonaws.com/role: es-cluster
 
 resources:
   requests:

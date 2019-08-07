@@ -2,6 +2,7 @@ CHART:
   - elasticsearch
   - kibana
   - filebeat
+  - metricbeat
 ES_SUITE:
   - default
   - multi
@@ -15,6 +16,11 @@ KIBANA_SUITE:
   - security
   - 6.x
 FILEBEAT_SUITE:
+  - default
+  - oss
+  - security
+  - 6.x
+METRICBEAT_SUITE:
   - default
   - oss
   - security

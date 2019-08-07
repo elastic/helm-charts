@@ -21,12 +21,12 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-extraVolumeMounts: []
+extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraVolumes: []
+extraVolumes: ""
   # - name: extras
   #   emptyDir: {}
 
@@ -34,7 +34,7 @@ extraVolumes: []
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.2.0"
+imageTag: "7.3.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -52,6 +52,9 @@ readinessProbe:
 
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
+
+# additionals labels
+labels: {}
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
@@ -86,6 +89,14 @@ secretMounts: []
 terminationGracePeriod: 30
 
 tolerations: []
+
+nodeSelector: {}
+
+affinity: {}
+
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: ""
 
 updateStrategy: RollingUpdate
 

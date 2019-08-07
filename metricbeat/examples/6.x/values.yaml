@@ -1,0 +1,5 @@
+imageTag: 6.8.1
+
+extraEnvs:
+  - name: ELASTICSEARCH_HOSTS
+    value: six-master:9200

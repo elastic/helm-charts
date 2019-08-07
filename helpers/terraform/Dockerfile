@@ -4,9 +4,11 @@ ENV VAULT_VERSION 0.9.3
 ENV TERRAFORM_VERSION=0.11.7
 ENV KUBECTL_VERSION=1.14.1
 ENV HELM_VERSION=2.14.0
+ENV DOCKER_VERSION=18.09.7
 
 RUN yum -y install \
     make \
+    openssl \
     unzip \
     which
 
@@ -36,3 +38,9 @@ RUN curl -O https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}
     mv linux-amd64/helm /usr/local/bin/ && \
     rm -rf linux-amd64 && \
     helm version --client
+
+RUN curl -O https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
+    tar xfv docker* && \
+    mv docker/docker /usr/local/bin && \
+    rm -rf docker/ && \
+    docker

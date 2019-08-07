@@ -333,3 +333,64 @@ def test_override_the_serverHost():
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
     assert c['env'][1]['name'] == 'SERVER_HOST'
     assert c['env'][1]['value'] == 'localhost'
+
+def test_adding_pod_annotations():
+    config = '''
+podAnnotations:
+  iam.amazonaws.com/role: es-role
+'''
+    r = helm_template(config)
+    assert r['deployment'][name]['spec']['template']['metadata']['annotations']['iam.amazonaws.com/role'] == 'es-role'
+
+def test_override_imagePullPolicy():
+    config = ''
+
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['imagePullPolicy'] == 'IfNotPresent'
+
+    config = '''
+    imagePullPolicy: Always
+    '''
+
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    assert c['imagePullPolicy'] == 'Always'
+
+def test_adding_pod_labels():
+     config = '''
+labels:
+  app.kubernetes.io/name: kibana
+'''
+     r = helm_template(config)
+     assert r['deployment'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
+
+def test_adding_a_secret_mount_with_subpath():
+    config = '''
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certs
+    path: /usr/share/elasticsearch/config/certs
+    subPath: cert.crt
+'''
+    r = helm_template(config)
+    d = r['deployment'][name]['spec']['template']['spec']
+    assert d['containers'][0]['volumeMounts'][-1] == {
+        'mountPath': '/usr/share/elasticsearch/config/certs',
+        'subPath': 'cert.crt',
+        'name': 'elastic-certificates'
+    }
+
+def test_adding_a_secret_mount_without_subpath():
+    config = '''
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certs
+    path: /usr/share/elasticsearch/config/certs
+'''
+    r = helm_template(config)
+    d = r['deployment'][name]['spec']['template']['spec']
+    assert d['containers'][0]['volumeMounts'][-1] == {
+        'mountPath': '/usr/share/elasticsearch/config/certs',
+        'name': 'elastic-certificates'
+    }

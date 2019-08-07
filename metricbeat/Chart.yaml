@@ -1,0 +1,11 @@
+description: Official Elastic helm chart for Metricbeat
+home: https://github.com/elastic/helm-charts
+maintainers:
+- email: helm-charts@elastic.co
+  name: Elastic
+name: metricbeat
+version: 7.3.0
+appVersion: 7.3.0
+sources:
+  - https://github.com/elastic/beats
+icon: https://helm.elastic.co/icons/metricbeat.png
