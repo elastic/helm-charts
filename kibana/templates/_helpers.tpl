@@ -48,9 +48,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Create the name of the service account to use
 */}}
 {{- define "kibana.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "kibana.fullname" .) .Values.serviceAccount.name }}
+{{- if .Values.managedServiceAccount.create -}}
+    {{ default (include "kibana.fullname" .) .Values.managedServiceAccount.name }}
 {{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
+    {{ default "default" .Values.managedServiceAccount.name }}
 {{- end -}}
 {{- end -}}
