@@ -94,6 +94,10 @@ nodeSelector: {}
 
 affinity: {}
 
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: ""
+
 updateStrategy: RollingUpdate
 
 # Override various naming aspects of this chart
