@@ -11,7 +11,8 @@ metricbeatConfig:
         - system
         - volume
       period: 10s
-      hosts: ["localhost:10255"]
+      host: "${NODE_NAME}"
+      hosts: ["${NODE_NAME}:10255"]
       processors:
       - add_kubernetes_metadata:
           in_cluster: true
