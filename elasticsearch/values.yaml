@@ -144,6 +144,7 @@ maxUnavailable: 1
 
 podSecurityContext:
   fsGroup: 1000
+  runAsUser: 1000
 
 # The following value is deprecated,
 # please use the above podSecurityContext.fsGroup instead
