@@ -1,7 +1,7 @@
 provider "google" {
   project = "${var.project}"
   region  = "${var.primary_region}"
-  version = "1.13.0"
+  version = "2.13.0"
 }
 
 terraform {
