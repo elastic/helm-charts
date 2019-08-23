@@ -5,6 +5,7 @@ CHART:
   - metricbeat
 ES_SUITE:
   - default
+  - config
   - multi
   - oss
   - security

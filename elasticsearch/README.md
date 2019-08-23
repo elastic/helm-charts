@@ -111,6 +111,7 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.3.0
 | `schedulerName`               | Name of the [alternate scheduler](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods)                                                                                                                                                                          | `nil`                                                                                                                     |
 | `masterTerminationFix`        | A workaround needed for Elasticsearch < 7.2 to prevent master status being lost during restarts [#63](https://github.com/elastic/helm-charts/issues/63)                                                                                                                                                                    | `false`                                                                                                                   |
 | `lifecycle`                   | Allows you to add lifecycle configuration. See [values.yaml](./values.yaml) for an example of the formatting.                                                                                                                                                                                                              | `{}`                                                                                                                      |
+| `keystore`                    | Allows you map Kubernetes secrets into the keystore. See the [config example](/elasticsearch/examples/config/values.yaml) and [how to use the keystore](#how-to-use-the-keystore)                                                                                                                                          | `[]`                                                                                                                      |
 
 ## Try it out
 
@@ -171,18 +172,55 @@ There are a couple reasons we recommend this.
 
 #### How to use the keystore?
 
-1. Create a Kubernetes secret containing the [keystore](https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html)
-   ```
-   $ kubectl create secret generic elasticsearch-keystore --from-file=./elasticsearch.keystore
-   ```
-2. Mount it into the container via `secretMounts`
-   ```
-   secretMounts:
-   - name: elasticsearch-keystore
-     secretName: elasticsearch-keystore
-     path: /usr/share/elasticsearch/config/elasticsearch.keystore
-     subPath: elasticsearch.keystore
-   ```
+
+##### Basic example
+
+Create the secret, the key name needs to be the keystore key path. In this example we will create a secret from a file and from a literal string.
+
+```
+kubectl create secret generic encryption_key --from-file=xpack.watcher.encryption_key=./watcher_encryption_key
+kubectl create secret generic slack_hook --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+```
+
+To add these secrets to the keystore:
+```
+keystore:
+  - secretName: encryption_key
+  - secretName: slack_hook
+```
+
+##### Multiple keys
+
+All keys in the secret will be added to the keystore. To create the previous example in one secret you could also do:
+
+```
+kubectl create secret generic keystore_secrets --from-file=xpack.watcher.encryption_key=./watcher_encryption_key --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+```
+
+```
+keystore:
+  - secretName: keystore_secrets
+```
+
+##### Custom paths and keys
+
+If you are using these secrets for other applications (besides the Elasticsearch keystore) then it is also possible to specify the keystore path and which keys you want to add. Everything specified under each `keystore` item will be passed through to the `volumeMounts` section for [mounting the secret](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets). In this example we will only add the `slack_hook` key from a secret that also has other keys. Our secret looks like this:
+
+```
+kubectl create secret generic slack_secrets --from-literal=slack_channel='#general' --from-literal=slack_hook='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+```
+
+We only want to add the `slack_hook` key to the keystore at path `xpack.notification.slack.account.monitoring.secure_url`.
+
+```
+keystore:
+  - secretName: slack_secrets
+    items:
+    - key: slack_hook
+      path: xpack.notification.slack.account.monitoring.secure_url
+```
+
+You can also take a look at the [config example](/elasticsearch/examples/config/) which is used as part of the automated testing pipeline.
 
 #### How to enable snapshotting?
 

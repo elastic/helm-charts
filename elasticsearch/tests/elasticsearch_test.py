@@ -793,3 +793,109 @@ labels:
 '''
     r = helm_template(config)
     assert r['statefulset'][uname]['metadata']['labels']['app.kubernetes.io/name'] == 'elasticsearch'
+
+def test_keystore_enable():
+    config = ''
+
+    r = helm_template(config)
+    s = r['statefulset'][uname]['spec']['template']['spec']
+
+    assert s['volumes'] == None
+
+    config = '''
+keystore:
+  - secretName: test
+    '''
+
+    r = helm_template(config)
+    s = r['statefulset'][uname]['spec']['template']['spec']
+
+    assert {'name': 'keystore', 'emptyDir': {}} in s['volumes']
+
+def test_keystore_init_container():
+    config = ''
+
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][-1]
+
+    assert i['name'] != 'keystore'
+
+    config = '''
+keystore:
+  - secretName: test
+    '''
+
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][-1]
+
+    assert i['name'] == 'keystore'
+
+def test_keystore_mount():
+    config = '''
+keystore:
+  - secretName: test
+'''
+
+    r = helm_template(config)
+    s = r['statefulset'][uname]['spec']['template']['spec']
+    assert s['containers'][0]['volumeMounts'][-1] == {
+        'mountPath': '/usr/share/elasticsearch/config/elasticsearch.keystore',
+        'subPath': 'elasticsearch.keystore',
+        'name': 'keystore'
+    }
+
+def test_keystore_init_volume_mounts():
+    config = '''
+keystore:
+  - secretName: test
+  - secretName: test-with-custom-path
+    items:
+    - key: slack_url
+      path: xpack.notification.slack.account.otheraccount.secure_url
+'''
+    r = helm_template(config)
+    s = r['statefulset'][uname]['spec']['template']['spec']
+    assert s['initContainers'][-1]['volumeMounts'] == [
+            {
+              'mountPath': '/tmp/keystore',
+              'name': 'keystore'
+            },
+            {
+              'mountPath': '/tmp/keystoreSecrets/test',
+              'name': 'keystore-test'
+            },
+            {
+              'mountPath': '/tmp/keystoreSecrets/test-with-custom-path',
+              'name': 'keystore-test-with-custom-path'
+            }
+    ]
+
+def test_keystore_volumes():
+    config = '''
+keystore:
+  - secretName: test
+  - secretName: test-with-custom-path
+    items:
+    - key: slack_url
+      path: xpack.notification.slack.account.otheraccount.secure_url
+'''
+    r = helm_template(config)
+    s = r['statefulset'][uname]['spec']['template']['spec']
+
+    assert {
+             'name': 'keystore-test',
+             'secret': {
+                 'secretName': 'test'
+             }
+           } in s['volumes']
+
+    assert {
+             'name': 'keystore-test-with-custom-path',
+             'secret': {
+                 'secretName': 'test-with-custom-path',
+                 'items': [{
+                     'key': 'slack_url',
+                     'path': 'xpack.notification.slack.account.otheraccount.secure_url'
+                 }]
+             }
+           } in s['volumes']
