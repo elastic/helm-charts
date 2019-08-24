@@ -86,6 +86,14 @@ volumeClaimTemplate:
     requests:
       storage: 30Gi
 
+rbac:
+  create: false
+  serviceAccountName: ""
+
+podSecurityPolicy:
+  create: false
+  name: ""
+
 persistence:
   enabled: true
   annotations: {}
