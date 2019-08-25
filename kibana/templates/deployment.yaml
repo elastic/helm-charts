@@ -35,11 +35,6 @@ spec:
 {{- end }}
       securityContext:
 {{ toYaml .Values.podSecurityContext | indent 8 }}
-      {{- if .Values.serviceAccount }}
-      serviceAccount: {{ .Values.serviceAccount }}
-      {{- else if .Values.managedServiceAccount.create }}
-      serviceAccount: {{ .Values.managedServiceAccount }}
-      {{- end }}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
@@ -67,7 +62,11 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
     {{- end }}
+      {{- if .Values.serviceAccount }}
+      serviceAccountName: {{ .Values.serviceAccount }}
+      {{- else if .Values.managedServiceAccount.create }}
       serviceAccountName: {{ template "kibana.serviceAccountName" . }}
+      {{- end }}
       containers:
       - name: kibana
         securityContext:
