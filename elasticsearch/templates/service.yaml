@@ -18,13 +18,13 @@ spec:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: "{{ template "uname" . }}"
   ports:
-  - name: http
+  - name: {{ .Values.httpPortName | default "http" }}
     protocol: TCP
     port: {{ .Values.httpPort }}
 {{- if .Values.service.nodePort }}
     nodePort: {{ .Values.service.nodePort }}
 {{- end }}
-  - name: transport
+  - name: {{ .Values.transportPortName | default "transport" }}
     protocol: TCP
     port: {{ .Values.transportPort }}
 ---
