@@ -258,6 +258,15 @@ cd examples/docker-for-mac
 make
 ```
 
+#### KIND - Kubernetes
+
+It is also possible to run this chart using a Kubernetes [KIND (Kubernetes in Docker)](https://github.com/kubernetes-sigs/kind) cluster: 
+
+```
+cd examples/kubernetes-kind
+make
+```
+
 ## Clustering and Node Discovery
 
 This chart facilitates Elasticsearch node discovery and services by creating two `Service` definitions in Kubernetes, one with the name `$clusterName-$nodeGroup` and another named `$clusterName-$nodeGroup-headless`.
