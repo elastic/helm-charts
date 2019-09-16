@@ -101,7 +101,7 @@ spec:
       {{- if .Values.serviceAccount }}
       serviceAccount: {{ .Values.serviceAccount }}
       {{- end }}
-      volumes:
+      volumes:      
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
           secret:
