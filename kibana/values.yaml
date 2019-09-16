@@ -52,6 +52,19 @@ kibanaConfig: {}
 #     key:
 #       nestedkey: value
 
+# List of plugins to install using initContainer
+# NOTE : We notice that lower resource constraints given to the chart + plugins are likely not going to work well.
+plugins:
+  # set to true to enable plugins installation
+  enabled: false
+  # set to true to remove all kibana plugins before installation
+  reset: false
+  # Use <plugin_name,version,url> to add/upgrade plugin
+  values:
+    # - elastalert-kibana-plugin,1.1.0,https://github.com/bitsensor/elastalert-kibana-plugin/releases/download/1.1.0/elastalert-kibana-plugin-1.1.0-7.3.0.zip
+    # - logtrail,0.1.31,https://github.com/sivasamyk/logtrail/releases/download/v0.1.31/logtrail-6.6.0-0.1.31.zip
+    # - other_plugin
+
 # If Pod Security Policy in use it may be required to specify security context as well as service account
 
 podSecurityContext:

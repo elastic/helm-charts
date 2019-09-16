@@ -30,6 +30,69 @@ spec:
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
+{{- if (.Values.plugins.enabled) }}
+      initContainers:
+      - name: kibana-plugins-install
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        command:
+          - /bin/bash
+          - "-c"
+          - |
+            set -e
+            rm -rf plugins/lost+found
+            plugins=(
+            {{- range .Values.plugins.values }}
+            {{ . }}
+            {{- end }}
+            )
+            if {{ .Values.plugins.reset }}
+            then
+              for p in $(./bin/kibana-plugin list | cut -d "@" -f1)
+              do
+                ./bin/kibana-plugin remove ${p}
+              done
+            fi
+            for i in "${plugins[@]}"
+            do
+              IFS=',' read -ra PLUGIN <<< "$i"
+              pluginInstalledCheck=$(./bin/kibana-plugin list | grep "${PLUGIN[0]}" | cut -d '@' -f1 || true)
+              pluginVersionCheck=$(./bin/kibana-plugin list | grep "${PLUGIN[0]}" | cut -d '@' -f2 || true)
+              if [ "${pluginInstalledCheck}" = "${PLUGIN[0]}" ]
+              then
+                if [ "${pluginVersionCheck}" != "${PLUGIN[1]}" ]
+                then
+                  ./bin/kibana-plugin remove "${PLUGIN[0]}"
+                  ./bin/kibana-plugin install "${PLUGIN[2]}"
+                fi
+              else
+                ./bin/kibana-plugin install "${PLUGIN[2]}"
+              fi
+            done
+        env:
+          {{- if .Values.elasticsearchURL }}
+          - name: ELASTICSEARCH_URL
+            value: "{{ .Values.elasticsearchURL }}"
+          {{- else if .Values.elasticsearchHosts }}
+          - name: ELASTICSEARCH_HOSTS
+            value: "{{ .Values.elasticsearchHosts }}"
+          {{- end }}
+          - name: SERVER_HOST
+            value: "{{ .Values.serverHost }}"
+{{- if .Values.extraEnvs }}
+{{ toYaml .Values.extraEnvs | indent 10 }}
+{{- end }}
+        volumeMounts:
+          {{- range $path, $config := .Values.kibanaConfig }}
+          - name: kibanaconfig
+            mountPath: /usr/share/kibana/config/{{ $path }}
+            subPath: {{ $path }}
+          {{- end -}}
+          {{- if .Values.plugins.enabled}}
+          - name: plugins
+            mountPath: /usr/share/kibana/plugins
+          {{- end }}
+{{- end}}
 {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
 {{- end }}
@@ -38,7 +101,7 @@ spec:
       {{- if .Values.serviceAccount }}
       serviceAccount: {{ .Values.serviceAccount }}
       {{- end }}
-      volumes:
+      volumes:      
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
           secret:
@@ -48,6 +111,10 @@ spec:
         - name: kibanaconfig
           configMap:
             name: {{ template "fullname" . }}-config
+        {{- end }}
+        {{- if .Values.plugins.enabled}}
+        - name: plugins
+          emptyDir: {}    
         {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -121,3 +188,7 @@ spec:
             mountPath: /usr/share/kibana/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
+          {{- if .Values.plugins.enabled}}
+          - name: plugins
+            mountPath: /usr/share/kibana/plugins
+          {{- end }}
