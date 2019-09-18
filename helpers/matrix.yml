@@ -5,6 +5,7 @@ CHART:
   - metricbeat
 ES_SUITE:
   - default
+  - config
   - multi
   - oss
   - security
@@ -26,6 +27,6 @@ METRICBEAT_SUITE:
   - security
   - 6.x
 KUBERNETES_VERSION:
-  - '1.11'
   - '1.12'
   - '1.13'
+  - '1.14'

@@ -210,3 +210,5 @@ lifecycle: {}
 
 sysctlInitContainer:
   enabled: true
+
+keystore: []
