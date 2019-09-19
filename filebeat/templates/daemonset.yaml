@@ -65,9 +65,15 @@ spec:
         hostPath:
           path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-{{ .Release.Namespace }}-data
           type: DirectoryOrCreate
+      - name: vardata
+        hostPath:
+          path: /var/data/          
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
+      - name: varlog
+        hostPath:
+          path: /var/log/     
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
@@ -134,14 +140,20 @@ spec:
         {{- end }}
         - name: data
           mountPath: /usr/share/filebeat/data
+        - name: vardata
+          mountPath: /var/data
+          readOnly: true         
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
           readOnly: true
+        - name: varlog
+          mountPath: /var/log
+          readOnly: true            
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
         - name: varrundockersock
           mountPath: /var/run/docker.sock
-          readOnly: true
+          readOnly: true        
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 8 }}
         {{- end }}
