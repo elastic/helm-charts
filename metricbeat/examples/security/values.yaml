@@ -61,7 +61,7 @@ metricbeatConfig:
         - state_pod
         - state_container
       period: 10s
-      hosts: ["${KUBE_STATE_METRICS_HOSTS:kube-state-metrics:8080}"]
+      hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
     output.elasticsearch:
       username: '${ELASTICSEARCH_USERNAME}'
       password: '${ELASTICSEARCH_PASSWORD}'
