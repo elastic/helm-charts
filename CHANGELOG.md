@@ -1,5 +1,52 @@
 # Changelog
 
+## 7.3.2 - 2019/09/19
+
+* 7.3.2 as the default stack version
+* Testing of GKE for 1.11 dropped and 1.14 added [#287](https://github.com/elastic/helm-charts/pull/287))
+* Make helper scripts python3 compatible [#255](https://github.com/elastic/helm-charts/pull/255) [@cclauss](https://github.com/cclauss)
+
+### Elasticsearch
+
+| PR                                                      | Author                                             | Title                                                                       |
+| ------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- |
+| [#238](https://github.com/elastic/helm-charts/pull/238) | [@Crazybus](https://github.com/Crazybus)           | Update documentation and defaults for tmpl values                           |
+| [#245](https://github.com/elastic/helm-charts/pull/245) | [@skitle](https://github.com/skitle)               | Fixed indent on elasticsearch extraVolumes tpl. Was causing parsing errors. |
+| [#250](https://github.com/elastic/helm-charts/pull/250) | [@tanordheim](https://github.com/tanordheim)       | Update priorityClassName default values in READMEs                          |
+| [#261](https://github.com/elastic/helm-charts/pull/261) | [@Crazybus](https://github.com/Crazybus)           | Bump google terraform provider to the latest                                |
+| [#154](https://github.com/elastic/helm-charts/pull/154) | [@Crazybus](https://github.com/Crazybus)           | Keystore integration                                                        |
+| [#290](https://github.com/elastic/helm-charts/pull/290) | [@Crazybus](https://github.com/Crazybus)           | Drop version from chart label in service                                    |
+| [#270](https://github.com/elastic/helm-charts/pull/270) | [@GreenKnight15](https://github.com/GreenKnight15) | ES Variable Port Name                                                       |
+| [#259](https://github.com/elastic/helm-charts/pull/259) | [@Crazybus](https://github.com/Crazybus)           | Set default runAsUser for pod security context                              |
+| [#265](https://github.com/elastic/helm-charts/pull/265) | [@maximelenair](https://github.com/maximelenair)   | Hardening of the pod permissions.                                           |
+
+### Kibana
+
+| PR                                                      | Author                                       | Title                                              |
+| ------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
+| [#250](https://github.com/elastic/helm-charts/pull/250) | [@tanordheim](https://github.com/tanordheim) | Update priorityClassName default values in READMEs |
+| [#268](https://github.com/elastic/helm-charts/pull/268) | [@accek](https://github.com/accek)           | fixed bogus request of 500 millibytes mem          |
+| [#272](https://github.com/elastic/helm-charts/pull/272) | [@rccrdpccl](https://github.com/rccrdpccl)   | use same env variable as application               |
+| [#291](https://github.com/elastic/helm-charts/pull/291) | [@Crazybus](https://github.com/Crazybus)     | Explicitly test for a 200 for readinessProbe       |
+
+### Filebeat
+
+| PR                                                      | Author                                       | Title                                              |
+| ------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
+| [#243](https://github.com/elastic/helm-charts/pull/243) | [@Crazybus](https://github.com/Crazybus)     | Add configurable nodeSelector and affinity spec    |
+| [#248](https://github.com/elastic/helm-charts/pull/248) | [@tanordheim](https://github.com/tanordheim) | Add priorityClassName to filebeat chart            |
+| [#250](https://github.com/elastic/helm-charts/pull/250) | [@tanordheim](https://github.com/tanordheim) | Update priorityClassName default values in READMEs |
+
+### Metricbeat
+
+| PR                                                      | Author                                   | Title                                                |
+| ------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+| [#243](https://github.com/elastic/helm-charts/pull/243) | [@Crazybus](https://github.com/Crazybus) | Add configurable nodeSelector and affinity spec      |
+| [#251](https://github.com/elastic/helm-charts/pull/251) | [@Crazybus](https://github.com/Crazybus) | Fix default configuration for kubernetes module      |
+| [#289](https://github.com/elastic/helm-charts/pull/289) | [@Crazybus](https://github.com/Crazybus) | Remove default kube static metrics host to avoid co… |
+| [#254](https://github.com/elastic/helm-charts/pull/254) | [@Azuka](https://github.com/Azuka)       | Enable events access to cluster role                 |
+
+
 ## 7.3.0 - 2019/07/31
 
 * 7.3.0 as the default stack version

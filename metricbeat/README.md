@@ -26,14 +26,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.1 | 7.3.0 |
+| 6.8.3 | 7.3.2 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.3.0` of metricbeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.3.2` of metricbeat it would look like this:
 
 ```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.3.0
+helm install --name metricbeat elastic/metricbeat --set imageTag=7.3.2
 ```
 
 
@@ -46,7 +46,7 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.3.0
 | `extraVolumes`           | Templatable string of additional volumes to be passed to the `tpl` function                                                                                                                                                                                                 | `""`                                                                                                                      |
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Metricbeat registry data                                                                                                                             | `/var/lib`                                                                                                                |
 | `image`                  | The Metricbeat docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/beats/metricbeat`                                                                                      |
-| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.3.0`                                                                                                                   |
+| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.3.2`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |

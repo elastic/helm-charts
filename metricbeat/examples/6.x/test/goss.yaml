@@ -29,12 +29,12 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-6.8.1'
+      - 'metricbeat-6.8.3'
   http://six-master:9200/_search?q=metricset.name:container:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-6.8.1'
+      - 'metricbeat-6.8.3'
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
@@ -48,4 +48,4 @@ command:
     exit-status: 0
     stdout:
       - 'elasticsearch: http://six-master:9200'
-      - 'version: 6.8.1'
+      - 'version: 6.8.3'
