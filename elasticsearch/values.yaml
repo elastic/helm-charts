@@ -132,6 +132,8 @@ service:
   type: ClusterIP
   nodePort:
   annotations: {}
+  httpPortName: http
+  transportPortName: transport
 
 updateStrategy: RollingUpdate
 
