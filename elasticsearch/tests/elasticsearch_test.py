@@ -926,9 +926,7 @@ podSecurityPolicy:
     assert r['rolebinding'][uname]['roleRef'] == {"apiGroup": "rbac.authorization.k8s.io", "kind": "Role", "name": uname}
     assert r['statefulset'][uname]['spec']['template']['spec']['serviceAccountName'] == uname
     psp_spec = r['podsecuritypolicy'][uname]['spec']
-    assert psp_spec['allowPrivilegeEscalation'] is True
     assert psp_spec['privileged'] is True
-    assert psp_spec['allowedCapabilities'] == ['*']
 
 
 def test_external_pod_security_policy():
