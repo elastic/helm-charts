@@ -10,19 +10,5 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: {{ $fullName | quote }}
 spec:
-  allowPrivilegeEscalation: true
-  privileged: true
-  allowedCapabilities: ['*']
-  fsGroup:
-    rule: RunAsAny
-  runAsUser:
-    rule: RunAsAny
-  seLinux:
-    rule: RunAsAny
-  supplementalGroups:
-    rule: RunAsAny
-  volumes:
-    - secret
-    - configMap
-    - persistentVolumeClaim
+{{ toYaml .Values.podSecurityPolicy.spec | indent 2 }}
 {{- end -}}

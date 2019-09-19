@@ -3,7 +3,6 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
 import yaml
-import json
 
 clusterName = 'elasticsearch'
 nodeGroup = 'master'
@@ -902,15 +901,7 @@ keystore:
            } in s['volumes']
 def test_pod_security_policy():
     ## Make sure the default config is not creating any resources
-    config = '''
-rbac:
-  create: false
-  serviceAccountName: ""
-
-podSecurityPolicy:
-  create: false
-  name: ""
-'''
+    config = ''
     resources = ('role', 'rolebinding', 'serviceaccount', 'podsecuritypolicy')
     r = helm_template(config)
     for resource in resources:
