@@ -86,6 +86,28 @@ volumeClaimTemplate:
     requests:
       storage: 30Gi
 
+rbac:
+  create: false
+  serviceAccountName: ""
+
+podSecurityPolicy:
+  create: false
+  name: ""
+  spec:
+    privileged: true
+    fsGroup:
+      rule: RunAsAny
+    runAsUser:
+      rule: RunAsAny
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - secret
+      - configMap
+      - persistentVolumeClaim
+
 persistence:
   enabled: true
   annotations: {}
