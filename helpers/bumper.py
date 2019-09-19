@@ -7,11 +7,11 @@ import fileinput
 
 os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
-chart_version = '7.3.0'
+chart_version = '7.3.2'
 
 versions = {
-    6: '6.8.1',
-    7: '7.3.0',
+    6: '6.8.3',
+    7: '7.3.2',
 }
 
 file_patterns = [
