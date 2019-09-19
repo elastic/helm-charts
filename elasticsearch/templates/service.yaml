@@ -6,7 +6,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}"
     app: "{{ template "uname" . }}"
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
@@ -15,7 +15,7 @@ spec:
   selector:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}"
     app: "{{ template "uname" . }}"
   ports:
   - name: http
@@ -35,7 +35,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}"
     app: "{{ template "uname" . }}"
   annotations:
     service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
