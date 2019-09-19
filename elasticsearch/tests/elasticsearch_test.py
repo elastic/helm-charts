@@ -142,7 +142,9 @@ def test_defaults():
 
     # Other
     assert r['statefulset'][uname]['spec']['template']['spec']['securityContext'] == {
-        'fsGroup': 1000}
+        'fsGroup': 1000,
+        'runAsUser': 1000
+    }
     assert r['statefulset'][uname]['spec']['template']['spec']['terminationGracePeriodSeconds'] == 120
 
     # Pod disruption budget
@@ -743,6 +745,7 @@ def test_set_pod_security_context():
     config = ''
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['securityContext']['fsGroup'] == 1000
+    assert r['statefulset'][uname]['spec']['template']['spec']['securityContext']['runAsUser'] == 1000
 
     config = '''
     podSecurityContext:
