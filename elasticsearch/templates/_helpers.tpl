@@ -28,8 +28,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "endpoints" -}}
-{{- $replicas := .replicas | int }}
-{{- $uname := printf "%s-%s" .clusterName .nodeGroup }}
+{{- $replicas := .Values.replicas | int }}
+{{- $uname := printf "%s-%s" .Values.clusterName .Values.nodeGroup }}
   {{- range $i, $e := untilStep 0 $replicas 1 -}}
 {{ $uname }}-{{ $i }},
   {{- end -}}
