@@ -5,8 +5,8 @@ include ../../../helpers/examples.mk
 RELEASE := helm-es-security
 
 install:
-	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../ ; \
-	
+	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../
+
 purge:
 	kubectl delete secrets elastic-credentials elastic-certificates elastic-certificate-pem || true
 	helm del --purge $(RELEASE)
