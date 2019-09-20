@@ -1,4 +1,7 @@
 ---
 
-fsGroup: null
-runAsUser: null
+podSecurityContext:
+  fsGroup: null
+
+securityContext:
+  runAsUser: null
