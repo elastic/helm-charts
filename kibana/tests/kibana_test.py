@@ -394,3 +394,15 @@ secretMounts:
         'mountPath': '/usr/share/elasticsearch/config/certs',
         'name': 'elastic-certificates'
     }
+
+def test_adding_lifecycle_events():
+    config = '''
+lifecycle:
+    postStart:
+        exec:
+            command: ['/bin/true']
+'''
+    r = helm_template(config)
+    d = r['deployment'][name]['spec']['template']['spec']
+    p = d['containers'][0]['lifecycle']['postStart']
+    assert p['exec']['command'][0] == '/bin/true'
