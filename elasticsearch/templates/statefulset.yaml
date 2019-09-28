@@ -1,5 +1,5 @@
 ---
-apiVersion: apps/v1beta1
+apiVersion: {{ template "elasticsearch.statefulset.apiVersion" . }}
 kind: StatefulSet
 metadata:
   name: {{ template "uname" . }}
