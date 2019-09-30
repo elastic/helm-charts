@@ -6,7 +6,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
 
 ## Requirements
 
-* Kubernetes >= 1.8
+* Kubernetes >= 1.9
 * [Helm](https://helm.sh/) >= 2.8.0
 
 ## Usage notes and getting started
