@@ -161,7 +161,7 @@ spec:
           done
 
           # Add the bootstrap password since otherwise the Elasticsearch entrypoint tries to do this on startup
-          [ ! -z "$ELASTIC_PASSWORD" ] && echo "$ELASTIC_PASSWORD" | elasticsearch-keystore add -x bootstrap.password
+          [ ! -z ${ELASTIC_PASSWORD+x} ] && echo "$ELASTIC_PASSWORD" | elasticsearch-keystore add -x bootstrap.password
 
           cp -a /usr/share/elasticsearch/config/elasticsearch.keystore /tmp/keystore/
         env: {{ toYaml .Values.extraEnvs | nindent 10 }}
