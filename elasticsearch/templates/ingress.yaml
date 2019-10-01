@@ -2,7 +2,7 @@
 {{- $fullName := include "uname" . -}}
 {{- $servicePort := .Values.httpPort -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: extensions/v1beta1
+apiVersion: {{ template "elasticsearch.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
