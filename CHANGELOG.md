@@ -1,9 +1,46 @@
 # Changelog
 
+## 7.4.0 - 2019/10/01
+
+* 7.4.0 as the default stack version
+* Helm-tester Docker image migrated to Python 3 in [#297](https://github.com/elastic/helm-charts/pull/297) [@jmlrt](https://github.com/jmlrt)
+* Helm-tester Python dependencies freeze in [#309](https://github.com/elastic/helm-charts/pull/309) [@jmlrt](https://github.com/jmlrt)
+
+### Elasticsearch
+
+| PR                                                      | Author                                             | Title                                                                               |
+| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
+|[#296](https://github.com/elastic/helm-charts/pull/296)  | [@jmlrt](https://github.com/jmlrt)                 | Fix "; \" when there is no additional command in the Makefiles                      |
+|[#298](https://github.com/elastic/helm-charts/pull/298)  | [@floretan](https://github.com/floretan)           | Make it possible to override the endpoint template.                                 |
+|[#263](https://github.com/elastic/helm-charts/pull/263)  | [@Crazybus](https://github.com/Crazybus)           | Add working examples for running Elasticsearch and Kibana on OpenShift              |
+|[#301](https://github.com/elastic/helm-charts/pull/301)  | [@ravishivt](https://github.com/ravishivt)         | Fix bug in keystore initContainer                                                   |
+
+### Kibana
+
+| PR                                                      | Author                                             | Title                                                                               |
+| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
+|[#295](https://github.com/elastic/helm-charts/pull/295)  | [@karlbohlmark](https://github.com/karlbohlmark)   | Allow configuring lifecycle events                                                  |
+|[#263](https://github.com/elastic/helm-charts/pull/263)  | [@Crazybus](https://github.com/Crazybus)           | Add working examples for running Elasticsearch and Kibana on OpenShift              |
+|[#303](https://github.com/elastic/helm-charts/pull/303)  | [@code-chris](https://github.com/code-chris)       | Add compatibility for k8s 1.16 and change min k8s version due to ingress apiVersion |
+
+
+### Filebeat
+
+| PR                                                      | Author                                             | Title                                                                               |
+| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
+|[#304](https://github.com/elastic/helm-charts/pull/304)  | [@code-chris](https://github.com/code-chris)       | Change min k8s version due to daemonset apiVersion                                  |
+
+### Metricbeat
+
+| PR                                                      | Author                                             | Title                                                                               |
+| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
+|[#305](https://github.com/elastic/helm-charts/pull/305)  | [@code-chris](https://github.com/code-chris)       | Change min k8s version due to used apiVersions                                      |
+
+
 ## 7.3.2 - 2019/09/19
 
 * 7.3.2 as the default stack version
-* Testing of GKE for 1.11 dropped and 1.14 added [#287](https://github.com/elastic/helm-charts/pull/287))
+* Testing of GKE for 1.11 dropped and 1.14 added [#287](https://github.com/elastic/helm-charts/pull/287)
 * Make helper scripts python3 compatible [#255](https://github.com/elastic/helm-charts/pull/255) [@cclauss](https://github.com/cclauss)
 
 ### Elasticsearch
@@ -176,14 +213,14 @@
 
 ### Elasticsearch
 
-* [#100](https://github.com/elastic/helm-charts/pull/100) - @kuisathaverat - Remove deprecated zen ping unicast hosts setting 
+* [#100](https://github.com/elastic/helm-charts/pull/100) - @kuisathaverat - Remove deprecated zen ping unicast hosts setting
 * [#114](https://github.com/elastic/helm-charts/pull/114) - @Crazybus - Make persistent volumes optional
 * [#115](https://github.com/elastic/helm-charts/pull/115) - @Crazybus - Added an integration test for upgrading from the previous release and testing rolling upgrades
 
 
 ### Kibana
 
-* [#107](https://github.com/elastic/helm-charts/pull/107) - @Crazybus - Make the health check path configurable to support webroots and other customizations. 
+* [#107](https://github.com/elastic/helm-charts/pull/107) - @Crazybus - Make the health check path configurable to support webroots and other customizations.
 
 ---
 ## 7.0.0-alpha1 - 2019/04/17
@@ -203,7 +240,7 @@ esMajorVersion: 6
 imageTag: 6.7.1
 ```
 
-If you are upgrading an existing cluster that did not override the default `storageClassName` you will now need to specify the `storageClassName`. This only affects existing clusters and was changed in https://github.com/elastic/helm-charts/pull/94. The advantage of this is that now the helm chart will just use the default storageClassName rather than needing to override it for any providers where it is not called `standard`. 
+If you are upgrading an existing cluster that did not override the default `storageClassName` you will now need to specify the `storageClassName`. This only affects existing clusters and was changed in https://github.com/elastic/helm-charts/pull/94. The advantage of this is that now the helm chart will just use the default storageClassName rather than needing to override it for any providers where it is not called `standard`.
 
 ```
 volumeClaimTemplate:
