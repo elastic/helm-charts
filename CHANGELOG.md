@@ -34,6 +34,7 @@
 
 | PR                                                      | Author                                             | Title                                                                               |
 | ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [#310](https://github.com/elastic/helm-charts/pull/310) | [@Crazybus](https://github.com/Crazybus)           | Make cluster role rules configurable                                                |
 |[#305](https://github.com/elastic/helm-charts/pull/305)  | [@code-chris](https://github.com/code-chris)       | Change min k8s version due to used apiVersions                                      |
 
 
