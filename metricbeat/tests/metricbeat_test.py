@@ -207,3 +207,26 @@ affinity:
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
         'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+
+def test_cluster_role_rules():
+    config = ''
+    r = helm_template(config)
+    rules = r['clusterrole']['release-name-metricbeat-cluster-role']['rules'][0]
+    assert rules['apiGroups'][0] == 'extensions'
+    assert rules['verbs'][0]     == 'get'
+    assert rules['resources'][0] == 'namespaces'
+
+    config = '''
+clusterRoleRules:
+  - apiGroups:
+    - "someone"
+    verbs:
+    - "or"
+    resources:
+    - "something"
+'''
+    r = helm_template(config)
+    rules = r['clusterrole']['release-name-metricbeat-cluster-role']['rules'][0]
+    assert rules['apiGroups'][0] == 'someone'
+    assert rules['verbs'][0]     == 'or'
+    assert rules['resources'][0] == 'something'
