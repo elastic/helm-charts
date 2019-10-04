@@ -189,6 +189,21 @@ nodeSelector:
     assert r['daemonset'][name]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
 
 
+def test_host_networking():
+    config = '''
+hostNetworking: true    
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['hostNetwork'] is True
+    assert r['deployment']['release-name-metricbeat-metrics']['spec']['template']['spec']['hostNetwork'] is True
+    config = '''
+hostNetworking: false    
+'''
+    r = helm_template(config)
+    assert 'hostNetwork' not in r['daemonset'][name]['spec']['template']['spec']
+    assert 'hostNetwork' not in r['deployment']['release-name-metricbeat-metrics']['spec']['template']['spec']
+
+
 def test_adding_an_affinity_rule():
     config = '''
 affinity:

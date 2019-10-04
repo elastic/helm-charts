@@ -7,6 +7,10 @@ metricbeatConfig:
       hostfs: /hostfs
     metricbeat.modules:
     - module: kubernetes
+      labels.dedot: true
+      annotations.dedot: true
+      add_metadata: true
+      in_cluster: true
       metricsets:
         - container
         - node
@@ -14,12 +18,25 @@ metricbeatConfig:
         - system
         - volume
       period: 10s
+      # This config is how metricbeat talks to the kubelet. There are two ports available-
+      # 10255 for read-only / insecure comms and 10250 for tls comms. Depending on your k8s
+      # config, you may need to use the commented config with port 10250 and the ssl secrets
+      # The final consideration is the hostname- ${NODE_NAME} needs to be dns resolvable.
+      # with host networking, localhost could work here on 10255- but the certs on 10250
+      # will be rejected with the `localhost` hostname (unless you set verify = false)
       host: "${NODE_NAME}"
       hosts: ["${NODE_NAME}:10255"]
-      processors:
-      - add_kubernetes_metadata:
-          in_cluster: true
+      # hosts: ["https://${NODE_NAME}:10250"]
+      # bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      # ssl.certificate_authorities:
+      #   - /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     - module: kubernetes
+      add_metadata: true
+      in_cluster: true
+      # without the `dedot` settings, annotations or labels such as `kubernetes.io: some-annotation`
+      # will not validate
+      labels.dedot: true
+      annotations.dedot: true
       enabled: true
       metricsets:
         - event
@@ -50,21 +67,29 @@ metricbeatConfig:
   kube-state-metrics-metricbeat.yml: |
     metricbeat.modules:
     - module: kubernetes
+      labels.dedot: true
+      annotations.dedot: true
+      add_metadata: true
+      in_cluster: true
       enabled: true
       metricsets:
         - state_node
         - state_deployment
         - state_replicaset
+        - state_statefulset
         - state_pod
         - state_container
       period: 10s
+      host: ${NODE_NAME}
       hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
     output.elasticsearch:
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
 # Replicas being used for the kube-state-metrics metricbeat deployment
-
 replicas: 1
+
+# Use host networking so that metricbeat can get hostname and talk to kubelet
+hostNetworking: true
 
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
