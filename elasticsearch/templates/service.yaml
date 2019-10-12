@@ -27,6 +27,11 @@ spec:
   - name: {{ .Values.service.transportPortName | default "transport" }}
     protocol: TCP
     port: {{ .Values.transportPort }}
+{{- if .Values.service.loadBalancerIP }}
+  # enables you to choose a specific IP address for the load balancer. 
+  # ignored if your cloud provider doesnt support that option
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }} 
+{{- end }}
 ---
 kind: Service
 apiVersion: v1
