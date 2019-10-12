@@ -2,7 +2,6 @@ import os
 import sys
 sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
-import yaml
 
 project = 'filebeat'
 name = 'release-name-' + project
@@ -85,6 +84,20 @@ updateStrategy: OnDelete
 
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['updateStrategy']['type'] == 'OnDelete'
+
+
+def test_host_networking():
+    config = '''
+hostNetworking: true    
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['hostNetwork'] is True
+    config = '''
+hostNetworking: false    
+'''
+    r = helm_template(config)
+    assert 'hostNetwork' not in r['daemonset'][name]['spec']['template']['spec']
+
 
 def test_setting_a_custom_service_account():
     config = '''
