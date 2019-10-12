@@ -72,7 +72,7 @@ spec:
         hostPath:
           path: /var/run/docker.sock
       {{- if .Values.extraVolumes }}
-{{ tpl .Values.extraVolumes . | indent 6 }}
+{{ toYaml .Values.extraVolumes | indent 6 }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -143,5 +143,5 @@ spec:
           mountPath: /var/run/docker.sock
           readOnly: true
         {{- if .Values.extraVolumeMounts }}
-{{ tpl .Values.extraVolumeMounts . | indent 8 }}
+{{ toYaml .Values.extraVolumeMounts | indent 8 }}
         {{- end }}

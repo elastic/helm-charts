@@ -167,10 +167,10 @@ secretMounts:
 
 def test_adding_a_extra_volume_with_volume_mount():
     config = '''
-extraVolumes: |
+extraVolumes:
   - name: extras
     emptyDir: {}
-extraVolumeMounts: |
+extraVolumeMounts:
   - name: extras
     mountPath: /usr/share/extras
     readOnly: true
