@@ -1,0 +1,27 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: "{{ template "fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: "{{ template "fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.httpPort }}
+{{- if .Values.service.nodePort }}
+    nodePort: {{ .Values.service.nodePort }}
+{{- end }}
