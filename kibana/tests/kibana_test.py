@@ -406,3 +406,16 @@ lifecycle:
     d = r['deployment'][name]['spec']['template']['spec']
     p = d['containers'][0]['lifecycle']['postStart']
     assert p['exec']['command'][0] == '/bin/true'
+
+def test_setting_fullnameOverride():
+    config = '''
+fullnameOverride: 'kibana-custom'
+'''
+    r = helm_template(config)
+
+    custom_name = 'kibana-custom'
+    assert custom_name in r['deployment']
+    assert custom_name in r['service']
+
+    assert r['service'][custom_name]['spec']['ports'][0]['port'] == 5601
+    assert r['deployment'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == 'kibana'
