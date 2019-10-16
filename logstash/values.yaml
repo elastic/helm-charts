@@ -133,14 +133,7 @@ nodeAffinity: {}
 # the same time when bootstrapping the cluster
 podManagementPolicy: "Parallel"
 
-protocol: http
 httpPort: 9600
-
-service:
-  type: ClusterIP
-  port: 9600
-  nodePort:
-  annotations: {}
 
 updateStrategy: RollingUpdate
 
@@ -191,21 +184,6 @@ schedulerName: ""
 
 nodeSelector: {}
 tolerations: []
-
-# Enabling this will publically expose your Logstash instance.
-# Only enable this if you have security enabled on your cluster
-ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  path: /
-  hosts:
-    - chart-example.local
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 nameOverride: ""
 fullnameOverride: ""
