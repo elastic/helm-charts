@@ -3,6 +3,8 @@
 elasticsearchURL: "" # "http://elasticsearch-master:9200"
 elasticsearchHosts: "http://elasticsearch-master:9200"
 
+waitForService: ""
+
 replicas: 1
 
 # Extra environment variables to append to this nodeGroup
@@ -127,3 +129,6 @@ lifecycle: {}
   # postStart:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+
+# Wait for elasticsearch 
+waitForService: "elasticsearch-master"
