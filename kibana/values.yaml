@@ -3,6 +3,7 @@
 elasticsearchURL: "" # "http://elasticsearch-master:9200"
 elasticsearchHosts: "http://elasticsearch-master:9200"
 
+# If set, wait for service DNS resolution to start pod
 waitForService: ""
 
 replicas: 1
@@ -129,6 +130,3 @@ lifecycle: {}
   # postStart:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-
-# Wait for elasticsearch 
-waitForService: "elasticsearch-master"
