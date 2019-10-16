@@ -131,3 +131,9 @@ spec:
             mountPath: /usr/share/kibana/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
+    {{- if .Values.waitForService }}
+      initContainers:
+        - name: init-elasticsearch
+          image: busybox
+          command: ['sh', '-c', 'until nslookup {{ .Values.waitForService }}; do echo waiting for elasticsearch; sleep 2; done;']
+    {{- end }}
