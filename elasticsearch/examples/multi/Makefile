@@ -14,3 +14,4 @@ test: install goss
 purge:
 	helm del --purge $(PREFIX)-master
 	helm del --purge $(PREFIX)-data
+	for pvc in $$(kubectl get pvc -o name | grep $(PREFIX)); do kubectl delete $$pvc; done

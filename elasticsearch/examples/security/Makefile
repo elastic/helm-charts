@@ -10,6 +10,7 @@ install:
 purge:
 	kubectl delete secrets elastic-credentials elastic-certificates elastic-certificate-pem || true
 	helm del --purge $(RELEASE)
+	for pvc in $$(kubectl get pvc -o name | grep $(RELEASE)); do kubectl delete $$pvc; done
 
 test: secrets install goss
 

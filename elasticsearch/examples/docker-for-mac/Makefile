@@ -10,3 +10,4 @@ test: install
 
 purge:
 	helm del --purge $(RELEASE)
+	for pvc in $$(kubectl get pvc -o name | grep $(RELEASE)); do kubectl delete $$pvc; done
