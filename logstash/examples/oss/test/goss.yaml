@@ -19,10 +19,10 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-default-logstash-0"'
+      - '"host" : "helm-logstash-oss-logstash-0"'
       - '"version" : "7.4.0"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-default-logstash-0"'
+      - '"name" : "helm-logstash-oss-logstash-0"'
       - '"status" : "green"'
       - '"workers" : 1'
       - '"batch_size" : 125'
@@ -37,7 +37,6 @@ file:
     filetype: file
     contains:
       - 'http.host: "0.0.0.0"'
-      - 'xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]'
   /usr/share/logstash/pipeline/logstash.conf:
     exists: true
     mode: "0644"
