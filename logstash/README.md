@@ -17,6 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 * The chart deploys a statefulset and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. If you prefer to update manually you can set [`updateStrategy: OnDelete`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#on-delete)
 * It is important to verify that the JVM heap size in `logstashJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
 * We have designed this chart to be very un-opinionated about how to configure Logstash. It exposes ways to set environment variables and mount secrets inside of the container. Doing this makes it much easier for this chart to support multiple versions with minimal changes.
+* `logstash.yml` configuration files can be set either by a ConfigMap using `logstashConfig` in `values.yml` or by environment variables using `extraEnvs` in `values.yml`, however Logstash Docker image can't mix both methods as defining settings with environment variables causes `logstash.yml` to be modified in place while using ConfigMap bind-mount the same file (more details in this [Note](https://www.elastic.co/guide/en/logstash/6.7/docker-config.html#docker-env-config)).
 
 ## Installing
 

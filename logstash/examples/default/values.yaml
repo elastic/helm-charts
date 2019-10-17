@@ -1,10 +1,7 @@
-extraEnvs:
-  - name: XPACK_MONITORING_ENABLED
-    value: "false"
-
-#logstashConfig:
-#  logstash.yml: |
-#    xpack.monitoring.enabled: false
+logstashConfig:
+  logstash.yml: |
+    http.host: 0.0.0.0
+    xpack.monitoring.enabled: false
 
 logstashPipeline:
   uptime.conf: |

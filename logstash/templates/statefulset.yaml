@@ -146,10 +146,12 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
+{{- if not ".Values.logstashConfig.logstash.yml" }}
           - name: node.name
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
+{{- end}}
           - name: LS_JAVA_OPTS
             value: "{{ .Values.logstashJavaOpts }}"
 {{- if .Values.extraEnvs }}
