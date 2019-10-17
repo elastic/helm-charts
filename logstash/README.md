@@ -90,3 +90,27 @@ helm install --name logstash elastic/logstash --set imageTag=7.4.0
 | `updateStrategy`              | The [updateStrategy](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets) for the statefulset. By default Kubernetes will wait for the cluster to be green after upgrading each pod. Setting this to `OnDelete` will allow you to manually delete each pod during upgrades | `RollingUpdate`                                                                                                           |
 | `volumeClaimTemplate`         | Configuration for the [volumeClaimTemplate for statefulsets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage). You will want to adjust the storage (default `30Gi`) and the `storageClassName` if you are using a different storage class                                            | `accessModes: [ "ReadWriteOnce" ]`<br>`resources.requests.storage: 1Gi`                                                   |
 | `rbac`                        | Configuration for creating a role, role binding and service account as part of this helm chart with `create: true`. Also can be used to reference an external service account with `serviceAccountName: "externalServiceAccountName"`.                                                                                     | `create: false`<br>`serviceAccountName: ""`                                                                               |
+
+## Try it out
+
+In [examples/](./examples) you will find some example configurations. These examples are used for the automated testing of this helm chart
+
+### Default
+
+To deploy a cluster with all default values and run the integration tests
+
+```
+cd examples/default
+make
+```
+
+## Integration Testing
+
+Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](examples/default/test/goss.yaml) for an example of what the tests look like.
+
+To run the goss tests against the default example:
+
+```
+cd examples/default
+make goss
+```
