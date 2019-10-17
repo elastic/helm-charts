@@ -35,6 +35,11 @@ http:
       - '"workers" : 1'
       - '"batch_size" : 125'
       - '"batch_delay" : 50'
+  http://elasticsearch-master:9200/_cat/indices:
+    status: 200
+    timeout: 2000
+    body:
+      - 'logstash'
 
 file:
   /usr/share/logstash/config/logstash.yml:
@@ -55,4 +60,4 @@ file:
     filetype: file
     contains:
       - 'input { exec { command => "uptime" interval => 30 } }'
-      - 'output { stdout { } }'
+      - 'output { elasticsearch { hosts => ["http://elasticsearch-master:9200"] index => "logstash" } }'

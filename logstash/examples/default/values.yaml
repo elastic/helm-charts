@@ -6,4 +6,4 @@ logstashConfig:
 logstashPipeline:
   uptime.conf: |
     input { exec { command => "uptime" interval => 30 } }
-    output { stdout { } }
+    output { elasticsearch { hosts => ["http://elasticsearch-master:9200"] index => "logstash" } }
