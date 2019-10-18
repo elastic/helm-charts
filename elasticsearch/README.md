@@ -15,7 +15,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 ## Usage notes and getting started
 
 * This repo includes a number of [example](./examples) configurations which can be used as a reference. They are also used in the automated testing of this chart
-* Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine). If you are using a different Kubernetes provider you will likely need to adjust the `storageClassName` in the `volumeClaimTemplate`
+* Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine).
 * The chart deploys a statefulset and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. If you prefer to update manually you can set [`updateStrategy: OnDelete`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#on-delete)
 * It is important to verify that the JVM heap size in `esJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
 * To simplify chart and maintenance each set of node groups is deployed as a separate helm release. Take a look at the [multi](./examples/multi) example to get an idea for how this works. Without doing this it isn't possible to resize persistent volumes in a statefulset. By setting it up this way it makes it possible to add more nodes with a new storage size then drain the old ones. It also solves the problem of allowing the user to determine which node groups to update first when doing upgrades or changes.
