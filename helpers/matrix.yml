@@ -3,6 +3,7 @@ CHART:
   - kibana
   - filebeat
   - metricbeat
+  - logstash
 ES_SUITE:
   - default
   - config
@@ -26,6 +27,10 @@ METRICBEAT_SUITE:
   - oss
   - security
   - 6.x
+LOGSTASH_SUITE:
+  - default
+  - oss
+  - elasticsearch
 KUBERNETES_VERSION:
   - '1.12'
   - '1.13'

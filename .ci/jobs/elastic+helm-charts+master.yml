@@ -35,6 +35,8 @@
           current-parameters: true
         - name: elastic+helm-charts+master+integration-metricbeat
           current-parameters: true
+        - name: elastic+helm-charts+master+integration-logstash
+          current-parameters: true
     publishers:
     - trigger-parameterized-builds:
       - project: elastic+helm-charts+master+cluster-cleanup
