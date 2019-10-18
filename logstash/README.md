@@ -103,6 +103,27 @@ cd examples/default
 make
 ```
 
+## Testing
+
+This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](../requirements.txt) in the parent directory.
+
+```
+pip install -r ../requirements.txt
+make pytest
+```
+
+You can also use `helm template` to look at the YAML being generated
+
+```
+make template
+```
+
+It is possible to run all of the tests and linting inside of a docker container
+
+```
+make test
+```
+
 ## Integration Testing
 
 Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](examples/default/test/goss.yaml) for an example of what the tests look like.
