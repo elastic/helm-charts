@@ -12,9 +12,6 @@ metadata:
 data:
 {{- range $path, $config := .Values.logstashConfig }}
   {{ $path }}: |
-{{- if (eq $path "logstash.yml") }}
-    node.name: {{ template "fullname" $ }}
-{{- end }}
 {{ $config | indent 4 -}}
 {{- end -}}
 {{- end -}}

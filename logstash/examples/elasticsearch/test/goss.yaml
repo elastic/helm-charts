@@ -49,7 +49,6 @@ file:
     group: logstash
     filetype: file
     contains:
-      - 'node.name: helm-logstash-elasticsearch-logstash'
       - 'http.host: 0.0.0.0'
       - 'xpack.monitoring.enabled: false'
   /usr/share/logstash/pipeline/uptime.conf:
