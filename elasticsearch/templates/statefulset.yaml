@@ -18,7 +18,7 @@ spec:
   selector:
     matchLabels:
       app: "{{ template "uname" . }}"
-  replicas: {{ default .Values.replicas }}
+  replicas: {{ .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
