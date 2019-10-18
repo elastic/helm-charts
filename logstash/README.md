@@ -12,7 +12,7 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 ## Usage notes and getting started
 
 * This repo includes a number of [example](./examples) configurations which can be used as a reference. They are also used in the automated testing of this chart
-* Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine). If you are using a different Kubernetes provider you will likely need to adjust the `storageClassName` in the `volumeClaimTemplate`
+* Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine).
 * The chart deploys a statefulset and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. If you prefer to update manually you can set [`updateStrategy: OnDelete`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#on-delete)
 * It is important to verify that the JVM heap size in `logstashJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
 * We have designed this chart to be very un-opinionated about how to configure Logstash. It exposes ways to set environment variables and mount secrets inside of the container. Doing this makes it much easier for this chart to support multiple versions with minimal changes.
