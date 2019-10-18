@@ -49,7 +49,7 @@ spec:
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
         {{- if .Values.logstashPipeline }}
-        configchecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
+        pipelinechecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
       {{- if .Values.schedulerName }}
