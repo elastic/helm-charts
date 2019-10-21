@@ -161,6 +161,18 @@ extraVolumeMounts: |
     assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
 
 
+def test_adding_a_extra_container():
+    config = '''
+extraContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+'''
+    r = helm_template(config)
+    extraContainer = r['statefulset'][name]['spec']['template']['spec']['containers']
+    assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraContainer
+
+
 def test_adding_a_extra_init_container():
     config = '''
 extraInitContainers: |
