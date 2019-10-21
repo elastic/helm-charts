@@ -73,7 +73,6 @@ def test_defaults():
     assert '/' in c['readinessProbe']['httpGet']['path']
     assert 'http' in c['readinessProbe']['httpGet']['port']
 
-
     # Resources
     assert c['resources'] == {
         'requests': {
@@ -90,6 +89,11 @@ def test_defaults():
     assert 'volumeClaimTemplates' not in r['statefulset'][name]['spec']
     assert r['statefulset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts'] == None
 
+    # Service
+    assert 'serviceName' not in r['statefulset'][name]['spec']
+    assert 'service' not in r
+
+
     # Other
     assert r['statefulset'][name]['spec']['template']['spec']['securityContext'] == {
         'fsGroup': 1000,
@@ -104,8 +108,6 @@ def test_defaults():
     assert 'imagePullSecrets' not in r['statefulset'][name]['spec']['template']['spec']
     assert 'tolerations' not in r['statefulset'][name]['spec']['template']['spec']
     assert 'nodeSelector' not in r['statefulset'][name]['spec']['template']['spec']
-    assert 'service' not in r
-    assert 'ingress' not in r
 
 
 def test_increasing_the_replicas():
@@ -547,3 +549,24 @@ podSecurityPolicy:
     # When referencing an external service account we do not want any resources to be created.
     for resource in resources:
         assert resource not in r
+
+
+def test_adding_a_service():
+    config = '''
+service:
+  annotations: {}
+  type: ClusterIP
+  ports:
+    - name: beats
+      port: 5044
+      protocol: TCP
+      targetPort: 5044
+'''
+    r = helm_template(config)
+    s = r['service'][name]
+    assert s['metadata']['name'] == name
+    assert s['metadata']['annotations'] == {}
+    assert s['spec']['type'] == 'ClusterIP'
+    assert len(s['spec']['ports']) == 1
+    assert s['spec']['ports'][0] == {
+        'name': 'beats', 'port': 5044, 'protocol': 'TCP', 'targetPort': 5044}

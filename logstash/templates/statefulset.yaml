@@ -12,6 +12,9 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
+  {{- if .Values.service }}
+  serviceName: {{ template "fullname" . }}
+  {{- end }}
   selector:
     matchLabels:
       app: "{{ template "fullname" . }}"
