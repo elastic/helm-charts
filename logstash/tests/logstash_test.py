@@ -58,7 +58,7 @@ def test_defaults():
 
     # Health checks
     assert c['livenessProbe']['failureThreshold'] == 3
-    assert c['livenessProbe']['initialDelaySeconds'] == 30
+    assert c['livenessProbe']['initialDelaySeconds'] == 60
     assert c['livenessProbe']['periodSeconds'] == 10
     assert c['livenessProbe']['successThreshold'] == 1
     assert c['livenessProbe']['timeoutSeconds'] == 5
@@ -66,7 +66,7 @@ def test_defaults():
     assert 'http' in c['livenessProbe']['httpGet']['port']
 
     assert c['readinessProbe']['failureThreshold'] == 3
-    assert c['readinessProbe']['initialDelaySeconds'] == 30
+    assert c['readinessProbe']['initialDelaySeconds'] == 60
     assert c['readinessProbe']['periodSeconds'] == 10
     assert c['readinessProbe']['successThreshold'] == 3
     assert c['readinessProbe']['timeoutSeconds'] == 5
