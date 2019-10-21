@@ -51,22 +51,6 @@ resources:
     cpu: "1000m"
     memory: "2Gi"
 
-initResources: {}
-  # limits:
-  #   cpu: "25m"
-  #   # memory: "128Mi"
-  # requests:
-  #   cpu: "25m"
-  #   memory: "128Mi"
-
-sidecarResources: {}
-  # limits:
-  #   cpu: "25m"
-  #   # memory: "128Mi"
-  # requests:
-  #   cpu: "25m"
-  #   memory: "128Mi"
-
 volumeClaimTemplate:
   accessModes: [ "ReadWriteOnce" ]
   resources:
