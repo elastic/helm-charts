@@ -80,7 +80,7 @@ podSecurityPolicy:
       - persistentVolumeClaim
 
 persistence:
-  enabled: true
+  enabled: false
   annotations: {}
 
 extraVolumes: ""

@@ -86,14 +86,9 @@ def test_defaults():
         }
     }
 
-    # Mounts
-    assert c['volumeMounts'][0]['mountPath'] == '/usr/share/logstash/data'
-    assert c['volumeMounts'][0]['name'] == name
-
-    v = r['statefulset']['release-name-logstash']['spec']['volumeClaimTemplates'][0]
-    assert v['metadata']['name'] == name
-    assert v['spec']['accessModes'] == ['ReadWriteOnce']
-    assert v['spec']['resources']['requests']['storage'] == '1Gi'
+    # Persistence
+    assert 'volumeClaimTemplates' not in r['statefulset'][name]['spec']
+    assert r['statefulset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts'] == None
 
     # Other
     assert r['statefulset'][name]['spec']['template']['spec']['securityContext'] == {
@@ -178,9 +173,26 @@ extraInitContainers: |
     assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraInitContainer
 
 
+def test_adding_persistence():
+    config = '''
+persistence:
+  enabled: true
+'''
+    r = helm_template(config)
+    c = r['statefulset'][name]['spec']['template']['spec']['containers'][0]
+    assert c['volumeMounts'][0]['mountPath'] == '/usr/share/logstash/data'
+    assert c['volumeMounts'][0]['name'] == name
+
+    v = r['statefulset']['release-name-logstash']['spec']['volumeClaimTemplates'][0]
+    assert v['metadata']['name'] == name
+    assert v['spec']['accessModes'] == ['ReadWriteOnce']
+    assert v['spec']['resources']['requests']['storage'] == '1Gi'
+
+
 def test_adding_storageclass_annotation_to_volumeclaimtemplate():
     config = '''
 persistence:
+  enabled: true
   annotations:
     volume.beta.kubernetes.io/storage-class: id
 '''
@@ -192,6 +204,7 @@ persistence:
 def test_adding_multiple_persistence_annotations():
     config = '''
     persistence:
+      enabled: true
       annotations:
         hello: world
         world: hello
@@ -357,16 +370,6 @@ logstashPipeline:
     assert 'output { stdout { { } } }' in c['uptime.conf']
 
     assert 'pipelinechecksum' in r['statefulset'][name]['spec']['template']['metadata']['annotations']
-
-
-def test_dont_add_data_volume_when_persistance_is_disabled():
-    config = '''
-persistence:
-  enabled: false
-'''
-    r = helm_template(config)
-    assert 'volumeClaimTemplates' not in r['statefulset'][name]['spec']
-    assert r['statefulset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts'] == None
 
 
 def test_priority_class_name():

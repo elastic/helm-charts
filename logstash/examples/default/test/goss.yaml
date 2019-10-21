@@ -4,10 +4,6 @@ port:
     ip:
     - '0.0.0.0'
 
-mount:
-  /usr/share/logstash/data:
-    exists: true
-
 user:
   logstash:
     exists: true
