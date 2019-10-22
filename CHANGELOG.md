@@ -1,5 +1,33 @@
 # Changelog
 
+## 7.4.1 - 2019/10/22
+
+* 7.4.1 as the default stack version
+* 6.8.4 as 6.x tested version
+
+### Elasticsearch
+
+| PR                                                      | Author                                    | Title                                        |
+| ------------------------------------------------------- | ----------------------------------------- | -------------------------------------------- |
+|[#313](https://github.com/elastic/helm-charts/pull/313) | [@Crazybus](https://github.com/Crazybus)   | Add logging when adding password to keystore |
+|[#301](https://github.com/elastic/helm-charts/pull/301) | [@ravishivt](https://github.com/ravishivt) | Fix bug in keystore initContainer            |
+|[#274](https://github.com/elastic/helm-charts/pull/274) | [@salaboy](https://github.com/salaboy)     | Add Example for Kubernetes KIND              |
+|[#335](https://github.com/elastic/helm-charts/pull/335) | [@jmlrt](https://github.com/jmlrt)         | Fix deprecated note                          |
+|[#337](https://github.com/elastic/helm-charts/pull/337) | [@jmlrt](https://github.com/jmlrt)         | Remove unused default value                  |
+
+### Kibana
+
+| PR                                                     | Author                             | Title                           |
+| ------------------------------------------------------ | ---------------------------------- | ------------------------------- |
+|[#326](https://github.com/elastic/helm-charts/pull/326) | [@jmlrt](https://github.com/jmlrt) | Remove unused antiAffinity keys |
+
+### Metricbeat
+
+| PR                                                     | Author                             | Title                                                  |
+| ------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------ |
+|[#339](https://github.com/elastic/helm-charts/pull/339) | [@jmlrt](https://github.com/jmlrt) | Allow adding additional labels to Metricbeat Daemonset |
+
+
 ## 7.4.0 - 2019/10/01
 
 * 7.4.0 as the default stack version
@@ -101,7 +129,7 @@
 | [#225](https://github.com/elastic/helm-charts/pull/225) | [@plumcraft](https://github.com/plumcraft) | Add configurable pod labels         |
 | [#230](https://github.com/elastic/helm-charts/pull/230) | [@Crazybus](https://github.com/Crazybus)   | Add subPath support to secretMounts |
 
----
+
 ## 7.2.1-0 - 2019/07/18
 
 * [#195](https://github.com/elastic/helm-charts/pull/195) - @cclauss - Initial steps started to move all python2 code to python3
@@ -131,7 +159,7 @@
 * [#127](https://github.com/elastic/helm-charts/pull/127) - @Crazybus - Add metricbeat chart
 * [#128](https://github.com/elastic/helm-charts/pull/128) - @Crazybus - Add ci jobs for metricbeat
 
----
+
 ## 7.2.0 - 2019/07/01
 
 * 7.2.0 as the default stack version
@@ -148,7 +176,6 @@
 * [#186](https://github.com/elastic/helm-charts/pull/186) - @Crazybus - Fix pvc annotations with multiple fields
 * [#189](https://github.com/elastic/helm-charts/pull/189) - @gnatpat - Add resources to sidecar container
 
-
 ### Kibana
 
 * [#160](https://github.com/elastic/helm-charts/pull/160) - @Crazybus - Add configurable nodePort to the service spec
@@ -162,7 +189,7 @@
 * [#182](https://github.com/elastic/helm-charts/pull/182) - @hxquangnhat - Fix secretName field for secretMounts
 * [#188](https://github.com/elastic/helm-charts/pull/188) - @cclauss - Fix octal literal to work in both Python 2 and Python 3
 
----
+
 ## 7.1.1 - 2019/06/07
 
 * 7.1.1 as the default stack version
@@ -180,7 +207,7 @@
 
 * [#140](https://github.com/elastic/helm-charts/pull/140) - @Crazybus - Remove fsGroup from container level security context
 
----
+
 ## 7.1.0 - 2019/05/21
 
 * 7.1.0 as the default stack version
@@ -204,7 +231,7 @@
 * [#121](https://github.com/elastic/helm-charts/pull/121) - @Crazybus - Add integration tests and other tweaks
 * [#129](https://github.com/elastic/helm-charts/pull/129) - @tylerjl - Add usage notes for filebeat
 
----
+
 ## 7.0.1-alpha1 - 2019/05/01
 
 * 7.0.1 as the default stack version
@@ -218,12 +245,11 @@
 * [#114](https://github.com/elastic/helm-charts/pull/114) - @Crazybus - Make persistent volumes optional
 * [#115](https://github.com/elastic/helm-charts/pull/115) - @Crazybus - Added an integration test for upgrading from the previous release and testing rolling upgrades
 
-
 ### Kibana
 
 * [#107](https://github.com/elastic/helm-charts/pull/107) - @Crazybus - Make the health check path configurable to support webroots and other customizations.
 
----
+
 ## 7.0.0-alpha1 - 2019/04/17
 
 * [#96](https://github.com/elastic/helm-charts/pull/96) - @Crazybus - 7.0.0 as the default stack version
