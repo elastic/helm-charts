@@ -1,3 +1,4 @@
+apiVersion: v1
 description: Official Elastic helm chart for Kibana
 home: https://github.com/elastic/helm-charts
 maintainers:
