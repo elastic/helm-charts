@@ -102,6 +102,9 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 5
 
+# additionals labels
+labels: {}
+
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
