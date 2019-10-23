@@ -4,7 +4,7 @@
 
 * 7.4.1 as the default stack version
 * 6.8.4 as 6.x tested version
-* Helm 2.15.1 support in [#309](https://github.com/elastic/helm-charts/pull/309) [@jmlrt](https://github.com/jmlrt)
+* Helm 2.15.1 support in [#338](https://github.com/elastic/helm-charts/pull/338) [@jmlrt](https://github.com/jmlrt)
 
 ### Elasticsearch
 
