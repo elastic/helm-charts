@@ -7,7 +7,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
 ## Requirements
 
 * Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0
+* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
 
 ## Usage notes and getting started
 * The default Filebeat configuration file for this chart is configured to use an Elasticsearch endpoint. Without any additional changes, Filebeat will send documents to the service URL that the Elasticsearch helm chart sets up by default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in `extraEnvs` to override this endpoint or modify the default `filebeatConfig` to change this behavior.

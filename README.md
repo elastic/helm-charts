@@ -19,5 +19,7 @@ Please look in the chart directories for the documentation for each chart. These
 
 The charts are [currently tested](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) against all GKE versions available. The exact versions are defined under `KUBERNETES_VERSIONS` in [helpers/matrix.yml](/helpers/matrix.yml)
 
+## Helm versions
 
-
+While we are checking backward compatibility, the charts are only tested with Helm version mentioned in [helm-tester Dockerfile](helpers/helm-tester/Dockerfile) (currently 2.15.1).
+Note that we don't support [Helm 3](https://v3.helm.sh/) version.

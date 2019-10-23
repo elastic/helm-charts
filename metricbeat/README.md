@@ -7,7 +7,7 @@ This helm chart is a lightweight way to configure and run our official [Metricbe
 ## Requirements
 
 * Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0
+* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
 
 ## Installing
 

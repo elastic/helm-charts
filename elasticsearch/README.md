@@ -6,7 +6,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 
 ## Requirements
 
-* [Helm](https://helm.sh/) >= 2.8.0
+* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
 * Kubernetes >= 1.8
 * Minimum cluster requirements include the following to run this chart with default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
