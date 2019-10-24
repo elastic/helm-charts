@@ -16,7 +16,7 @@ http:
     timeout: 2000
     body:
       - '"host" : "helm-logstash-default-logstash-0"'
-      - '"version" : "7.4.0"'
+      - '"version" : "7.4.1"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"name" : "helm-logstash-default-logstash-0"'
       - '"status" : "green"'
