@@ -659,6 +659,43 @@ def test_adding_a_nodePort():
 
     assert r['service'][uname]['spec']['ports'][0]['nodePort'] == 30001
 
+
+def test_adding_a_label_on_non_headless_service():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'label1' not in r['service'][uname]['metadata']['labels']
+    
+    config = '''
+    service:
+      labels:
+        label1: value1
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][uname]['metadata']['labels']['label1'] == 'value1'
+
+
+
+def test_adding_a_label_on_headless_service():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'label1' not in r['service'][uname + '-headless']['metadata']['labels']
+    
+    config = '''
+    service:
+      labelsHeadless:
+        label1: value1
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][uname + '-headless']['metadata']['labels']['label1'] == 'value1'
+
 def test_master_termination_fixed_enabled():
     config = ''
 
