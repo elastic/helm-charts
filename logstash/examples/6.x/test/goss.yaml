@@ -1,9 +1,3 @@
-port:
-  tcp:9600:
-    listening: true
-    ip:
-    - '0.0.0.0'
-
 user:
   logstash:
     exists: true
