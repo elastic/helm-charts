@@ -354,6 +354,19 @@ sysctlInitContainer:
     initContainers = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
     assert initContainers[0]['name'] == 'configure-sysctl'
 
+def test_sysctl_init_container_image():
+    config = '''
+image: customImage
+imageTag: 6.2.4
+imagePullPolicy: Never
+sysctlInitContainer:
+  enabled: true
+'''
+    r = helm_template(config)
+    initContainers = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
+    assert initContainers[0]['image'] == 'customImage:6.2.4'
+    assert initContainers[0]['imagePullPolicy'] == 'Never'
+
 def test_adding_storageclass_annotation_to_volumeclaimtemplate():
     config = '''
 persistence:
@@ -869,6 +882,19 @@ keystore:
     i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][-1]
 
     assert i['name'] == 'keystore'
+
+def test_keystore_init_container_image():
+    config = '''
+image: customImage
+imageTag: 6.2.4
+imagePullPolicy: Never
+keystore:
+  - secretName: test
+'''
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][-1]
+    assert i['image'] == 'customImage:6.2.4'
+    assert i['imagePullPolicy'] == 'Never'
 
 def test_keystore_mount():
     config = '''
