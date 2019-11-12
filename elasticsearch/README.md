@@ -27,6 +27,8 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
 
 ## Installing
 
+### Using Helm repository
+
 * Add the elastic helm charts repo
   ```
   helm repo add elastic https://helm.elastic.co
@@ -34,6 +36,17 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
 * Install it
   ```
   helm install --name elasticsearch elastic/elasticsearch
+  ```
+
+### Using master branch
+
+* Clone the git repo
+  ```
+  git clone git@github.com:elastic/helm-charts.git
+  ```
+* Install it
+  ```
+  helm install --name elasticsearch ./helm-charts/elasticsearch
   ```
 
 ## Compatibility
@@ -89,7 +102,7 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.1
 | `podManagementPolicy`         | By default Kubernetes [deploys statefulsets serially](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies). This deploys them in parallel so that they can discover eachother                                                                                                   | `Parallel`                                                                                                                |
 | `protocol`                    | The protocol that will be used for the readinessProbe. Change this to `https` if you have `xpack.security.http.ssl.enabled` set                                                                                                                                                                                            | `http`                                                                                                                    |
 | `httpPort`                    | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#_settings) in `extraEnvs`                                                                          | `9200`                                                                                                                    |
-| `transportPort`               | The transport port that Kubernetes will use for the service. If you change this you will also need to set [transport port configuration](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#_transport_settings) in `extraEnvs`                                                        | `9300`                                                                                                                    |                     
+| `transportPort`               | The transport port that Kubernetes will use for the service. If you change this you will also need to set [transport port configuration](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#_transport_settings) in `extraEnvs`                                                        | `9300`                                                                                                                    |
 | `service.labels`              | Labels to be added to non-headless service                                                                                                                                                                                                                                                                                 | `{}`                                                                                                                      |
 | `service.labelsHeadless`      | Labels to be added to headless service                                                                                                                                                                                                                                                                                     | `{}`                                                                                                                      |
 | `service.type`                | Type of elasticsearch service. [Service Types](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)                                                                                                                                                                         | `ClusterIP`                                                                                                               |
