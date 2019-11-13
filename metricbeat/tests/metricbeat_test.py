@@ -239,3 +239,13 @@ labels:
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'metricbeat'
+
+def test_adding_env_from():
+    config = '''
+envFrom:
+- configMapRef:
+    name: configmap-name
+'''
+    r = helm_template(config)
+    envFrom = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom']
+    assert envFrom ['configMapRef'][0] == {'name': 'configmap-name'}

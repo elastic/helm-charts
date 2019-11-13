@@ -231,3 +231,13 @@ priorityClassName: "highest"
     r = helm_template(config)
     priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
+
+def test_adding_env_from():
+    config = '''
+envFrom:
+- configMapRef:
+    name: configmap-name
+'''
+    r = helm_template(config)
+    envFrom = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom']
+    assert envFrom ['configMapRef'][0] == {'name': 'configmap-name'}
