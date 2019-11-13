@@ -21,10 +21,6 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-envFrom: []
-# - configMapRef:
-#     name: configmap-name
-
 extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
@@ -33,6 +29,10 @@ extraVolumeMounts: ""
 extraVolumes: ""
   # - name: extras
   #   emptyDir: {}
+
+envFrom: []
+# - configMapRef:
+#     name: configmap-name
 
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
