@@ -22,5 +22,5 @@ The charts are [currently tested](https://devops-ci.elastic.co/job/elastic+helm-
 
 ## Helm versions
 
-While we are checking backward compatibility, the charts are only tested with Helm version mentioned in [helm-tester Dockerfile](helpers/helm-tester/Dockerfile) (currently 2.15.2).
+While we are checking backward compatibility, the charts are only tested with Helm version mentioned in [helm-tester Dockerfile](helpers/helm-tester/Dockerfile) (currently 2.16.1).
 Note that we don't support [Helm 3](https://v3.helm.sh/) version.
