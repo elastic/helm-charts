@@ -21,6 +21,10 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
+extraEnvFrom: ""
+  # - configMapRef:
+  #     name: config-secret
+
 extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
