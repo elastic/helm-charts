@@ -239,5 +239,5 @@ envFrom:
     name: configmap-name
 '''
     r = helm_template(config)
-    envFrom = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom']
-    assert envFrom ['configMapRef'][0] == {'name': 'configmap-name'}
+    configMapRef = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom'][0]['configMapRef']
+    assert configMapRef == {'name': 'configmap-name'}

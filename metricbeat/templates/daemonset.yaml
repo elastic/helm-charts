@@ -115,9 +115,9 @@ spec:
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 8 }}
 {{- end }}
-{{- if .Values.extraEnvFrom }}
+{{- if .Values.envFrom }}
         envFrom:
-{{ toYaml .Values.extraEnvFrom | indent 10 }}
+{{ toYaml .Values.envFrom | indent 10 }}
 {{- if .Values.podSecurityContext }}
         securityContext:
 {{ toYaml .Values.podSecurityContext | indent 10 }}

@@ -21,9 +21,9 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-extraEnvFrom: ""
-  # - configMapRef:
-  #     name: config-secret
+envFrom: []
+# - configMapRef:
+#     name: configmap-name
 
 extraVolumeMounts: ""
   # - name: extras
