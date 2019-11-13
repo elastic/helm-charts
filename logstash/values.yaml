@@ -46,10 +46,10 @@ logstashJavaOpts: "-Xmx1g -Xms1g"
 resources:
   requests:
     cpu: "100m"
-    memory: "1280Mi"
+    memory: "1536Mi"
   limits:
     cpu: "1000m"
-    memory: "1280Mi"
+    memory: "1536Mi"
 
 volumeClaimTemplate:
   accessModes: [ "ReadWriteOnce" ]
