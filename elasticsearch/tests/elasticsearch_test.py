@@ -354,6 +354,19 @@ sysctlInitContainer:
     initContainers = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
     assert initContainers[0]['name'] == 'configure-sysctl'
 
+def test_sysctl_init_container_image():
+    config = '''
+image: customImage
+imageTag: 6.2.4
+imagePullPolicy: Never
+sysctlInitContainer:
+  enabled: true
+'''
+    r = helm_template(config)
+    initContainers = r['statefulset'][uname]['spec']['template']['spec']['initContainers']
+    assert initContainers[0]['image'] == 'customImage:6.2.4'
+    assert initContainers[0]['imagePullPolicy'] == 'Never'
+
 def test_adding_storageclass_annotation_to_volumeclaimtemplate():
     config = '''
 persistence:
@@ -659,6 +672,43 @@ def test_adding_a_nodePort():
 
     assert r['service'][uname]['spec']['ports'][0]['nodePort'] == 30001
 
+
+def test_adding_a_label_on_non_headless_service():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'label1' not in r['service'][uname]['metadata']['labels']
+    
+    config = '''
+    service:
+      labels:
+        label1: value1
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][uname]['metadata']['labels']['label1'] == 'value1'
+
+
+
+def test_adding_a_label_on_headless_service():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'label1' not in r['service'][uname + '-headless']['metadata']['labels']
+    
+    config = '''
+    service:
+      labelsHeadless:
+        label1: value1
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][uname + '-headless']['metadata']['labels']['label1'] == 'value1'
+
 def test_master_termination_fixed_enabled():
     config = ''
 
@@ -832,6 +882,19 @@ keystore:
     i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][-1]
 
     assert i['name'] == 'keystore'
+
+def test_keystore_init_container_image():
+    config = '''
+image: customImage
+imageTag: 6.2.4
+imagePullPolicy: Never
+keystore:
+  - secretName: test
+'''
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['initContainers'][-1]
+    assert i['image'] == 'customImage:6.2.4'
+    assert i['imagePullPolicy'] == 'Never'
 
 def test_keystore_mount():
     config = '''

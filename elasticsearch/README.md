@@ -6,7 +6,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 
 ## Requirements
 
-* [Helm](https://helm.sh/) >= 2.8.0
+* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
 * Kubernetes >= 1.8
 * Minimum cluster requirements include the following to run this chart with default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
@@ -15,8 +15,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 ## Usage notes and getting started
 
 * This repo includes a number of [example](./examples) configurations which can be used as a reference. They are also used in the automated testing of this chart
-* Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine). If you are using a different Kubernetes provider you will likely need to adjust the `storageClassName` in the `volumeClaimTemplate`
-* The default storage class for GKE is `standard` which by default will give you `pd-ssd` type persistent volumes. This is network attached storage and will not perform as well as local storage. If you are using Kubernetes version 1.10 or greater you can use [Local PersistentVolumes](https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/local-ssd) for increased performance
+* Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine).
 * The chart deploys a statefulset and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. If you prefer to update manually you can set [`updateStrategy: OnDelete`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#on-delete)
 * It is important to verify that the JVM heap size in `esJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
 * To simplify chart and maintenance each set of node groups is deployed as a separate helm release. Take a look at the [multi](./examples/multi) example to get an idea for how this works. Without doing this it isn't possible to resize persistent volumes in a statefulset. By setting it up this way it makes it possible to add more nodes with a new storage size then drain the old ones. It also solves the problem of allowing the user to determine which node groups to update first when doing upgrades or changes.
@@ -28,6 +27,8 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
 
 ## Installing
 
+### Using Helm repository
+
 * Add the elastic helm charts repo
   ```
   helm repo add elastic https://helm.elastic.co
@@ -37,20 +38,31 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   helm install --name elasticsearch elastic/elasticsearch
   ```
 
+### Using master branch
+
+* Clone the git repo
+  ```
+  git clone git@github.com:elastic/helm-charts.git
+  ```
+* Install it
+  ```
+  helm install --name elasticsearch ./helm-charts/elasticsearch
+  ```
+
 ## Compatibility
 
 This chart is tested with the latest supported versions. The currently tested versions are:
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.3 | 7.4.0 |
+| 6.8.4 | 7.4.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.0` of Elasticsearch it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.0
+helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.1
 ```
 
 ## Configuration
@@ -71,7 +83,7 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.0
 | `extraInitContainers`         | Templatable string of additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                        | `""`                                                                                                                      |
 | `secretMounts`                | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `[]`                                                                                                                      |
 | `image`                       | The Elasticsearch docker image                                                                                                                                                                                                                                                                                             | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                    | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.4.0`                                                                                                                   |
+| `imageTag`                    | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.4.1`                                                                                                                   |
 | `imagePullPolicy`             | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `podAnnotations`              | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Elasticsearch pods                                                                                                                                                                               | `{}`                                                                                                                      |
 | `labels`                      | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Elasticsearch pods                                                                                                                                                                                          | `{}`                                                                                                                      |
@@ -91,6 +103,8 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.0
 | `protocol`                    | The protocol that will be used for the readinessProbe. Change this to `https` if you have `xpack.security.http.ssl.enabled` set                                                                                                                                                                                            | `http`                                                                                                                    |
 | `httpPort`                    | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#_settings) in `extraEnvs`                                                                          | `9200`                                                                                                                    |
 | `transportPort`               | The transport port that Kubernetes will use for the service. If you change this you will also need to set [transport port configuration](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#_transport_settings) in `extraEnvs`                                                        | `9300`                                                                                                                    |
+| `service.labels`              | Labels to be added to non-headless service                                                                                                                                                                                                                                                                                 | `{}`                                                                                                                      |
+| `service.labelsHeadless`      | Labels to be added to headless service                                                                                                                                                                                                                                                                                     | `{}`                                                                                                                      |
 | `service.type`                | Type of elasticsearch service. [Service Types](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)                                                                                                                                                                         | `ClusterIP`                                                                                                               |
 | `service.nodePort`            | Custom [nodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) port that can be set if you are using `service.type: nodePort`.                                                                                                                                                               | ``                                                                                                                        |
 | `service.annotations`         | Annotations that Kubernetes will use for the service. This will configure load balancer if `service.type` is `LoadBalancer` [Annotations](https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws)                                                                                             | `{}`                                                                                                                      |
@@ -264,7 +278,7 @@ make
 
 #### KIND - Kubernetes
 
-It is also possible to run this chart using a Kubernetes [KIND (Kubernetes in Docker)](https://github.com/kubernetes-sigs/kind) cluster: 
+It is also possible to run this chart using a Kubernetes [KIND (Kubernetes in Docker)](https://github.com/kubernetes-sigs/kind) cluster:
 
 ```
 cd examples/kubernetes-kind
