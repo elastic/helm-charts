@@ -23,7 +23,7 @@ volumeClaimTemplate:
 extraInitContainers: |
   - name: create
     image: busybox:1.28
-    command: ['mkdir', '/usr/share/elasticsearch/data/nodes/']  
+    command: ['mkdir', '-p', '/usr/share/elasticsearch/data/nodes/']
     volumeMounts:
     - mountPath: /usr/share/elasticsearch/data
       name: elasticsearch-master
@@ -33,4 +33,4 @@ extraInitContainers: |
     volumeMounts:
     - mountPath: /usr/share/elasticsearch/data
       name: elasticsearch-master
-      
+
