@@ -67,7 +67,7 @@ spec:
           type: DirectoryOrCreate
       - name: varlibdockercontainers
         hostPath:
-          path: /var/lib/docker/containers
+          path: /data/shared/docker/containers
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
@@ -135,7 +135,7 @@ spec:
         - name: data
           mountPath: /usr/share/filebeat/data
         - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
+          mountPath: /data/shared/docker/containers
           readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
