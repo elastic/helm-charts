@@ -29,8 +29,6 @@ filebeatConfig:
       - add_kubernetes_metadata:
           in_cluster: true
 
-    cloud.id: ${ELASTIC_CLOUD_ID}
-    cloud.auth: ${ELASTIC_CLOUD_AUTH}
     output.elasticsearch:
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
