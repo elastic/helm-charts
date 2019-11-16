@@ -35,7 +35,11 @@ filebeatConfig:
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
+extraEnvs: 
+  - name: NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
