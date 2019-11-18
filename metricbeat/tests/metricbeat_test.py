@@ -239,3 +239,22 @@ labels:
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'metricbeat'
+
+def test_setting_fullnameOverride():
+    config = '''
+fullnameOverride: 'metricbeat-custom'
+'''
+    r = helm_template(config)
+
+    custom_name = 'metricbeat-custom'
+    assert custom_name in r['daemonset']
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == project
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['serviceAccountName'] == name
+    volumes = r['daemonset'][custom_name]['spec']['template']['spec']['volumes']
+    assert {
+               'name': 'data',
+               'hostPath': {
+                   'path': '/var/lib/' + custom_name + '-default-data',
+                   'type': 'DirectoryOrCreate'
+               }
+           } in volumes
