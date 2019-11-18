@@ -43,7 +43,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.4.0"
+imageTag: "7.4.1"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -151,8 +151,10 @@ httpPort: 9200
 transportPort: 9300
 
 service:
+  labels: {}
+  labelsHeadless: {}
   type: ClusterIP
-  nodePort:
+  nodePort: ""
   annotations: {}
   httpPortName: http
   transportPortName: transport

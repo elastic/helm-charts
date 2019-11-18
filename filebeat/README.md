@@ -7,13 +7,15 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
 ## Requirements
 
 * Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0
+* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
 
 ## Usage notes and getting started
 * The default Filebeat configuration file for this chart is configured to use an Elasticsearch endpoint. Without any additional changes, Filebeat will send documents to the service URL that the Elasticsearch helm chart sets up by default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in `extraEnvs` to override this endpoint or modify the default `filebeatConfig` to change this behavior.
 * The default Filebeat configuration file is also configured to capture container logs and enrich them with Kubernetes metadata by default. This will capture all container logs in the cluster.
 
 ## Installing
+
+### Using Helm repository
 
 * Add the elastic helm charts repo
   ```
@@ -24,20 +26,31 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
   helm install --name filebeat elastic/filebeat
   ```
 
+### Using master branch
+
+* Clone the git repo
+  ```
+  git clone git@github.com:elastic/helm-charts.git
+  ```
+* Install it
+  ```
+  helm install --name filebeat ./helm-charts/filebeat
+  ```
+
 ## Compatibility
 
 This chart is tested with the latest supported versions. The currently tested versions are:
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.3 | 7.4.0 |
+| 6.8.4 | 7.4.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.0` of Filebeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Filebeat it would look like this:
 
 ```
-helm install --name filebeat elastic/filebeat --set imageTag=7.4.0
+helm install --name filebeat elastic/filebeat --set imageTag=7.4.1
 ```
 
 
@@ -50,7 +63,7 @@ helm install --name filebeat elastic/filebeat --set imageTag=7.4.0
 | `extraVolumes`           | Templatable string of additional volumes to be passed to the `tpl` function                                                                                                                                                                                                 | `""`                                                                                                                      |
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Filebeat registry data                                                                                                                               | `/var/lib`                                                                                                                |
 | `image`                  | The Filebeat docker image                                                                                                                                                                                                                                                   | `docker.elastic.co/beats/filebeat`                                                                                        |
-| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.4.0`                                                                                                                   |
+| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.4.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |

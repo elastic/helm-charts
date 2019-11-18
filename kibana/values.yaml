@@ -22,7 +22,7 @@ secretMounts: []
 #    subPath: kibana.keystore # optional
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "7.4.0"
+imageTag: "7.4.1"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
@@ -71,14 +71,6 @@ serviceAccount: ""
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
 
-# By default this will make sure two pods don't end up on the same node
-# Changing this to a region would allow you to spread pods across regions
-antiAffinityTopologyKey: "kubernetes.io/hostname"
-
-# Hard means that by default pods will only be scheduled if there are enough nodes for them
-# and that they will never end up on the same node. Setting this to soft will do this "best effort"
-antiAffinity: "hard"
-
 httpPort: 5601
 
 # This is the max unavailable setting for the pod disruption budget
@@ -92,7 +84,7 @@ updateStrategy:
 service:
   type: ClusterIP
   port: 5601
-  nodePort:
+  nodePort: ""
   annotations: {}
     # cloud.google.com/load-balancer-type: "Internal"
     # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0

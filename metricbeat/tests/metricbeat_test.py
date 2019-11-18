@@ -231,6 +231,15 @@ clusterRoleRules:
     assert rules['verbs'][0]     == 'or'
     assert rules['resources'][0] == 'something'
 
+
+def test_adding_pod_labels():
+    config = '''
+labels:
+  app.kubernetes.io/name: metricbeat
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'metricbeat'
+
 def test_setting_fullnameOverride():
     config = '''
 fullnameOverride: 'metricbeat-custom'
