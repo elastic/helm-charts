@@ -137,7 +137,7 @@ spec:
         securityContext:
           runAsUser: 0
           privileged: true
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        image: busybox:latest
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
         resources:
