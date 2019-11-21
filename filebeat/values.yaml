@@ -12,6 +12,7 @@ filebeatConfig:
           in_cluster: true
 
     output.elasticsearch:
+      host: '${NODE_NAME}'
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
 # Extra environment variables to append to the DaemonSet pod spec.
@@ -32,7 +33,7 @@ extraVolumes: ""
 
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
-
+hostNetworking: true
 image: "docker.elastic.co/beats/filebeat"
 imageTag: "7.4.1"
 imagePullPolicy: "IfNotPresent"
