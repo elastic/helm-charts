@@ -7,9 +7,11 @@ This helm chart is a lightweight way to configure and run our official [Metricbe
 ## Requirements
 
 * Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0
+* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
 
 ## Installing
+
+### Using Helm repository
 
 * Add the elastic helm charts repo
   ```
@@ -20,20 +22,31 @@ This helm chart is a lightweight way to configure and run our official [Metricbe
   helm install --name metricbeat elastic/metricbeat
   ```
 
+### Using master branch
+
+* Clone the git repo
+  ```
+  git clone git@github.com:elastic/helm-charts.git
+  ```
+* Install it
+  ```
+  helm install --name metricbeat ./helm-charts/metricbeat
+  ```
+
 ## Compatibility
 
 This chart is tested with the latest supported versions. The currently tested versions are:
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.3 | 7.4.0 |
+| 6.8.4 | 7.4.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.0` of metricbeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of metricbeat it would look like this:
 
 ```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.4.0
+helm install --name metricbeat elastic/metricbeat --set imageTag=7.4.1
 ```
 
 
@@ -46,9 +59,10 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.4.0
 | `extraVolumes`           | Templatable string of additional volumes to be passed to the `tpl` function                                                                                                                                                                                                 | `""`                                                                                                                      |
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Metricbeat registry data                                                                                                                             | `/var/lib`                                                                                                                |
 | `image`                  | The Metricbeat docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/beats/metricbeat`                                                                                      |
-| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.4.0`                                                                                                                   |
+| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.4.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
+| `labels`                 | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Metricbeat pods                                                                                                                                              | `{}`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |
 | `clusterRoleRules`       | Configurable [cluster role rules](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole) that Metricbeat uses to access Kubernetes resources.                                                                                                  | see [values.yaml](./values.yaml)                                                                                          |
 | `podAnnotations`         | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Metricbeat pods                                                                                                                                   | `{}`                                                                                                                      |
@@ -64,6 +78,7 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.4.0
 | `affinity`               | Configurable [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                                                                                                                      | `{}`                                                                                                                      |
 | `updateStrategy`         | The [updateStrategy](https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy) for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually. | `RollingUpdate`                                                                                                           |
 | `replicas`               | The replica count for the metricbeat deployment talking to kube-state-metrics                                                                                                                                                                                               | `1`                                                                                                                       |
+| `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to "`.Release.Name`-`.Values.nameOverride or .Chart.Name`"                                                                                                                                       | `""`                                                                                                                      |
 
 ## Examples
 

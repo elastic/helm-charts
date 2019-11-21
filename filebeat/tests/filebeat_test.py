@@ -39,7 +39,7 @@ def test_defaults():
     assert {
             'name': 'data',
                 'hostPath': {
-                'path': '/var/lib/release-name-filebeat-default-data',
+                'path': '/var/lib/' + name + '-default-data',
                 'type': 'DirectoryOrCreate'
                 }
            } in volumes
@@ -231,3 +231,22 @@ priorityClassName: "highest"
     r = helm_template(config)
     priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
+
+def test_setting_fullnameOverride():
+    config = '''
+fullnameOverride: 'filebeat-custom'
+'''
+    r = helm_template(config)
+
+    custom_name = 'filebeat-custom'
+    assert custom_name in r['daemonset']
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == project
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['serviceAccountName'] == name
+    volumes = r['daemonset'][custom_name]['spec']['template']['spec']['volumes']
+    assert {
+               'name': 'data',
+               'hostPath': {
+                   'path': '/var/lib/' + custom_name + '-default-data',
+                   'type': 'DirectoryOrCreate'
+               }
+           } in volumes

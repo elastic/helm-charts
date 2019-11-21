@@ -18,7 +18,7 @@ spec:
   selector:
     matchLabels:
       app: "{{ template "uname" . }}"
-  replicas: {{ default .Values.replicas }}
+  replicas: {{ .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
@@ -138,6 +138,7 @@ spec:
           runAsUser: 0
           privileged: true
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command: ["sysctl", "-w", "vm.max_map_count={{ .Values.sysctlVmMaxMapCount}}"]
         resources:
 {{ toYaml .Values.initResources | indent 10 }}
@@ -145,6 +146,7 @@ spec:
 {{ if .Values.keystore }}
       - name: keystore
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command:
         - sh
         - -c

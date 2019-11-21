@@ -86,7 +86,7 @@ extraVolumes: ""
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "7.4.0"
+imageTag: "7.4.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -101,6 +101,9 @@ readinessProbe:
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
+
+# additionals labels
+labels: {}
 
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
