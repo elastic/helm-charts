@@ -2,7 +2,6 @@ import os
 import sys
 sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
-import yaml
 
 project = 'metricbeat'
 name = 'release-name-' + project
@@ -166,10 +165,10 @@ secretMounts:
 
 def test_adding_a_extra_volume_with_volume_mount():
     config = '''
-extraVolumes: |
+extraVolumes:
   - name: extras
     emptyDir: {}
-extraVolumeMounts: |
+extraVolumeMounts:
   - name: extras
     mountPath: /usr/share/extras
     readOnly: true
