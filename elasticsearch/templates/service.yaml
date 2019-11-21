@@ -2,7 +2,15 @@
 kind: Service
 apiVersion: v1
 metadata:
+<<<<<<< HEAD
   name: {{ template "elasticsearch.uname" . }}
+=======
+{{- if eq .Values.nodeGroup "master" }}
+  name: {{ template "masterService" . }}
+{{- else }}
+  name: {{ template "uname" . }}
+{{- end }}
+>>>>>>> Allow for name overrides of resources
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -34,7 +42,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
+{{- if eq .Values.nodeGroup "master" }}
+  name: {{ template "masterService" . }}-headless
+{{- else }}
   name: {{ template "elasticsearch.uname" . }}-headless
+{{- end }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

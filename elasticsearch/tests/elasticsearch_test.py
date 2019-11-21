@@ -1034,3 +1034,23 @@ podSecurityPolicy:
     # When referencing an external service account we do not want any resources to be created.
     for resource in resources:
         assert resource not in r
+
+def test_name_override():
+    ## Make sure we can use a name override
+    config = '''
+nameOverride: "customName"
+'''
+    r = helm_template(config)
+
+    assert "customName-master" in r['statefulset']
+    assert "customName-master" in r['service']
+
+def test_full_name_override():
+    ## Make sure we can use a full name override
+    config = '''
+fullnameOverride: "customfullName"
+'''
+    r = helm_template(config)
+
+    assert "customfullName" in r['statefulset']
+    assert "customfullName" in r['service']
