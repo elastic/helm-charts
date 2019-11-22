@@ -680,7 +680,7 @@ def test_adding_a_label_on_non_headless_service():
     r = helm_template(config)
 
     assert 'label1' not in r['service'][uname]['metadata']['labels']
-    
+
     config = '''
     service:
       labels:
@@ -699,7 +699,7 @@ def test_adding_a_label_on_headless_service():
     r = helm_template(config)
 
     assert 'label1' not in r['service'][uname + '-headless']['metadata']['labels']
-    
+
     config = '''
     service:
       labelsHeadless:
@@ -847,6 +847,7 @@ labels:
 '''
     r = helm_template(config)
     assert r['statefulset'][uname]['metadata']['labels']['app.kubernetes.io/name'] == 'elasticsearch'
+    assert r['statefulset'][uname]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'elasticsearch'
 
 def test_keystore_enable():
     config = ''

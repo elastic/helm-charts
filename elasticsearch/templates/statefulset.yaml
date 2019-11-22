@@ -41,6 +41,9 @@ spec:
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}"
         app: "{{ template "uname" . }}"
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
