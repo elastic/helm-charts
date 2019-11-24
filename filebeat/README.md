@@ -23,7 +23,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
   ```
 * Install it
   ```
-  helm install --name filebeat elastic/filebeat
+  helm install filebeat elastic/filebeat
   ```
 
 ### Using master branch
@@ -34,7 +34,7 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
   ```
 * Install it
   ```
-  helm install --name filebeat ./helm-charts/filebeat
+  helm install filebeat ./helm-charts/filebeat
   ```
 
 ## Compatibility
@@ -50,7 +50,7 @@ Examples of installing older major versions can be found in the [examples](./exa
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Filebeat it would look like this:
 
 ```
-helm install --name filebeat elastic/filebeat --set imageTag=7.4.1
+helm install filebeat elastic/filebeat --set imageTag=7.4.1
 ```
 
 

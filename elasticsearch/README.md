@@ -35,7 +35,7 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   ```
 * Install it
   ```
-  helm install --name elasticsearch elastic/elasticsearch
+  helm install elasticsearch elastic/elasticsearch
   ```
 
 ### Using master branch
@@ -46,7 +46,7 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   ```
 * Install it
   ```
-  helm install --name elasticsearch ./helm-charts/elasticsearch
+  helm install elasticsearch ./helm-charts/elasticsearch
   ```
 
 ## Compatibility
@@ -62,7 +62,7 @@ Examples of installing older major versions can be found in the [examples](./exa
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.1
+helm install elasticsearch elastic/elasticsearch --set imageTag=7.4.1
 ```
 
 ## Configuration

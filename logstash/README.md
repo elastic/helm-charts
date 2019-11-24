@@ -28,7 +28,7 @@ This helm chart is a lightweight way to configure and run our official [Logstash
   ```
 * Install it
   ```
-  helm install --name logstash ./helm-charts/logstash
+  helm install logstash ./helm-charts/logstash
   ```
 
 ## Compatibility
@@ -44,7 +44,7 @@ Examples of installing older major versions can be found in the [examples](./exa
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Logstash it would look like this:
 
 ```
-helm install --name logstash elastic/logstash --set imageTag=7.4.1
+helm install logstash elastic/logstash --set imageTag=7.4.1
 ```
 
 ## Configuration
