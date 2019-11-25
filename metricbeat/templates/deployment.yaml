@@ -51,7 +51,7 @@ spec:
           name: {{ template "fullname" . }}-config
       {{- end }}
       {{- if .Values.extraVolumes }}
-{{ tpl .Values.extraVolumes . | indent 6 }}
+{{ toYaml .Values.extraVolumes | indent 6 }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -118,5 +118,5 @@ spec:
           subPath: {{ $path }}
         {{- end }}
         {{- if .Values.extraVolumeMounts }}
-{{ tpl .Values.extraVolumeMounts . | indent 8 }}
+{{ toYaml .Values.extraVolumeMounts | indent 8 }}
         {{- end }}

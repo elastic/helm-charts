@@ -2,7 +2,6 @@ import os
 import sys
 sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
-import yaml
 
 project = 'filebeat'
 name = 'release-name-' + project
@@ -39,7 +38,7 @@ def test_defaults():
     assert {
             'name': 'data',
                 'hostPath': {
-                'path': '/var/lib/release-name-filebeat-default-data',
+                'path': '/var/lib/' + name + '-default-data',
                 'type': 'DirectoryOrCreate'
                 }
            } in volumes
@@ -85,6 +84,20 @@ updateStrategy: OnDelete
 
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['updateStrategy']['type'] == 'OnDelete'
+
+
+def test_host_networking():
+    config = '''
+hostNetworking: true    
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['hostNetwork'] is True
+    config = '''
+hostNetworking: false    
+'''
+    r = helm_template(config)
+    assert 'hostNetwork' not in r['daemonset'][name]['spec']['template']['spec']
+
 
 def test_setting_a_custom_service_account():
     config = '''
@@ -167,10 +180,10 @@ secretMounts:
 
 def test_adding_a_extra_volume_with_volume_mount():
     config = '''
-extraVolumes: |
+extraVolumes:
   - name: extras
     emptyDir: {}
-extraVolumeMounts: |
+extraVolumeMounts:
   - name: extras
     mountPath: /usr/share/extras
     readOnly: true
@@ -241,3 +254,22 @@ envFrom:
     r = helm_template(config)
     configMapRef = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom'][0]['configMapRef']
     assert configMapRef == {'name': 'configmap-name'}
+
+def test_setting_fullnameOverride():
+    config = '''
+fullnameOverride: 'filebeat-custom'
+'''
+    r = helm_template(config)
+
+    custom_name = 'filebeat-custom'
+    assert custom_name in r['daemonset']
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == project
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['serviceAccountName'] == name
+    volumes = r['daemonset'][custom_name]['spec']['template']['spec']['volumes']
+    assert {
+               'name': 'data',
+               'hostPath': {
+                   'path': '/var/lib/' + custom_name + '-default-data',
+                   'type': 'DirectoryOrCreate'
+               }
+           } in volumes
