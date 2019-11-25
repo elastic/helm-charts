@@ -10,8 +10,8 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 chart_version = '7.4.1'
 
 versions = {
-    6: '6.8.4',
-    7: '7.4.1',
+    6: '6.8.5',
+    7: '7.4.2',
 }
 
 file_patterns = [

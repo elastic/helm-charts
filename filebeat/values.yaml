@@ -35,7 +35,7 @@ extraVolumes: []
 hostPathRoot: /var/lib
 hostNetworking: true
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.4.1"
+imageTag: "7.4.2"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 

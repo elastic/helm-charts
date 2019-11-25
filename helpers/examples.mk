@@ -1,7 +1,7 @@
 GOSS_VERSION := v0.3.6
 GOSS_FILE ?= goss.yaml
 GOSS_SELECTOR ?= release=$(RELEASE)
-STACK_VERSION := 7.4.1
+STACK_VERSION := 7.4.2
 
 goss:
 	GOSS_CONTAINER=$$(kubectl get --no-headers=true pods -l $(GOSS_SELECTOR) -o custom-columns=:metadata.name | sed -n 1p ) && \
