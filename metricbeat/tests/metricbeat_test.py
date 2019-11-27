@@ -6,6 +6,7 @@ from helpers import helm_template
 
 project = "metricbeat"
 name = "release-name-" + project
+kube_state_metric_name = "release-name-kube-state-metrics"
 
 
 def test_defaults():
@@ -16,6 +17,14 @@ def test_defaults():
 
     assert name in r["daemonset"]
     assert name + "-metrics" in r["deployment"]
+
+    assert kube_state_metric_name in r["deployment"]
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "env"
+        ][1]["value"]
+        == "$(RELEASE_NAME_KUBE_STATE_METRICS_SERVICE_HOST):$(RELEASE_NAME_KUBE_STATE_METRICS_SERVICE_PORT_HTTP)"
+    )
 
     c = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
     assert c["name"] == project
@@ -1182,3 +1191,41 @@ deployment:
     r = helm_template(config)
 
     assert name + "-metrics" not in r.get("deployment", {})
+
+
+def test_do_not_install_kube_stat_metrics():
+    config = """
+kube_state_metrics:
+  enabled: false
+"""
+    r = helm_template(config)
+
+    assert kube_state_metric_name not in r["deployment"]
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "env"
+        ][1]["name"]
+        == "KUBE_STATE_METRICS_HOSTS"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "env"
+        ][1]["value"]
+        == "kube-state-metrics:8080"
+    )
+
+
+def test_custom_kube_stat_metrics_host():
+    config = """
+kube_state_metrics:
+  enabled: false
+  host: "kube-state-metrics.kube-system:9999"
+"""
+    r = helm_template(config)
+
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "env"
+        ][1]["value"]
+        == "kube-state-metrics.kube-system:9999"
+    )
