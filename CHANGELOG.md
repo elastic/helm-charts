@@ -1,5 +1,55 @@
 # Changelog
 
+## 7.5.0 - 2019/12/02
+
+* 7.5.0 as the default stack version
+* 6.8.5 as 6.x tested version in [#386](https://github.com/elastic/helm-charts/pull/386) [@jmlrt](https://github.com/jmlrt)
+* Helm 2.16.1 support in [#366](https://github.com/elastic/helm-charts/pull/366) [@jmlrt](https://github.com/jmlrt)
+* Add Beats icons to Helm repository in [#345](https://github.com/elastic/helm-charts/pull/345) [@jmlrt](https://github.com/jmlrt)
+* Make helm-tester docker image build less verbose in [#346](https://github.com/elastic/helm-charts/pull/346) [@jmlrt](https://github.com/jmlrt)
+* Update install doc in [#364](https://github.com/elastic/helm-charts/pull/364)[@jmlrt](https://github.com/jmlrt)
+* Add security notice to github issue template in [#368](https://github.com/elastic/helm-charts/pull/368) [@jmlrt](https://github.com/jmlrt)
+
+### Elasticsearch
+
+| PR                                                      | Author                                               | Title                                                                        |
+| ------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+|[#344](https://github.com/elastic/helm-charts/pull/344)  | [@usamaahmadkhan](https://github.com/usamaahmadkhan) | Add support for labels on services                                           |
+|[#350](https://github.com/elastic/helm-charts/pull/350)  | [@crgstar](https://github.com/crgstar)               | Use same imagePullPolicy in initContainer                                    |
+|[#380](https://github.com/elastic/helm-charts/pull/380)  | [@fatmcgav](https://github.com/fatmcgav)             | Tweak the 'readinessProbe' command to verify that master nodes are available |
+|[#383](https://github.com/elastic/helm-charts/pull/383)  | [@tanakapayam](https://github.com/tanakapayam)       | Apply labels to all pods                                                     |
+
+### Filebeat
+
+| PR                                                     | Author                                           | Title                                                                     |
+| ------------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------- |
+|[#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                  |
+|[#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node informations  |
+|[#322](https://github.com/elastic/helm-charts/pull/322) | [@pbecotte](https://github.com/pbecotte)         | Use a list for extra volume mounts to match the comments and other values |
+
+### Kibana
+
+| PR                                                     | Author                                           | Title                    |
+| ------------------------------------------------------ | -------------------------------------------------| ------------------------ |
+|[#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride |
+
+### Logstash
+
+| PR                                                     | Author                             | Title                                        |
+| ------------------------------------------------------ | ---------------------------------- | -------------------------------------------- |
+|[#333](https://github.com/elastic/helm-charts/pull/333) | [@jmlrt](https://github.com/jmlrt) | First version of logstash helm chart         |
+|[#347](https://github.com/elastic/helm-charts/pull/347) | [@jmlrt](https://github.com/jmlrt) | Remove goss port test                        |
+|[#367](https://github.com/elastic/helm-charts/pull/367) | [@jmlrt](https://github.com/jmlrt) | Update default values for memory requirements|
+
+### Metricbeat
+
+| PR                                                     | Author                                           | Title                                                                                     |
+| ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+|[#352](https://github.com/elastic/helm-charts/pull/352) | [@masterkain](https://github.com/masterkain)     | Bump kube-state-metrics to latest chart and app version                                   |
+|[#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                                  |
+|[#314](https://github.com/elastic/helm-charts/pull/314) | [@pbecotte](https://github.com/pbecotte)         | Add a couple extra mounts to pick up all the metrics from the host nodes on Digital Ocean |
+
+
 ## 7.4.1 - 2019/10/23
 
 * 7.4.1 as the default stack version
