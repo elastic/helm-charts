@@ -7,7 +7,7 @@
 * Helm 2.16.1 support in [#366](https://github.com/elastic/helm-charts/pull/366) [@jmlrt](https://github.com/jmlrt)
 * Add Beats icons to Helm repository in [#345](https://github.com/elastic/helm-charts/pull/345) [@jmlrt](https://github.com/jmlrt)
 * Make helm-tester docker image build less verbose in [#346](https://github.com/elastic/helm-charts/pull/346) [@jmlrt](https://github.com/jmlrt)
-* Update install doc in [#364](https://github.com/elastic/helm-charts/pull/364)[@jmlrt](https://github.com/jmlrt)
+* Update install doc in [#364](https://github.com/elastic/helm-charts/pull/364) [@jmlrt](https://github.com/jmlrt)
 * Add security notice to github issue template in [#368](https://github.com/elastic/helm-charts/pull/368) [@jmlrt](https://github.com/jmlrt)
 
 ### Elasticsearch
