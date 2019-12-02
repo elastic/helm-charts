@@ -37,14 +37,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.5 | 7.4.2 |
+| 6.8.5 | 7.5.0 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.2` of Logstash it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.5.0` of Logstash it would look like this:
 
 ```
-helm install --name logstash elastic/logstash --set imageTag=7.4.2
+helm install --name logstash elastic/logstash --set imageTag=7.5.0
 ```
 
 ## Configuration
@@ -61,7 +61,7 @@ helm install --name logstash elastic/logstash --set imageTag=7.4.2
 | `image`                       | The Logstash docker image                                                                                                                                                                                                                                                                                                  | `docker.elastic.co/logstash/logstash`                                                                                     |
 | `imagePullPolicy`             | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`            | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                       | `[]`                                                                                                                      |
-| `imageTag`                    | The Logstash docker image tag                                                                                                                                                                                                                                                                                              | `7.4.2`                                                                                                                   |
+| `imageTag`                    | The Logstash docker image tag                                                                                                                                                                                                                                                                                              | `7.5.0`                                                                                                                   |
 | `extraInitContainers`         | Templatable string of additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                        | `""`                                                                                                                      |
 | `httpPort`                    | The http port that Kubernetes will use for the healthchecks and the service.                                                                                                                                                                                                                                               | `9600`                                                                                                                    |
 | `labels`                      | Configurable [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Logstash pods                                                                                                                                                                                              | `{}`                                                                                                                      |
