@@ -20,6 +20,16 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 
 ## Installing
 
+### Using Helm repository
+
+* Add the elastic helm charts repo
+  ```
+  helm repo add elastic https://helm.elastic.co
+  ```
+* Install it
+  ```
+  helm install --name logstash elastic/logstash
+
 ### Using master branch
 
 * Clone the git repo
