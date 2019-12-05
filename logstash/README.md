@@ -115,6 +115,28 @@ cd examples/default
 make
 ```
 
+### FAQ
+
+#### How to install plugins?
+
+The [recommended](https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images) way to install plugins into our docker images is to create a custom docker image.
+
+The Dockerfile would look something like:
+
+```
+ARG logstash_version
+FROM docker.elastic.co/logstash/logstash:${logstash_version}
+
+RUN bin/logstash-plugin install logstash-output-kafka
+```
+
+And then updating the `image` in values to point to your custom image.
+
+There are a couple reasons we recommend this.
+
+1. Tying the availability of Logstash to the download service to install plugins is not a great idea or something that we recommend. Especially in Kubernetes where it is normal and expected for a container to be moved to another host at random times.
+2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure.
+
 ## Testing
 
 This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](../requirements.txt) in the parent directory.
