@@ -137,6 +137,44 @@ There are a couple reasons we recommend this.
 1. Tying the availability of Logstash to the download service to install plugins is not a great idea or something that we recommend. Especially in Kubernetes where it is normal and expected for a container to be moved to another host at random times.
 2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure.
 
+#### Why am I missing required field `serviceName` during install?
+
+When executing `helm install`, you may receive an error similar to the following:
+
+```bash
+Error: unable to build kubernetes objects from release manifest: error validating "": error validating data: ValidationError(StatefulSet.spec): missing required field "serviceName" in io.k8s.api.apps.v1.StatefulSetSpec
+```
+
+By default, no services are defined in the `values.yaml` file. This is due to the fact that there are many plugins and many possible use cases for Logstash.
+
+In order to successfully install logstash, at least one service must be defined. This can be done by finding the following section in `values.yaml`:
+
+```yaml
+service: {}
+#  annotations: {}
+#  type: ClusterIP
+#  ports:
+#    - name: beats
+#      port: 5044
+#      protocol: TCP
+#      targetPort: 5044
+#    - name: http
+#      port: 8080
+#      protocol: TCP
+#      targetPort: 8080
+```
+
+Once you have found this, do the following:
+
+1. Remove `{}` from `service:`.
+2. Uncomment the following lines:
+   ```yaml
+   #  annotations: {}
+   #  type: ClusterIP
+   #  ports:
+   ```
+3. Uncomment one of the existing service definitions or define a new service.
+
 ## Testing
 
 This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](../requirements.txt) in the parent directory.
