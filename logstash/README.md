@@ -20,6 +20,16 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 
 ## Installing
 
+### Using Helm repository
+
+* Add the elastic helm charts repo
+  ```
+  helm repo add elastic https://helm.elastic.co
+  ```
+* Install it
+  ```
+  helm install --name logstash elastic/logstash
+
 ### Using master branch
 
 * Clone the git repo
@@ -37,14 +47,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.5 | 7.4.2 |
+| 6.8.5 | 7.5.0 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.2` of Logstash it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.5.0` of Logstash it would look like this:
 
 ```
-helm install --name logstash elastic/logstash --set imageTag=7.4.2
+helm install --name logstash elastic/logstash --set imageTag=7.5.0
 ```
 
 ## Configuration
@@ -61,12 +71,12 @@ helm install --name logstash elastic/logstash --set imageTag=7.4.2
 | `image`                       | The Logstash docker image                                                                                                                                                                                                                                                                                                  | `docker.elastic.co/logstash/logstash`                                                                                     |
 | `imagePullPolicy`             | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`            | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                       | `[]`                                                                                                                      |
-| `imageTag`                    | The Logstash docker image tag                                                                                                                                                                                                                                                                                              | `7.4.2`                                                                                                                   |
+| `imageTag`                    | The Logstash docker image tag                                                                                                                                                                                                                                                                                              | `7.5.0`                                                                                                                   |
 | `extraInitContainers`         | Templatable string of additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                        | `""`                                                                                                                      |
 | `httpPort`                    | The http port that Kubernetes will use for the healthchecks and the service.                                                                                                                                                                                                                                               | `9600`                                                                                                                    |
 | `labels`                      | Configurable [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Logstash pods                                                                                                                                                                                              | `{}`                                                                                                                      |
 | `lifecycle`                   | Allows you to add lifecycle configuration. See [values.yaml](./values.yaml) for an example of the formatting.                                                                                                                                                                                                              | `{}`                                                                                                                      |
-| `livenessProbe`               | Configuration fields for the [livenessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                                | `failureThreshold: 3`<br>`initialDelaySeconds: 30`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
+| `livenessProbe`               | Configuration fields for the [livenessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                                | `failureThreshold: 3`<br>`initialDelaySeconds: 300`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `logstashConfig`              | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties`. See [values.yaml](./values.yaml) for an example of the formatting.                                                                                                                                     | `{}`                                                                                                                      |
 | `logstashJavaOpts`            | Java options for Logstash. This is where you should configure the jvm heap size                                                                                                                                                                                                                                            | `-Xmx1g -Xms1g`                                                                                                           |
 | `logstashPipeline`            | Allows you to add any pipeline files in `/usr/share/logstash/pipeline/`.                                                                                                                                                                                                                                                   | `{}`                                                                                                                      |
@@ -80,9 +90,9 @@ helm install --name logstash elastic/logstash --set imageTag=7.4.2
 | `podSecurityContext`          | Allows you to set the [securityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod) for the pod                                                                                                                                                         | `fsGroup: 1000`<br>`runAsUser: 1000`                                                                                      |
 | `podSecurityPolicy`           | Configuration for create a pod security policy with minimal permissions to run this Helm chart with `create: true`. Also can be used to reference an external pod security policy with `name: "externalPodSecurityPolicy"`                                                                                                 | `create: false`<br>`name: ""`                                                                                             |
 | `priorityClassName`           | The [name of the PriorityClass](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass). No default is supplied as the PriorityClass must be created first.                                                                                                                              | `""`                                                                                                                      |
-| `readinessProbe`              | Configuration fields for the [readinessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                               | `failureThreshold: 3`<br>`initialDelaySeconds: 30`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
+| `readinessProbe`              | Configuration fields for the [readinessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                               | `failureThreshold: 3`<br>`initialDelaySeconds: 60`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `replicas`                    | Kubernetes replica count for the statefulset (i.e. how many pods)                                                                                                                                                                                                                                                          | `1`                                                                                                                       |
-| `resources`                   | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                               | `requests.cpu: 100m`<br>`requests.memory: 1536Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 1536Mi`                             |
+| `resources`                   | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                               | `requests.cpu: 100m`<br>`requests.memory: 1536Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 1536Mi`                       |
 | `schedulerName`               | Name of the [alternate scheduler](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods)                                                                                                                                                                          | `""`                                                                                                                      |
 | `secretMounts`                | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `[]`                                                                                                                      |
 | `securityContext`             | Allows you to set the [securityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) for the container                                                                                                                                             | `capabilities.drop:[ALL]`<br>`runAsNonRoot: true`<br>`runAsUser: 1000`                                                    |
@@ -104,6 +114,28 @@ To deploy a cluster with all default values and run the integration tests
 cd examples/default
 make
 ```
+
+### FAQ
+
+#### How to install plugins?
+
+The [recommended](https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images) way to install plugins into our docker images is to create a custom docker image.
+
+The Dockerfile would look something like:
+
+```
+ARG logstash_version
+FROM docker.elastic.co/logstash/logstash:${logstash_version}
+
+RUN bin/logstash-plugin install logstash-output-kafka
+```
+
+And then updating the `image` in values to point to your custom image.
+
+There are a couple reasons we recommend this.
+
+1. Tying the availability of Logstash to the download service to install plugins is not a great idea or something that we recommend. Especially in Kubernetes where it is normal and expected for a container to be moved to another host at random times.
+2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure.
 
 ## Testing
 
