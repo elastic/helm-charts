@@ -58,7 +58,7 @@ def test_defaults():
 
     # Health checks
     assert c['livenessProbe']['failureThreshold'] == 3
-    assert c['livenessProbe']['initialDelaySeconds'] == 60
+    assert c['livenessProbe']['initialDelaySeconds'] == 90
     assert c['livenessProbe']['periodSeconds'] == 10
     assert c['livenessProbe']['successThreshold'] == 1
     assert c['livenessProbe']['timeoutSeconds'] == 5
