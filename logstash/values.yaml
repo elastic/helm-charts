@@ -150,7 +150,7 @@ livenessProbe:
   httpGet:
     path: /
     port: http
-  initialDelaySeconds: 90
+  initialDelaySeconds: 300
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 3
