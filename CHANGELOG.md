@@ -43,6 +43,9 @@
 
 ### Metricbeat
 
+**Warning**
+[#352](https://github.com/elastic/helm-charts/pull/352) is introducing a breaking change, please refer to [Metricbeat Breaking Changes](./metricbeat/README.md#breaking-changes) section for users upgrading from a chart version < 7.5.0.
+
 | PR                                                     | Author                                           | Title                                                                                     |
 | ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 |[#352](https://github.com/elastic/helm-charts/pull/352) | [@masterkain](https://github.com/masterkain)     | Bump kube-state-metrics to latest chart and app version                                   |

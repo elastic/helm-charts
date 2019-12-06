@@ -4,6 +4,20 @@ This functionality is in beta and is subject to change. The design and code is l
 
 This helm chart is a lightweight way to configure and run our official [Metricbeat docker image](https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html).
 
+## Breaking Changes
+
+[7.5.0](https://github.com/elastic/helm-charts/releases/tag/7.5.0) release is introducing a breaking change for Metricbeat users upgrading from a previous chart version.
+The breaking change tracked in [#395](https://github.com/elastic/helm-charts/issues/395) is failing `helm upgrade` command with the following error:
+```
+UPGRADE FAILED
+Error: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.0", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+Error: UPGRADE FAILED: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.0", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+```
+
+This is caused by the update of [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) chart dependency which is renaming some labels in [helm/charts#15261](https://github.com/helm/charts/pull/15261).
+
+The workaround is to use `--force` argument for `helm upgrade` command which will force Metricbeat resources update through delete/recreate.
+
 ## Requirements
 
 * Kubernetes >= 1.9
