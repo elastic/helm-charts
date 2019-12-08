@@ -6,8 +6,8 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
 
 ## Requirements
 
-* Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
+* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](../README.md) for more details)
+* Kubernetes >=1.9
 
 ## Installing
 
