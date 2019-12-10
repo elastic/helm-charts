@@ -269,8 +269,17 @@ healthCheckPath: "/kibana/app/kibana"
     r = helm_template(config)
     c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
 
-    assert 'http "/kibana/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
+    assert 'http "/kibana/app/kibana" "200"' in c['readinessProbe']['exec']['command'][-1]
 
+def test_changing_the_health_check_http_code():
+    config = '''
+healthCheckPath: "/some/path/kibana"
+healthCheckHttpCode: "301"
+'''
+    r = helm_template(config)
+    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+
+    assert 'http "/some/path/kibana" "301"' in c['readinessProbe']['exec']['command'][-1]
 
 def test_priority_class_name():
     config = '''

@@ -44,6 +44,7 @@ protocol: http
 serverHost: "0.0.0.0"
 
 healthCheckPath: "/app/kibana"
+healthCheckHttpCode: "200"
 
 # Allows you to add any config files in /usr/share/kibana/config/
 # such as kibana.yml

@@ -94,6 +94,7 @@ spec:
                 #!/usr/bin/env bash -e
                 http () {
                     local path="${1}"
+                    local httpcode="${2}"
                     set -- -XGET -s --fail
 
                     if [ -n "${ELASTICSEARCH_USERNAME}" ] && [ -n "${ELASTICSEARCH_PASSWORD}" ]; then
@@ -101,15 +102,15 @@ spec:
                     fi
 
                     STATUS=$(curl --output /dev/null --write-out "%{http_code}" -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}")
-                    if [[ "${STATUS}" -eq 200 ]]; then
+                    if [[ "${STATUS}" -eq ${httpcode} ]]; then
                       exit 0
                     fi
 
-                    echo "Error: Got HTTP code ${STATUS} but expected a 200"
+                    echo "Error: Got HTTP code ${STATUS} but expected a ${httpcode}"
                     exit 1
                 }
 
-                http "{{ .Values.healthCheckPath }}"
+                http "{{ .Values.healthCheckPath }}" "{{ .Values.healthCheckHttpCode }}"
         ports:
         - containerPort: {{ .Values.httpPort }}
 {{- if .Values.lifecycle }}
