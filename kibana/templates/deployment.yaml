@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "kibana.fullname" . }}
   labels:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name | quote }}
@@ -47,7 +47,7 @@ spec:
         {{- if .Values.kibanaConfig }}
         - name: kibanaconfig
           configMap:
-            name: {{ template "fullname" . }}-config
+            name: {{ template "kibana.fullname" . }}-config
         {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
