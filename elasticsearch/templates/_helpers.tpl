@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "name" -}}
+{{- define "elasticsearch.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -10,16 +10,16 @@ Expand the name of the chart.
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "fullname" -}}
+{{- define "elasticsearch.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "uname" -}}
+{{- define "elasticsearch.uname" -}}
 {{ .Values.clusterName }}-{{ .Values.nodeGroup }}
 {{- end -}}
 
-{{- define "masterService" -}}
+{{- define "elasticsearch.masterService" -}}
 {{- if empty .Values.masterService -}}
 {{ .Values.clusterName }}-master
 {{- else -}}
@@ -27,7 +27,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 {{- end -}}
 
-{{- define "endpoints" -}}
+{{- define "elasticsearch.endpoints" -}}
 {{- $replicas := int (toString (.Values.replicas)) }}
 {{- $uname := printf "%s-%s" .Values.clusterName .Values.nodeGroup }}
   {{- range $i, $e := untilStep 0 $replicas 1 -}}
@@ -35,7 +35,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- end -}}
 {{- end -}}
 
-{{- define "esMajorVersion" -}}
+{{- define "elasticsearch.esMajorVersion" -}}
 {{- if .Values.esMajorVersion -}}
 {{ .Values.esMajorVersion }}
 {{- else -}}

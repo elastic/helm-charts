@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: '{{ template "fullname" . }}-metrics'
+  name: '{{ template "metricbeat.fullname" . }}-metrics'
   labels:
-    app: '{{ template "fullname" . }}-metrics'
+    app: '{{ template "metricbeat.fullname" . }}-metrics'
     chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
     heritage: '{{ .Release.Service }}'
     release: '{{ .Release.Name }}'
@@ -12,7 +12,7 @@ spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: '{{ template "fullname" . }}-metrics'
+      app: '{{ template "metricbeat.fullname" . }}-metrics'
       chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
       heritage: '{{ .Release.Service }}'
       release: '{{ .Release.Name }}'
@@ -27,7 +27,7 @@ spec:
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
       labels:
-        app: '{{ template "fullname" . }}-metrics'
+        app: '{{ template "metricbeat.fullname" . }}-metrics'
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
         heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
@@ -36,7 +36,7 @@ spec:
       tolerations:
 {{ toYaml . | indent 6 }}
       {{- end }}
-      serviceAccountName: {{ template "serviceAccount" . }}
+      serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       volumes:
       {{- range .Values.secretMounts }}
@@ -48,7 +48,7 @@ spec:
       - name: metricbeat-config
         configMap:
           defaultMode: 0600
-          name: {{ template "fullname" . }}-config
+          name: {{ template "metricbeat.fullname" . }}-config
       {{- end }}
       {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 6 }}

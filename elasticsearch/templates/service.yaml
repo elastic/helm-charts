@@ -2,12 +2,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ template "uname" . }}
+  name: {{ template "elasticsearch.uname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
-    app: "{{ template "uname" . }}"
+    app: "{{ template "elasticsearch.uname" . }}"
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4}}
 {{- end }}
@@ -19,7 +19,7 @@ spec:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
-    app: "{{ template "uname" . }}"
+    app: "{{ template "elasticsearch.uname" . }}"
   ports:
   - name: {{ .Values.service.httpPortName | default "http" }}
     protocol: TCP
@@ -34,12 +34,12 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ template "uname" . }}-headless
+  name: {{ template "elasticsearch.uname" . }}-headless
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
-    app: "{{ template "uname" . }}"
+    app: "{{ template "elasticsearch.uname" . }}"
 {{- if .Values.service.labelsHeadless }}
 {{ toYaml .Values.service.labelsHeadless | indent 4 }}
 {{- end }}
@@ -50,7 +50,7 @@ spec:
   # Create endpoints also if the related pod isn't ready
   publishNotReadyAddresses: true
   selector:
-    app: "{{ template "uname" . }}"
+    app: "{{ template "elasticsearch.uname" . }}"
   ports:
   - name: {{ .Values.service.httpPortName | default "http" }}
     port: {{ .Values.httpPort }}
