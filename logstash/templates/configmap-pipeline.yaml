@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "fullname" . }}-pipeline
+  name: {{ template "logstash.fullname" . }}-pipeline
   labels:
-    app: "{{ template "fullname" . }}"
+    app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

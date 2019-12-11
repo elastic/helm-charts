@@ -14,5 +14,5 @@ spec:
       - "-c"
       - |
         #!/usr/bin/env bash -e
-        curl -XGET --fail '{{ template "uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
+        curl -XGET --fail '{{ template "elasticsearch.uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
   restartPolicy: Never

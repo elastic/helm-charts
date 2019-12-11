@@ -3,9 +3,9 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: "{{ template "fullname" . }}"
+  name: "{{ template "logstash.fullname" . }}"
   labels:
-    app: "{{ template "fullname" . }}"
+    app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -14,7 +14,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    app: "{{ template "fullname" . }}"
+    app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
