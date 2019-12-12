@@ -91,7 +91,7 @@ service:
     # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
     # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
-  loadBalancerSourceRanges: {}
+  loadBalancerSourceRanges: []
     # 0.0.0.0/0
 
 ingress:

@@ -47,7 +47,7 @@ def test_defaults():
     # Make sure that the default 'annotation' dictionary is empty
     assert 'annotations' not in r['service'][name]['metadata']
 
-    # Make sure that the default 'loadBalancerSourceRanges' dictionary is empty
+    # Make sure that the default 'loadBalancerSourceRanges' list is empty
     assert 'loadBalancerSourceRanges' not in r['service'][name]['spec']
 
 def test_overriding_the_elasticsearch_hosts():
