@@ -38,7 +38,7 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
-      {{- if .Values.hostNetworking }}
+      {{- if .Values.deploymentHostNetworking }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       {{- end }}

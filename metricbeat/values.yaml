@@ -88,8 +88,11 @@ metricbeatConfig:
 # Replicas being used for the kube-state-metrics metricbeat deployment
 replicas: 1
 
-# Use host networking so that metricbeat can get hostname and talk to kubelet
-hostNetworking: true
+# Depending on networking settings, you may need to use host networking for the
+# the metricbeat daemonset to get the correct hostname (instead of the pod name) or
+# send traffic to the kubelet metrics endpoint.
+hostNetworking: false
+deploymentHostNetworking: false
 
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env

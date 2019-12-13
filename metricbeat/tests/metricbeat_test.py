@@ -36,7 +36,7 @@ def test_defaults():
     volumes = r['daemonset'][name]['spec']['template']['spec']['volumes']
     assert {
             'name': 'data',
-                'hostPath': {
+            'hostPath': {
                 'path': '/var/lib/' + name + '-default-data',
                 'type': 'DirectoryOrCreate'
                 }
@@ -195,13 +195,18 @@ hostNetworking: true
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['hostNetwork'] is True
-    assert r['deployment']['release-name-metricbeat-metrics']['spec']['template']['spec']['hostNetwork'] is True
+    assert 'hostNetwork' not in r['deployment']['release-name-metricbeat-metrics']['spec']['template']['spec']
     config = '''
-hostNetworking: false    
+deploymentHostNetworking: true 
 '''
     r = helm_template(config)
     assert 'hostNetwork' not in r['daemonset'][name]['spec']['template']['spec']
+    assert r['deployment']['release-name-metricbeat-metrics']['spec']['template']['spec']['hostNetwork'] is True
+    config = ''
+    r = helm_template(config)
+    assert 'hostNetwork' not in r['daemonset'][name]['spec']['template']['spec']
     assert 'hostNetwork' not in r['deployment']['release-name-metricbeat-metrics']['spec']['template']['spec']
+
 
 
 def test_adding_an_affinity_rule():

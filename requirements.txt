@@ -1,2 +1,4 @@
 pytest==4.1.0
 PyYAML==4.2b4
+# attrs 19.2 not compatable with pytest 4.1
+attrs < 19.2
