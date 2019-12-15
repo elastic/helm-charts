@@ -176,6 +176,7 @@ service:
   labels: {}
   labelsHeadless: {}
   type: ClusterIP
+  omitClusterIP: false
   nodePort: ""
   annotations: {}
   httpPortName: http
