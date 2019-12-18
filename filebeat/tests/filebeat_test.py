@@ -88,12 +88,12 @@ updateStrategy: OnDelete
 
 def test_host_networking():
     config = '''
-hostNetworking: true    
+hostNetworking: true
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['hostNetwork'] is True
     config = '''
-hostNetworking: false    
+hostNetworking: false
 '''
     r = helm_template(config)
     assert 'hostNetwork' not in r['daemonset'][name]['spec']['template']['spec']
@@ -201,6 +201,7 @@ labels:
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'filebeat'
+    assert r['daemonset'][name]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'filebeat'
 
 
 def test_adding_a_node_selector():
