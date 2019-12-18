@@ -1,5 +1,32 @@
 # Changelog
 
+## 7.5.1 - 2019/12/18
+
+* 7.5.1 as the default stack version
+* 6.8.6 as 6.x tested version
+* Add a notice that Helm v3 is not supported in [#400](https://github.com/elastic/helm-charts/pull/400) [@jmlrt](https://github.com/jmlrt)
+* Prefixed helper functions with chart name in [#407](https://github.com/elastic/helm-charts/pull/407) [bpdunni](https://github.com/bpdunni)
+* Use details tag around code backticks for 'helm get' output in issue template in [#413](https://github.com/elastic/helm-charts/pull/413) [krichter722](https://github.com/krichter722)
+
+### Filebeat
+
+| PR                                                     | Author                                   | Title                                                 |
+| ------------------------------------------------------ | ---------------------------------------- | ----------------------------------------------------- |
+|[#403](https://github.com/elastic/helm-charts/pull/403) | [@ChrsMark](https://github.com/ChrsMark) | Remove in_cluster config from add_kubernetes_metadata |
+
+### Kibana
+
+| PR                                                     | Author                                               | Title                                |
+| ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------ |
+|[#411](https://github.com/elastic/helm-charts/pull/411) | [@usamaahmadkhan](https://github.com/usamaahmadkhan) | Enable labels to be added to service |
+
+### Metricbeat
+
+| PR                                                     | Author                             | Title                                                 |
+| ------------------------------------------------------ | ---------------------------------- | ----------------------------------------------------- |
+|[#397](https://github.com/elastic/helm-charts/pull/397) | [@jmlrt](https://github.com/jmlrt) | Add a notice about kube-state-metrics breaking change |
+
+
 ## 7.5.0 - 2019/12/02
 
 * 7.5.0 as the default stack version
