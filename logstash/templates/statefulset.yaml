@@ -42,6 +42,9 @@ spec:
         chart: "{{ .Chart.Name }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
