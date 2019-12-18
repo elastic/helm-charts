@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
 {{- if eq .Values.nodeGroup "master" }}
-  name: {{ template "masterService" . }}
+  name: {{ template "elasticsearch.masterService" . }}
 {{- else }}
   name: {{ template "elasticsearch.uname" . }}
 {{- end }}
@@ -39,7 +39,7 @@ kind: Service
 apiVersion: v1
 metadata:
 {{- if eq .Values.nodeGroup "master" }}
-  name: {{ template "masterService" . }}-headless
+  name: {{ template "elasticsearch.masterService" . }}-headless
 {{- else }}
   name: {{ template "elasticsearch.uname" . }}-headless
 {{- end }}
