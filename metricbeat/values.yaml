@@ -90,7 +90,7 @@ envFrom: []
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "7.4.1"
+imageTag: "7.5.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 

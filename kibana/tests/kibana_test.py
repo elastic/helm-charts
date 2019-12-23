@@ -287,6 +287,22 @@ priorityClassName: "highest"
     priority_class_name = r['deployment'][name]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
 
+def test_service_labels():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'label1' not in r['service'][name]['metadata']['labels']
+
+    config = '''
+    service:
+      labels:
+        label1: value1
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][name]['metadata']['labels']['label1'] == 'value1'
 
 def test_service_annotatations():
     config = '''
@@ -364,6 +380,7 @@ labels:
 '''
      r = helm_template(config)
      assert r['deployment'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
+     assert r['deployment'][name]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
 
 def test_adding_a_secret_mount_with_subpath():
     config = '''

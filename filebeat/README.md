@@ -6,12 +6,13 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
 
 ## Requirements
 
-* Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
+* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](../README.md) for more details)
+* Kubernetes >=1.9
 
 ## Usage notes and getting started
 * The default Filebeat configuration file for this chart is configured to use an Elasticsearch endpoint. Without any additional changes, Filebeat will send documents to the service URL that the Elasticsearch helm chart sets up by default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in `extraEnvs` to override this endpoint or modify the default `filebeatConfig` to change this behavior.
 * The default Filebeat configuration file is also configured to capture container logs and enrich them with Kubernetes metadata by default. This will capture all container logs in the cluster.
+* This chart disables the [HostNetwork](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces) setting by default for compatibility reasons with the majority of kubernetes providers and scenarios. Some kubernetes providers may not allow enabling `hostNetwork` and deploying multiple Filebeat pods on the same node isn't possible with `hostNetwork`. However Filebeat does recommend activating it. If your kubernetes provider is compatible with `hostNetwork` and you don't need to run multiple Filebeat daemonsets, you can activate it by setting `hostNetworking: true` in [values.yaml](./values.yaml).
 
 ## Installing
 
@@ -43,14 +44,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.4 | 7.4.1 |
+| 6.8.6 | 7.5.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Filebeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.5.1` of Filebeat it would look like this:
 
 ```
-helm install --name filebeat elastic/filebeat --set imageTag=7.4.1
+helm install --name filebeat elastic/filebeat --set imageTag=7.5.1
 ```
 
 
@@ -59,13 +60,13 @@ helm install --name filebeat elastic/filebeat --set imageTag=7.4.1
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `filebeatConfig`         | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`. See [values.yaml](./values.yaml) for an example of the formatting with the default configuration.                                                                                       | see [values.yaml](./values.yaml)                                                                                          |
 | `extraEnvs`              | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                          | `[]`                                                                                                                      |
-| `extraVolumeMounts`      | Templatable string of additional volumeMounts to be passed to the `tpl` function                                                                                                                                                                                            | `""`                                                                                                                      |
-| `extraVolumes`           | Templatable string of additional volumes to be passed to the `tpl` function                                                                                                                                                                                                 | `""`                                                                                                                      |
+| `extraVolumeMounts`      | List of additional volumeMounts to be mounted on the Daemonset                                                                                                                                                                                            | `""`                                                                                                                      |
+| `extraVolumes`           | List of additional volumes to be mounted on the Daemonset                                                                                                                                                                                                     | `""`                                                                                                                      |
 | `envFrom`                | Templatable string of envFrom to be passed to the  [environment from variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) which will be appended to the `envFrom:` definition for the container                          | `[]`    
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Filebeat registry data                                                                                                                               | `/var/lib`                                                                                                                |
-| `hostNetworking`         | Use host networking in the daemonset so that hostname is reported correctly
+| `hostNetworking`         | Use host networking in the daemonset so that hostname is reported correctly                                                                                                                                                                                                 | `false`                                                                                                                   |
 | `image`                  | The Filebeat docker image                                                                                                                                                                                                                                                   | `docker.elastic.co/beats/filebeat`                                                                                        |
-| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.4.1`                                                                                                                   |
+| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                               | `7.5.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |

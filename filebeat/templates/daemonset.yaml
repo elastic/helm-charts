@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "filebeat.fullname" . }}
   labels:
-    app: "{{ template "fullname" . }}"
+    app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -14,7 +14,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: "{{ template "fullname" . }}"
+      app: "{{ template "filebeat.fullname" . }}"
       release: {{ .Release.Name | quote }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
@@ -28,12 +28,15 @@ spec:
         {{- if .Values.filebeatConfig }}
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
-      name: "{{ template "fullname" . }}"
+      name: "{{ template "filebeat.fullname" . }}"
       labels:
-        app: "{{ template "fullname" . }}"
+        app: "{{ template "filebeat.fullname" . }}"
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       {{- with .Values.tolerations }}
       tolerations: {{ toYaml . | nindent 6 }}
@@ -47,7 +50,7 @@ spec:
       {{- with .Values.affinity }}
       affinity: {{ toYaml . | nindent 8 -}}
       {{- end }}
-      serviceAccountName: {{ template "serviceAccount" . }}
+      serviceAccountName: {{ template "filebeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       {{- if .Values.hostNetworking }}
       hostNetwork: true
@@ -63,11 +66,11 @@ spec:
       - name: filebeat-config
         configMap:
           defaultMode: 0600
-          name: {{ template "fullname" . }}-config
+          name: {{ template "filebeat.fullname" . }}-config
       {{- end }}
       - name: data
         hostPath:
-          path: {{ .Values.hostPathRoot }}/{{ template "fullname" . }}-{{ .Release.Namespace }}-data
+          path: {{ .Values.hostPathRoot }}/{{ template "filebeat.fullname" . }}-{{ .Release.Namespace }}-data
           type: DirectoryOrCreate
       - name: varlibdockercontainers
         hostPath:

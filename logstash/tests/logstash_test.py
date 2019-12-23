@@ -58,7 +58,7 @@ def test_defaults():
 
     # Health checks
     assert c['livenessProbe']['failureThreshold'] == 3
-    assert c['livenessProbe']['initialDelaySeconds'] == 60
+    assert c['livenessProbe']['initialDelaySeconds'] == 300
     assert c['livenessProbe']['periodSeconds'] == 10
     assert c['livenessProbe']['successThreshold'] == 1
     assert c['livenessProbe']['timeoutSeconds'] == 5
@@ -480,6 +480,7 @@ labels:
 '''
     r = helm_template(config)
     assert r['statefulset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'logstash'
+    assert r['statefulset'][name]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'logstash'
 
 
 def test_pod_security_policy():

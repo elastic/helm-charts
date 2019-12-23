@@ -4,10 +4,24 @@ This functionality is in beta and is subject to change. The design and code is l
 
 This helm chart is a lightweight way to configure and run our official [Metricbeat docker image](https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html).
 
+## Breaking Changes
+
+[7.5.1](https://github.com/elastic/helm-charts/releases/tag/7.5.1) release is introducing a breaking change for Metricbeat users upgrading from a previous chart version.
+The breaking change tracked in [#395](https://github.com/elastic/helm-charts/issues/395) is failing `helm upgrade` command with the following error:
+```
+UPGRADE FAILED
+Error: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.1", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+Error: UPGRADE FAILED: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.1", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+```
+
+This is caused by the update of [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) chart dependency which is renaming some labels in [helm/charts#15261](https://github.com/helm/charts/pull/15261).
+
+The workaround is to use `--force` argument for `helm upgrade` command which will force Metricbeat resources update through delete/recreate.
+
 ## Requirements
 
-* Kubernetes >= 1.9
-* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
+* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](../README.md) for more details)
+* Kubernetes >=1.9
 
 ## Installing
 
@@ -39,14 +53,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.4 | 7.4.1 |
+| 6.8.6 | 7.5.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of metricbeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.5.1` of metricbeat it would look like this:
 
 ```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.4.1
+helm install --name metricbeat elastic/metricbeat --set imageTag=7.5.1
 ```
 
 
@@ -60,7 +74,7 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.4.1
 | `envFrom`              | Templatable string of envFrom to be passed to the  [environment from variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) which will be appended to the `envFrom:` definition for the container                          | `[]`                            
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Metricbeat registry data                                                                                                                             | `/var/lib`                                                                                                                |
 | `image`                  | The Metricbeat docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/beats/metricbeat`                                                                                      |
-| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.4.1`                                                                                                                   |
+| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                             | `7.5.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `labels`                 | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Metricbeat pods                                                                                                                                              | `{}`                                                                                                                      |

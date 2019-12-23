@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "uname" . }}-config
+  name: {{ template "elasticsearch.uname" . }}-config
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
-    app: "{{ template "uname" . }}"
+    app: "{{ template "elasticsearch.uname" . }}"
 data:
 {{- range $path, $config := .Values.esConfig }}
   {{ $path }}: |

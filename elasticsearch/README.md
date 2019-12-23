@@ -6,8 +6,8 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 
 ## Requirements
 
-* [Helm](https://helm.sh/) >= 2.8.0 (see parent [README](../README.md) for more details)
-* Kubernetes >= 1.8
+* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](../README.md) for more details)
+* Kubernetes >=1.8
 * Minimum cluster requirements include the following to run this chart with default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
   * 1GB of RAM for the JVM heap
@@ -55,14 +55,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.4 | 7.4.1 |
+| 6.8.6 | 7.5.1 |
 
 Examples of installing older major versions can be found in the [examples](./examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.4.1` of Elasticsearch it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.5.1` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.1
+helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.5.1
 ```
 
 ## Configuration
@@ -83,7 +83,7 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.4.1
 | `extraInitContainers`         | Templatable string of additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                        | `""`                                                                                                                      |
 | `secretMounts`                | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](./values.yaml) for an example                                                                                                                                                     | `[]`                                                                                                                      |
 | `image`                       | The Elasticsearch docker image                                                                                                                                                                                                                                                                                             | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                    | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.4.1`                                                                                                                   |
+| `imageTag`                    | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                         | `7.5.1`                                                                                                                   |
 | `imagePullPolicy`             | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                            |
 | `podAnnotations`              | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Elasticsearch pods                                                                                                                                                                               | `{}`                                                                                                                      |
 | `labels`                      | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Elasticsearch pods                                                                                                                                                                                          | `{}`                                                                                                                      |

@@ -8,8 +8,7 @@ filebeatConfig:
       containers.ids:
       - '*'
       processors:
-      - add_kubernetes_metadata:
-          in_cluster: true
+      - add_kubernetes_metadata: ~
 
     output.elasticsearch:
       host: '${NODE_NAME}'
@@ -37,9 +36,9 @@ envFrom: []
 
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
-hostNetworking: true
+hostNetworking: false
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.4.1"
+imageTag: "7.5.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 

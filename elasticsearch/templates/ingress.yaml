@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "uname" . -}}
+{{- $fullName := include "elasticsearch.uname" . -}}
 {{- $servicePort := .Values.httpPort -}}
 {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: {{ template "elasticsearch.ingress.apiVersion" . }}
