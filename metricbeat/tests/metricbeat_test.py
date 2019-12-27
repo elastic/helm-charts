@@ -240,6 +240,16 @@ labels:
     assert r['daemonset'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'metricbeat'
     assert r['daemonset'][name]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'metricbeat'
 
+def test_adding_env_from():
+    config = '''
+envFrom:
+- configMapRef:
+    name: configmap-name
+'''
+    r = helm_template(config)
+    configMapRef = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom'][0]['configMapRef']
+    assert configMapRef == {'name': 'configmap-name'}
+
 def test_setting_fullnameOverride():
     config = '''
 fullnameOverride: 'metricbeat-custom'
