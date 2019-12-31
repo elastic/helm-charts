@@ -89,6 +89,7 @@ spec:
         - "-e"
         - "-E"
         - "http.enabled=true"
+        - "--system.hostfs=/hostfs"
         livenessProbe:
           exec:
             command:
