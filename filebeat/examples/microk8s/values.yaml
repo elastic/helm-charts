@@ -1,0 +1,10 @@
+extraVolumeMounts:
+  - name: varlog
+    mountPath: /var/log/
+    readOnly: true
+
+extraVolumes:
+  - name: varlog
+    hostPath:
+      path: /var/log/
+      type: ''
