@@ -44,7 +44,6 @@ spec:
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
-        app: "{{ template "elasticsearch.uname" . }}"
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
