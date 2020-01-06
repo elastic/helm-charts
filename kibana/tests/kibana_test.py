@@ -47,6 +47,9 @@ def test_defaults():
     # Make sure that the default 'annotation' dictionary is empty
     assert 'annotations' not in r['service'][name]['metadata']
 
+    # Make sure that the default 'loadBalancerSourceRanges' list is empty
+    assert 'loadBalancerSourceRanges' not in r['service'][name]['spec']
+
 def test_overriding_the_elasticsearch_hosts():
     config = '''
     elasticsearchHosts: 'http://hello.world'
@@ -322,6 +325,30 @@ service:
     r = helm_template(config)
     s = r['service'][name]['metadata']['annotations']['service.beta.kubernetes.io/aws-load-balancer-internal']
     assert s == "0.0.0.0/0"
+
+
+def test_service_load_balancer_source_ranges():
+    config = '''
+service:
+  loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    '''
+    r = helm_template(config)
+    l = r['service'][name]['spec']['loadBalancerSourceRanges'][0]
+    assert l == "0.0.0.0/0"
+
+    config = '''
+service:
+  loadBalancerSourceRanges:
+    - 192.168.0.0/24
+    - 192.168.1.0/24
+    '''
+    r = helm_template(config)
+    l = r['service'][name]['spec']['loadBalancerSourceRanges'][0]
+    assert l == "192.168.0.0/24"
+    l = r['service'][name]['spec']['loadBalancerSourceRanges'][1]
+    assert l == "192.168.1.0/24"
+
 
 def test_adding_a_nodePort():
     config = ''
