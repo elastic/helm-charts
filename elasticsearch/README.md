@@ -287,6 +287,18 @@ cd examples/kubernetes-kind
 make
 ```
 
+#### MicroK8S
+
+It is also possible to run this chart using [MicroK8S](https://microk8s.io):
+
+```
+microk8s.enable dns
+microk8s.enable helm
+microk8s.enable storage
+cd examples/microk8s
+make
+```
+
 ## Clustering and Node Discovery
 
 This chart facilitates Elasticsearch node discovery and services by creating two `Service` definitions in Kubernetes, one with the name `$clusterName-$nodeGroup` and another named `$clusterName-$nodeGroup-headless`.
