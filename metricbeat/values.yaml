@@ -3,8 +3,6 @@
 # such as metricbeat.yml
 metricbeatConfig:
   metricbeat.yml: |
-    system:
-      hostfs: /hostfs
     metricbeat.modules:
     - module: kubernetes
       metricsets:

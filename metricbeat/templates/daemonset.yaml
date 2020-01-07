@@ -92,6 +92,7 @@ spec:
         - "-e"
         - "-E"
         - "http.enabled=true"
+        - "--system.hostfs=/hostfs"
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
