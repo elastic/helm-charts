@@ -123,6 +123,28 @@ In [examples/](./examples) you will find some example configurations. These exam
   curl -I -k -u elastic:$password https://localhost:5601/app/kibana
   ```
 
+## FAQ
+
+### How to install plugins?
+
+The recommended way to install plugins into our docker images is to create a custom docker image.
+
+The Dockerfile would look something like:
+
+```
+ARG kibana_version
+FROM docker.elastic.co/kibana/kibana:${kibana_version}
+
+RUN bin/kibana-plugin install <plugin_url>
+```
+
+And then updating the `image` in values to point to your custom image.
+
+There are a couple reasons we recommend this.
+
+1. Tying the availability of Kibana to the download service to install plugins is not a great idea or something that we recommend. Especially in Kubernetes where it is normal and expected for a container to be moved to another host at random times.
+2. Mutating the state of a running docker image (by installing plugins) goes against best practices of containers and immutable infrastructure.
+
 ## Testing
 
 This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](../requirements.txt) in the parent directory.
