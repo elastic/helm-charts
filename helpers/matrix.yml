@@ -33,6 +33,6 @@ LOGSTASH_SUITE:
   - elasticsearch
   - 6.x
 KUBERNETES_VERSION:
-  - '1.12'
   - '1.13'
   - '1.14'
+  - '1.15'
