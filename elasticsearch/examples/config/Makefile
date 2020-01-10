@@ -4,7 +4,7 @@ include ../../../helpers/examples.mk
 RELEASE := helm-es-config
 
 install:
-	helm upgrade --wait --timeout=600 --install $(RELEASE) --values ./values.yaml ../../ ; \
+	helm upgrade --wait --timeout=600 --install $(RELEASE) --values ./values.yaml ../../
 
 secrets:
 	kubectl delete secret elastic-config-credentials elastic-config-secret elastic-config-slack elastic-config-custom-path || true

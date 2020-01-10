@@ -1,8 +1,8 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "fullname" . -}}
+{{- $fullName := include "kibana.fullname" . -}}
 {{- $servicePort := .Values.service.port -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: extensions/v1beta1
+apiVersion: {{ template "kibana.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}

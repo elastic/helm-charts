@@ -5,8 +5,8 @@ include ../../../helpers/examples.mk
 RELEASE := helm-es-security
 
 install:
-	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../ ; \
-	
+	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../
+
 purge:
 	kubectl delete secrets elastic-credentials elastic-certificates elastic-certificate-pem || true
 	helm del --purge $(RELEASE)
@@ -21,7 +21,7 @@ secrets:
 		docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) \
 		/bin/sh -c " \
 			elasticsearch-certutil ca --out /app/elastic-stack-ca.p12 --pass '' && \
-			elasticsearch-certutil cert --name security-master --ca /app/elastic-stack-ca.p12 --pass '' --ca-pass '' --out /app/elastic-certificates.p12" && \
+			elasticsearch-certutil cert --name security-master --dns security-master --ca /app/elastic-stack-ca.p12 --pass '' --ca-pass '' --out /app/elastic-certificates.p12" && \
 	docker cp elastic-helm-charts-certs:/app/elastic-certificates.p12 ./ && \
 	docker rm -f elastic-helm-charts-certs && \
 	openssl pkcs12 -nodes -passin pass:'' -in elastic-certificates.p12 -out elastic-certificate.pem && \

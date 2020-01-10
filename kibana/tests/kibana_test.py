@@ -47,6 +47,9 @@ def test_defaults():
     # Make sure that the default 'annotation' dictionary is empty
     assert 'annotations' not in r['service'][name]['metadata']
 
+    # Make sure that the default 'loadBalancerSourceRanges' list is empty
+    assert 'loadBalancerSourceRanges' not in r['service'][name]['spec']
+
 def test_overriding_the_elasticsearch_hosts():
     config = '''
     elasticsearchHosts: 'http://hello.world'
@@ -287,6 +290,22 @@ priorityClassName: "highest"
     priority_class_name = r['deployment'][name]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
 
+def test_service_labels():
+    config = ''
+
+    r = helm_template(config)
+
+    assert 'label1' not in r['service'][name]['metadata']['labels']
+
+    config = '''
+    service:
+      labels:
+        label1: value1
+    '''
+
+    r = helm_template(config)
+
+    assert r['service'][name]['metadata']['labels']['label1'] == 'value1'
 
 def test_service_annotatations():
     config = '''
@@ -306,6 +325,30 @@ service:
     r = helm_template(config)
     s = r['service'][name]['metadata']['annotations']['service.beta.kubernetes.io/aws-load-balancer-internal']
     assert s == "0.0.0.0/0"
+
+
+def test_service_load_balancer_source_ranges():
+    config = '''
+service:
+  loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    '''
+    r = helm_template(config)
+    l = r['service'][name]['spec']['loadBalancerSourceRanges'][0]
+    assert l == "0.0.0.0/0"
+
+    config = '''
+service:
+  loadBalancerSourceRanges:
+    - 192.168.0.0/24
+    - 192.168.1.0/24
+    '''
+    r = helm_template(config)
+    l = r['service'][name]['spec']['loadBalancerSourceRanges'][0]
+    assert l == "192.168.0.0/24"
+    l = r['service'][name]['spec']['loadBalancerSourceRanges'][1]
+    assert l == "192.168.1.0/24"
+
 
 def test_adding_a_nodePort():
     config = ''
@@ -364,6 +407,7 @@ labels:
 '''
      r = helm_template(config)
      assert r['deployment'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
+     assert r['deployment'][name]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
 
 def test_adding_a_secret_mount_with_subpath():
     config = '''
@@ -394,3 +438,28 @@ secretMounts:
         'mountPath': '/usr/share/elasticsearch/config/certs',
         'name': 'elastic-certificates'
     }
+
+def test_adding_lifecycle_events():
+    config = '''
+lifecycle:
+    postStart:
+        exec:
+            command: ['/bin/true']
+'''
+    r = helm_template(config)
+    d = r['deployment'][name]['spec']['template']['spec']
+    p = d['containers'][0]['lifecycle']['postStart']
+    assert p['exec']['command'][0] == '/bin/true'
+
+def test_setting_fullnameOverride():
+    config = '''
+fullnameOverride: 'kibana-custom'
+'''
+    r = helm_template(config)
+
+    custom_name = 'kibana-custom'
+    assert custom_name in r['deployment']
+    assert custom_name in r['service']
+
+    assert r['service'][custom_name]['spec']['ports'][0]['port'] == 5601
+    assert r['deployment'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == 'kibana'

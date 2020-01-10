@@ -43,7 +43,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.3.0"
+imageTag: "7.5.1"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -85,6 +85,28 @@ volumeClaimTemplate:
   resources:
     requests:
       storage: 30Gi
+
+rbac:
+  create: false
+  serviceAccountName: ""
+
+podSecurityPolicy:
+  create: false
+  name: ""
+  spec:
+    privileged: true
+    fsGroup:
+      rule: RunAsAny
+    runAsUser:
+      rule: RunAsAny
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - secret
+      - configMap
+      - persistentVolumeClaim
 
 persistence:
   enabled: true
@@ -129,9 +151,13 @@ httpPort: 9200
 transportPort: 9300
 
 service:
+  labels: {}
+  labelsHeadless: {}
   type: ClusterIP
-  nodePort:
+  nodePort: ""
   annotations: {}
+  httpPortName: http
+  transportPortName: transport
 
 updateStrategy: RollingUpdate
 
@@ -142,6 +168,7 @@ maxUnavailable: 1
 
 podSecurityContext:
   fsGroup: 1000
+  runAsUser: 1000
 
 # The following value is deprecated,
 # please use the above podSecurityContext.fsGroup instead

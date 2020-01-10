@@ -3,10 +3,10 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: "{{ template "uname" . }}-pdb"
+  name: "{{ template "elasticsearch.uname" . }}-pdb"
 spec:
   maxUnavailable: {{ .Values.maxUnavailable }}
   selector:
     matchLabels:
-      app: "{{ template "uname" . }}"
+      app: "{{ template "elasticsearch.uname" . }}"
 {{- end }}

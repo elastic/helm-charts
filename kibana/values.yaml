@@ -22,7 +22,7 @@ secretMounts: []
 #    subPath: kibana.keystore # optional
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "7.3.0"
+imageTag: "7.5.1"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
@@ -34,7 +34,7 @@ podAnnotations: {}
 resources:
   requests:
     cpu: "100m"
-    memory: "500m"
+    memory: "500Mi"
   limits:
     cpu: "1000m"
     memory: "1Gi"
@@ -71,20 +71,7 @@ serviceAccount: ""
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
 
-# By default this will make sure two pods don't end up on the same node
-# Changing this to a region would allow you to spread pods across regions
-antiAffinityTopologyKey: "kubernetes.io/hostname"
-
-# Hard means that by default pods will only be scheduled if there are enough nodes for them
-# and that they will never end up on the same node. Setting this to soft will do this "best effort"
-antiAffinity: "hard"
-
 httpPort: 5601
-
-# This is the max unavailable setting for the pod disruption budget
-# The default value of 1 will make sure that kubernetes won't allow more than 1
-# of your pods to be unavailable during maintenance
-maxUnavailable: 1
 
 updateStrategy:
   type: "Recreate"
@@ -92,13 +79,16 @@ updateStrategy:
 service:
   type: ClusterIP
   port: 5601
-  nodePort:
+  nodePort: ""
+  labels: {}
   annotations: {}
     # cloud.google.com/load-balancer-type: "Internal"
     # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
     # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
     # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
+  loadBalancerSourceRanges: []
+    # 0.0.0.0/0
 
 ingress:
   enabled: false
@@ -127,3 +117,11 @@ affinity: {}
 
 nameOverride: ""
 fullnameOverride: ""
+
+lifecycle: {}
+  # preStop:
+  #   exec:
+  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+  # postStart:
+  #   exec:
+  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
