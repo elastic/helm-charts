@@ -90,6 +90,9 @@ imageTag: "7.3.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
+# Setting this to true allow kibana's Infrastructure panel to have the node's name instead of the pod's name
+daemonsetHostNetworking: false
+
 livenessProbe:
   failureThreshold: 3
   initialDelaySeconds: 10

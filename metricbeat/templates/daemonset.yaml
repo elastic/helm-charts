@@ -32,6 +32,10 @@ spec:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
     spec:
+      {{- if .Values.daemonsetHostNetworking }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      {{- end }}
       {{- with .Values.tolerations }}
       tolerations: {{ toYaml . | nindent 6 }}
       {{- end }}
