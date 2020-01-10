@@ -20,7 +20,6 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
     app: "{{ template "elasticsearch.uname" . }}"
