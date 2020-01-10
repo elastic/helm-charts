@@ -207,3 +207,11 @@ affinity:
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
         'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+
+def test_daemonset_host_networking():
+    config = '''
+daemonsetHostNetworking: true
+'''
+    r = helm_template(config)
+    assert r['daemonset'][name]['spec']['template']['spec']['hostNetwork'] is True
+    assert r['daemonset'][name]['spec']['template']['spec']['dnsPolicy'] == "ClusterFirstWithHostNet"
