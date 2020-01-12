@@ -223,6 +223,7 @@ priorityClassName: "highest"
     priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
     assert priority_class_name == "highest"
 
+
 def test_cluster_role_rules():
     config = ''
     r = helm_template(config)
