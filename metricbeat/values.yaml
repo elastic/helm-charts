@@ -153,13 +153,13 @@ podSecurityContext:
   runAsUser: 0
   privileged: false
 
-resources:
-  requests:
-    cpu: "100m"
-    memory: "100Mi"
-  limits:
-    cpu: "1000m"
-    memory: "200Mi"
+resources: {}
+#  requests:
+#    cpu: "100m"
+#    memory: "100Mi"
+#  limits:
+#    cpu: "1000m"
+#    memory: "200Mi"
 
 # Custom service account override that the pod will use
 serviceAccount: ""

@@ -74,16 +74,7 @@ def test_defaults():
     assert 'http' in c['readinessProbe']['httpGet']['port']
 
     # Resources
-    assert c['resources'] == {
-        'requests': {
-            'cpu': '100m',
-            'memory': '1536Mi'
-        },
-        'limits': {
-            'cpu': '1000m',
-            'memory': '1536Mi'
-        }
-    }
+    assert c['resources'] == {}
 
     # Persistence
     assert 'volumeClaimTemplates' not in r['statefulset'][name]['spec']
@@ -531,6 +522,30 @@ podSecurityPolicy:
 
     assert r['role'][name]['rules'][0] == {"apiGroups": ["extensions"], "verbs": ["use"], "resources": ["podsecuritypolicies"], "resourceNames": ["customPodSecurityPolicy"]}
 
+
+def test_add_resources():
+        config = '''
+    resources:
+      limits:
+        cpu: "25m"
+        memory: "128Mi"
+      requests:
+        cpu: "25m"
+        memory: "128Mi"
+    '''
+        r = helm_template(config)
+        i = r['statefulset'][name]['spec']['template']['spec']['containers'][0]
+
+        assert i['resources'] == {
+            'requests': {
+                'cpu': '25m',
+                'memory': '128Mi'
+            },
+            'limits': {
+                'cpu': '25m',
+                'memory': '128Mi'
+            }
+        }
 
 def test_external_service_account():
     ## Make sure we can use an externally defined service account

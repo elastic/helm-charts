@@ -2,7 +2,6 @@ import os
 import sys
 sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
 from helpers import helm_template
-import yaml
 
 clusterName = 'elasticsearch'
 nodeGroup = 'master'
@@ -110,16 +109,7 @@ def test_defaults():
     assert '/_cluster/health?timeout=0s' in c['readinessProbe']['exec']['command'][-1]
 
     # Resources
-    assert c['resources'] == {
-        'requests': {
-            'cpu': '100m',
-            'memory': '2Gi'
-        },
-        'limits': {
-            'cpu': '1000m',
-            'memory': '2Gi'
-        }
-    }
+    assert c['resources'] == {}
 
     # Mounts
     assert c['volumeMounts'][0]['mountPath'] == '/usr/share/elasticsearch/data'
@@ -467,6 +457,30 @@ nodeSelector:
 '''
     r = helm_template(config)
     assert r['statefulset'][uname]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
+
+def test_adding_resources():
+    config = '''
+resources:
+  limits:
+    cpu: "25m"
+    memory: "128Mi"
+  requests:
+    cpu: "25m"
+    memory: "128Mi"
+'''
+    r = helm_template(config)
+    i = r['statefulset'][uname]['spec']['template']['spec']['containers'][0]
+
+    assert i['resources'] == {
+        'requests': {
+            'cpu': '25m',
+            'memory': '128Mi'
+        },
+        'limits': {
+            'cpu': '25m',
+            'memory': '128Mi'
+        }
+    }
 
 def test_adding_resources_to_initcontainer():
     config = '''

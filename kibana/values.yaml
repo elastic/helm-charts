@@ -31,13 +31,13 @@ labels: {}
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
-resources:
-  requests:
-    cpu: "100m"
-    memory: "500Mi"
-  limits:
-    cpu: "1000m"
-    memory: "1Gi"
+resources: {}
+#  requests:
+#    cpu: "100m"
+#    memory: "500Mi"
+#  limits:
+#    cpu: "1000m"
+#    memory: "1Gi"
 
 protocol: http
 
