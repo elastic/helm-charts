@@ -45,13 +45,22 @@ def test_defaults():
 
 def test_adding_envs():
     config = '''
-extraEnvs:
-- name: LOG_LEVEL
-  value: DEBUG
+daemonset:
+    extraEnvs:
+    - name: LOG_LEVEL
+      value: DEBUG
+deployment:
+    extraEnvs:
+    - name: LOG_LEVEL
+      value: INFO
 '''
     r = helm_template(config)
     envs = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['env']
     assert {'name': 'LOG_LEVEL', 'value': 'DEBUG'} in envs
+    envs = r['deployment'][name + '-metrics']['spec']['template']['spec']['containers'][0]['env']
+    assert {'name': 'LOG_LEVEL', 'value': 'INFO'} in envs
+
+
 
 
 def test_adding_image_pull_secrets():
@@ -65,15 +74,24 @@ imagePullSecrets:
 
 def test_adding_tolerations():
     config = '''
-tolerations:
-- key: "key1"
-  operator: "Equal"
-  value: "value1"
-  effect: "NoExecute"
-  tolerationSeconds: 3600
+daemonset:
+    tolerations:
+    - key: "key1"
+      operator: "Equal"
+      value: "value1"
+      effect: "NoExecute"
+      tolerationSeconds: 3600
+deployment:
+    tolerations:
+    - key: "key3"
+      operator: "Equal"
+      value: "value1"
+      effect: "NoExecute"
+      tolerationSeconds: 360
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['tolerations'][0]['key'] == 'key1'
+    assert r['deployment'][name + '-metrics']['spec']['template']['spec']['tolerations'][0]['key'] == 'key3'
 
 
 def test_override_the_default_update_strategy():
@@ -102,9 +120,10 @@ managedServiceAccount: false
 
 def test_setting_pod_security_context():
     config = '''
-podSecurityContext:
-  runAsUser: 1001
-  privileged: false
+daemonset:
+    podSecurityContext:
+      runAsUser: 1001
+      privileged: false
 '''
     r = helm_template(config)
     c = r['daemonset'][name]['spec']['template']['spec']['containers'][0]
@@ -144,10 +163,16 @@ metricbeatConfig:
 
 def test_adding_a_secret_mount():
     config = '''
-secretMounts:
-  - name: elastic-certificates
-    secretName: elastic-certificates-name
-    path: /usr/share/metricbeat/config/certs
+daemonset:
+    secretMounts:
+      - name: elastic-certificates
+        secretName: elastic-certificates-name
+        path: /usr/share/metricbeat/config/certs
+deployment:
+    secretMounts:
+      - name: elastic-certificates
+        secretName: elastic-certificates-name
+        path: /usr/share/metricbeat/config/certs2
 '''
     r = helm_template(config)
     s = r['daemonset'][name]['spec']['template']['spec']
@@ -161,29 +186,52 @@ secretMounts:
             'secretName': 'elastic-certificates-name'
         }
     }
+    s = r['deployment'][name + '-metrics']['spec']['template']['spec']
+    assert s['containers'][0]['volumeMounts'][0] == {
+        'mountPath': '/usr/share/metricbeat/config/certs2',
+        'name': 'elastic-certificates'
+    }
+    assert s['volumes'][0] == {
+        'name': 'elastic-certificates',
+        'secret': {
+            'secretName': 'elastic-certificates-name'
+        }
+    }
 
 
 def test_adding_a_extra_volume_with_volume_mount():
     config = '''
-extraVolumes:
-  - name: extras
-    emptyDir: {}
-extraVolumeMounts:
-  - name: extras
-    mountPath: /usr/share/extras
-    readOnly: true
+daemonset:
+    extraVolumes:
+      - name: extras
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: extras
+        mountPath: /usr/share/extras
+        readOnly: true
+deployment:
+    extraVolumes:
+      - name: extras
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: extras
+        mountPath: /usr/share/extras2
+        readOnly: true
 '''
     r = helm_template(config)
     extraVolume = r['daemonset'][name]['spec']['template']['spec']['volumes']
     assert {'name': 'extras', 'emptyDir': {}} in extraVolume
     extraVolumeMounts = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['volumeMounts']
     assert {'name': 'extras', 'mountPath': '/usr/share/extras', 'readOnly': True} in extraVolumeMounts
+    extraVolumeMounts = r['deployment'][name + '-metrics']['spec']['template']['spec']['containers'][0]['volumeMounts']
+    assert {'name': 'extras', 'mountPath': '/usr/share/extras2', 'readOnly': True} in extraVolumeMounts
 
 
 def test_adding_a_node_selector():
     config = '''
-nodeSelector:
-  disktype: ssd
+daemonset:
+    nodeSelector:
+      disktype: ssd
 '''
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
@@ -191,21 +239,36 @@ nodeSelector:
 
 def test_adding_an_affinity_rule():
     config = '''
-affinity:
-  podAntiAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-    - labelSelector:
-        matchExpressions:
-        - key: app
-          operator: In
-          values:
-          - metricbeat
-      topologyKey: kubernetes.io/hostname
+daemonset:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - metricbeat
+          topologyKey: kubernetes.io/hostname
+deployment:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - metricbeat
+          topologyKey: kubernetes.io/hostname
 '''
 
     r = helm_template(config)
     assert r['daemonset'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
         'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+    assert r['deployment'][name + '-metrics']['spec']['template']['spec']['affinity']['podAntiAffinity'][
+        'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+
 
 def test_cluster_role_rules():
     config = ''
@@ -242,12 +305,19 @@ labels:
 
 def test_adding_env_from():
     config = '''
-envFrom:
-- configMapRef:
-    name: configmap-name
+daemonset:
+    envFrom:
+    - configMapRef:
+        name: configmap-name
+deployment:
+    envFrom:
+    - configMapRef:
+        name: configmap-name
 '''
     r = helm_template(config)
     configMapRef = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['envFrom'][0]['configMapRef']
+    assert configMapRef == {'name': 'configmap-name'}
+    configMapRef = r['deployment'][name + '-metrics']['spec']['template']['spec']['containers'][0]['envFrom'][0]['configMapRef']
     assert configMapRef == {'name': 'configmap-name'}
 
 def test_setting_fullnameOverride():

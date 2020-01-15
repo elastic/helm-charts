@@ -1,4 +1,4 @@
----
+{{- if .Values.deployment.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,14 +32,19 @@ spec:
         heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
     spec:
-      {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 6 }}
+      {{- with .Values.deployment.tolerations }}
+      tolerations: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector: {{ toYaml . | nindent 8 -}}
+      {{- end }}
+      {{- with .Values.deployment.affinity }}
+      affinity: {{ toYaml . | nindent 8 -}}
       {{- end }}
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       volumes:
-      {{- range .Values.secretMounts }}
+      {{- range .Values.deployment.secretMounts }}
       - name: {{ .name }}
         secret:
           secretName: {{ .secretName }}
@@ -50,8 +55,8 @@ spec:
           defaultMode: 0600
           name: {{ template "metricbeat.fullname" . }}-config
       {{- end }}
-      {{- if .Values.extraVolumes }}
-{{ toYaml .Values.extraVolumes | indent 6 }}
+      {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 6 }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -72,7 +77,7 @@ spec:
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+{{ toYaml .Values.deployment.resources | indent 10 }}
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -80,19 +85,19 @@ spec:
               fieldPath: metadata.namespace
         - name: KUBE_STATE_METRICS_HOSTS
           value: "$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_HOST):$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_PORT_HTTP)"
-{{- if .Values.extraEnvs }}
-{{ toYaml .Values.extraEnvs | indent 8 }}
+{{- if .Values.deployment.extraEnvs }}
+{{ toYaml .Values.deployment.extraEnvs | indent 8 }}
 {{- end }}
-{{- if .Values.envFrom }}
+{{- if .Values.deployment.envFrom }}
         envFrom:
-{{ toYaml .Values.envFrom | indent 10 }}
+{{ toYaml .Values.deployment.envFrom | indent 10 }}
 {{- end }}
-{{- if .Values.podSecurityContext }}
+{{- if .Values.deployment.podSecurityContext }}
         securityContext:
-{{ toYaml .Values.podSecurityContext | indent 10 }}
+{{ toYaml .Values.deployment.podSecurityContext | indent 10 }}
 {{- end }}
         volumeMounts:
-        {{- range .Values.secretMounts }}
+        {{- range .Values.deployment.secretMounts }}
         - name: {{ .name }}
           mountPath: {{ .path }}
           {{- if .subPath }}
@@ -105,6 +110,7 @@ spec:
           readOnly: true
           subPath: {{ $path }}
         {{- end }}
-        {{- if .Values.extraVolumeMounts }}
-{{ toYaml .Values.extraVolumeMounts | indent 8 }}
+        {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 8 }}
         {{- end }}
+{{- end }}

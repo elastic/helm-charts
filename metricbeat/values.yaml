@@ -64,25 +64,107 @@ metricbeatConfig:
 
 replicas: 1
 
-# Extra environment variables to append to the DaemonSet pod spec.
-# This will be appended to the current 'env:' key. You can use any of the kubernetes env
-# syntax here
-extraEnvs: []
-#  - name: MY_ENVIRONMENT_VAR
-#    value: the_value_goes_here
+daemonset:
+  enabled: true
+  # Extra environment variables to append to the DaemonSet pod spec.
+  # This will be appended to the current 'env:' key. You can use any of the kubernetes env
+  # syntax here
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
 
-extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true
 
-extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
 
-envFrom: []
-  # - configMapRef:
-  #     name: config-secret
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: metricbeat-certificates
+  #    secretName: metricbeat-certificates
+  #    path: /usr/share/metricbeat/certs
+
+
+  envFrom: []
+    # - configMapRef:
+    #     name: config-secret
+
+  # Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
+  #
+  # - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
+  # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
+  # - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
+  podSecurityContext:
+    runAsUser: 0
+    privileged: false
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
+
+  tolerations: []
+  nodeSelector: {}
+  affinity: {}
+
+deployment:
+  enabled: true
+  # Extra environment variables to append to the deployment pod spec.
+  # This will be appended to the current 'env:' key. You can use any of the kubernetes env
+  # syntax here
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
+
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true
+
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: metricbeat-certificates
+  #    secretName: metricbeat-certificates
+  #    path: /usr/share/metricbeat/certs
+
+
+  envFrom: []
+    # - configMapRef:
+    #     name: config-secret
+
+  # Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
+  #
+  # - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
+  # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
+  # - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
+  podSecurityContext:
+    runAsUser: 0
+    privileged: false
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
+
+  tolerations: []
+  nodeSelector: {}
+  affinity: {}
 
 # Root directory where metricbeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
@@ -144,41 +226,11 @@ clusterRoleRules:
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
-# Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
-#
-# - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
-# - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
-# - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
-podSecurityContext:
-  runAsUser: 0
-  privileged: false
-
-resources:
-  requests:
-    cpu: "100m"
-    memory: "100Mi"
-  limits:
-    cpu: "1000m"
-    memory: "200Mi"
-
 # Custom service account override that the pod will use
 serviceAccount: ""
 
-# A list of secrets and their paths to mount inside the pod
-# This is useful for mounting certificates for security other sensitive values
-secretMounts: []
-#  - name: metricbeat-certificates
-#    secretName: metricbeat-certificates
-#    path: /usr/share/metricbeat/certs
-
 # How long to wait for metricbeat pods to stop gracefully
 terminationGracePeriod: 30
-
-tolerations: []
-
-nodeSelector: {}
-
-affinity: {}
 
 updateStrategy: RollingUpdate
 
