@@ -197,7 +197,7 @@ persistence:
     assert c['volumeMounts'][0]['mountPath'] == '/usr/share/logstash/data'
     assert c['volumeMounts'][0]['name'] == name
 
-    v = r['statefulset']['release-name-logstash']['spec']['volumeClaimTemplates'][0]
+    v = r['statefulset'][name]['spec']['volumeClaimTemplates'][0]
     assert v['metadata']['name'] == name
     assert v['spec']['accessModes'] == ['ReadWriteOnce']
     assert v['spec']['resources']['requests']['storage'] == '1Gi'
@@ -321,7 +321,7 @@ nodeAffinity:
         - myvalue
 '''
     r = helm_template(config)
-    assert r['statefulset']['release-name-logstash']['spec']['template']['spec']['affinity']['nodeAffinity'] == {
+    assert r['statefulset'][name]['spec']['template']['spec']['affinity']['nodeAffinity'] == {
         'preferredDuringSchedulingIgnoredDuringExecution': [{
             'weight': 100,
             'preference': {
@@ -361,7 +361,7 @@ logstashConfig:
 
     s = r['statefulset'][name]['spec']['template']['spec']
 
-    assert {'configMap': {'name': 'release-name-logstash-config'}, 'name': 'logstashconfig'} in s['volumes']
+    assert {'configMap': {'name': name + '-config'}, 'name': 'logstashconfig'} in s['volumes']
     assert {'mountPath': '/usr/share/logstash/config/logstash.yml', 'name': 'logstashconfig', 'subPath': 'logstash.yml'} in s['containers'][0]['volumeMounts']
     assert {'mountPath': '/usr/share/logstash/config/log4j2.properties', 'name': 'logstashconfig', 'subPath': 'log4j2.properties'} in s['containers'][0]['volumeMounts']
 
@@ -384,6 +384,19 @@ logstashPipeline:
     assert 'output { stdout { { } } }' in c['uptime.conf']
 
     assert 'pipelinechecksum' in r['statefulset'][name]['spec']['template']['metadata']['annotations']
+
+
+def test_adding_in_pipeline_from_existing_configmap():
+    config = '''
+existingPipelineConfigmap: uptime-pipeline
+'''
+    r = helm_template(config)
+
+    s = r['statefulset'][name]['spec']['template']['spec']
+
+    assert {'configMap': {'name': 'uptime-pipeline'}, 'name': 'logstashpipeline'} in s['volumes']
+
+    assert r['statefulset'][name]['spec']['template']['metadata']['annotations'] == None
 
 
 def test_priority_class_name():

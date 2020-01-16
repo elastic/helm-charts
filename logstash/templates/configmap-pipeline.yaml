@@ -1,4 +1,4 @@
-{{- if .Values.logstashPipeline }}
+{{- if and (.Values.logstashPipeline) (not .Values.existingPipelineConfigmap) }}
 ---
 apiVersion: v1
 kind: ConfigMap

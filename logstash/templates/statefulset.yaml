@@ -54,7 +54,7 @@ spec:
         configchecksum: {{ include (print .Template.BasePath "/configmap-config.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.logstashPipeline }}
+        {{- if and (.Values.logstashPipeline) (not .Values.existingPipelineConfigmap) }}
         pipelinechecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
@@ -121,10 +121,10 @@ spec:
           configMap:
             name: {{ template "logstash.fullname" . }}-config
         {{- end }}
-        {{- if .Values.logstashPipeline }}
+        {{- if or .Values.logstashPipeline .Values.existingPipelineConfigmap }}
         - name: logstashpipeline
           configMap:
-            name: {{ template "logstash.fullname" . }}-pipeline
+            name: {{ default (printf "%s-pipeline" (include "logstash.fullname" . )) .Values.existingPipelineConfigmap }}
         {{- end }}
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 8 }}

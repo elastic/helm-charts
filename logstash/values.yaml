@@ -21,6 +21,11 @@ logstashPipeline: {}
 #    }
 #    output { stdout { } }
 
+# Allows you to specify an existing configmap containing pipeline files
+# to add to /usr/share/logstash/pipeline/
+# NOTE: If this is set, the logstashPipeline config is ignored.
+existingPipelineConfigmap: ""
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
