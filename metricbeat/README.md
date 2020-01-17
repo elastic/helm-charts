@@ -99,6 +99,64 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.5.1
 
 In [examples/](https://github.com/elastic/helm-charts/tree/master/metricbeat/examples) you will find some example configurations. These examples are used for the automated testing of this helm chart.
 
+### Kubelet Stats
+
+The configuration of Metricbeat to pull stats from the kubelet requires special
+mention. The preferred approach for the kubernetes modules node, pod, container,
+volume, and system is to run Metricbeat as a DaemonSet, and have it hit the
+kubelet API to pull these stats. However, depending on the kubernetes setup,
+there are a number of ways to do this. You need to know three things-
+
+1. Is your kubernetes `node name` a routable DNS address from INSIDE a pod?
+2. Is your kuubelet configured to listen on the https port 10250 or on the http
+only read-only port 10255? (and have those ports been changed from the defaults)
+3. Does your kubelet have a valid SSL cert with the server name that IS routable
+from your pods?
+
+The end state is you have to be able to make a request to that api endpoint.
+This is controlled under the metricbeat config with `hosts`. Some example
+configurations-
+
+`hosts: ["${NODE_NAME}:10255"]` - this would work when the node name is a valid
+dns name AND the http read-only port is accessible
+
+`hosts: ["https://${NODE_NAME}:10250"]` - this is a routable name, but the https
+port. When you're using ssl, you need to get the CA cert as well. This could be
+something like the below-
+
+```
+bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+ssl.certificate_authorities:
+  - /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+```
+
+this was taken from a server where the kube-api CA was used to generate CA certs.
+You'll have to figure out the right CA for YOUR kubelet.
+
+```
+hosts: ["https://${NODE_IP}:10250"]` 
+```
+
+plus the below (all of these examples require you to set up
+environment variables in the DaemonSet to access the kubelet)
+
+```
+extraEnvs:
+    - name: 'NODE_HOSTNAME'
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: 'NODE_HOST_IP'
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+```
+
+The default chart uses the read-only port and the node name. This works on GKE
+and older versiosn of EKS, but not on newer EKS or RKE or Digital Ocean. There
+really isn't any way except to figure out how your cluster is set up.
+
+
 ### Default
 
 * Deploy the [default Elasticsearch helm chart](https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default)
