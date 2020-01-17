@@ -15,8 +15,7 @@ Please look in the chart directories for the documentation for each chart. These
 | [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/current/docker.html                    |
 | [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   |
 | [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html |
-
-## Kubernetes versions
+| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       |
 
 The charts are [currently tested](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) against all GKE versions available. The exact versions are defined under `KUBERNETES_VERSIONS` in [helpers/matrix.yml](/helpers/matrix.yml)
 
