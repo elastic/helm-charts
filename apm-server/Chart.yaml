@@ -1,0 +1,12 @@
+apiVersion: v1
+description: Official Elastic helm chart for Elastic APM Server
+home: https://github.com/elastic/helm-charts
+maintainers:
+- email: helm-charts@elastic.co
+  name: Elastic
+name: apm-server
+version: 7.5.1
+appVersion: 7.5.1
+sources:
+  - https://github.com/elastic/apm
+icon: https://helm.elastic.co/icons/apm.png
