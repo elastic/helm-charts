@@ -1,0 +1,7 @@
+apiVersion: v1
+description: Elasticsearch Hot Cold Example
+home: https://github.com/elastic/helm-charts
+name: elasticsearch-host-cold
+version: 1.0.0
+sources:
+  - https://github.com/elastic/elasticsearch

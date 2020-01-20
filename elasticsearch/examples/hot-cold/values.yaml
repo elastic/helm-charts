@@ -1,0 +1,79 @@
+# To define common settings, it may be useful to use YAML anchors to use the same
+# base settings for both node types (data + master)
+es-defaults: &defaults
+  clusterName: "logging"
+  # masterService is not needed since by default it is computed from cluster name and not group name.
+
+# The data nodes
+es-data-hot:
+  <<: *defaults
+  nodeGroup: "data-hot"
+  esConfig:
+    elasticsearch.yml: |
+      node:
+        attr:
+          data: hot
+  roles:
+    master: "false"
+    ingest: "true"
+    data: "true"
+  replicas: 1
+
+es-data-warm:
+  <<: *defaults
+  nodeGroup: "data-warm"
+  esConfig:
+    elasticsearch.yml: |
+      node:
+        attr:
+          data: warm
+  roles:
+    master: "false"
+    ingest: "false"
+    data: "true"
+  replicas: 1
+
+es-data-cold:
+  <<: *defaults
+  nodeGroup: "data-cold"
+  esConfig:
+    elasticsearch.yml: |
+      node:
+        attr:
+          data: cold
+  roles:
+    master: "false"
+    ingest: "false"
+    data: "true"
+  replicas: 1
+
+# The master nodes
+es-master:
+  <<: *defaults
+  nodeGroup: "master"
+  roles:
+    master: "true"
+    ingest: "false"
+    data: "false"
+  esJavaOpts: "-Xms512m -Xmx512m"
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: 20m
+    limits:
+      memory: "1Gi"
+      cpu: "2"
+
+kibana:
+  elasticsearchHosts: http://logging-data-hot:9200
+  resources:
+    limits:
+      cpu: 2
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 1Gi
+  kibanaConfig:
+    kibana.yml: |
+      server.name: kibana
+      server.host: "0"

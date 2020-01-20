@@ -1,0 +1,20 @@
+dependencies:
+  - name: elasticsearch
+    repository: "https://helm.elastic.co"
+    version: "*"
+    alias: es-data-hot
+  - name: elasticsearch
+    repository: "https://helm.elastic.co"
+    version: "*"
+    alias: es-data-warm
+  - name: elasticsearch
+    repository: "https://helm.elastic.co"
+    version: "*"
+    alias: es-data-cold
+  - name: elasticsearch
+    repository: "https://helm.elastic.co"
+    version: "*"
+    alias: es-master
+  - name: kibana
+    repository: "https://helm.elastic.co"
+    version: "*"
