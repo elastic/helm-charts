@@ -213,15 +213,19 @@ def test_priority_class_name():
 priorityClassName: ""
 '''
     r = helm_template(config)
-    spec = r['daemonset'][name]['spec']['template']['spec']
-    assert 'priorityClassName' not in spec
+    daemonset_spec = r['daemonset'][name]['spec']['template']['spec']
+    deployment_spec = r['deployment'][name + '-metrics']['spec']['template']['spec']
+    assert 'priorityClassName' not in daemonset_spec
+    assert 'priorityClassName' not in deployment_spec
 
     config = '''
 priorityClassName: "highest"
 '''
     r = helm_template(config)
-    priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
-    assert priority_class_name == "highest"
+    daemonset_priority_class_name = r['daemonset'][name]['spec']['template']['spec']['priorityClassName']
+    deployment_priority_class_name = r['deployment'][name + '-metrics']['spec']['template']['spec']['priorityClassName']
+    assert daemonset_priority_class_name == "highest"
+    assert deployment_priority_class_name == "highest"
 
 
 def test_cluster_role_rules():
