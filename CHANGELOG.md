@@ -1,5 +1,57 @@
 # Changelog
 
+## 7.5.2 - 2020/01/21
+
+* 7.5.2 as the default stack version
+* Testing of GKE for 1.12 dropped and 1.15 added [#435](https://github.com/elastic/helm-charts/pull/435) [@jmlrt](https://github.com/jmlrt)
+* Add [Probot](https://probot.github.io) config to manage stale issues / PR [#421](https://github.com/elastic/helm-charts/pull/421) [@jmlrt](https://github.com/jmlrt)
+* Fix README docs links on [Helm Hub](https://hub.helm.sh) [#438](https://github.com/elastic/helm-charts/pull/438) [@jmlrt](https://github.com/jmlrt)
+
+### Elasticsearch
+
+| PR                                                     | Author                                           | Title                                                           |
+| ------------------------------------------------------ | ------------------------------------------------ | --------------------------------------------------------------- |
+|[#382](https://github.com/elastic/helm-charts/pull/382) | [@jaumann](https://github.com/jaumann)           | Allow for name overrides of resources                           |
+|[#433](https://github.com/elastic/helm-charts/pull/433) | [@jmlrt](https://github.com/jmlrt)               | Add example for [Microk8s](https://microk8s.io/)                |
+|[#428](https://github.com/elastic/helm-charts/pull/428) | [@mmisztal1980](https://github.com/mmisztal1980) | Remove duplicate label                                          |
+|[#434](https://github.com/elastic/helm-charts/pull/434) | [@jmlrt](https://github.com/jmlrt)               | Add workaround to fix [kind])https://kind.sigs.k8s.io/) example |
+|[#444](https://github.com/elastic/helm-charts/pull/444) | [@naseemkullah](https://github.com/naseemkullah) | Add commented out example of a useful post start hook           |
+
+### Filebeat
+
+| PR                                                     | Author                                         | Title                                                                 |
+| ------------------------------------------------------ | ---------------------------------------------- | --------------------------------------------------------------------- |
+|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)             | Add custom labels to pods                                             |
+|[#369](https://github.com/elastic/helm-charts/pull/369) | [@jmymy](https://github.com/jmymy)             | Add support for `envfrom`                                             |
+|[#420](https://github.com/elastic/helm-charts/pull/420) | [@jmlrt](https://github.com/jmlrt)             | Override probes commands                                              |
+|[#430](https://github.com/elastic/helm-charts/pull/430) | [@krichter722](https://github.com/krichter722) | Fix default value of `extraVolumeMounts` and `extraVolumes` in README |
+
+### Kibana
+
+| PR                                                     | Author                                           | Title                                           |
+| ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------- |
+|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)               | Add custom labels to pods                       |
+|[#422](https://github.com/elastic/helm-charts/pull/422) | [@victorsalaun](https://github.com/victorsalaun) | Remove useless `maxUnavailable` in Kibana chart |
+|[#408](https://github.com/elastic/helm-charts/pull/408) | [@ichylinux](https://github.com/ichylinux)       | Add support for `loadBalancerSourceRanges`      |
+|[#419](https://github.com/elastic/helm-charts/pull/419) | [@jmlrt](https://github.com/jmlrt)               | Add doc for plugin install                      |
+
+### Logstash
+
+| PR                                                     | Author                             | Title                     |
+| ------------------------------------------------------ | ---------------------------------- | ------------------------- |
+|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt) | Add custom labels to pods |
+
+### Metricbeat
+
+| PR                                                     | Author                                   | Title                                                         |
+| ------------------------------------------------------ | ---------------------------------------- | ------------------------------------------------------------- |
+|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)       | Add custom labels to pods                                     |
+|[#369](https://github.com/elastic/helm-charts/pull/369) | [@jmymy](https://github.com/jmymy)       | Add support for `envfrom`                                     |
+|[#420](https://github.com/elastic/helm-charts/pull/420) | [@jmlrt](https://github.com/jmlrt)       | Override probes commands                                      |
+|[#425](https://github.com/elastic/helm-charts/pull/425) | [@pbecotte](https://github.com/pbecotte) | Update `hostfs` to be a CLI option instead of a config option |
+|[#436](https://github.com/elastic/helm-charts/pull/436) | [@gadiener](https://github.com/gadiener) | Add `priorityClassName` config                                |
+
+
 ## 7.5.1 - 2019/12/18
 
 * 7.5.1 as the default stack version
