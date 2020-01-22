@@ -571,3 +571,22 @@ service:
     assert len(s['spec']['ports']) == 1
     assert s['spec']['ports'][0] == {
         'name': 'beats', 'port': 5044, 'protocol': 'TCP', 'targetPort': 5044}
+
+def test_setting_fullnameOverride():
+    config = '''
+fullnameOverride: 'logstash-custom'
+'''
+    r = helm_template(config)
+
+    custom_name = 'logstash-custom'
+    assert custom_name in r['daemonset']
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == project
+    assert r['daemonset'][custom_name]['spec']['template']['spec']['serviceAccountName'] == name
+    volumes = r['daemonset'][custom_name]['spec']['template']['spec']['volumes']
+    assert {
+               'name': 'data',
+               'hostPath': {
+                   'path': '/var/lib/' + custom_name + '-default-data',
+                   'type': 'DirectoryOrCreate'
+               }
+           } in volumes
