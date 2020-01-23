@@ -87,6 +87,8 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
+      hostNetwork: true  
+      dnsPolicy: ClusterFirstWithHostNet 
       containers:
       - name: "metricbeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
