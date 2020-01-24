@@ -1,11 +1,11 @@
 # APM Server Helm Chart
 
-This functionality is in alpha and is subject to change. The design and code is 
-less mature than official GA features and is being provided as-is with no 
-warranties. Alpha features are not subject to the support SLA of official GA 
+This functionality is in alpha and is subject to change. The design and code is
+less mature than official GA features and is being provided as-is with no
+warranties. Alpha features are not subject to the support SLA of official GA
 features.
 
-This helm chart is a lightweight way to configure and run our official 
+This helm chart is a lightweight way to configure and run our official
 [APM Server docker image](https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html).
 
 ## Requirements
@@ -14,11 +14,11 @@ This helm chart is a lightweight way to configure and run our official
 * [Helm](https://helm.sh/) >= 2.8.0
 
 ## Usage notes and getting started
-* The default APM Server configuration file for this chart is configured to use an 
+* The default APM Server configuration file for this chart is configured to use an
 Elasticsearch endpoint as configured by the rest of these helm charts. This can
 easily be overridden in the config value `apmConfig.apm-server.yml`.
 
-Note: Automated testing of this chart is currently only run against GKE (Google 
+Note: Automated testing of this chart is currently only run against GKE (Google
 Kubernetes Engine).
 
 ## Installing
@@ -31,7 +31,7 @@ Kubernetes Engine).
   ```
   helm install --name apm-server elastic/apm-server
   ```
-  
+
 ### Using master branch
 
 * Clone the git repo
@@ -49,17 +49,17 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.6 | 7.5.1 |
+| 6.8.6 | 7.5.2 |
 
-Examples of installing older major versions can be found in the 
+Examples of installing older major versions can be found in the
 [examples](apm-server/examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old 
-or new releases by overriding the `imageTag`. To install version `7.5.1` of APM 
+While only the latest releases are tested, it is possible to easily install old
+or new releases by overriding the `imageTag`. To install version `7.5.2` of APM
 Server it would look like this:
 
 ```
-helm install --name apm-server elastic/apm-server --set imageTag=7.5.1
+helm install --name apm-server elastic/apm-server --set imageTag=7.5.2
 ```
 
 
@@ -72,7 +72,7 @@ helm install --name apm-server elastic/apm-server --set imageTag=7.5.1
 | `extraVolumeMounts`      | List of additional volumeMounts                                                                                                                                                                                                                                             | `[]`                                                                                                                      |
 | `extraVolumes`           | List of additional volumes                                                                                                                                                                                                                                                  | `[]`                                                                                                                      |
 | `image`                  | The APM Server docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/apm/apm-server`                                                                                        |
-| `imageTag`               | The APM Server docker image tag                                                                                                                                                                                                                                             | `7.5.1`                                                                                                                   |
+| `imageTag`               | The APM Server docker image tag                                                                                                                                                                                                                                             | `7.5.2`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |
@@ -99,7 +99,7 @@ helm install --name apm-server elastic/apm-server --set imageTag=7.5.1
 
 ## Examples
 
-In [examples/](apm-server/examples) you will find some example configurations. These examples 
+In [examples/](apm-server/examples) you will find some example configurations. These examples
 are used for the automated testing of this helm chart.
 
 ### Default
@@ -118,8 +118,8 @@ are used for the automated testing of this helm chart.
 
 ## Testing
 
-This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating 
-logic. The dependencies for testing can be installed from the 
+This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating
+logic. The dependencies for testing can be installed from the
 [`requirements.txt`](requirements.txt) in the parent directory.
 
 ```
@@ -141,9 +141,9 @@ make test
 
 ## Integration Testing
 
-Integration tests are run using 
-[goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a 
-serverspec like tool written in golang. See [goss.yaml](apm-server/examples/default/test/goss.yaml) 
+Integration tests are run using
+[goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a
+serverspec like tool written in golang. See [goss.yaml](apm-server/examples/default/test/goss.yaml)
 for an example of what the tests look like.
 
 To run the goss tests against the default example:

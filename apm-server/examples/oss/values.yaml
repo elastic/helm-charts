@@ -1,4 +1,4 @@
-image: docker.elastic.co/apm/apm-server-oss:7.5.1
+image: docker.elastic.co/apm/apm-server-oss:7.5.2
 
 apmConfig:
   apm-server.yml: |
