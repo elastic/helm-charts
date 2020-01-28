@@ -558,13 +558,13 @@ ingress:
   tls:
   - secretName: elastic-co-wildcard
     hosts:
-     - elasticsearch.elastic.co
+     - '*.elastic.co'
 '''
 
     r = helm_template(config)
     assert uname in r['ingress']
     i = r['ingress'][uname]['spec']
-    assert i['tls'][0]['hosts'][0] == 'elasticsearch.elastic.co'
+    assert i['tls'][0]['hosts'][0] == '*.elastic.co'
     assert i['tls'][0]['secretName'] == 'elastic-co-wildcard'
 
     assert i['rules'][0]['host'] == 'elasticsearch.elastic.co'
