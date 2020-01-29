@@ -85,6 +85,10 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
+      {{- if .Values.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.extraInitContainers | indent 8 }}
+      {{- end }}
       containers:
       - name: "filebeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
