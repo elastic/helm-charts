@@ -54,6 +54,17 @@ extraEnvs:
     envs = r['daemonset'][name]['spec']['template']['spec']['containers'][0]['env']
     assert {'name': 'LOG_LEVEL', 'value': 'DEBUG'} in envs
 
+def test_adding_init_containers():
+    config = '''
+extraInitContainers:
+- name: dummy-init
+  image: busybox
+  command: ['echo', 'hey']
+'''
+    r = helm_template(config)
+    initContainers = r['daemonset'][name]['spec']['template']['spec']['initContainers']
+    assert {'name': 'dummy-init', 'image': 'busybox', 'command': ['echo', 'hey']} in initContainers
+
 
 def test_adding_image_pull_secrets():
     config = '''

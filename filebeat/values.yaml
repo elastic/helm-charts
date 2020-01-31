@@ -30,6 +30,11 @@ extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
+extraInitContainers: []
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 envFrom: []
 # - configMapRef:
 #     name: configmap-name
