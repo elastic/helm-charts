@@ -112,7 +112,7 @@ def test_defaults():
     # Resources
     assert c['resources'] == {
         'requests': {
-            'cpu': '100m',
+            'cpu': '1000m',
             'memory': '2Gi'
         },
         'limits': {
