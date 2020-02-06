@@ -43,6 +43,21 @@ def test_defaults():
            } in volumes
 
 
+def test_adding_a_extra_container():
+    config = '''
+extraContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+'''
+    r = helm_template(config)
+    extraContainerDaemonset = r['daemonset'][name]['spec']['template']['spec']['containers']
+    assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraContainerDaemonset
+    deployment_name = name + '-metrics'
+    extraContainerDeployment = r['deployment'][deployment_name]['spec']['template']['spec']['containers']
+    assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraContainerDeployment
+
+
 def test_adding_envs():
     config = '''
 extraEnvs:
