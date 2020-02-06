@@ -69,6 +69,11 @@ extraContainers: ""
 #   image: busybox
 #   command: ['echo', 'hey']
 
+extraInitContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
