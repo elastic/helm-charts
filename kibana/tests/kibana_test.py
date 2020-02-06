@@ -148,6 +148,18 @@ extraContainers: |
     assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraContainer
 
 
+def test_adding_a_extra_init_container():
+    config = '''
+extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+'''
+    r = helm_template(config)
+    extraInitContainer = r['deployment'][name]['spec']['template']['spec']['initContainers']
+    assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraInitContainer
+
+
 def test_adding_an_ingress_rule():
     config = '''
 ingress:
