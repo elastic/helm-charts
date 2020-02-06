@@ -136,6 +136,18 @@ affinity:
         'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
 
 
+def test_adding_a_extra_container():
+    config = '''
+extraContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+'''
+    r = helm_template(config)
+    extraContainer = r['deployment'][name]['spec']['template']['spec']['containers']
+    assert {'name': 'do-something', 'image': 'busybox', 'command': ['do', 'something'], } in extraContainer
+
+
 def test_adding_an_ingress_rule():
     config = '''
 ingress:
