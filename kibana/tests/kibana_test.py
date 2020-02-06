@@ -331,7 +331,7 @@ def test_service_labels():
 
     assert r['service'][name]['metadata']['labels']['label1'] == 'value1'
 
-def test_service_annotatations():
+def test_service_annotations():
     config = '''
 service:
   annotations:
