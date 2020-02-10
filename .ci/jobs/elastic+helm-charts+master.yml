@@ -17,6 +17,8 @@
         projects:
         - name: elastic+helm-charts+master+template-testing
           current-parameters: true
+        - name: elastic+helm-charts+master+lint-python
+          current-parameters: true
         - name: elastic+helm-charts+master+cluster-creation
           current-parameters: true
     - multijob:

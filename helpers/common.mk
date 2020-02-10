@@ -29,3 +29,6 @@ helm:
 	kubectl get cs
 	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
 	helm init --wait --upgrade
+
+lint-python:
+	black --diff --check .
