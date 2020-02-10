@@ -73,6 +73,16 @@ priorityClassName: ""
 
 httpPort: 5601
 
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+extraInitContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 updateStrategy:
   type: "Recreate"
 

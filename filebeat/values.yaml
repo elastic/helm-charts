@@ -30,6 +30,11 @@ extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 extraInitContainers: []
 # - name: dummy-init
 #   image: busybox

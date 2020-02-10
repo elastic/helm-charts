@@ -20,6 +20,16 @@ apmConfig:
 
 replicas: 1
 
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+extraInitContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
@@ -130,7 +140,7 @@ ingress:
 service:
   type: ClusterIP
   port: 8200
-  nodePort:
+  nodePort: ""
   annotations: {}
     # cloud.google.com/load-balancer-type: "Internal"
     # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
