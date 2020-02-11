@@ -4,7 +4,7 @@
 
 * 7.6.0 as the default stack version
 * Freeze pip dependencies [#463](https://github.com/elastic/helm-charts/pull/463) [@morganchristiansson](https://github.com/morganchristiansson)
-* Format python scripts with [Black](https://black.readthedocs.io/en/stable/) [#475](https://github.com/elastic/helm-charts/pull/475) [@jmlrt](https://github.com/jmlrt)
+* Format python scripts with [Black](https://black.readthedocs.io/en/stable/) [#475](https://github.com/elastic/helm-charts/pull/475) & [#477](https://github.com/elastic/helm-charts/pull/477) [@jmlrt](https://github.com/jmlrt)
 
 ### APM Server
 
