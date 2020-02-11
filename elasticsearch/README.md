@@ -4,6 +4,27 @@ This functionality is in beta and is subject to change. The design and code is l
 
 This helm chart is a lightweight way to configure and run our official [Elasticsearch docker image](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 
+## Notice
+
+[7.6.0](https://github.com/elastic/helm-charts/releases/tag/7.6.0) release is introducing a change for Elasticsearch users upgrading from a previous chart version.
+Following our recommandations, the change tracked in [#458](https://github.com/elastic/helm-charts/pull/458) is setting CPU request to the same value as CPU limit.
+
+For users which don't overwrite default values for CPU requests, Elasticsearch pod will now request `1000m` CPU instead of `100m` CPU. This may impact the resources (nodes) required in your Kubernetes cluster to deploy Elasticsearch chart.
+
+If you wish to come back to former values, you just need to override CPU requests when deploying your Helm Chart.
+
+- Overriding CPU requests in commandline argument:
+```
+helm install --name elasticsearch --set resources.requests.cpu=100m elastic/elasticsearch
+```
+
+- Overriding CPU requests in your custom `values.yaml` file:
+```
+resources:
+  requests:
+    cpu: "100m"
+```
+
 ## Requirements
 
 * [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/master/README.md) for more details)
