@@ -1,5 +1,54 @@
 # Changelog
 
+## 7.6.0 - 2020/02/11
+
+* 7.6.0 as the default stack version
+* Freeze pip dependencies [#463](https://github.com/elastic/helm-charts/pull/463) [@morganchristiansson](https://github.com/morganchristiansson)
+* Format python scripts with [Black](https://black.readthedocs.io/en/stable/) [#475](https://github.com/elastic/helm-charts/pull/475) & [#477](https://github.com/elastic/helm-charts/pull/477) [@jmlrt](https://github.com/jmlrt)
+
+### APM Server
+
+| PR                                                     | Author                                   | Title                                       |
+| ------------------------------------------------------ | ---------------------------------------- | ------------------------------------------- |
+|[#324](https://github.com/elastic/helm-charts/pull/324) | [@pbecotte](https://github.com/pbecotte) | Add apm-server helm chart                   |
+|[#459](https://github.com/elastic/helm-charts/pull/459) | [@jmlrt](https://github.com/jmlrt)       | Add ci tests for apm-server chart           |
+|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)       | Add extraContainers and extraInitContainers |
+
+### Elasticsearch
+
+| PR                                                     | Author                                       | Title                       |
+| ------------------------------------------------------ | -------------------------------------------- | --------------------------- |
+|[#455](https://github.com/elastic/helm-charts/pull/455) | [@sachinmsft](https://github.com/sachinmsft) | Fixing typo                 |
+|[#458](https://github.com/elastic/helm-charts/pull/458) | [@jmlrt](https://github.com/jmlrt)           | Set cpu request = cpu limit |
+|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)           | Add extraContainers         |
+
+### Filebeat
+
+| PR                                                     | Author                               | Title                   |
+| ------------------------------------------------------ | ------------------------------------ | ----------------------- |
+|[#466](https://github.com/elastic/helm-charts/pull/466) | [@vasrem](https://github.com/vasrem) | Add extraInitContainers |
+|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)   | Add extraContainers     |
+
+### Kibana
+
+| PR                                                     | Author                             | Title                                       |
+| ------------------------------------------------------ | ---------------------------------- | ------------------------------------------- |
+|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt) | Add extraContainers and extraInitContainers |
+
+### Logstash
+
+| PR                                                     | Author                                                         | Title                           |
+| ------------------------------------------------------ | -------------------------------------------------------------- | ------------------------------- |
+|[#457](https://github.com/elastic/helm-charts/pull/457) | [@morganchristiansson](https://github.com/morganchristiansson) | Add fullnameOverride setting    |
+|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)                             | Remove duplicate line in README |
+
+### Metricbeat
+
+| PR                                                     | Author                             | Title                                       |
+| ------------------------------------------------------ | ---------------------------------- | ------------------------------------------- |
+|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt) | Add extraContainers and extraInitContainers |
+
+
 ## 7.5.2 - 2020/01/21
 
 * 7.5.2 as the default stack version
