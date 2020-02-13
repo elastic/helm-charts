@@ -29,7 +29,7 @@ lint: ## Lint helm templates
 
 .PHONY: lint-python
 lint-python: ## Lint python scripts
-	black --diff --check .
+	black --diff --check --exclude='ve/|venv/' .
 
 .PHONY: pytest
 pytest: ## Run python tests
