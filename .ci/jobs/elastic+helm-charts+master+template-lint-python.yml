@@ -11,7 +11,7 @@
         type: slave
         name: label
         values:
-        - docker&&virtual
+        - docker&&virtual&&ubuntu-18.04
     builders:
     - shell: |-
         #!/usr/local/bin/runbld
