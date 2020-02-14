@@ -191,8 +191,16 @@ spec:
 {{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+      {{- if .Values.readinessProbe.customProbe }}
         readinessProbe:
-{{ toYaml .Values.readinessProbe | indent 10 }}
+          {{ toYaml .Values.readinessProbe.customProbe | indent 10 | trim}}
+      {{- else }}
+        readinessProbe:
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           exec:
             command:
               - sh
@@ -226,6 +234,7 @@ spec:
                         exit 1
                     fi
                 fi
+      {{- end }}
         ports:
         - name: http
           containerPort: {{ .Values.httpPort }}

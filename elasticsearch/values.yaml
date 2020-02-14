@@ -1,4 +1,3 @@
----
 clusterName: "elasticsearch"
 nodeGroup: "master"
 
@@ -13,8 +12,8 @@ roles:
   ingest: "true"
   data: "true"
 
-replicas: 3
-minimumMasterNodes: 2
+replicas: 1
+minimumMasterNodes: 1
 
 esMajorVersion: ""
 
@@ -198,6 +197,18 @@ readinessProbe:
   periodSeconds: 10
   successThreshold: 3
   timeoutSeconds: 5
+
+  customProbe: {}
+    # failureThreshold: 3
+    # initialDelaySeconds: 10
+    # periodSeconds: 10
+    # successThreshold: 3
+    # timeoutSeconds: 5
+    # httpGet:
+    #   path: /
+    #   port: 8080
+
+
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params wait_for_status
 clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
