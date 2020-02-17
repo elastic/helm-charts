@@ -47,6 +47,28 @@ def test_defaults():
     } in volumes
 
 
+def test_override_the_default_host_network_option():
+    config = """
+hostNetwork: true
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["hostNetwork"]
+        == True
+    )
+
+
+def test_override_the_default_dns_policy_option():
+    config = """
+dnsPolicy: ClusterFirstWithHostNet
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["dnsPolicy"]
+        == "ClusterFirstWithHostNet"
+    )
+
+
 def test_adding_a_extra_container():
     config = """
 extraContainers: |

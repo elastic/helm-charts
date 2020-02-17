@@ -91,8 +91,8 @@ spec:
       initContainers:
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- end }}
-      hostNetwork: true  
-      dnsPolicy: ClusterFirstWithHostNet 
+      hostNetwork: {{ .Values.hostNetwork | default false }}
+      dnsPolicy: {{ .Values.dnsPolicy | default "ClusterFirst" }}
       containers:
       - name: "metricbeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"

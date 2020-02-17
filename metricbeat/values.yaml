@@ -190,6 +190,9 @@ nodeSelector: {}
 
 affinity: {}
 
+hostNetwork: false
+dnsPolicy: "ClusterFirst"
+
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
