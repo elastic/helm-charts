@@ -1,124 +1,136 @@
 import os
 import sys
-sys.path.insert(1, os.path.join(sys.path[0], '../../helpers'))
+
+sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
 from helpers import helm_template
 import yaml
 
-name = 'release-name-kibana'
-elasticsearchHosts = 'http://elasticsearch-master:9200'
+name = "release-name-kibana"
+elasticsearchHosts = "http://elasticsearch-master:9200"
 
 
 def test_defaults():
-    config = '''
-    '''
+    config = """
+    """
 
     r = helm_template(config)
 
-    assert name in r['deployment']
-    assert name in r['service']
+    assert name in r["deployment"]
+    assert name in r["service"]
 
-    s = r['service'][name]['spec']
-    assert s['ports'][0]['port'] == 5601
-    assert s['ports'][0]['name'] == 'http'
-    assert s['ports'][0]['protocol'] == 'TCP'
-    assert s['ports'][0]['targetPort'] == 5601
+    s = r["service"][name]["spec"]
+    assert s["ports"][0]["port"] == 5601
+    assert s["ports"][0]["name"] == "http"
+    assert s["ports"][0]["protocol"] == "TCP"
+    assert s["ports"][0]["targetPort"] == 5601
 
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['name'] == 'kibana'
-    assert c['image'].startswith('docker.elastic.co/kibana/kibana:')
-    assert c['ports'][0]['containerPort'] == 5601
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["name"] == "kibana"
+    assert c["image"].startswith("docker.elastic.co/kibana/kibana:")
+    assert c["ports"][0]["containerPort"] == 5601
 
-    assert c['env'][0]['name'] == 'ELASTICSEARCH_HOSTS'
-    assert c['env'][0]['value'] == elasticsearchHosts
+    assert c["env"][0]["name"] == "ELASTICSEARCH_HOSTS"
+    assert c["env"][0]["value"] == elasticsearchHosts
 
-    assert c['env'][1]['name'] == 'SERVER_HOST'
-    assert c['env'][1]['value'] == '0.0.0.0'
+    assert c["env"][1]["name"] == "SERVER_HOST"
+    assert c["env"][1]["value"] == "0.0.0.0"
 
-    assert 'http "/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
+    assert 'http "/app/kibana"' in c["readinessProbe"]["exec"]["command"][-1]
 
     # Empty customizable defaults
-    assert 'imagePullSecrets' not in r['deployment'][name]['spec']['template']['spec']
-    assert 'tolerations' not in r['deployment'][name]['spec']['template']['spec']
-    assert 'nodeSelector' not in r['deployment'][name]['spec']['template']['spec']
-    assert 'ingress' not in r
+    assert "imagePullSecrets" not in r["deployment"][name]["spec"]["template"]["spec"]
+    assert "tolerations" not in r["deployment"][name]["spec"]["template"]["spec"]
+    assert "nodeSelector" not in r["deployment"][name]["spec"]["template"]["spec"]
+    assert "ingress" not in r
 
-    assert r['deployment'][name]['spec']['strategy']['type'] == 'Recreate'
+    assert r["deployment"][name]["spec"]["strategy"]["type"] == "Recreate"
 
     # Make sure that the default 'annotation' dictionary is empty
-    assert 'annotations' not in r['service'][name]['metadata']
+    assert "annotations" not in r["service"][name]["metadata"]
 
     # Make sure that the default 'loadBalancerSourceRanges' list is empty
-    assert 'loadBalancerSourceRanges' not in r['service'][name]['spec']
+    assert "loadBalancerSourceRanges" not in r["service"][name]["spec"]
+
 
 def test_overriding_the_elasticsearch_hosts():
-    config = '''
+    config = """
     elasticsearchHosts: 'http://hello.world'
-    '''
+    """
 
     r = helm_template(config)
 
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['env'][0]['name'] == 'ELASTICSEARCH_HOSTS'
-    assert c['env'][0]['value'] == 'http://hello.world'
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["env"][0]["name"] == "ELASTICSEARCH_HOSTS"
+    assert c["env"][0]["value"] == "http://hello.world"
+
 
 def test_overriding_the_elasticsearch_url():
-    config = '''
+    config = """
     elasticsearchURL: 'http://hello.world'
-    '''
+    """
 
     r = helm_template(config)
 
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['env'][0]['name'] == 'ELASTICSEARCH_URL'
-    assert c['env'][0]['value'] == 'http://hello.world'
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["env"][0]["name"] == "ELASTICSEARCH_URL"
+    assert c["env"][0]["value"] == "http://hello.world"
 
 
 def test_overriding_the_port():
-    config = '''
+    config = """
     httpPort: 5602
-    '''
+    """
 
     r = helm_template(config)
 
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['ports'][0]['containerPort'] == 5602
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["ports"][0]["containerPort"] == 5602
 
-    assert r['service'][name]['spec']['ports'][0]['targetPort'] == 5602
+    assert r["service"][name]["spec"]["ports"][0]["targetPort"] == 5602
 
 
 def test_adding_image_pull_secrets():
-    config = '''
+    config = """
 imagePullSecrets:
   - name: test-registry
-'''
+"""
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['spec']['imagePullSecrets'][0]['name'] == 'test-registry'
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"]["imagePullSecrets"][0]["name"]
+        == "test-registry"
+    )
 
 
 def test_adding_tolerations():
-    config = '''
+    config = """
 tolerations:
 - key: "key1"
   operator: "Equal"
   value: "value1"
   effect: "NoExecute"
   tolerationSeconds: 3600
-'''
+"""
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['spec']['tolerations'][0]['key'] == 'key1'
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"]["tolerations"][0]["key"]
+        == "key1"
+    )
 
 
 def test_adding_a_node_selector():
-    config = '''
+    config = """
 nodeSelector:
   disktype: ssd
-'''
+"""
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['spec']['nodeSelector']['disktype'] == 'ssd'
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"]["nodeSelector"]["disktype"]
+        == "ssd"
+    )
 
 
 def test_adding_an_affinity_rule():
-    config = '''
+    config = """
 affinity:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -129,15 +141,53 @@ affinity:
           values:
           - kibana
       topologyKey: kubernetes.io/hostname
-'''
+"""
 
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['spec']['affinity']['podAntiAffinity'][
-        'requiredDuringSchedulingIgnoredDuringExecution'][0]['topologyKey'] == 'kubernetes.io/hostname'
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"]["affinity"][
+            "podAntiAffinity"
+        ]["requiredDuringSchedulingIgnoredDuringExecution"][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
+
+
+def test_adding_a_extra_container():
+    config = """
+extraContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraContainer = r["deployment"][name]["spec"]["template"]["spec"]["containers"]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraContainer
+
+
+def test_adding_a_extra_init_container():
+    config = """
+extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraInitContainer = r["deployment"][name]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraInitContainer
 
 
 def test_adding_an_ingress_rule():
-    config = '''
+    config = """
 ingress:
   enabled: true
   annotations:
@@ -149,21 +199,22 @@ ingress:
   - secretName: elastic-co-wildcard
     hosts:
      - kibana.elastic.co
-'''
+"""
 
     r = helm_template(config)
-    assert name in r['ingress']
-    i = r['ingress'][name]['spec']
-    assert i['tls'][0]['hosts'][0] == 'kibana.elastic.co'
-    assert i['tls'][0]['secretName'] == 'elastic-co-wildcard'
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "kibana.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
 
-    assert i['rules'][0]['host'] == 'kibana.elastic.co'
-    assert i['rules'][0]['http']['paths'][0]['path'] == '/'
-    assert i['rules'][0]['http']['paths'][0]['backend']['serviceName'] == name
-    assert i['rules'][0]['http']['paths'][0]['backend']['servicePort'] == 5601
+    assert i["rules"][0]["host"] == "kibana.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+
 
 def test_adding_an_ingress_rule_wildcard():
-    config = '''
+    config = """
 ingress:
   enabled: true
   annotations:
@@ -175,60 +226,74 @@ ingress:
   - secretName: elastic-co-wildcard
     hosts:
      - "*.elastic.co"
-'''
+"""
 
     r = helm_template(config)
-    assert name in r['ingress']
-    i = r['ingress'][name]['spec']
-    assert i['tls'][0]['hosts'][0] == '*.elastic.co'
-    assert i['tls'][0]['secretName'] == 'elastic-co-wildcard'
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "*.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
 
-    assert i['rules'][0]['host'] == 'kibana.elastic.co'
-    assert i['rules'][0]['http']['paths'][0]['path'] == '/'
-    assert i['rules'][0]['http']['paths'][0]['backend']['serviceName'] == name
-    assert i['rules'][0]['http']['paths'][0]['backend']['servicePort'] == 5601
-
+    assert i["rules"][0]["host"] == "kibana.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
 
 
 def test_override_the_default_update_strategy():
-    config = '''
+    config = """
 updateStrategy:
   type: "RollingUpdate"
   rollingUpdate:
     maxUnavailable: 1
     maxSurge: 1
-'''
+"""
 
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['strategy']['type'] == 'RollingUpdate'
-    assert r['deployment'][name]['spec']['strategy']['rollingUpdate']['maxUnavailable'] == 1
-    assert r['deployment'][name]['spec']['strategy']['rollingUpdate']['maxSurge'] == 1
+    assert r["deployment"][name]["spec"]["strategy"]["type"] == "RollingUpdate"
+    assert (
+        r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxUnavailable"]
+        == 1
+    )
+    assert r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxSurge"] == 1
+
 
 def test_using_a_name_override():
-    config = '''
+    config = """
 nameOverride: overrider
-'''
+"""
 
     r = helm_template(config)
-    assert 'overrider-kibana' in r['deployment']
+    assert "overrider-kibana" in r["deployment"]
+
 
 def test_setting_a_custom_service_account():
-    config = '''
+    config = """
 serviceAccount: notdefault
-'''
+"""
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['spec']['serviceAccount'] == 'notdefault'
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"]["serviceAccount"]
+        == "notdefault"
+    )
+
 
 def test_setting_pod_security_context():
-    config = '''
+    config = """
 podSecurityContext:
   runAsUser: 1001
-'''
+"""
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['spec']['securityContext']['runAsUser'] == 1001
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"]["securityContext"][
+            "runAsUser"
+        ]
+        == 1001
+    )
+
 
 def test_adding_in_kibana_config():
-    config = '''
+    config = """
 kibanaConfig:
   kibana.yml: |
     key:
@@ -237,229 +302,278 @@ kibanaConfig:
 
   other-config.yml: |
     hello = world
-'''
+"""
     r = helm_template(config)
-    c = r['configmap'][name + '-config']['data']
+    c = r["configmap"][name + "-config"]["data"]
 
-    assert 'kibana.yml' in c
-    assert 'other-config.yml' in c
+    assert "kibana.yml" in c
+    assert "other-config.yml" in c
 
-    assert 'nestedkey: value' in c['kibana.yml']
-    assert 'dot.notation: test' in c['kibana.yml']
+    assert "nestedkey: value" in c["kibana.yml"]
+    assert "dot.notation: test" in c["kibana.yml"]
 
-    assert 'hello = world' in c['other-config.yml']
+    assert "hello = world" in c["other-config.yml"]
 
-    d = r['deployment'][name]['spec']['template']['spec']
+    d = r["deployment"][name]["spec"]["template"]["spec"]
 
-    assert {'configMap': {'name': name + '-config'}, 'name': 'kibanaconfig'} in d['volumes']
-    assert {'mountPath': '/usr/share/kibana/config/kibana.yml', 'name': 'kibanaconfig', 'subPath': 'kibana.yml'} in d['containers'][0]['volumeMounts']
-    assert {'mountPath': '/usr/share/kibana/config/other-config.yml', 'name': 'kibanaconfig', 'subPath': 'other-config.yml'} in d['containers'][0]['volumeMounts']
+    assert {"configMap": {"name": name + "-config"}, "name": "kibanaconfig"} in d[
+        "volumes"
+    ]
+    assert {
+        "mountPath": "/usr/share/kibana/config/kibana.yml",
+        "name": "kibanaconfig",
+        "subPath": "kibana.yml",
+    } in d["containers"][0]["volumeMounts"]
+    assert {
+        "mountPath": "/usr/share/kibana/config/other-config.yml",
+        "name": "kibanaconfig",
+        "subPath": "other-config.yml",
+    } in d["containers"][0]["volumeMounts"]
 
-    assert 'configchecksum' in r['deployment'][name]['spec']['template']['metadata']['annotations']
+    assert (
+        "configchecksum"
+        in r["deployment"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
+
 
 def test_changing_the_protocol():
-    config = '''
+    config = """
 protocol: https
-'''
+"""
     r = helm_template(config)
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert 'https://' in c['readinessProbe']['exec']['command'][-1]
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert "https://" in c["readinessProbe"]["exec"]["command"][-1]
+
 
 def test_changing_the_health_check_path():
-    config = '''
+    config = """
 healthCheckPath: "/kibana/app/kibana"
-'''
+"""
     r = helm_template(config)
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
 
-    assert 'http "/kibana/app/kibana"' in c['readinessProbe']['exec']['command'][-1]
+    assert 'http "/kibana/app/kibana"' in c["readinessProbe"]["exec"]["command"][-1]
 
 
 def test_priority_class_name():
-    config = '''
+    config = """
 priorityClassName: ""
-'''
+"""
     r = helm_template(config)
-    spec = r['deployment'][name]['spec']['template']['spec']
-    assert 'priorityClassName' not in spec
+    spec = r["deployment"][name]["spec"]["template"]["spec"]
+    assert "priorityClassName" not in spec
 
-    config = '''
+    config = """
 priorityClassName: "highest"
-'''
+"""
     r = helm_template(config)
-    priority_class_name = r['deployment'][name]['spec']['template']['spec']['priorityClassName']
+    priority_class_name = r["deployment"][name]["spec"]["template"]["spec"][
+        "priorityClassName"
+    ]
     assert priority_class_name == "highest"
 
+
 def test_service_labels():
-    config = ''
+    config = ""
 
     r = helm_template(config)
 
-    assert 'label1' not in r['service'][name]['metadata']['labels']
+    assert "label1" not in r["service"][name]["metadata"]["labels"]
 
-    config = '''
+    config = """
     service:
       labels:
         label1: value1
-    '''
+    """
 
     r = helm_template(config)
 
-    assert r['service'][name]['metadata']['labels']['label1'] == 'value1'
+    assert r["service"][name]["metadata"]["labels"]["label1"] == "value1"
 
-def test_service_annotatations():
-    config = '''
+
+def test_service_annotations():
+    config = """
 service:
   annotations:
     cloud.google.com/load-balancer-type: "Internal"
-    '''
+    """
     r = helm_template(config)
-    s = r['service'][name]['metadata']['annotations']['cloud.google.com/load-balancer-type']
+    s = r["service"][name]["metadata"]["annotations"][
+        "cloud.google.com/load-balancer-type"
+    ]
     assert s == "Internal"
 
-    config = '''
+    config = """
 service:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    '''
+    """
     r = helm_template(config)
-    s = r['service'][name]['metadata']['annotations']['service.beta.kubernetes.io/aws-load-balancer-internal']
+    s = r["service"][name]["metadata"]["annotations"][
+        "service.beta.kubernetes.io/aws-load-balancer-internal"
+    ]
     assert s == "0.0.0.0/0"
 
 
 def test_service_load_balancer_source_ranges():
-    config = '''
+    config = """
 service:
   loadBalancerSourceRanges:
     - 0.0.0.0/0
-    '''
+    """
     r = helm_template(config)
-    l = r['service'][name]['spec']['loadBalancerSourceRanges'][0]
+    l = r["service"][name]["spec"]["loadBalancerSourceRanges"][0]
     assert l == "0.0.0.0/0"
 
-    config = '''
+    config = """
 service:
   loadBalancerSourceRanges:
     - 192.168.0.0/24
     - 192.168.1.0/24
-    '''
+    """
     r = helm_template(config)
-    l = r['service'][name]['spec']['loadBalancerSourceRanges'][0]
+    l = r["service"][name]["spec"]["loadBalancerSourceRanges"][0]
     assert l == "192.168.0.0/24"
-    l = r['service'][name]['spec']['loadBalancerSourceRanges'][1]
+    l = r["service"][name]["spec"]["loadBalancerSourceRanges"][1]
     assert l == "192.168.1.0/24"
 
 
 def test_adding_a_nodePort():
-    config = ''
+    config = ""
 
     r = helm_template(config)
 
-    assert 'nodePort' not in r['service'][name]['spec']['ports'][0]
+    assert "nodePort" not in r["service"][name]["spec"]["ports"][0]
 
-    config = '''
+    config = """
     service:
       nodePort: 30001
-    '''
+    """
 
     r = helm_template(config)
 
-    assert r['service'][name]['spec']['ports'][0]['nodePort'] == 30001
+    assert r["service"][name]["spec"]["ports"][0]["nodePort"] == 30001
+
 
 def test_override_the_serverHost():
-    config = '''
+    config = """
     serverHost: "localhost"
-    '''
+    """
 
     r = helm_template(config)
 
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['env'][1]['name'] == 'SERVER_HOST'
-    assert c['env'][1]['value'] == 'localhost'
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["env"][1]["name"] == "SERVER_HOST"
+    assert c["env"][1]["value"] == "localhost"
+
 
 def test_adding_pod_annotations():
-    config = '''
+    config = """
 podAnnotations:
   iam.amazonaws.com/role: es-role
-'''
+"""
     r = helm_template(config)
-    assert r['deployment'][name]['spec']['template']['metadata']['annotations']['iam.amazonaws.com/role'] == 'es-role'
+    assert (
+        r["deployment"][name]["spec"]["template"]["metadata"]["annotations"][
+            "iam.amazonaws.com/role"
+        ]
+        == "es-role"
+    )
+
 
 def test_override_imagePullPolicy():
-    config = ''
+    config = ""
 
     r = helm_template(config)
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['imagePullPolicy'] == 'IfNotPresent'
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["imagePullPolicy"] == "IfNotPresent"
 
-    config = '''
+    config = """
     imagePullPolicy: Always
-    '''
+    """
 
     r = helm_template(config)
-    c = r['deployment'][name]['spec']['template']['spec']['containers'][0]
-    assert c['imagePullPolicy'] == 'Always'
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["imagePullPolicy"] == "Always"
+
 
 def test_adding_pod_labels():
-     config = '''
+    config = """
 labels:
   app.kubernetes.io/name: kibana
-'''
-     r = helm_template(config)
-     assert r['deployment'][name]['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
-     assert r['deployment'][name]['spec']['template']['metadata']['labels']['app.kubernetes.io/name'] == 'kibana'
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["metadata"]["labels"]["app.kubernetes.io/name"]
+        == "kibana"
+    )
+    assert (
+        r["deployment"][name]["spec"]["template"]["metadata"]["labels"][
+            "app.kubernetes.io/name"
+        ]
+        == "kibana"
+    )
+
 
 def test_adding_a_secret_mount_with_subpath():
-    config = '''
+    config = """
 secretMounts:
   - name: elastic-certificates
     secretName: elastic-certs
     path: /usr/share/elasticsearch/config/certs
     subPath: cert.crt
-'''
+"""
     r = helm_template(config)
-    d = r['deployment'][name]['spec']['template']['spec']
-    assert d['containers'][0]['volumeMounts'][-1] == {
-        'mountPath': '/usr/share/elasticsearch/config/certs',
-        'subPath': 'cert.crt',
-        'name': 'elastic-certificates'
+    d = r["deployment"][name]["spec"]["template"]["spec"]
+    assert d["containers"][0]["volumeMounts"][-1] == {
+        "mountPath": "/usr/share/elasticsearch/config/certs",
+        "subPath": "cert.crt",
+        "name": "elastic-certificates",
     }
 
+
 def test_adding_a_secret_mount_without_subpath():
-    config = '''
+    config = """
 secretMounts:
   - name: elastic-certificates
     secretName: elastic-certs
     path: /usr/share/elasticsearch/config/certs
-'''
+"""
     r = helm_template(config)
-    d = r['deployment'][name]['spec']['template']['spec']
-    assert d['containers'][0]['volumeMounts'][-1] == {
-        'mountPath': '/usr/share/elasticsearch/config/certs',
-        'name': 'elastic-certificates'
+    d = r["deployment"][name]["spec"]["template"]["spec"]
+    assert d["containers"][0]["volumeMounts"][-1] == {
+        "mountPath": "/usr/share/elasticsearch/config/certs",
+        "name": "elastic-certificates",
     }
 
+
 def test_adding_lifecycle_events():
-    config = '''
+    config = """
 lifecycle:
     postStart:
         exec:
             command: ['/bin/true']
-'''
+"""
     r = helm_template(config)
-    d = r['deployment'][name]['spec']['template']['spec']
-    p = d['containers'][0]['lifecycle']['postStart']
-    assert p['exec']['command'][0] == '/bin/true'
+    d = r["deployment"][name]["spec"]["template"]["spec"]
+    p = d["containers"][0]["lifecycle"]["postStart"]
+    assert p["exec"]["command"][0] == "/bin/true"
+
 
 def test_setting_fullnameOverride():
-    config = '''
+    config = """
 fullnameOverride: 'kibana-custom'
-'''
+"""
     r = helm_template(config)
 
-    custom_name = 'kibana-custom'
-    assert custom_name in r['deployment']
-    assert custom_name in r['service']
+    custom_name = "kibana-custom"
+    assert custom_name in r["deployment"]
+    assert custom_name in r["service"]
 
-    assert r['service'][custom_name]['spec']['ports'][0]['port'] == 5601
-    assert r['deployment'][custom_name]['spec']['template']['spec']['containers'][0]['name'] == 'kibana'
+    assert r["service"][custom_name]["spec"]["ports"][0]["port"] == 5601
+    assert (
+        r["deployment"][custom_name]["spec"]["template"]["spec"]["containers"][0][
+            "name"
+        ]
+        == "kibana"
+    )

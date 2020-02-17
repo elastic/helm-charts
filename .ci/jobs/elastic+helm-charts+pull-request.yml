@@ -28,6 +28,9 @@
         - name: elastic+helm-charts+pull-request+template-testing
           current-parameters: true
           predefined-parameters: branch_specifier=${ghprbActualCommit}
+        - name: elastic+helm-charts+pull-request+lint-python
+          current-parameters: true
+          predefined-parameters: branch_specifier=${ghprbActualCommit}
         - name: elastic+helm-charts+pull-request+cluster-creation
           current-parameters: true
           predefined-parameters: branch_specifier=${ghprbActualCommit}
@@ -52,6 +55,9 @@
           current-parameters: true
           predefined-parameters: branch_specifier=${ghprbActualCommit}
         - name: elastic+helm-charts+pull-request+integration-logstash
+          current-parameters: true
+          predefined-parameters: branch_specifier=${ghprbActualCommit}
+        - name: elastic+helm-charts+pull-request+integration-apm-server
           current-parameters: true
           predefined-parameters: branch_specifier=${ghprbActualCommit}
     publishers:

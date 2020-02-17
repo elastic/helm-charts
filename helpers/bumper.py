@@ -5,22 +5,22 @@ import glob
 import subprocess
 import fileinput
 
-os.chdir(os.path.join(os.path.dirname(__file__), '..'))
+os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
-chart_version = '7.5.2'
+chart_version = "7.6.0"
 
 versions = {
-    6: '6.8.6',
-    7: '7.5.2',
+    6: "6.8.6",
+    7: "7.6.0",
 }
 
 file_patterns = [
-    '*/examples/*/test/goss*.y*ml',
-    '*/examples/*/*.y*ml',
-    'helpers/examples.mk',
-    '*/README.md',
-    '*/values.y*ml',
-    '*/Chart.y*ml',
+    "*/examples/*/test/goss*.y*ml",
+    "*/examples/*/*.y*ml",
+    "helpers/examples.mk",
+    "*/README.md",
+    "*/values.y*ml",
+    "*/Chart.y*ml",
 ]
 
 # Anything matching this regex won't have version bumps changed
@@ -36,7 +36,7 @@ for major, version in versions.iteritems():
                 if re.match(blacklist, line):
                     print(line.rstrip())
                 else:
-                    if f.endswith('Chart.yaml') and line.startswith('version:'):
+                    if f.endswith("Chart.yaml") and line.startswith("version:"):
                         print(r.sub(chart_version, line.rstrip()))
                     else:
                         print(r.sub(version, line.rstrip()))

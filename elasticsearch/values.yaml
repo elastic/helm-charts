@@ -43,7 +43,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.5.2"
+imageTag: "7.6.0"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -56,7 +56,7 @@ esJavaOpts: "-Xmx1g -Xms1g"
 
 resources:
   requests:
-    cpu: "100m"
+    cpu: "1000m"
     memory: "2Gi"
   limits:
     cpu: "1000m"
@@ -120,6 +120,11 @@ extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
+
+extraContainers: ""
+  # - name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
 
 extraInitContainers: ""
   # - name: do-something
