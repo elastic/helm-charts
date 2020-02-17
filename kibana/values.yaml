@@ -113,6 +113,16 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+ingressRoute:
+  enabled: false
+  entryPoints: []
+  #  - websecure
+  # path: /
+  tls: {} # Example for exist ACME configuration in traefik
+  #  certResolver: exampleResolver
+  hosts:
+    - chart-example.local
+
 readinessProbe:
   failureThreshold: 3
   initialDelaySeconds: 10

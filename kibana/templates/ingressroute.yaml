@@ -1,0 +1,37 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- $fullName := include "kibana.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
+{{- $ingressRoutePath := .Values.ingressRoute.path -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+{{- if .Values.ingressRoute.entryPoints }}
+  entryPoints:
+  {{- range .Values.ingressRoute.entryPoints }}
+    - {{ . }}
+  {{- end }}
+{{- end }}
+{{- if .Values.ingressRoute.tls }}
+  tls:
+{{ toYaml .Values.ingressRoute.tls | indent 4 }}
+{{- end }}
+  routes:
+  {{- range .Values.ingressRoute.hosts }}
+  {{- if $ingressRoutePath }}
+    - match: Host(`{{ . }}`) && PathPrefix(`{{ $ingressRoutePath }}`)
+  {{- else }}
+    - match: Host(`{{ . }}`)
+  {{- end }}
+      kind: Rule
+      services:
+        - name: {{ $fullName }}
+          kind: Service
+          port: {{ $servicePort }}
+  {{- end }}          
+{{- end -}}
