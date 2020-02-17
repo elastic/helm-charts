@@ -4,6 +4,27 @@ This functionality is in beta and is subject to change. The design and code is l
 
 This helm chart is a lightweight way to configure and run our official [Elasticsearch docker image](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 
+## Notice
+
+[7.6.0](https://github.com/elastic/helm-charts/releases/tag/7.6.0) release is introducing a change for Elasticsearch users upgrading from a previous chart version.
+Following our recommandations, the change tracked in [#458](https://github.com/elastic/helm-charts/pull/458) is setting CPU request to the same value as CPU limit.
+
+For users which don't overwrite default values for CPU requests, Elasticsearch pod will now request `1000m` CPU instead of `100m` CPU. This may impact the resources (nodes) required in your Kubernetes cluster to deploy Elasticsearch chart.
+
+If you wish to come back to former values, you just need to override CPU requests when deploying your Helm Chart.
+
+- Overriding CPU requests in commandline argument:
+```
+helm install --name elasticsearch --set resources.requests.cpu=100m elastic/elasticsearch
+```
+
+- Overriding CPU requests in your custom `values.yaml` file:
+```
+resources:
+  requests:
+    cpu: "100m"
+```
+
 ## Requirements
 
 * [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/master/README.md) for more details)
@@ -55,14 +76,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.6 | 7.5.1 |
+| 6.8.6 | 7.6.0 |
 
 Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.5.1` of Elasticsearch it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.0` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.5.1
+helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.6.0
 ```
 
 ## Configuration
@@ -80,15 +101,16 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.5.1
 | `extraEnvs`                   | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                          | `[]`                                                                                                                      |
 | `extraVolumes`                | Templatable string of additional volumes to be passed to the `tpl` function                                                                                                                                                                                                                                                 | `""`                                                                                                                      |
 | `extraVolumeMounts`           | Templatable string of additional volumeMounts to be passed to the `tpl` function                                                                                                                                                                                                                                            | `""`                                                                                                                      |
+| `extraContainers`             | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                                                                                                                                              | `""`                                                                                                                      |
 | `extraInitContainers`         | Templatable string of additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                         | `""`                                                                                                                      |
 | `secretMounts`                | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/elasticsearch/values.yaml) for an example                                                                                       | `[]`                                                                                                                      |
 | `image`                       | The Elasticsearch docker image                                                                                                                                                                                                                                                                                              | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                    | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                          | `7.5.1`                                                                                                                   |
+| `imageTag`                    | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                          | `7.6.0`                                                                                                                   |
 | `imagePullPolicy`             | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `podAnnotations`              | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Elasticsearch pods                                                                                                                                                                                | `{}`                                                                                                                      |
 | `labels`                      | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Elasticsearch pods                                                                                                                                                                                           | `{}`                                                                                                                      |
 | `esJavaOpts`                  | [Java options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html) for Elasticsearch. This is where you should configure the [jvm heap size](https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html)                                                                  | `-Xmx1g -Xms1g`                                                                                                           |
-| `resources`                   | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                                | `requests.cpu: 100m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                             |
+| `resources`                   | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                                | `requests.cpu: 1000m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                            |
 | `initResources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the initContainer in the statefulset                                                                                                                                                           | {}                                                                                                                        |
 | `sidecarResources`            | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the sidecar containers in the statefulset                                                                                                                                                      | {}                                                                                                                        |
 | `networkHost`                 | Value for the [network.host Elasticsearch setting](https://www.elastic.co/guide/en/elasticsearch/reference/current/network.host.html)                                                                                                                                                                                       | `0.0.0.0`                                                                                                                 |

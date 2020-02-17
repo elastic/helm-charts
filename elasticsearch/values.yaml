@@ -43,7 +43,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.5.1"
+imageTag: "7.6.0"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -56,7 +56,7 @@ esJavaOpts: "-Xmx1g -Xms1g"
 
 resources:
   requests:
-    cpu: "100m"
+    cpu: "1000m"
     memory: "2Gi"
   limits:
     cpu: "1000m"
@@ -120,6 +120,11 @@ extraVolumeMounts: ""
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
+
+extraContainers: ""
+  # - name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
 
 extraInitContainers: ""
   # - name: do-something
@@ -233,7 +238,19 @@ lifecycle: {}
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
   # postStart:
   #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+  #     command:
+  #       - bash
+  #       - -c
+  #       - |
+  #         #!/bin/bash
+  #         # Add a template to adjust number of shards/replicas
+  #         TEMPLATE_NAME=my_template
+  #         INDEX_PATTERN="logstash-*"
+  #         SHARD_COUNT=8
+  #         REPLICA_COUNT=1
+  #         ES_URL=http://localhost:9200
+  #         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+  #         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 
 sysctlInitContainer:
   enabled: true

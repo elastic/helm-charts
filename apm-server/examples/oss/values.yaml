@@ -1,0 +1,21 @@
+image: docker.elastic.co/apm/apm-server-oss
+
+apmConfig:
+  apm-server.yml: |
+    apm-server:
+      host: "0.0.0.0:8200"
+
+    queue: {}
+    output.file:
+      enabled: false
+
+    output.elasticsearch:
+      hosts: ["http://oss-master:9200"]
+      ## If you have security enabled- you'll need to add the credentials
+      ## as environment variables
+      # username: "${ELASTICSEARCH_USERNAME}"
+      # password: "${ELASTICSEARCH_PASSWORD}"
+      ## If SSL is enabled
+      # protocol: https
+      # ssl.certificate_authorities:
+      #  - /usr/share/apm-server/config/certs/elastic-ca.pem

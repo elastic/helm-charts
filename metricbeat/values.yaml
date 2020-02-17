@@ -64,6 +64,16 @@ metricbeatConfig:
 
 replicas: 1
 
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+extraInitContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
@@ -88,7 +98,7 @@ envFrom: []
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "7.5.1"
+imageTag: "7.6.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -179,6 +189,10 @@ tolerations: []
 nodeSelector: {}
 
 affinity: {}
+
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: ""
 
 updateStrategy: RollingUpdate
 
