@@ -515,6 +515,31 @@ labels:
     )
 
 
+def test_service_to_pod_label_selectors():
+    config = "" 
+    
+    r = helm_template(config)
+
+    assert(all (
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items() 
+        for l in r["service"][name]["spec"]["selector"].items())
+    )
+
+
+def test_service_to_pod_label_selectors_with_custom_labels():
+    config = """
+labels:
+  app.kubernetes.io/name: kibana
+"""
+
+    r = helm_template(config)
+
+    assert(all (
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items() 
+        for l in r["service"][name]["spec"]["selector"].items())
+    )
+
+
 def test_adding_a_secret_mount_with_subpath():
     config = """
 secretMounts:
