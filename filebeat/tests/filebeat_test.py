@@ -370,3 +370,72 @@ fullnameOverride: 'filebeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
+
+def test_pod_security_policy():
+    ## Make sure the default config is not creating any resources
+    config = ""
+    resources = ("role", "rolebinding", "serviceaccount", "podsecuritypolicy")
+    r = helm_template(config)
+    for resource in resources:
+        assert resource not in r
+    assert (
+        "serviceAccountName" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    )
+
+    ## Make sure all the resources are created with default values
+    config = """
+rbac:
+  create: true
+  serviceAccountName: ""
+
+podSecurityPolicy:
+  create: true
+  name: ""
+"""
+    r = helm_template(config)
+    for resource in resources:
+        assert resource in r
+    assert r["role"][uname]["rules"][0] == {
+        "apiGroups": ["extensions"],
+        "verbs": ["use"],
+        "resources": ["podsecuritypolicies"],
+        "resourceNames": [uname],
+    }
+    assert r["rolebinding"][uname]["subjects"] == [
+        {"kind": "ServiceAccount", "namespace": "default", "name": uname}
+    ]
+    assert r["rolebinding"][uname]["roleRef"] == {
+        "apiGroup": "rbac.authorization.k8s.io",
+        "kind": "Role",
+        "name": uname,
+    }
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["serviceAccountName"]
+        == uname
+    )
+    psp_spec = r["podsecuritypolicy"][uname]["spec"]
+    assert psp_spec["privileged"] is True
+
+
+def test_external_pod_security_policy():
+    ## Make sure we can use an externally defined pod security policy
+    config = """
+rbac:
+  create: true
+  serviceAccountName: ""
+
+podSecurityPolicy:
+  create: false
+  name: "customPodSecurityPolicy"
+"""
+    resources = ("role", "rolebinding")
+    r = helm_template(config)
+    for resource in resources:
+        assert resource in r
+
+    assert r["role"][uname]["rules"][0] == {
+        "apiGroups": ["extensions"],
+        "verbs": ["use"],
+        "resources": ["podsecuritypolicies"],
+        "resourceNames": ["customPodSecurityPolicy"],
+    }

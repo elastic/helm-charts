@@ -5,7 +5,7 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: filebeat
-version: 7.6.0
+version: 7.6.1
 appVersion: 7.6.0
 sources:
   - https://github.com/elastic/beats
