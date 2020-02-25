@@ -763,23 +763,24 @@ def test_adding_a_label_on_headless_service():
 
 
 def test_adding_load_balancer_source_ranges():
-    config = '''
+    config = """
 service:
   loadBalancerSourceRanges:
     - 0.0.0.0/0
-    '''
+    """
     r = helm_template(config)
-    assert r['service'][uname]['spec']['loadBalancerSourceRanges'][0] == "0.0.0.0/0"
+    assert r["service"][uname]["spec"]["loadBalancerSourceRanges"][0] == "0.0.0.0/0"
 
-    config = '''
+    config = """
 service:
   loadBalancerSourceRanges:
     - 192.168.0.0/24
     - 192.168.1.0/24
-    '''
+    """
     r = helm_template(config)
-    assert r['service'][uname]['spec']['loadBalancerSourceRanges'][0] == "192.168.0.0/24"
-    assert r['service'][uname]['spec']['loadBalancerSourceRanges'][1] == "192.168.1.0/24"
+    ranges = r["service"][uname]["spec"]["loadBalancerSourceRanges"]
+    assert ranges[0] == "192.168.0.0/24"
+    assert ranges[1] == "192.168.1.0/24"
 
 
 def test_master_termination_fixed_enabled():
