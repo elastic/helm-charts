@@ -38,6 +38,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       {{- with .Values.tolerations }}
       tolerations: {{ toYaml . | nindent 6 }}
       {{- end }}

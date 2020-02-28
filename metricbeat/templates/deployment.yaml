@@ -32,6 +32,7 @@ spec:
         heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
     spec:
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 6 }}

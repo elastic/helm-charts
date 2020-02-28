@@ -89,6 +89,7 @@ volumeClaimTemplate:
 rbac:
   create: false
   serviceAccountName: ""
+  automountServiceAccountToken: true
 
 podSecurityPolicy:
   create: false

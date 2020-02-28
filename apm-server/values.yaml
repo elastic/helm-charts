@@ -95,6 +95,8 @@ resources:
 # Custom service account override that the pod will use
 serviceAccount: ""
 
+automountServiceAccountToken: true
+
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []
 #  - name: elastic-certificate-pem
