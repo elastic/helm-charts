@@ -35,6 +35,7 @@ file:
   /usr/share/elasticsearch/config/elasticsearch.yml:
     exists: true
     contains:
+      - 'node.store.allow_mmap: false'
       - 'xpack.security.enabled: true'
       - 'xpack.security.transport.ssl.enabled: true'
       - 'xpack.security.transport.ssl.verification_mode: certificate'
