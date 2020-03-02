@@ -124,6 +124,11 @@ podManagementPolicy: "Parallel"
 
 httpPort: 9600
 
+# Custom ports to add to logstash
+ports: []
+  # - name: beats
+  #   containerPort: 5001
+
 updateStrategy: RollingUpdate
 
 # This is the max unavailable setting for the pod disruption budget
