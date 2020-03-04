@@ -1,5 +1,22 @@
 # Changelog
 
+## 7.6.1 - 2020/03/04
+
+* 7.6.1 as the default stack version
+
+### APM Server
+
+| PR                                                     | Author                                   | Title             |
+| ------------------------------------------------------ | ---------------------------------------- | ----------------- |
+|[#479](https://github.com/elastic/helm-charts/pull/479) | [@vhatsura](https://github.com/vhatsura) | Fix template name |
+
+### Elasticsearch
+
+| PR                                                     | Author                                 | Title                                   |
+| ------------------------------------------------------ | -------------------------------------- | --------------------------------------- |
+|[#483](https://github.com/elastic/helm-charts/pull/483) | [@ta-ando](https://github.com/ta-ando) | Ad support for loadBalancerSourceRanges |
+
+
 ## 7.6.0 - 2020/02/11
 
 * 7.6.0 as the default stack version
