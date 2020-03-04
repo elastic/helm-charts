@@ -53,14 +53,14 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.6 | 7.6.0 |
+| 6.8.7 | 7.6.1 |
 
 Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/metricbeat/examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.0` of metricbeat it would look like this:
+While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.1` of metricbeat it would look like this:
 
 ```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.0
+helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.1
 ```
 
 
@@ -76,7 +76,7 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.0
 | `envFrom`                | Templatable string of envFrom to be passed to the  [environment from variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) which will be appended to the `envFrom:` definition for the container | `[]`                                                                                                                      |
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Metricbeat registry data                                                                                                                                                                          | `/var/lib`                                                                                                                |
 | `image`                  | The Metricbeat docker image                                                                                                                                                                                                                                                                                              | `docker.elastic.co/beats/metricbeat`                                                                                      |
-| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                                                                          | `7.6.0`                                                                                                                   |
+| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                                                                          | `7.6.1`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                           | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                     | `[]`                                                                                                                      |
 | `labels`                 | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Metricbeat pods                                                                                                                                                                                           | `{}`                                                                                                                      |
