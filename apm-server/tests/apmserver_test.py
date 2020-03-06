@@ -304,7 +304,7 @@ fullnameOverride: "apm-server-custom"
 """
     r = helm_template(config)
 
-    custom_name = 'apm-server-custom'
+    custom_name = "apm-server-custom"
     assert custom_name in r["deployment"]
     assert custom_name in r["service"]
 
