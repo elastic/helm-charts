@@ -125,7 +125,7 @@ podManagementPolicy: "Parallel"
 httpPort: 9600
 
 # Custom ports to add to logstash
-ports: []
+extraPorts: []
   # - name: beats
   #   containerPort: 5001
 

@@ -150,8 +150,8 @@ spec:
         ports:
         - name: http
           containerPort: {{ .Values.httpPort }}
-      {{- if .Values.ports }}
-        {{- toYaml .Values.ports | nindent 8 }}  
+      {{- if .Values.extraPorts }}
+        {{- toYaml .Values.extraPorts | nindent 8 }}  
       {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
