@@ -187,11 +187,10 @@ extraPorts:
     containerPort: 30000
 """
     r = helm_template(config)
-    extraPorts = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0]["ports"]
-    assert {
-        "name": "foo",
-        "containerPort": 30000,
-    } in extraPorts
+    extraPorts = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "ports"
+    ]
+    assert {"name": "foo", "containerPort": 30000,} in extraPorts
 
 
 def test_adding_a_extra_init_container():
