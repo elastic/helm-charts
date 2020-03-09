@@ -107,7 +107,7 @@ spec:
                       set -- "$@" -u "${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}"
                     fi
 
-                    STATUS=$(curl --output /dev/null --write-out "%{http_code}" -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}")
+                    STATUS=$(curl --output /dev/null --write-out "%{http_code}" -L -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}")
                     if [[ "${STATUS}" -eq 200 ]]; then
                       exit 0
                     fi
