@@ -27,7 +27,7 @@ easily be overridden in the config value `apmConfig.apm-server.yml`.
   ```
 * Install it
   ```
-  helm install --name apm-server elastic/apm-server
+  helm install apm-server elastic/apm-server
   ```
 
 ### Using master branch
@@ -38,7 +38,7 @@ easily be overridden in the config value `apmConfig.apm-server.yml`.
   ```
 * Install it
   ```
-  helm install --name apm-server ./helm-charts/apm-server
+  helm install apm-server ./helm-charts/apm-server
   ```
 
 ## Compatibility
@@ -57,7 +57,7 @@ or new releases by overriding the `imageTag`. To install version `7.6.1` of APM
 Server it would look like this:
 
 ```
-helm install --name apm-server elastic/apm-server --set imageTag=7.6.1
+helm install apm-server elastic/apm-server --set imageTag=7.6.1
 ```
 
 

@@ -15,7 +15,7 @@ If you wish to come back to former values, you just need to override CPU request
 
 - Overriding CPU requests in commandline argument:
 ```
-helm install --name elasticsearch --set resources.requests.cpu=100m elastic/elasticsearch
+helm install elasticsearch --set resources.requests.cpu=100m elastic/elasticsearch
 ```
 
 - Overriding CPU requests in your custom `values.yaml` file:
@@ -56,7 +56,7 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   ```
 * Install it
   ```
-  helm install --name elasticsearch elastic/elasticsearch
+  helm install elasticsearch elastic/elasticsearch
   ```
 
 ### Using master branch
@@ -67,7 +67,7 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
   ```
 * Install it
   ```
-  helm install --name elasticsearch ./helm-charts/elasticsearch
+  helm install elasticsearch ./helm-charts/elasticsearch
   ```
 
 ## Compatibility
@@ -83,7 +83,7 @@ Examples of installing older major versions can be found in the [examples](https
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.1` of Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.6.1
+helm install elasticsearch elastic/elasticsearch --set imageTag=7.6.1
 ```
 
 ## Configuration

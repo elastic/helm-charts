@@ -33,7 +33,7 @@ The workaround is to use `--force` argument for `helm upgrade` command which wil
   ```
 * Install it
   ```
-  helm install --name metricbeat elastic/metricbeat
+  helm install metricbeat elastic/metricbeat
   ```
 
 ### Using master branch
@@ -44,7 +44,7 @@ The workaround is to use `--force` argument for `helm upgrade` command which wil
   ```
 * Install it
   ```
-  helm install --name metricbeat ./helm-charts/metricbeat
+  helm install metricbeat ./helm-charts/metricbeat
   ```
 
 ## Compatibility
@@ -60,7 +60,7 @@ Examples of installing older major versions can be found in the [examples](https
 While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.1` of metricbeat it would look like this:
 
 ```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.1
+helm install metricbeat elastic/metricbeat --set imageTag=7.6.1
 ```
 
 
