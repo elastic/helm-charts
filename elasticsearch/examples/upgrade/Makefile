@@ -17,7 +17,7 @@ install:
 	kubectl rollout status sts/upgrade-master --timeout=600ss
 
 init:
-	helm init --client-only
+	#helm init --client-only
 
 test: init install goss
 
