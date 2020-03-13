@@ -6,7 +6,7 @@ RELEASE := helm-metricbeat-security
 GOSS_SELECTOR = release=$(RELEASE),app=helm-metricbeat-security-metricbeat
 
 install:
-	helm upgrade --wait --timeout=600 --install $(RELEASE) --values values.yaml ../../
+	helm upgrade --wait --timeout=600s --install $(RELEASE) --values values.yaml ../../
 
 purge:
 	helm del $(RELEASE)

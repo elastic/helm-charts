@@ -11,10 +11,10 @@ RELEASE := helm-es-upgrade
 # upgrade is forced for this test
 install:
 	helm repo add elastic https://helm.elastic.co && \
-	helm upgrade --wait --timeout=600 --install $(RELEASE) elastic/elasticsearch --version 7.0.0-alpha1 --set clusterName=upgrade ; \
-	kubectl rollout status sts/upgrade-master --timeout=600s
-	helm upgrade --wait --timeout=600 --set terminationGracePeriod=121 --install $(RELEASE) ../../ --set clusterName=upgrade ; \
-	kubectl rollout status sts/upgrade-master --timeout=600s
+	helm upgrade --wait --timeout=600s --install $(RELEASE) elastic/elasticsearch --version 7.0.0-alpha1 --set clusterName=upgrade ; \
+	kubectl rollout status sts/upgrade-master --timeout=600ss
+	helm upgrade --wait --timeout=600s --set terminationGracePeriod=121 --install $(RELEASE) ../../ --set clusterName=upgrade ; \
+	kubectl rollout status sts/upgrade-master --timeout=600ss
 
 init:
 	helm init --client-only
