@@ -18,9 +18,9 @@ deps: ## Update helm charts dependencies
 
 .PHONY: helm
 helm: ## Deploy helm on k8s cluster
-	kubectl get cs
-	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
-	helm init --wait --upgrade
+	#kubectl get cs
+	#kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
+	#helm init --wait --upgrade
 
 .PHONY: lint
 lint: ## Lint helm templates

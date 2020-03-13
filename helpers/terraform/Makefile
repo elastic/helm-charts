@@ -71,13 +71,12 @@ k8s: apply creds ## Configure gke cluster
 
 .PHONY: up
 up: k8s ## Install helm on gke cluster
-	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
-	for i in 1 2 3 4 5; do helm init --wait --upgrade && break || sleep 5; done
+	#kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
+	#for i in 1 2 3 4 5; do helm init --wait --upgrade && break || sleep 5; done
 
 .PHONY: integration
 integration: creds ## Deploy helm chart and run integration tests
 	cd ../../$(CHART)/ && \
-	helm init --client-only && \
 	helm dependency update && \
 	cd ./examples/$(SUITE) && \
 	make
