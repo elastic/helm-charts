@@ -7,6 +7,6 @@ install:
 	helm upgrade --wait --timeout=600 --install --values ./values.yml $(RELEASE) ../../
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)
 
 test: install goss

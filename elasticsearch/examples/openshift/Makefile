@@ -12,4 +12,4 @@ install:
 test: install goss
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)

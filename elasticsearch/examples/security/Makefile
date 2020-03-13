@@ -9,7 +9,7 @@ install:
 
 purge:
 	kubectl delete secrets elastic-credentials elastic-certificates elastic-certificate-pem || true
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)
 
 test: secrets install goss
 

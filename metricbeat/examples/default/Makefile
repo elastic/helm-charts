@@ -14,4 +14,4 @@ test-metrics:
 test: install goss test-metrics
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)

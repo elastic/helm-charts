@@ -12,5 +12,5 @@ install:
 test: install goss
 
 purge:
-	helm del --purge $(PREFIX)-master
-	helm del --purge $(PREFIX)-data
+	helm del $(PREFIX)-master
+	helm del $(PREFIX)-data

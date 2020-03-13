@@ -9,4 +9,4 @@ test: install
 	helm test $(RELEASE)
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)
