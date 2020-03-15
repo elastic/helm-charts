@@ -114,6 +114,7 @@ podSecurityPolicy:
       - secret
       - configMap
       - persistentVolumeClaim
+      - projected
 
 persistence:
   enabled: true

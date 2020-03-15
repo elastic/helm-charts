@@ -218,6 +218,25 @@ clusterRoleRules:
   - nodes/stats
   verbs: ["get"]
 
+podSecurityPolicy:
+  create: false
+  name: ""
+  spec:
+    privileged: true
+    fsGroup:
+      rule: RunAsAny
+    runAsUser:
+      rule: RunAsAny
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - secret
+      - configMap
+      - persistentVolumeClaim
+      - projected
+
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
