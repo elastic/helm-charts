@@ -1,4 +1,3 @@
-{{- if .Values.service }}
 ---
 kind: Service
 apiVersion: v1
@@ -20,4 +19,3 @@ spec:
     release: {{ .Release.Name | quote }}
   ports:
 {{ toYaml .Values.service.ports | indent 4 }}
-{{- end }}

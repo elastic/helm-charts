@@ -78,7 +78,7 @@ def test_defaults():
     )
 
     # Service
-    assert "serviceName" not in r["statefulset"][name]["spec"]
+    assert "serviceName" in r["statefulset"][name]["spec"]
     assert "service" not in r
 
     # Other

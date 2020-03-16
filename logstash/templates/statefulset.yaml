@@ -12,9 +12,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  {{- if .Values.service }}
   serviceName: {{ template "logstash.fullname" . }}
-  {{- end }}
   selector:
     matchLabels:
       app: "{{ template "logstash.fullname" . }}"

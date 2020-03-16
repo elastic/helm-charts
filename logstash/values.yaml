@@ -191,15 +191,15 @@ lifecycle: {}
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 
-service: {}
-#  annotations: {}
-#  type: ClusterIP
-#  ports:
+service:
+  annotations: {}
+  type: ClusterIP
+  ports:
 #    - name: beats
 #      port: 5044
 #      protocol: TCP
 #      targetPort: 5044
-#    - name: http
-#      port: 8080
-#      protocol: TCP
-#      targetPort: 8080
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
