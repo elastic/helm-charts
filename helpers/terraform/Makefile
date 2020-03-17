@@ -15,6 +15,11 @@ export TF_VAR_kubernetes_version=$(KUBERNETES_VERSION)
 help: ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
+.PHONY: clean
+clean: ## Delete terraform working directory and local state files
+	rm credentials.json
+	rm -rf .terraform/
+
 credentials.json:
 	vault read -field=value \
 		"secret/devops-ci/helm-charts/gce/service-account" \
