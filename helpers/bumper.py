@@ -27,7 +27,6 @@ versions = {
 chart_version = versions[7]
 
 file_patterns = [
-    "*/examples/*/test/goss*.y*ml",
     "*/examples/*/*.y*ml",
     "helpers/examples.mk",
     "*/README.md",
@@ -35,9 +34,14 @@ file_patterns = [
     "*/Chart.y*ml",
 ]
 
+goss_files = ["*/examples/*/test/goss*.y*ml"]
+
+
 # Anything matching this regex won't have version bumps changed
 # This was happening because strings like 127.0.0.1 match for 7.0.0
 blacklist = re.compile(r".*127.0.0.1.*")
+
+print("Updating versions...")
 
 for major, version in versions.iteritems():
     r = re.compile(r"{0}\.[0-9]*\.[0-9]*-?[0-9]?".format(major))
@@ -52,6 +56,19 @@ for major, version in versions.iteritems():
                         print(r.sub(chart_version, line.rstrip()))
                     else:
                         print(r.sub(version, line.rstrip()))
+    for pattern in goss_files:
+        for f in glob.glob(pattern):
+            print(f)
+            for line in fileinput.input([f], inplace=True):
+                # If we have a version with a build id, like 7.6.2-abcdabcd,
+                # strip off the latter part and only use the 7.6.2 in the goss
+                # tests
+                version_without_build_id = re.sub(r"-.*", "", version)
+                if re.match(blacklist, line):
+                    print(line.rstrip())
+                else:
+                    print(r.sub(version_without_build_id, line.rstrip()))
+
 
 if os.environ.get("BUMPER_USE_STAGING_IMAGES") == "true":
     image_file_patterns = file_patterns + [
@@ -59,6 +76,8 @@ if os.environ.get("BUMPER_USE_STAGING_IMAGES") == "true":
         "**/templates/*.tpl",
         "**/Makefile",
     ]
+
+    print("\nUpdating namespaces...")
 
     for pattern in image_file_patterns:
         for f in glob.glob(pattern):
@@ -71,3 +90,15 @@ if os.environ.get("BUMPER_USE_STAGING_IMAGES") == "true":
                         line.rstrip(),
                     )
                 )
+
+    print("\nUpdating imagePullSecrets...")
+
+    for f in glob.glob("*/values.y*ml"):
+        print(f)
+        for line in fileinput.input([f], inplace=True):
+            print(
+                line.rstrip().replace(
+                    "imagePullSecrets: []",
+                    "imagePullSecrets: [{name: registry-staging}]",
+                )
+            )
