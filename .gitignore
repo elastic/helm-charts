@@ -5,3 +5,4 @@ elastic-certificates.p12
 index.yaml
 *.tgz
 .idea/
+/venv
