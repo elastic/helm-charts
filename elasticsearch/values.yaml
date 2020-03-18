@@ -110,6 +110,9 @@ podSecurityPolicy:
 
 persistence:
   enabled: true
+  multiDisk:
+    enabled: false
+    count: 1
   annotations: {}
 
 extraVolumes: ""

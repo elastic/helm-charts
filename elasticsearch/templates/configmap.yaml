@@ -9,8 +9,36 @@ metadata:
     chart: "{{ .Chart.Name }}"
     app: "{{ template "elasticsearch.uname" . }}"
 data:
-{{- range $path, $config := .Values.esConfig }}
+  {{- range $path, $config := .Values.esConfig }}
   {{ $path }}: |
 {{ $config | indent 4 -}}
-{{- end -}}
+    {{- if $.Values.persistence.multiDisk.enabled }}
+      {{- if (not ( contains "data:/" ($config | replace " " "") ))}}
+    path.data:
+        {{- $root := . -}}
+        {{- range until ( int $.Values.persistence.multiDisk.count ) }}
+      - /usr/share/elasticsearch/data-{{ . }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else -}}
+  {{- if .Values.persistence.multiDisk.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "elasticsearch.uname" . }}-config
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    app: "{{ template "elasticsearch.uname" . }}"
+data:
+  elasticsearch.yml: |
+    path.data:
+    {{- $root := . -}}
+    {{- range until ( int .Values.persistence.multiDisk.count ) }}
+      - /usr/share/elasticsearch/data-{{ . }}
+    {{- end }}
+  {{- end -}}
 {{- end -}}

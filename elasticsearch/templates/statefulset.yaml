@@ -24,6 +24,19 @@ spec:
     type: {{ .Values.updateStrategy }}
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
+    {{- if .Values.persistence.multiDisk.enabled }}
+      {{- $root := . -}}
+      {{- range until ( int .Values.persistence.multiDisk.count ) }}
+  - metadata:
+      name: {{ template "elasticsearch.uname" $root }}-{{ . }}
+    {{- with $.Values.persistence.annotations  }}
+      annotations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    spec:
+{{ toYaml $.Values.volumeClaimTemplate | indent 6 }}
+      {{- end }}
+    {{- else }}
   - metadata:
       name: {{ template "elasticsearch.uname" . }}
     {{- with .Values.persistence.annotations  }}
@@ -32,6 +45,7 @@ spec:
     {{- end }}
     spec:
 {{ toYaml .Values.volumeClaimTemplate | indent 6 }}
+    {{- end }}
   {{- end }}
   template:
     metadata:
@@ -114,7 +128,7 @@ spec:
           secret:
             secretName: {{ .secretName }}
         {{- end }}
-        {{- if .Values.esConfig }}
+        {{- if or .Values.esConfig .Values.persistence.multiDisk.enabled }}
         - name: esconfig
           configMap:
             name: {{ template "elasticsearch.uname" . }}-config
@@ -269,8 +283,16 @@ spec:
 {{- end }}
         volumeMounts:
           {{- if .Values.persistence.enabled }}
+            {{- if .Values.persistence.multiDisk.enabled }}
+              {{- $root := . -}}
+              {{- range until ( int .Values.persistence.multiDisk.count ) }}
+          - name: "{{ template "elasticsearch.uname" $root }}-{{ . }}"
+            mountPath: /usr/share/elasticsearch/data-{{ . }}
+              {{- end }}
+            {{- else }}
           - name: "{{ template "elasticsearch.uname" . }}"
             mountPath: /usr/share/elasticsearch/data
+            {{- end }}
           {{- end }}
 {{ if .Values.keystore }}
           - name: keystore
@@ -284,6 +306,13 @@ spec:
             subPath: {{ .subPath }}
             {{- end }}
           {{- end }}
+          {{- if not (hasKey .Values.esConfig "elasticsearch.yml") }}
+            {{- if .Values.persistence.multiDisk.enabled }}
+          - name: esconfig
+            mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+            subPath: elasticsearch.yml
+            {{- end}}
+          {{- end}}
           {{- range $path, $config := .Values.esConfig }}
           - name: esconfig
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
