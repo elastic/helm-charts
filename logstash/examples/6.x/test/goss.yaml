@@ -12,7 +12,7 @@ http:
       - '"host" : "helm-logstash-six-logstash-0"'
       - '"version" : "6.8.7"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-six-logstash-0"'
+      - '"name" : "helm-logstash-six-logstash-0.svc.cluster.local"'
 
 file:
   /usr/share/logstash/config/logstash.yml:
