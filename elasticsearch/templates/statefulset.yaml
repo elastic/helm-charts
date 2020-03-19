@@ -74,13 +74,14 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
       {{- end }}
-      {{- if or (eq .Values.antiAffinity "hard") (eq .Values.antiAffinity "soft") .Values.nodeAffinity }}
+      {{- if or .Values.antiAffinity .Values.nodeAffinity }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
       affinity:
       {{- end }}
-      {{- if eq .Values.antiAffinity "hard" }}
+      {{- if kindIs "string" .Values.antiAffinity }}
+        {{- if eq .Values.antiAffinity "hard" }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -90,7 +91,7 @@ spec:
                 values:
                 - "{{ template "elasticsearch.uname" .}}"
             topologyKey: {{ .Values.antiAffinityTopologyKey }}
-      {{- else if eq .Values.antiAffinity "soft" }}
+        {{- else if eq .Values.antiAffinity "soft" }}
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -102,6 +103,12 @@ spec:
                   operator: In
                   values:
                   - "{{ template "elasticsearch.uname" . }}"
+        {{- end }}
+      {{- else }}
+        podAntiAffinity:
+        {{- with .Values.antiAffinity }}
+{{ toYaml . | indent 10 }}
+        {{- end }}
       {{- end }}
       {{- with .Values.nodeAffinity }}
         nodeAffinity:
