@@ -79,7 +79,7 @@ def test_defaults():
 
     # Service
     assert "serviceName" in r["statefulset"][name]["spec"]
-    assert "service" not in r
+    assert r["service"][name]["spec"]["ports"][0]["port"] == 8080
 
     # Other
     assert r["statefulset"][name]["spec"]["template"]["spec"]["securityContext"] == {
