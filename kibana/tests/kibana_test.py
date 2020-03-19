@@ -516,13 +516,13 @@ labels:
 
 
 def test_service_to_pod_label_selectors():
-    config = "" 
-    
+    config = ""
+
     r = helm_template(config)
 
-    assert(all (
-        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items() 
-        for l in r["service"][name]["spec"]["selector"].items())
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
     )
 
 
@@ -534,9 +534,9 @@ labels:
 
     r = helm_template(config)
 
-    assert(all (
-        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items() 
-        for l in r["service"][name]["spec"]["selector"].items())
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
     )
 
 
