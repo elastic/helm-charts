@@ -1,8 +1,8 @@
 ---
 - job:
-    name: elastic+helm-charts+master+integration-apm-server
-    display-name: elastic / helm-charts - master - integration apm-server
-    description: Master - integration apm-server
+    name: elastic+helm-charts+staging+integration-apm-server
+    display-name: elastic / helm-charts - staging - integration apm-server
+    description: staging - integration apm-server
     parameters:
       - string:
           name: BUILD_ID
