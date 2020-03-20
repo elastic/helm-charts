@@ -296,3 +296,21 @@ priorityClassName: "highest"
         "priorityClassName"
     ]
     assert priority_class_name == "highest"
+
+
+def test_setting_fullnameOverride():
+    config = """
+fullnameOverride: "apm-server-custom"
+"""
+    r = helm_template(config)
+
+    custom_name = "apm-server-custom"
+    assert custom_name in r["deployment"]
+    assert custom_name in r["service"]
+
+    assert (
+        r["deployment"][custom_name]["spec"]["template"]["spec"]["containers"][0][
+            "name"
+        ]
+        == project
+    )
