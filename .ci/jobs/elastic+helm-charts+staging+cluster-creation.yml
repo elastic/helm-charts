@@ -33,8 +33,6 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        env BUMPER_VERSION_7="$BUILD_ID" BUMPER_USE_STAGING_IMAGES="true" ./helpers/bumper.py
-
         cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
 
         cd helpers/terraform/
