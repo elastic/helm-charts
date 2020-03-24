@@ -13,7 +13,7 @@ export TF_VAR_kubernetes_version=$(KUBERNETES_VERSION)
 
 .PHONY: help
 help: ## Display this help
-	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
 .PHONY: clean
 clean: ## Delete terraform working directory and local state files
@@ -68,6 +68,14 @@ creds: credentials.json ## Get gke credentials
 .PHONY: k8s
 k8s: apply creds ## Configure gke cluster
 	kubectl get cs
+
+.PHONY: k8s-staging-registry
+k8s-staging-registry: creds ## Create the staging registry auth secret in k8s
+	@DOCKER_PASSWORD="$$(vault read -field=password secret/devops-ci/docker.elastic.co/devops-ci)" && \
+		kubectl create secret docker-registry registry-staging \
+		--docker-server="docker.elastic.co" \
+		--docker-username="devops-ci" \
+		--docker-password="$$DOCKER_PASSWORD"
 
 .PHONY: up
 up: k8s ## Install helm on gke cluster
