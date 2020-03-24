@@ -726,6 +726,23 @@ def test_adding_a_nodePort():
     assert r["service"][uname]["spec"]["ports"][0]["nodePort"] == 30001
 
 
+def test_adding_a_loadBalancerIP():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "loadBalancerIP" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      loadBalancerIP: 12.4.19.81
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["loadBalancerIP"] == "12.4.19.81"
+
+
 def test_adding_a_label_on_non_headless_service():
     config = ""
 

@@ -34,6 +34,9 @@ spec:
   - name: {{ .Values.service.transportPortName | default "transport" }}
     protocol: TCP
     port: {{ .Values.transportPort }}
+{{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+{{- end }}
 {{- with .Values.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
 {{ toYaml . | indent 4 }}
