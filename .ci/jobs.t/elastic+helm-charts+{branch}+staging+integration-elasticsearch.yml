@@ -1,8 +1,12 @@
 ---
 - job:
-    name: elastic+helm-charts+master+integration-apm-server
-    display-name: elastic / helm-charts - master - integration apm-server
-    description: Master - integration apm-server
+    name: elastic+helm-charts+%BRANCH%+staging+integration-elasticsearch
+    display-name: elastic / helm-charts - staging - integration elasticsearch
+    description: staging - integration elasticsearch
+    parameters:
+      - string:
+          name: BUILD_ID
+          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
     scm:
     - git:
         wipe-workspace: 'True'
@@ -14,7 +18,7 @@
         - docker&&virtual
     - axis:
         type: yaml
-        name: APM_SERVER_SUITE
+        name: ES_SUITE
         filename: helpers/matrix.yml
     - axis:
         type: yaml
@@ -33,7 +37,9 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        cluster_name="helm-${KUBERNETES_VERSION//./}-${branch_specifier:0:10}"
+        env BUMPER_VERSION_7="$BUILD_ID" BUMPER_USE_STAGING_IMAGES="true" ./helpers/bumper.py
+
+        cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
 
         cd helpers/terraform/
-        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${APM_SERVER_SUITE} CHART=apm-server
+        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${ES_SUITE} CHART=elasticsearch

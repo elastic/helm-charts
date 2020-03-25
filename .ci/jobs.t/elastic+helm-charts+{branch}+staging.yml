@@ -1,8 +1,13 @@
 ---
 - job:
-    name: elastic+helm-charts+master
-    display-name: elastic / helm-charts - master
-    description: Master branch testing
+    name: elastic+helm-charts+%BRANCH%+staging
+    display-name: elastic / helm-charts - staging
+    description: Staging image testing
+    concurrent: true
+    parameters:
+      - string:
+          name: BUILD_ID
+          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
     project-type: multijob
     scm:
     - git:
@@ -15,34 +20,30 @@
         name: template testing and kubernetes cluster creation
         condition: SUCCESSFUL
         projects:
-        - name: elastic+helm-charts+master+template-testing
-          current-parameters: true
-        - name: elastic+helm-charts+master+lint-python
-          current-parameters: true
-        - name: elastic+helm-charts+master+cluster-creation
+        - name: elastic+helm-charts+staging+cluster-creation
           current-parameters: true
     - multijob:
         name: elasticsearch integration testing
         condition: ALWAYS
         projects:
-        - name: elastic+helm-charts+master+integration-elasticsearch
+        - name: elastic+helm-charts+staging+integration-elasticsearch
           current-parameters: true
     - multijob:
         name: integration testing
         condition: ALWAYS
         projects:
-        - name: elastic+helm-charts+master+integration-kibana
+        - name: elastic+helm-charts+staging+integration-kibana
           current-parameters: true
-        - name: elastic+helm-charts+master+integration-filebeat
+        - name: elastic+helm-charts+staging+integration-filebeat
           current-parameters: true
-        - name: elastic+helm-charts+master+integration-metricbeat
+        - name: elastic+helm-charts+staging+integration-metricbeat
           current-parameters: true
-        - name: elastic+helm-charts+master+integration-logstash
+        - name: elastic+helm-charts+staging+integration-logstash
           current-parameters: true
-        - name: elastic+helm-charts+master+integration-apm-server
+        - name: elastic+helm-charts+staging+integration-apm-server
           current-parameters: true
     publishers:
     - trigger-parameterized-builds:
-      - project: elastic+helm-charts+master+cluster-cleanup
+      - project: elastic+helm-charts+staging+cluster-cleanup
         current-parameters: true
         trigger-with-no-params: false

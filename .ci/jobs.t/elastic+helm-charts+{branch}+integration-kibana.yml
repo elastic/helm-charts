@@ -1,11 +1,11 @@
 ---
 - job:
-    name: elastic+helm-charts+pull-request+integration-apm-server
-    display-name: elastic / helm-charts - pull-request - integration apm-server
-    description: Pull request - integration apm-server
+    name: elastic+helm-charts+%BRANCH%+integration-kibana
+    display-name: elastic / helm-charts - %BRANCH% - integration kibana
+    description: integration kibana
     scm:
     - git:
-        refspec: +refs/pull/*:refs/remotes/origin/pr/*
+        wipe-workspace: 'True'
     axes:
     - axis:
         type: slave
@@ -14,7 +14,7 @@
         - docker&&virtual
     - axis:
         type: yaml
-        name: APM_SERVER_SUITE
+        name: KIBANA_SUITE
         filename: helpers/matrix.yml
     - axis:
         type: yaml
@@ -36,4 +36,4 @@
         cluster_name="helm-${KUBERNETES_VERSION//./}-${branch_specifier:0:10}"
 
         cd helpers/terraform/
-        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${APM_SERVER_SUITE} CHART=apm-server
+        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${KIBANA_SUITE} CHART=kibana

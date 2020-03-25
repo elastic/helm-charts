@@ -12,12 +12,6 @@
     logrotate:
       daysToKeep: 30
       numToKeep: 100
-    parameters:
-    - string:
-        name: branch_specifier
-        default: master
-        description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
-          &lt;commitId&gt;, etc.)
     properties:
     - github:
         url: https://github.com/elastic/helm-charts/
@@ -30,7 +24,7 @@
         credentials-id: f6c7695a-671e-4f4f-a331-acdce44ff9ba
         reference-repo: /var/lib/jenkins/.git-references/helm-charts.git
         branches:
-        - ${branch_specifier}
+        - "%BRANCH%"
         url: git@github.com:elastic/helm-charts.git
         basedir: ''
         wipe-workspace: 'True'

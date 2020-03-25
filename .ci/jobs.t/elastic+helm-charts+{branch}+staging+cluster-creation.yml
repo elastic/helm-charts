@@ -1,8 +1,8 @@
 ---
 - job:
-    name: elastic+helm-charts+staging+integration-logstash
-    display-name: elastic / helm-charts - staging - integration logstash
-    description: staging - integration logstash
+    name: elastic+helm-charts+%BRANCH%+staging+cluster-creation
+    display-name: elastic / helm-charts - staging - cluster creation
+    description: staging - cluster creation
     parameters:
       - string:
           name: BUILD_ID
@@ -16,10 +16,6 @@
         name: label
         values:
         - docker&&virtual
-    - axis:
-        type: yaml
-        name: LOGSTASH_SUITE
-        filename: helpers/matrix.yml
     - axis:
         type: yaml
         name: KUBERNETES_VERSION
@@ -37,9 +33,8 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        env BUMPER_VERSION_7="$BUILD_ID" BUMPER_USE_STAGING_IMAGES="true" ./helpers/bumper.py
-
         cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
 
         cd helpers/terraform/
-        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${LOGSTASH_SUITE} CHART=logstash
+        ./in-docker make up KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name}
+        ./in-docker make k8s-staging-registry KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name}

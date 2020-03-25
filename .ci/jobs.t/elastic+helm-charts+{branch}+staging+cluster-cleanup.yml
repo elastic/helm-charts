@@ -1,8 +1,8 @@
 ---
 - job:
-    name: elastic+helm-charts+staging+integration-elasticsearch
-    display-name: elastic / helm-charts - staging - integration elasticsearch
-    description: staging - integration elasticsearch
+    name: elastic+helm-charts+%BRANCH%+staging+cluster-cleanup
+    display-name: elastic / helm-charts - staging - cluster cleanup
+    description: staging - cluster cleanup
     parameters:
       - string:
           name: BUILD_ID
@@ -16,10 +16,6 @@
         name: label
         values:
         - docker&&virtual
-    - axis:
-        type: yaml
-        name: ES_SUITE
-        filename: helpers/matrix.yml
     - axis:
         type: yaml
         name: KUBERNETES_VERSION
@@ -37,9 +33,7 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        env BUMPER_VERSION_7="$BUILD_ID" BUMPER_USE_STAGING_IMAGES="true" ./helpers/bumper.py
-
         cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
 
         cd helpers/terraform/
-        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${ES_SUITE} CHART=elasticsearch
+        ./in-docker make destroy KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name}

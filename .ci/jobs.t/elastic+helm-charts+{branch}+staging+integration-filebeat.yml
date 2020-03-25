@@ -1,11 +1,15 @@
 ---
 - job:
-    name: elastic+helm-charts+pull-request+integration-logstash
-    display-name: elastic / helm-charts - pull-request - integration logstash
-    description: Pull request - integration logstash
+    name: elastic+helm-charts+%BRANCH%+staging+integration-filebeat
+    display-name: elastic / helm-charts - staging - integration filebeat
+    description: staging - integration filebeat
+    parameters:
+      - string:
+          name: BUILD_ID
+          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
     scm:
     - git:
-        refspec: +refs/pull/*:refs/remotes/origin/pr/*
+        wipe-workspace: 'True'
     axes:
     - axis:
         type: slave
@@ -14,7 +18,7 @@
         - docker&&virtual
     - axis:
         type: yaml
-        name: LOGSTASH_SUITE
+        name: FILEBEAT_SUITE
         filename: helpers/matrix.yml
     - axis:
         type: yaml
@@ -33,7 +37,9 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        cluster_name="helm-${KUBERNETES_VERSION//./}-${branch_specifier:0:10}"
+        env BUMPER_VERSION_7="$BUILD_ID" BUMPER_USE_STAGING_IMAGES="true" ./helpers/bumper.py
+
+        cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
 
         cd helpers/terraform/
-        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${LOGSTASH_SUITE} CHART=logstash
+        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${FILEBEAT_SUITE} CHART=filebeat

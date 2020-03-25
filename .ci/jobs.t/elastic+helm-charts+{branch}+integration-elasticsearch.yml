@@ -1,12 +1,8 @@
 ---
 - job:
-    name: elastic+helm-charts+staging+cluster-creation
-    display-name: elastic / helm-charts - staging - cluster creation
-    description: staging - cluster creation
-    parameters:
-      - string:
-          name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
+    name: elastic+helm-charts+%BRANCH%+integration-elasticsearch
+    display-name: elastic / helm-charts - %BRANCH% - integration elasticsearch
+    description: integration elasticsearch
     scm:
     - git:
         wipe-workspace: 'True'
@@ -16,6 +12,10 @@
         name: label
         values:
         - docker&&virtual
+    - axis:
+        type: yaml
+        name: ES_SUITE
+        filename: helpers/matrix.yml
     - axis:
         type: yaml
         name: KUBERNETES_VERSION
@@ -33,8 +33,7 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
+        cluster_name="helm-${KUBERNETES_VERSION//./}-${branch_specifier:0:10}"
 
         cd helpers/terraform/
-        ./in-docker make up KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name}
-        ./in-docker make k8s-staging-registry KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name}
+        ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${ES_SUITE} CHART=elasticsearch
