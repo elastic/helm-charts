@@ -93,3 +93,9 @@ integration: creds ## Deploy helm chart and run integration tests
 .PHONY: build
 build: ## Build helm-charts docker image
 	for i in 1 2 3 4 5; do docker build -t helm-charts . && break || sleep 5; done
+
+.PHONY: pull-private-images
+pull-private-images: ## Pull private images used in testing
+	cd ../../elasticsearch/examples/security/ && \
+		make pull-elasticsearch-image
+

@@ -74,7 +74,8 @@ if os.environ.get("BUMPER_USE_STAGING_IMAGES") == "true":
     image_file_patterns = file_patterns + [
         "*/tests/*.py",
         "**/templates/*.tpl",
-        "**/Makefile",
+        # some tests use docker images in their makefile
+        "*/examples/*/Makefile",
     ]
 
     print("\nUpdating namespaces...")
@@ -85,7 +86,7 @@ if os.environ.get("BUMPER_USE_STAGING_IMAGES") == "true":
             for line in fileinput.input([f], inplace=True):
                 print(
                     re.sub(
-                        r"docker.elastic.co/.+/",
+                        r"docker.elastic.co/.+?/",
                         "docker.elastic.co/staging/",
                         line.rstrip(),
                     )
