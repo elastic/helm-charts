@@ -12,9 +12,6 @@
     scm:
     - git:
         wipe-workspace: 'False'
-    triggers:
-    - timed: H H(02-04) * * *
-    - github
     builders:
     - multijob:
         name: template testing and kubernetes cluster creation
