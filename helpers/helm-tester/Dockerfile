@@ -1,6 +1,6 @@
 FROM python:3.7
 
-ENV HELM_VERSION=2.16.4
+ENV HELM_VERSION=2.16.5
 
 RUN wget --no-verbose https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
