@@ -101,7 +101,7 @@ spec:
                 #!/usr/bin/env bash -e
                 http () {
                     local path="${1}"
-                    set -- -XGET -s --fail
+                    set -- -XGET -s --fail -L
 
                     if [ -n "${ELASTICSEARCH_USERNAME}" ] && [ -n "${ELASTICSEARCH_PASSWORD}" ]; then
                       set -- "$@" -u "${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}"
