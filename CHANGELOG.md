@@ -1,5 +1,56 @@
 # Changelog
 
+## 7.6.2 - 2020/03/31
+
+* 7.6.2 as the default stack version
+* 6.8.8 as 6.x tested version
+* Helm 2.16.5 support in [#537](https://github.com/elastic/helm-charts/pull/537) [@jmlrt](https://github.com/jmlrt)
+* Drop GKE 1.13 tests in [#533](https://github.com/elastic/helm-charts/pull/533) [@jmlrt](https://github.com/jmlrt)
+* Few dev environment tweaks in [#521](https://github.com/elastic/helm-charts/pull/521) [@Conky5](https://github.com/Conky5)
+* Version bumping script enhancements in [#524](https://github.com/elastic/helm-charts/pull/524) [@Conky5](https://github.com/Conky5)
+* Staging image testing in [#532](https://github.com/elastic/helm-charts/pull/532), [#544](https://github.com/elastic/helm-charts/pull/544) & [#545](https://github.com/elastic/helm-charts/pull/545) [@Conky5](https://github.com/Conky5)
+
+### APM Server
+
+| PR                                                     | Author                                 | Title                          |
+| ------------------------------------------------------ | -------------------------------------- | ------------------------------ |
+|[#508](https://github.com/elastic/helm-charts/pull/508) | [@kawat55](https://github.com/kawat55) | Fix `fullnameOverride` setting |
+|[#509](https://github.com/elastic/helm-charts/pull/509) | [@qqshfox](https://github.com/qqshfox) | Fix `apiVersion` of HPA        |
+
+### Elasticsearch
+
+| PR                                                     | Author                                               | Title                                                         |
+| ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------- |
+|[#485](https://github.com/elastic/helm-charts/pull/485) | [@mschmidt291](https://github.com/mschmidt291)       | Add possibility to define custom `readinessProbe`             |
+|[#517](https://github.com/elastic/helm-charts/pull/517) | [@maksim-m](https://github.com/maksim-m)             | Add namespace parameter to the test function to `NOTES.txt`   |
+|[#539](https://github.com/elastic/helm-charts/pull/539) | [@adulescentulus](https://github.com/adulescentulus) | Add `loadBalancerIP` option to service                        |
+
+### Filebeat
+
+| PR                                                     | Author                                   | Title                                                       |
+| ------------------------------------------------------ | ---------------------------------------- | ----------------------------------------------------------- |
+|[#530](https://github.com/elastic/helm-charts/pull/530) | [@flaper87](https://github.com/flaper87) | Accept a string as `extraInitContainers` value for Filebeat |
+
+### Kibana
+
+**Warning**
+[#540](https://github.com/elastic/helm-charts/pull/540) increase default CPU and memory requests/limits. This may impact the resources (nodes) required in your Kubernetes cluster to deploy Kibana chart.
+
+If you wish to come back to former values, you need to override CPU and Memory requests/limits as well as `NODE_OPTIONS` `extraEnvs` variable when deploying your Helm Chart.
+
+
+| PR                                                     | Author                                   | Title                                                                                  |
+| ------------------------------------------------------ | ---------------------------------------- | -------------------------------------------------------------------------------------- |
+|[#493](https://github.com/elastic/helm-charts/pull/493) | [@jamoflaw](https://github.com/jamoflaw) | Fix Mismatch Between Service Selector and Pod Labels when using Helm Aliases in Kibana |
+|[#540](https://github.com/elastic/helm-charts/pull/540) | [@jmlrt](https://github.com/jmlrt)       | Optimize Kibana memory usage                                                           |
+
+### Logstash
+
+| PR                                                     | Author                                               | Title                                          |
+| ------------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------- |
+|[#500](https://github.com/elastic/helm-charts/pull/500) | [@zeph](https://github.com/zeph)                     | Add warn to override Logstash default pipeline |
+|[#505](https://github.com/elastic/helm-charts/pull/505) | [@ChiefAlexander](https://github.com/ChiefAlexander) | Update Logstash chart to support custom ports  |
+
 ## 7.6.1 - 2020/03/04
 
 * 7.6.1 as the default stack version
