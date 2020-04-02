@@ -6,7 +6,7 @@ This helm chart is a lightweight way to configure and run our official [Elastics
 
 ## Notice
 
-[7.7.0-SNAPSHOT](https://github.com/elastic/helm-charts/releases/tag/7.7.0-SNAPSHOT) release is introducing a change for Elasticsearch users upgrading from a previous chart version.
+[7.6.1](https://github.com/elastic/helm-charts/releases/tag/7.6.1) release is introducing a change for Elasticsearch users upgrading from a previous chart version.
 Following our recommandations, the change tracked in [#458](https://github.com/elastic/helm-charts/pull/458) is setting CPU request to the same value as CPU limit.
 
 For users which don't overwrite default values for CPU requests, Elasticsearch pod will now request `1000m` CPU instead of `100m` CPU. This may impact the resources (nodes) required in your Kubernetes cluster to deploy Elasticsearch chart.
