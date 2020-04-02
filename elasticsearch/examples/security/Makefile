@@ -3,6 +3,7 @@ default: test
 include ../../../helpers/examples.mk
 
 RELEASE := helm-es-security
+ELASTICSEARCH_IMAGE := docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION)
 
 install:
 	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../
@@ -13,12 +14,15 @@ purge:
 
 test: secrets install goss
 
+pull-elasticsearch-image:
+	docker pull $(ELASTICSEARCH_IMAGE)
+
 secrets:
 	docker rm -f elastic-helm-charts-certs || true
 	rm -f elastic-certificates.p12 elastic-certificate.pem elastic-stack-ca.p12 || true
-	password=$$([ ! -z "$$ELASTIC_PASSWORD" ] && echo $$ELASTIC_PASSWORD || echo $$(docker run --rm docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) /bin/sh -c "< /dev/urandom tr -cd '[:alnum:]' | head -c20")) && \
+	password=$$([ ! -z "$$ELASTIC_PASSWORD" ] && echo $$ELASTIC_PASSWORD || echo $$(docker run --rm $(ELASTICSEARCH_IMAGE) /bin/sh -c "< /dev/urandom tr -cd '[:alnum:]' | head -c20")) && \
 	docker run --name elastic-helm-charts-certs -i -w /app \
-		docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) \
+		$(ELASTICSEARCH_IMAGE) \
 		/bin/sh -c " \
 			elasticsearch-certutil ca --out /app/elastic-stack-ca.p12 --pass '' && \
 			elasticsearch-certutil cert --name security-master --dns security-master --ca /app/elastic-stack-ca.p12 --pass '' --ca-pass '' --out /app/elastic-certificates.p12" && \

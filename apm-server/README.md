@@ -47,17 +47,17 @@ This chart is tested with the latest supported versions. The currently tested ve
 
 | 6.x   | 7.x   |
 | ----- | ----- |
-| 6.8.6 | 7.5.2 |
+| 6.8.8 | 7.6.2 |
 
 Examples of installing older major versions can be found in the
 [examples](https://github.com/elastic/helm-charts/tree/master/apm-server/examples) directory.
 
 While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag`. To install version `7.5.2` of APM
+or new releases by overriding the `imageTag`. To install version `7.6.2` of APM
 Server it would look like this:
 
 ```
-helm install --name apm-server elastic/apm-server --set imageTag=7.5.2
+helm install --name apm-server elastic/apm-server --set imageTag=7.6.2
 ```
 
 
@@ -66,11 +66,13 @@ helm install --name apm-server elastic/apm-server --set imageTag=7.5.2
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `apmConfig`              | Allows you to add any config files in `/usr/share/apm-server/config` such as `apm-server.yml`. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/apm-server/values.yaml) for an example of the formatting with the default configuration.                | see [values.yaml](https://github.com/elastic/helm-charts/tree/master/apm-server/values.yaml)                              |
 | `replicas`               | Number of APM servers to run                                                                                                                                                                                                                                                | `1`                                                                                                                       |
+| `extraContainers`        | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                                                                                              | `""`                                                                                                                      |
+| `extraInitContainers`    | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                                                                                              | `""`                                                                                                                      |
 | `extraEnvs`              | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                          | `[]`                                                                                                                      |
 | `extraVolumeMounts`      | List of additional volumeMounts                                                                                                                                                                                                                                             | `[]`                                                                                                                      |
 | `extraVolumes`           | List of additional volumes                                                                                                                                                                                                                                                  | `[]`                                                                                                                      |
 | `image`                  | The APM Server docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/apm/apm-server`                                                                                        |
-| `imageTag`               | The APM Server docker image tag                                                                                                                                                                                                                                             | `7.5.2`                                                                                                                   |
+| `imageTag`               | The APM Server docker image tag                                                                                                                                                                                                                                             | `7.6.2`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |

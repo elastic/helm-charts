@@ -10,7 +10,7 @@ http:
     timeout: 2000
     body:
       - '"host" : "helm-logstash-six-logstash-0"'
-      - '"version" : "6.8.6"'
+      - '"version" : "6.8.8"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"name" : "helm-logstash-six-logstash-0"'
 

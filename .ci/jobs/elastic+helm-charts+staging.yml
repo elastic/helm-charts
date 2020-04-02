@@ -1,0 +1,46 @@
+---
+- job:
+    name: elastic+helm-charts+staging
+    display-name: elastic / helm-charts - staging
+    description: Staging image testing
+    concurrent: true
+    parameters:
+      - string:
+          name: BUILD_ID
+          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
+    project-type: multijob
+    scm:
+    - git:
+        wipe-workspace: 'False'
+    builders:
+    - multijob:
+        name: template testing and kubernetes cluster creation
+        condition: SUCCESSFUL
+        projects:
+        - name: elastic+helm-charts+staging+cluster-creation
+          current-parameters: true
+    - multijob:
+        name: elasticsearch integration testing
+        condition: ALWAYS
+        projects:
+        - name: elastic+helm-charts+staging+integration-elasticsearch
+          current-parameters: true
+    - multijob:
+        name: integration testing
+        condition: ALWAYS
+        projects:
+        - name: elastic+helm-charts+staging+integration-kibana
+          current-parameters: true
+        - name: elastic+helm-charts+staging+integration-filebeat
+          current-parameters: true
+        - name: elastic+helm-charts+staging+integration-metricbeat
+          current-parameters: true
+        - name: elastic+helm-charts+staging+integration-logstash
+          current-parameters: true
+        - name: elastic+helm-charts+staging+integration-apm-server
+          current-parameters: true
+    publishers:
+    - trigger-parameterized-builds:
+      - project: elastic+helm-charts+staging+cluster-cleanup
+        current-parameters: true
+        trigger-with-no-params: false

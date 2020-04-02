@@ -43,7 +43,7 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.5.2"
+imageTag: "7.6.2"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -121,6 +121,11 @@ extraVolumeMounts: ""
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
+extraContainers: ""
+  # - name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
+
 extraInitContainers: ""
   # - name: do-something
   #   image: busybox
@@ -158,6 +163,8 @@ service:
   annotations: {}
   httpPortName: http
   transportPortName: transport
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
 
 updateStrategy: RollingUpdate
 

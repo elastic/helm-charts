@@ -14,12 +14,12 @@ spec:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   selector:
     matchLabels:
-      app: kibana
+      app: {{ .Chart.Name }}
       release: {{ .Release.Name | quote }}
   template:
     metadata:
       labels:
-        app: kibana
+        app: {{ .Chart.Name }}
         release: {{ .Release.Name | quote }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
@@ -68,6 +68,10 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
     {{- end }}
+      {{- if .Values.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- end }}
       containers:
       - name: kibana
         securityContext:
@@ -97,7 +101,7 @@ spec:
                 #!/usr/bin/env bash -e
                 http () {
                     local path="${1}"
-                    set -- -XGET -s --fail
+                    set -- -XGET -s --fail -L
 
                     if [ -n "${ELASTICSEARCH_USERNAME}" ] && [ -n "${ELASTICSEARCH_PASSWORD}" ]; then
                       set -- "$@" -u "${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}"
@@ -134,3 +138,6 @@ spec:
             mountPath: /usr/share/kibana/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
+      {{- if .Values.extraContainers }}
+{{ tpl .Values.extraContainers . | indent 6 }}
+      {{- end }}

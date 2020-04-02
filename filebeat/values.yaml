@@ -30,6 +30,11 @@ extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
 extraInitContainers: []
 # - name: dummy-init
 #   image: busybox
@@ -43,7 +48,7 @@ envFrom: []
 hostPathRoot: /var/lib
 hostNetworking: false
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.5.2"
+imageTag: "7.6.2"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
