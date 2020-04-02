@@ -2,12 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "kibana.fullname" . }}
-  labels:
-    app: {{ .Chart.Name }}
-    release: {{ .Release.Name | quote }}
-    {{- range $key, $value := .Values.labels }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+  labels: {{ include "kibana.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
