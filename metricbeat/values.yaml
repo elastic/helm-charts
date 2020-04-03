@@ -151,6 +151,7 @@ clusterRoleRules:
     - events
     - deployments
     - nodes
+    - nodes/stats
     - replicasets
     verbs:
     - get
