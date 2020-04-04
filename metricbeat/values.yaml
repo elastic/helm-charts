@@ -207,3 +207,11 @@ updateStrategy: RollingUpdate
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
+
+# Control the behavior of kube-state-metrics
+kubeStateMetrics:
+  enabled: true
+
+exports:
+  kubeStateMetrics: {}
+

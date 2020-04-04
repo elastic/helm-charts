@@ -97,6 +97,8 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 | `priorityClassName`      | The [name of the PriorityClass](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass). No default is supplied as the PriorityClass must be created first.                                                                                                                            | `""`                                                                                                                      |
 | `replicas`               | The replica count for the metricbeat deployment talking to kube-state-metrics                                                                                                                                                                                                                                            | `1`                                                                                                                       |
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to "`.Release.Name`-`.Values.nameOverride or .Chart.Name`"                                                                                                                                                                                    | `""`                                                                                                                      |
+| `kubeStateMetrics`       | Control the kube-state-metrics sub-chart                                                                                                                                                                                                                                                                                 | `enabled: true`                                                                                                           |
+| `exports`                | Values for all sub-charts                                                                                                                                                                                                                                                                                                | `kubestateMetrics: {}`                                                                                                    |
 
 ## Examples
 
@@ -146,3 +148,4 @@ To run the goss tests against the default example:
 cd examples/default
 make goss
 ```
+
