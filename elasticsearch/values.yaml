@@ -163,6 +163,7 @@ service:
   annotations: {}
   httpPortName: http
   transportPortName: transport
+  loadBalancerIP: ""
   loadBalancerSourceRanges: []
 
 updateStrategy: RollingUpdate

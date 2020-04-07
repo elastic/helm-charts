@@ -35,6 +35,10 @@
         VAULT_TOKEN=$(retry 5 vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
         export VAULT_TOKEN
         unset VAULT_ROLE_ID VAULT_SECRET_ID
+
+        DOCKER_PASSWORD=$(retry 5 vault read -field password secret/devops-ci/docker.elastic.co/devops-ci)
+        retry 5 docker login -u devops-ci -p $DOCKER_PASSWORD docker.elastic.co
+        unset DOCKER_PASSWORD
         set -x
 
         env BUMPER_VERSION_7="$BUILD_ID" BUMPER_USE_STAGING_IMAGES="true" ./helpers/bumper.py
@@ -42,4 +46,9 @@
         cluster_name="helm-${KUBERNETES_VERSION//./}-${BUILD_ID//./-}"
 
         cd helpers/terraform/
+
+        # pull private images while we have the hosts docker daemon authenticated
+        make pull-private-images
+
+        # the private images will be used in here
         ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${ES_SUITE} CHART=elasticsearch
