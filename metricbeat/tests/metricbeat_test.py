@@ -334,9 +334,9 @@ def test_cluster_role_rules():
     config = ""
     r = helm_template(config)
     rules = r["clusterrole"]["release-name-metricbeat-cluster-role"]["rules"][0]
-    assert rules["apiGroups"][0] == "extensions"
+    assert rules["apiGroups"][0] == ""
     assert rules["verbs"][0] == "get"
-    assert rules["resources"][0] == "namespaces"
+    assert rules["resources"][0] == "nodes"
 
     config = """
 clusterRoleRules:

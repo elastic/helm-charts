@@ -156,12 +156,10 @@ clusterRoleRules:
   - statefulsets
   - deployments
   verbs: ["get", "list", "watch"]
-- apiGroups:
-  - ""
+- apiGroups: [""]
   resources:
   - nodes/stats
-  verbs:
-  - get
+  verbs: ["get"]
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
