@@ -5,7 +5,11 @@ filebeatConfig:
       paths:
         - /var/log/containers/*.log
       processors:
-      - add_kubernetes_metadata: ~
+      - add_kubernetes_metadata: 
+          host: ${NODE_NAME}
+          matchers:
+          - logs_path:
+              logs_path: "/var/log/containers/"
 
     output.elasticsearch:
       username: '${ELASTICSEARCH_USERNAME}'
