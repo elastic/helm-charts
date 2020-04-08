@@ -4,9 +4,9 @@
 filebeatConfig:
   filebeat.yml: |
     filebeat.inputs:
-    - type: docker
-      containers.ids:
-      - '*'
+    - type: container
+      paths:
+        - /var/log/containers/*.log
       processors:
       - add_kubernetes_metadata: ~
 
