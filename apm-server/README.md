@@ -30,10 +30,10 @@ This chart is tested with the latest 7.7.x versions.
   helm repo add elastic https://helm.elastic.co
   ```
 
-* Install it
+* Install the latest 7.7 release
 
   ```bash
-  helm install --name apm-server elastic/apm-server --set imageTag=7.7.0-SNAPSHOT
+  helm install --name apm-server elastic/apm-server --version=7.7.0
   ```
 
 ### Using the 7.7 branch
@@ -46,7 +46,7 @@ This chart is tested with the latest 7.7.x versions.
   git checkout -b 7.7 origin/7.7
   ```
 
-* Install it
+* Install the latest 7.7.x-SNAPSHOT
 
   ```bash
   helm install --name apm-server ./helm-charts/apm-server
