@@ -11,43 +11,36 @@ This helm chart is a lightweight way to configure and run our official [Kibana d
 
 ## Installing
 
-### Using Helm repository
+This chart is tested with the latest 7.7.x versions.
 
 * Add the elastic helm charts repo
-  ```
+
+  ```bash
   helm repo add elastic https://helm.elastic.co
   ```
-* Install it
-  ```
-  helm install --name kibana elastic/kibana
+
+* Install the latest 7.7 release
+
+  ```bash
+  helm install --name kibana elastic/kibana --version=7.7.0
   ```
 
-### Using master branch
+### Using the 7.7 branch
 
-* Clone the git repo
-  ```
+* Clone the git repo and checkout the right branch
+
+  ```bash
   git clone git@github.com:elastic/helm-charts.git
+  cd helm-charts
+  git checkout -b 7.7 origin/7.7
   ```
-* Install it
-  ```
+
+* Install the latest 7.7.x-SNAPSHOT
+
+  ```bash
   helm install --name kibana ./helm-charts/kibana
   ```
 
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested versions are:
-
-| 6.x   | 7.x   |
-| ----- | ----- |
-| 6.8.8 | 7.6.2 |
-
-Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/kibana/examples) directory.
-
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.2` of Kibana it would look like this:
-
-```
-helm install --name kibana elastic/kibana --set imageTag=7.6.2
-```
 
 ## Configuration
 
@@ -59,7 +52,7 @@ helm install --name kibana elastic/kibana --set imageTag=7.6.2
 | `extraEnvs`               | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                                                             | `name: NODE_OPTIONS`<br>`value: "--max-old-space-size=1800"`                                                                   |
 | `secretMounts`            | Allows you easily mount a secret as a file inside the deployment. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/kibana/values.yaml) for an example                                                                                                                                  | `[]`                                                                                                                      |
 | `image`                   | The Kibana docker image                                                                                                                                                                                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`                                                                                         |
-| `imageTag`                | The Kibana docker image tag                                                                                                                                                                                                                                                                                                                                    | `7.6.2`                                                                                                                   |
+| `imageTag`                | The Kibana docker image tag                                                                                                                                                                                                                                                                                                                                    | `7.7.0-SNAPSHOT`                                                                                                                   |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                                                                 | `IfNotPresent`                                                                                                            |
 | `podAnnotations`          | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Kibana pods                                                                                                                                                                                                                          | `{}`                                                                                                                      |
 | `resources`               | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                                                                   | `requests.cpu: 1000m`<br>`requests.memory: 2Gi`<br>`limits.cpu: 1000m`<br>`limits.memory: 2Gi`                           |

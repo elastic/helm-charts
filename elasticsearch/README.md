@@ -48,43 +48,36 @@ If you currently have a cluster deployed with the [helm/charts stable](https://g
 
 ## Installing
 
-### Using Helm repository
+This chart is tested with the latest 7.7.x versions.
 
 * Add the elastic helm charts repo
-  ```
+
+  ```bash
   helm repo add elastic https://helm.elastic.co
   ```
-* Install it
-  ```
-  helm install --name elasticsearch elastic/elasticsearch
+
+* Install the latest 7.7 release
+
+  ```bash
+  helm install --name elasticsearch elastic/elasticsearch --version=7.7.0
   ```
 
-### Using master branch
+### Using the 7.7 branch
 
-* Clone the git repo
-  ```
+* Clone the git repo and checkout the right branch
+
+  ```bash
   git clone git@github.com:elastic/helm-charts.git
+  cd helm-charts
+  git checkout -b 7.7 origin/7.7
   ```
-* Install it
-  ```
+
+* Install the latest 7.7.x-SNAPSHOT
+
+  ```bash
   helm install --name elasticsearch ./helm-charts/elasticsearch
   ```
 
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested versions are:
-
-| 6.x   | 7.x   |
-| ----- | ----- |
-| 6.8.8 | 7.6.2 |
-
-Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples) directory.
-
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.2` of Elasticsearch it would look like this:
-
-```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.6.2
-```
 
 ## Configuration
 
@@ -105,7 +98,7 @@ helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.6.2
 | `extraInitContainers`              | Templatable string of additional init containers to be passed to the `tpl` function                                                                                                                                                                                                                                         | `""`                                                                                                                      |
 | `secretMounts`                     | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/elasticsearch/values.yaml) for an example                                                                                       | `[]`                                                                                                                      |
 | `image`                            | The Elasticsearch docker image                                                                                                                                                                                                                                                                                              | `docker.elastic.co/elasticsearch/elasticsearch`                                                                           |
-| `imageTag`                         | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                          | `7.6.2`                                                                                                                   |
+| `imageTag`                         | The Elasticsearch docker image tag                                                                                                                                                                                                                                                                                          | `7.7.0-SNAPSHOT`                                                                                                                   |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `podAnnotations`                   | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Elasticsearch pods                                                                                                                                                                                | `{}`                                                                                                                      |
 | `labels`                           | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Elasticsearch pods                                                                                                                                                                                           | `{}`                                                                                                                      |

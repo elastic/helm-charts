@@ -20,8 +20,7 @@ import fileinput
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
 versions = {
-    6: os.environ.get("BUMPER_VERSION_6", "6.8.8"),
-    7: os.environ.get("BUMPER_VERSION_7", "7.6.2"),
+    7: os.environ.get("BUMPER_VERSION_7", "7.7.0-SNAPSHOT"),
 }
 
 chart_version = versions[7]

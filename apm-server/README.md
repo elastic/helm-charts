@@ -14,6 +14,7 @@ This helm chart is a lightweight way to configure and run our official
 * [Helm](https://helm.sh/) >= 2.8.0
 
 ## Usage notes and getting started
+
 * The default APM Server configuration file for this chart is configured to use an
 Elasticsearch endpoint as configured by the rest of these helm charts. This can
 easily be overridden in the config value `apmConfig.apm-server.yml`.
@@ -21,44 +22,35 @@ easily be overridden in the config value `apmConfig.apm-server.yml`.
 
 ## Installing
 
+This chart is tested with the latest 7.7.x versions.
+
 * Add the elastic helm charts repo
-  ```
+
+  ```bash
   helm repo add elastic https://helm.elastic.co
   ```
-* Install it
-  ```
-  helm install --name apm-server elastic/apm-server
+
+* Install the latest 7.7 release
+
+  ```bash
+  helm install --name apm-server elastic/apm-server --version=7.7.0
   ```
 
-### Using master branch
+### Using the 7.7 branch
 
-* Clone the git repo
-  ```
+* Clone the git repo and checkout the right branch
+
+  ```bash
   git clone git@github.com:elastic/helm-charts.git
+  cd helm-charts
+  git checkout -b 7.7 origin/7.7
   ```
-* Install it
-  ```
+
+* Install the latest 7.7.x-SNAPSHOT
+
+  ```bash
   helm install --name apm-server ./helm-charts/apm-server
   ```
-
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested versions are:
-
-| 6.x   | 7.x   |
-| ----- | ----- |
-| 6.8.8 | 7.6.2 |
-
-Examples of installing older major versions can be found in the
-[examples](https://github.com/elastic/helm-charts/tree/master/apm-server/examples) directory.
-
-While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag`. To install version `7.6.2` of APM
-Server it would look like this:
-
-```
-helm install --name apm-server elastic/apm-server --set imageTag=7.6.2
-```
 
 
 ## Configuration
@@ -72,7 +64,7 @@ helm install --name apm-server elastic/apm-server --set imageTag=7.6.2
 | `extraVolumeMounts`      | List of additional volumeMounts                                                                                                                                                                                                                                             | `[]`                                                                                                                      |
 | `extraVolumes`           | List of additional volumes                                                                                                                                                                                                                                                  | `[]`                                                                                                                      |
 | `image`                  | The APM Server docker image                                                                                                                                                                                                                                                 | `docker.elastic.co/apm/apm-server`                                                                                        |
-| `imageTag`               | The APM Server docker image tag                                                                                                                                                                                                                                             | `7.6.2`                                                                                                                   |
+| `imageTag`               | The APM Server docker image tag                                                                                                                                                                                                                                             | `7.7.0-SNAPSHOT`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                              | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                        | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                       | `true`                                                                                                                    |

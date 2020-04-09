@@ -16,43 +16,35 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
 
 ## Installing
 
-### Using Helm repository
+This chart is tested with the latest 7.7.x versions.
 
 * Add the elastic helm charts repo
-  ```
+
+  ```bash
   helm repo add elastic https://helm.elastic.co
   ```
-* Install it
-  ```
-  helm install --name filebeat elastic/filebeat
+
+* Install the latest 7.7 release
+
+  ```bash
+  helm install --name filebeat elastic/filebeat --version=7.7.0
   ```
 
-### Using master branch
+### Using the 7.7 branch
 
-* Clone the git repo
-  ```
+* Clone the git repo and checkout the right branch
+
+  ```bash
   git clone git@github.com:elastic/helm-charts.git
+  cd helm-charts
+  git checkout -b 7.7 origin/7.7
   ```
-* Install it
-  ```
+
+* Install the latest 7.7.x-SNAPSHOT
+
+  ```bash
   helm install --name filebeat ./helm-charts/filebeat
   ```
-
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested versions are:
-
-| 6.x   | 7.x   |
-| ----- | ----- |
-| 6.8.8 | 7.6.2 |
-
-Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/filebeat/examples) directory.
-
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.2` of Filebeat it would look like this:
-
-```
-helm install --name filebeat elastic/filebeat --set imageTag=7.6.2
-```
 
 
 ## Configuration
@@ -68,7 +60,7 @@ helm install --name filebeat elastic/filebeat --set imageTag=7.6.2
 | `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Filebeat registry data                                                                                                                                                                            | `/var/lib`                                                                                                                |
 | `hostNetworking`         | Use host networking in the daemonset so that hostname is reported correctly                                                                                                                                                                                                                                              | `false`                                                                                                                   |
 | `image`                  | The Filebeat docker image                                                                                                                                                                                                                                                                                                | `docker.elastic.co/beats/filebeat`                                                                                        |
-| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                                                                            | `7.6.2`                                                                                                                   |
+| `imageTag`               | The Filebeat docker image tag                                                                                                                                                                                                                                                                                            | `7.7.0-SNAPSHOT`                                                                                                                   |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                           | `IfNotPresent`                                                                                                            |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                     | `[]`                                                                                                                      |
 | `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                                                                    | `true`                                                                                                                    |

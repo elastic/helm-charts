@@ -24,7 +24,7 @@ secretMounts: []
 #    subPath: kibana.keystore # optional
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "7.6.2"
+imageTag: "7.7.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels

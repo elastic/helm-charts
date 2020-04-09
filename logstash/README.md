@@ -20,42 +20,36 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 
 ## Installing
 
-### Using Helm repository
+This chart is tested with the latest 7.7.x versions.
 
 * Add the elastic helm charts repo
-  ```
+
+  ```bash
   helm repo add elastic https://helm.elastic.co
   ```
-* Install it
-  ```
-  helm install --name logstash elastic/logstash
 
-### Using master branch
+* Install the latest 7.7 release
 
-* Clone the git repo
+  ```bash
+  helm install --name logstash elastic/logstash --version=7.7.0
   ```
+
+### Using the 7.7 branch
+
+* Clone the git repo and checkout the right branch
+
+  ```bash
   git clone git@github.com:elastic/helm-charts.git
+  cd helm-charts
+  git checkout -b 7.7 origin/7.7
   ```
-* Install it
-  ```
+
+* Install the latest 7.7.x-SNAPSHOT
+
+  ```bash
   helm install --name logstash ./helm-charts/logstash
   ```
 
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested versions are:
-
-| 6.x   | 7.x   |
-| ----- | ----- |
-| 6.8.8 | 7.6.2 |
-
-Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/logstash/examples) directory.
-
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.2` of Logstash it would look like this:
-
-```
-helm install --name logstash elastic/logstash --set imageTag=7.6.2
-```
 
 ## Configuration
 
@@ -71,7 +65,7 @@ helm install --name logstash elastic/logstash --set imageTag=7.6.2
 | `image`                       | The Logstash docker image                                                                                                                                                                                                                                                                                                  | `docker.elastic.co/logstash/logstash`                                                                                      |
 | `imagePullPolicy`             | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                             | `IfNotPresent`                                                                                                             |
 | `imagePullSecrets`            | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                       | `[]`                                                                                                                       |
-| `imageTag`                    | The Logstash docker image tag                                                                                                                                                                                                                                                                                              | `7.6.2`                                                                                                                    |
+| `imageTag`                    | The Logstash docker image tag                                                                                                                                                                                                                                                                                              | `7.7.0-SNAPSHOT`                                                                                                                    |
 | `httpPort`                    | The http port that Kubernetes will use for the healthchecks and the service.                                                                                                                                                                                                                                               | `9600`                                                                                                                     |
 | `extraPorts`                    | An array of extra ports to open on the pod                                                                                                                                                                                                                                                | `[]`                                                                                                                     |
 | `labels`                      | Configurable [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Logstash pods                                                                                                                                                                                              | `{}`                                                                                                                       |
