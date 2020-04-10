@@ -33,7 +33,7 @@
         unset VAULT_ROLE_ID VAULT_SECRET_ID
         set -x
 
-        cluster_name="helm-${KUBERNETES_VERSION//./}-${branch_specifier:0:10}"
+        cluster_name="helm-${KUBERNETES_VERSION//./}-%BRANCH%"
 
         cd helpers/terraform/
         ./in-docker make integration KUBERNETES_VERSION=${KUBERNETES_VERSION} CLUSTER_NAME=${cluster_name} SUITE=${FILEBEAT_SUITE} CHART=filebeat
