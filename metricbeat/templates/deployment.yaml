@@ -52,6 +52,11 @@ spec:
         configMap:
           defaultMode: 0600
           name: {{ template "metricbeat.fullname" . }}-config
+      {{- else if .Values.deployment.metricbeatConfig }}
+      - name: metricbeat-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "metricbeat.fullname" . }}-deployment-config
       {{- end }}
       {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 6 }}
@@ -69,8 +74,6 @@ spec:
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         args:
-          - "-c"
-          - "/usr/share/metricbeat/kube-state-metrics-metricbeat.yml"
           - "-e"
           - "-E"
           - "http.enabled=true"
@@ -111,6 +114,13 @@ spec:
           mountPath: /usr/share/metricbeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.deployment.metricbeatConfig }}
+        - name: metricbeat-config
+          mountPath: /usr/share/metricbeat/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
         {{- end }}
         {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 8 }}

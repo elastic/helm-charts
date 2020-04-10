@@ -63,6 +63,11 @@ spec:
         configMap:
           defaultMode: 0600
           name: {{ template "metricbeat.fullname" . }}-config
+      {{- else if .Values.daemonset.metricbeatConfig }}
+      - name: metricbeat-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "metricbeat.fullname" . }}-daemonset-config
       {{- end }}
       - name: data
         hostPath:
@@ -136,6 +141,13 @@ spec:
           mountPath: /usr/share/metricbeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.daemonset.metricbeatConfig }}
+        - name: metricbeat-config
+          mountPath: /usr/share/metricbeat/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
         {{- end }}
         - name: data
           mountPath: /usr/share/metricbeat/data

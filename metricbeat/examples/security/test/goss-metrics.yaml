@@ -5,7 +5,7 @@ port:
     - '127.0.0.1'
 
 mount:
-  /usr/share/metricbeat/kube-state-metrics-metricbeat.yml:
+  /usr/share/metricbeat/metricbeat.yml:
     exists: true
     opts:
       - ro
@@ -38,7 +38,6 @@ file:
   /usr/share/metricbeat/metricbeat.yml:
     exists: true
     contains:
-      - 'add_kubernetes_metadata'
       - 'output.elasticsearch'
 
 command:

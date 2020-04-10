@@ -37,14 +37,66 @@ def test_defaults():
         r["daemonset"][name]["spec"]["template"]["spec"]["serviceAccountName"] == name
     )
 
-    volumes = r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+    cfg = r["configmap"]
+
+    assert name + "-config" not in cfg
+    assert name + "-daemonset-config" in cfg
+    assert name + "-deployment-config" in cfg
+
+    assert "metricbeat.yml" in cfg[name + "-daemonset-config"]["data"]
+    assert "metricbeat.yml" in cfg[name + "-deployment-config"]["data"]
+
+    assert "module: system" in cfg[name + "-daemonset-config"]["data"]["metricbeat.yml"]
+    assert (
+        "module: system"
+        not in cfg[name + "-deployment-config"]["data"]["metricbeat.yml"]
+    )
+    assert "state_pod" not in cfg[name + "-daemonset-config"]["data"]["metricbeat.yml"]
+    assert "state_pod" in cfg[name + "-deployment-config"]["data"]["metricbeat.yml"]
+
+    daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
+
+    assert {
+        "configMap": {"name": name + "-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } not in daemonset["volumes"]
+    assert {
+        "configMap": {"name": name + "-daemonset-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } in daemonset["volumes"]
+
     assert {
         "name": "data",
         "hostPath": {
             "path": "/var/lib/" + name + "-default-data",
             "type": "DirectoryOrCreate",
         },
-    } in volumes
+    } in daemonset["volumes"]
+
+    assert {
+        "mountPath": "/usr/share/metricbeat/metricbeat.yml",
+        "name": project + "-config",
+        "subPath": "metricbeat.yml",
+        "readOnly": True,
+    } in daemonset["containers"][0]["volumeMounts"]
+
+    deployment = r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+
+    assert {
+        "configMap": {"name": name + "-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } not in deployment["volumes"]
+    assert {
+        "configMap": {"name": name + "-deployment-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } in deployment["volumes"]
+
+    assert {
+        "mountPath": "/usr/share/metricbeat/metricbeat.yml",
+        "name": project + "-config",
+        "subPath": "metricbeat.yml",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
 
 
 def test_adding_a_extra_container():
@@ -183,6 +235,63 @@ podSecurityContext:
 
 
 def test_adding_in_metricbeat_config():
+    config = """
+daemonset:
+  metricbeatConfig:
+    metricbeat.yml: |
+      key: daemonset
+    daemonset-config.yml: |
+      hello = daemonset
+
+deployment:
+  metricbeatConfig:
+    metricbeat.yml: |
+      key: deployment
+    deployment-config.yml: |
+      hello = deployment
+"""
+    r = helm_template(config)
+    cfg = r["configmap"]
+
+    assert "metricbeat.yml" in cfg[name + "-daemonset-config"]["data"]
+    assert "daemonset-config.yml" in cfg[name + "-daemonset-config"]["data"]
+    assert "deployment-config.yml" not in cfg[name + "-daemonset-config"]["data"]
+    assert "metricbeat.yml" in cfg[name + "-deployment-config"]["data"]
+    assert "deployment-config.yml" in cfg[name + "-deployment-config"]["data"]
+    assert "daemonset-config.yml" not in cfg[name + "-deployment-config"]["data"]
+
+    assert "key: daemonset" in cfg[name + "-daemonset-config"]["data"]["metricbeat.yml"]
+    assert (
+        "key: deployment" in cfg[name + "-deployment-config"]["data"]["metricbeat.yml"]
+    )
+
+    assert (
+        "hello = daemonset"
+        in cfg[name + "-daemonset-config"]["data"]["daemonset-config.yml"]
+    )
+    assert (
+        "hello = deployment"
+        in cfg[name + "-deployment-config"]["data"]["deployment-config.yml"]
+    )
+
+    daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
+    assert {
+        "mountPath": "/usr/share/metricbeat/daemonset-config.yml",
+        "name": project + "-config",
+        "subPath": "daemonset-config.yml",
+        "readOnly": True,
+    } in daemonset["containers"][0]["volumeMounts"]
+
+    deployment = r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    assert {
+        "mountPath": "/usr/share/metricbeat/deployment-config.yml",
+        "name": project + "-config",
+        "subPath": "deployment-config.yml",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
+
+
+def test_adding_in_deprecated_metricbeat_config():
     config = """
 metricbeatConfig:
   metricbeat.yml: |
