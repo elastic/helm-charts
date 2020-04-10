@@ -9,10 +9,6 @@ mount:
     exists: true
   /run/docker.sock:
     exists: true
-  /var/lib/docker/containers:
-    exists: true
-    opts:
-      - ro
   /usr/share/metricbeat/metricbeat.yml:
     exists: true
     opts:

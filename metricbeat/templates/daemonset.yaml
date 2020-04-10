@@ -68,9 +68,6 @@ spec:
         hostPath:
           path: {{ .Values.hostPathRoot }}/{{ template "metricbeat.fullname" . }}-{{ .Release.Namespace }}-data
           type: DirectoryOrCreate
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
@@ -142,9 +139,6 @@ spec:
         {{- end }}
         - name: data
           mountPath: /usr/share/metricbeat/data
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/metricbeat/master/configuration-autodiscover.html
         - name: varrundockersock

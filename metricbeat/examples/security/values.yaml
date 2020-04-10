@@ -18,8 +18,7 @@ metricbeatConfig:
       #ssl.certificate_authorities:
         #- /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
       processors:
-      - add_kubernetes_metadata:
-          in_cluster: true
+      - add_kubernetes_metadata: ~
     - module: kubernetes
       enabled: true
       metricsets:
