@@ -21,8 +21,7 @@ metricbeatConfig:
       #ssl.certificate_authorities:
         #- /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
       processors:
-      - add_kubernetes_metadata:
-          in_cluster: true
+      - add_kubernetes_metadata: ~
     - module: kubernetes
       enabled: true
       metricsets:
@@ -141,22 +140,27 @@ labels: {}
 managedServiceAccount: true
 
 clusterRoleRules:
-  - apiGroups:
-    - "extensions"
-    - "apps"
-    - ""
-    resources:
-    - namespaces
-    - pods
-    - events
-    - deployments
-    - nodes
-    - nodes/stats
-    - replicasets
-    verbs:
-    - get
-    - list
-    - watch
+- apiGroups: [""]
+  resources:
+  - nodes
+  - namespaces
+  - events
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions"]
+  resources:
+  - replicasets
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+  - statefulsets
+  - deployments
+  - replicasets
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources:
+  - nodes/stats
+  verbs: ["get"]
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
