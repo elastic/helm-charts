@@ -44,5 +44,5 @@
     publishers:
     - trigger-parameterized-builds:
       - project: elastic+helm-charts+%BRANCH%+cluster-cleanup
-        current-parameters: true
-        trigger-with-no-params: false
+        current-parameters: false
+        trigger-with-no-params: true
