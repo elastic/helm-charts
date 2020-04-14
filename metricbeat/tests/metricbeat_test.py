@@ -413,6 +413,53 @@ affinity:
         ][0]["topologyKey"]
         == "kubernetes.io/hostname"
     )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["affinity"] == {}
+    )
+
+    config = """
+daemonset:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - metricbeat
+        topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["affinity"]["podAntiAffinity"][
+            "requiredDuringSchedulingIgnoredDuringExecution"
+        ][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
+
+    config = """
+deployment:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - metricbeat
+        topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["affinity"][
+            "podAntiAffinity"
+        ]["requiredDuringSchedulingIgnoredDuringExecution"][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
 
 
 def test_priority_class_name():

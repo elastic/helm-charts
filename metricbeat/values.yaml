@@ -1,6 +1,7 @@
 ---
 
 daemonset:
+  affinity: {}
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for daemonset
   metricbeatConfig:
@@ -53,6 +54,7 @@ daemonset:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
 deployment:
+  affinity: {}
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for deployment
   metricbeatConfig:
@@ -209,8 +211,6 @@ tolerations: []
 
 nodeSelector: {}
 
-affinity: {}
-
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
@@ -221,3 +221,6 @@ updateStrategy: RollingUpdate
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
+
+# DEPRECATED
+affinity: {}

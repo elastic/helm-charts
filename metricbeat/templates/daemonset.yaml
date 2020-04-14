@@ -47,9 +47,7 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName  }}
       {{- end }}
-      {{- with .Values.affinity }}
-      affinity: {{ toYaml . | nindent 8 -}}
-      {{- end }}
+      affinity: {{ toYaml ( .Values.affinity | default .Values.daemonset.affinity ) | nindent 8 }}
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       volumes:
