@@ -391,6 +391,37 @@ extraVolumeMounts:
 
 def test_adding_a_node_selector():
     config = """
+daemonset:
+  nodeSelector:
+    disktype: ssd
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["nodeSelector"]["disktype"]
+        == "ssd"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["nodeSelector"]
+        == {}
+    )
+
+    config = """
+deployment:
+  nodeSelector:
+    disktype: ssd
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["nodeSelector"][
+            "disktype"
+        ]
+        == "ssd"
+    )
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["nodeSelector"] == {}
+
+
+def test_adding_deprecated_node_selector():
+    config = """
 nodeSelector:
   disktype: ssd
 """

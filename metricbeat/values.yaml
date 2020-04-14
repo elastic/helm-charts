@@ -52,6 +52,7 @@ daemonset:
             system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  nodeSelector: {}
   resources:
     requests:
       cpu: "100m"
@@ -79,6 +80,7 @@ deployment:
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  nodeSelector: {}
   resources:
     requests:
       cpu: "100m"
@@ -215,8 +217,6 @@ terminationGracePeriod: 30
 
 tolerations: []
 
-nodeSelector: {}
-
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
@@ -230,4 +230,5 @@ fullnameOverride: ""
 
 # DEPRECATED
 affinity: {}
+nodeSelector: {}
 resources: {}

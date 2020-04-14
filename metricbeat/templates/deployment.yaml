@@ -33,6 +33,7 @@ spec:
         release: '{{ .Release.Name }}'
     spec:
       affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}
       {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 6 }}
