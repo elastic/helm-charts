@@ -98,6 +98,15 @@ def test_defaults():
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
 
+    assert daemonset["containers"][0]["resources"] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+    assert deployment["containers"][0]["resources"] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+
 
 def test_adding_a_extra_container():
     config = """
@@ -539,6 +548,81 @@ envFrom:
         "envFrom"
     ][0]["configMapRef"]
     assert configMapRef == {"name": "configmap-name"}
+
+
+def test_overriding_resources():
+    config = """
+daemonset:
+  resources:
+    limits:
+      cpu: "25m"
+      memory: "128Mi"
+    requests:
+      cpu: "25m"
+      memory: "128Mi"
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "resources"
+    ] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["resources"] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+
+    config = """
+deployment:
+  resources:
+    limits:
+      cpu: "25m"
+      memory: "128Mi"
+    requests:
+      cpu: "25m"
+      memory: "128Mi"
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "resources"
+    ] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["resources"] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
+
+
+def test_adding_deprecated_resources():
+    config = """
+resources:
+  limits:
+    cpu: "25m"
+    memory: "128Mi"
+  requests:
+    cpu: "25m"
+    memory: "128Mi"
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "resources"
+    ] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["resources"] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
 
 
 def test_setting_fullnameOverride():

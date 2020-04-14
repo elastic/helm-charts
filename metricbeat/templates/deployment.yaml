@@ -82,8 +82,7 @@ spec:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
-        resources:
-{{ toYaml .Values.resources | indent 10 }}
+        resources: {{ toYaml ( .Values.resources | default .Values.deployment.resources ) | nindent 10 }}
         env:
         - name: POD_NAMESPACE
           valueFrom:

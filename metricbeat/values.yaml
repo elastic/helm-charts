@@ -52,6 +52,13 @@ daemonset:
             system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
 
 deployment:
   affinity: {}
@@ -72,6 +79,13 @@ deployment:
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
 
 # DEPRECATED
 # Allows you to add any config files in /usr/share/metricbeat
@@ -186,14 +200,6 @@ podSecurityContext:
   runAsUser: 0
   privileged: false
 
-resources:
-  requests:
-    cpu: "100m"
-    memory: "100Mi"
-  limits:
-    cpu: "1000m"
-    memory: "200Mi"
-
 # Custom service account override that the pod will use
 serviceAccount: ""
 
@@ -224,3 +230,4 @@ fullnameOverride: ""
 
 # DEPRECATED
 affinity: {}
+resources: {}
