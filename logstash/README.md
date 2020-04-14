@@ -6,12 +6,12 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 
 ## Requirements
 
-* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/master/README.md) for more details)
+* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/7.7/README.md) for more details)
 * Kubernetes >=1.8
 
 ## Usage notes and getting started
 
-* This repo includes a number of [example](https://github.com/elastic/helm-charts/tree/master/logstash/examples) configurations which can be used as a reference. They are also used in the automated testing of this chart
+* This repo includes a number of [example](https://github.com/elastic/helm-charts/tree/7.7/logstash/examples) configurations which can be used as a reference. They are also used in the automated testing of this chart
 * Automated testing of this chart is currently only run against GKE (Google Kubernetes Engine).
 * The chart deploys a statefulset and by default will do an automated rolling update of your cluster. It does this by waiting for the cluster health to become green after each instance is updated. If you prefer to update manually you can set [`updateStrategy: OnDelete`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#on-delete)
 * It is important to verify that the JVM heap size in `logstashJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
@@ -69,9 +69,9 @@ This chart is tested with the latest 7.7.x versions.
 | `httpPort`                    | The http port that Kubernetes will use for the healthchecks and the service.                                                                                                                                                                                                                                               | `9600`                                                                                                                     |
 | `extraPorts`                    | An array of extra ports to open on the pod                                                                                                                                                                                                                                                | `[]`                                                                                                                     |
 | `labels`                      | Configurable [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Logstash pods                                                                                                                                                                                              | `{}`                                                                                                                       |
-| `lifecycle`                   | Allows you to add lifecycle configuration. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/logstash/values.yaml) for an example of the formatting.                                                                                                                                                    | `{}`                                                                                                                       |
+| `lifecycle`                   | Allows you to add lifecycle configuration. See [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/logstash/values.yaml) for an example of the formatting.                                                                                                                                                    | `{}`                                                                                                                       |
 | `livenessProbe`               | Configuration fields for the [livenessProbe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)                                                                                                                                                                                | `failureThreshold: 3`<br>`initialDelaySeconds: 300`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
-| `logstashConfig`              | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties`. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/logstash/values.yaml) for an example of the formatting.                                                                           | `{}`                                                                                                                       |
+| `logstashConfig`              | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties`. See [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/logstash/values.yaml) for an example of the formatting.                                                                           | `{}`                                                                                                                       |
 | `logstashJavaOpts`            | Java options for Logstash. This is where you should configure the jvm heap size                                                                                                                                                                                                                                            | `-Xmx1g -Xms1g`                                                                                                            |
 | `logstashPipeline`            | Allows you to add any pipeline files in `/usr/share/logstash/pipeline/`.                                                                                                                                                                                                                                                   | `{}`                                                                                                                       |
 | `maxUnavailable`              | The [maxUnavailable](https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget) value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                | `1`                                                                                                                        |
@@ -88,7 +88,7 @@ This chart is tested with the latest 7.7.x versions.
 | `replicas`                    | Kubernetes replica count for the statefulset (i.e. how many pods)                                                                                                                                                                                                                                                          | `1`                                                                                                                        |
 | `resources`                   | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the statefulset                                                                                                                                                                               | `requests.cpu: 100m`<br>`requests.memory: 1536Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 1536Mi`                        |
 | `schedulerName`               | Name of the [alternate scheduler](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods)                                                                                                                                                                          | `""`                                                                                                                       |
-| `secretMounts`                | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/logstash/values.yaml) for an example                                                                                           | `[]`                                                                                                                       |
+| `secretMounts`                | Allows you easily mount a secret as a file inside the statefulset. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/logstash/values.yaml) for an example                                                                                           | `[]`                                                                                                                       |
 | `securityContext`             | Allows you to set the [securityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) for the container                                                                                                                                             | `capabilities.drop:[ALL]`<br>`runAsNonRoot: true`<br>`runAsUser: 1000`                                                     |
 | `terminationGracePeriod`      | The [terminationGracePeriod](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods) in seconds used when trying to stop the pod                                                                                                                                                                      | `120`                                                                                                                      |
 | `tolerations`                 | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                                                                                        | `[]`                                                                                                                       |
@@ -99,7 +99,7 @@ This chart is tested with the latest 7.7.x versions.
 
 ## Try it out
 
-In [examples/](https://github.com/elastic/helm-charts/tree/master/logstash/examples) you will find some example configurations. These examples are used for the automated testing of this helm chart
+In [examples/](https://github.com/elastic/helm-charts/tree/7.7/logstash/examples) you will find some example configurations. These examples are used for the automated testing of this helm chart
 
 ### Default
 
@@ -134,7 +134,7 @@ There are a couple reasons we recommend this.
 
 ## Testing
 
-This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](https://github.com/elastic/helm-charts/tree/master/requirements.txt) in the parent directory.
+This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](https://github.com/elastic/helm-charts/tree/7.7/requirements.txt) in the parent directory.
 
 ```
 pip install -r ../requirements.txt
@@ -155,7 +155,7 @@ make test
 
 ## Integration Testing
 
-Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](https://github.com/elastic/helm-charts/tree/master/logstash/examples/default/test/goss.yaml) for an example of what the tests look like.
+Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](https://github.com/elastic/helm-charts/tree/7.7/logstash/examples/default/test/goss.yaml) for an example of what the tests look like.
 
 To run the goss tests against the default example:
 

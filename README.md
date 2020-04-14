@@ -1,6 +1,6 @@
 # Elastic Stack Kubernetes Helm Charts
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.7.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.7/)
 
 This functionality is in beta and is subject to change. The design and code is less mature than official GA features and is being provided as-is with no warranties. Beta features are not subject to the support SLA of official GA features.
 
@@ -19,7 +19,7 @@ Please look in the chart directories for the documentation for each chart. These
 
 ## Kubernetes Versions
 
-The charts are [currently tested](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) against all GKE versions available. The exact versions are defined under `KUBERNETES_VERSIONS` in [helpers/matrix.yml](/helpers/matrix.yml)
+The charts are [currently tested](https://devops-ci.elastic.co/job/elastic+helm-charts+7.7/) against all GKE versions available. The exact versions are defined under `KUBERNETES_VERSIONS` in [helpers/matrix.yml](/helpers/matrix.yml)
 
 ## Helm versions
 

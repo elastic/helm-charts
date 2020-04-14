@@ -6,13 +6,13 @@ This helm chart is a lightweight way to configure and run our official [Filebeat
 
 ## Requirements
 
-* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/master/README.md) for more details)
+* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/7.7/README.md) for more details)
 * Kubernetes >=1.9
 
 ## Usage notes and getting started
 * The default Filebeat configuration file for this chart is configured to use an Elasticsearch endpoint. Without any additional changes, Filebeat will send documents to the service URL that the Elasticsearch helm chart sets up by default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in `extraEnvs` to override this endpoint or modify the default `filebeatConfig` to change this behavior.
 * The default Filebeat configuration file is also configured to capture container logs and enrich them with Kubernetes metadata by default. This will capture all container logs in the cluster.
-* This chart disables the [HostNetwork](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces) setting by default for compatibility reasons with the majority of kubernetes providers and scenarios. Some kubernetes providers may not allow enabling `hostNetwork` and deploying multiple Filebeat pods on the same node isn't possible with `hostNetwork`. However Filebeat does recommend activating it. If your kubernetes provider is compatible with `hostNetwork` and you don't need to run multiple Filebeat daemonsets, you can activate it by setting `hostNetworking: true` in [values.yaml](https://github.com/elastic/helm-charts/tree/master/filebeat/values.yaml).
+* This chart disables the [HostNetwork](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces) setting by default for compatibility reasons with the majority of kubernetes providers and scenarios. Some kubernetes providers may not allow enabling `hostNetwork` and deploying multiple Filebeat pods on the same node isn't possible with `hostNetwork`. However Filebeat does recommend activating it. If your kubernetes provider is compatible with `hostNetwork` and you don't need to run multiple Filebeat daemonsets, you can activate it by setting `hostNetworking: true` in [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/filebeat/values.yaml).
 
 ## Installing
 
@@ -50,7 +50,7 @@ This chart is tested with the latest 7.7.x versions.
 ## Configuration
 | Parameter                | Description                                                                                                                                                                                                                                                                                                              | Default                                                                                                                   |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| `filebeatConfig`         | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/filebeat/values.yaml) for an example of the formatting with the default configuration.                                                                          | see [values.yaml](https://github.com/elastic/helm-charts/tree/master/filebeat/values.yaml)                                |
+| `filebeatConfig`         | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`. See [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/filebeat/values.yaml) for an example of the formatting with the default configuration.                                                                          | see [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/filebeat/values.yaml)                                |
 | `extraContainers`        | List of additional init containers to be added at the Daemonset                                                                                                                                                                                                                                                          | `""`                                                                                                                      |
 | `extraEnvs`              | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                       | `[]`                                                                                                                      |
 | `extraInitContainers`    | List of additional init containers to be added at the Daemonset. It also accepts a templatable string of additional containers to be passed to the `tpl` function                                                                                                                                                                                                                                                          | `[]`                    |
@@ -71,7 +71,7 @@ This chart is tested with the latest 7.7.x versions.
 | `readinessProbe`         | Parameters to pass to [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                                                                | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
 | `resources`              | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the `DaemonSet`                                                                                                                                                                             | `requests.cpu: 100m`<br>`requests.memory: 100Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 200Mi`                         |
 | `serviceAccount`         | Custom [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that Filebeat will use during execution. By default will use the service account created by this chart.                                                                                                     | `""`                                                                                                                      |
-| `secretMounts`           | Allows you easily mount a secret as a file inside the `DaemonSet`. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/filebeat/values.yaml) for an example                                                                                         | `[]`                                                                                                                      |
+| `secretMounts`           | Allows you easily mount a secret as a file inside the `DaemonSet`. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/7.7/filebeat/values.yaml) for an example                                                                                         | `[]`                                                                                                                      |
 | `terminationGracePeriod` | Termination period (in seconds) to wait before killing Filebeat pod process on pod shutdown                                                                                                                                                                                                                              | `30`                                                                                                                      |
 | `tolerations`            | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                                                                                      | `[]`                                                                                                                      |
 | `nodeSelector`           | Configurable [nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector)                                                                                                                                                                                                             | `{}`                                                                                                                      |
@@ -82,11 +82,11 @@ This chart is tested with the latest 7.7.x versions.
 
 ## Examples
 
-In [examples/](https://github.com/elastic/helm-charts/tree/master/filebeat/examples) you will find some example configurations. These examples are used for the automated testing of this helm chart.
+In [examples/](https://github.com/elastic/helm-charts/tree/7.7/filebeat/examples) you will find some example configurations. These examples are used for the automated testing of this helm chart.
 
 ### Default
 
-* Deploy the [default Elasticsearch helm chart](https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default)
+* Deploy the [default Elasticsearch helm chart](https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/README.md#default)
 * Deploy Filebeat with the default values
   ```
   cd examples/default
@@ -100,7 +100,7 @@ In [examples/](https://github.com/elastic/helm-charts/tree/master/filebeat/examp
 
 ## Testing
 
-This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](https://github.com/elastic/helm-charts/tree/master/requirements.txt) in the parent directory.
+This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](https://github.com/elastic/helm-charts/tree/7.7/requirements.txt) in the parent directory.
 
 ```
 pip install -r ../requirements.txt
@@ -121,7 +121,7 @@ make test
 
 ## Integration Testing
 
-Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](https://github.com/elastic/helm-charts/tree/master/filebeat/examples/default/test/goss.yaml) for an example of what the tests look like.
+Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](https://github.com/elastic/helm-charts/tree/7.7/filebeat/examples/default/test/goss.yaml) for an example of what the tests look like.
 
 To run the goss tests against the default example:
 ```
