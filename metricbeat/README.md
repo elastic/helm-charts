@@ -25,7 +25,7 @@ The workaround is to use `--force` argument for `helm upgrade` command which wil
 
 ## Installing
 
-This chart is tested with the latest 7.7.x versions.
+This chart is tested with the latest 7.7.0-SNAPSHOT versions.
 
 * Add the elastic helm charts repo
 
@@ -49,7 +49,7 @@ This chart is tested with the latest 7.7.x versions.
   git checkout -b 7.7 origin/7.7
   ```
 
-* Install the latest 7.7.x-SNAPSHOT
+* Install the latest 7.7.0-SNAPSHOT
 
   ```bash
   helm install --name metricbeat ./helm-charts/metricbeat
