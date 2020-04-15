@@ -9,6 +9,13 @@ daemonset:
   extraEnvs: []
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
+  extraVolumes: []
+  # - name: extras
+  #   emptyDir: {}
+  extraVolumeMounts: []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for daemonset
   metricbeatConfig:
@@ -86,6 +93,13 @@ deployment:
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
   # Allows you to add any config files in /usr/share/metricbeat
+  extraVolumes: []
+  # - name: extras
+  #   emptyDir: {}
+  extraVolumeMounts: []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
   # such as metricbeat.yml for deployment
   metricbeatConfig:
     metricbeat.yml: |
@@ -127,15 +141,6 @@ extraInitContainers: ""
 # - name: dummy-init
 #   image: busybox
 #   command: ['echo', 'hey']
-
-extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
-
-extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
 
 # Root directory where metricbeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
@@ -231,6 +236,8 @@ fullnameOverride: ""
 affinity: {}
 envFrom: []
 extraEnvs: []
+extraVolumes: []
+extraVolumeMounts: []
 # Allows you to add any config files in /usr/share/metricbeat
 # such as metricbeat.yml for both daemonset and deployment
 metricbeatConfig: {}

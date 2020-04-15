@@ -564,6 +564,62 @@ secretMounts:
 
 def test_adding_a_extra_volume_with_volume_mount():
     config = """
+daemonset:
+  extraVolumes:
+    - name: extras
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: extras
+      mountPath: /usr/share/extras
+      readOnly: true
+"""
+    r = helm_template(config)
+    assert {"name": "extras", "emptyDir": {}} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "daemonset"
+    ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
+    assert {"name": "extras", "emptyDir": {}} not in r["deployment"][name + "-metrics"][
+        "spec"
+    ]["template"]["spec"]["volumes"]
+    assert (
+        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"][
+            "containers"
+        ][0]["volumeMounts"]
+    )
+
+    config = """
+deployment:
+  extraVolumes:
+    - name: extras
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: extras
+      mountPath: /usr/share/extras
+      readOnly: true
+"""
+    r = helm_template(config)
+    assert {"name": "extras", "emptyDir": {}} in r["deployment"][name + "-metrics"][
+        "spec"
+    ]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "deployment"
+    ][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
+    assert {"name": "extras", "emptyDir": {}} not in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["volumes"]
+    assert (
+        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
+        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+
+
+def test_adding_a_deprecated_extra_volume_with_volume_mount():
+    config = """
 extraVolumes:
   - name: extras
     emptyDir: {}
@@ -573,16 +629,18 @@ extraVolumeMounts:
     readOnly: true
 """
     r = helm_template(config)
-    extraVolume = r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
-    assert {"name": "extras", "emptyDir": {}} in extraVolume
-    extraVolumeMounts = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][
-        0
-    ]["volumeMounts"]
-    assert {
-        "name": "extras",
-        "mountPath": "/usr/share/extras",
-        "readOnly": True,
-    } in extraVolumeMounts
+    assert {"name": "extras", "emptyDir": {}} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "daemonset"
+    ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
+    assert {"name": "extras", "emptyDir": {}} in r["deployment"][name + "-metrics"][
+        "spec"
+    ]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "deployment"
+    ][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
 
 
 def test_adding_a_node_selector():
