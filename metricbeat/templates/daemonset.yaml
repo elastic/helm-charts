@@ -47,7 +47,7 @@ spec:
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       volumes:
-      {{- range .Values.secretMounts }}
+      {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}
       - name: {{ .name }}
         secret:
           secretName: {{ .secretName }}
@@ -118,7 +118,7 @@ spec:
 {{- end }}
         securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.daemonset.securityContext ) | nindent 10 }}
         volumeMounts:
-        {{- range .Values.secretMounts }}
+        {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}
         - name: {{ .name }}
           mountPath: {{ .path }}
           {{- if .subPath }}

@@ -67,6 +67,12 @@ daemonset:
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
   nodeSelector: {}
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: metricbeat-certificates
+  #    secretName: metricbeat-certificates
+  #    path: /usr/share/metricbeat/certs
   # Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
   # - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
   # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
@@ -117,6 +123,12 @@ deployment:
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
   nodeSelector: {}
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: metricbeat-certificates
+  #    secretName: metricbeat-certificates
+  #    path: /usr/share/metricbeat/certs
   securityContext:
     runAsUser: 0
     privileged: false
@@ -211,13 +223,6 @@ podAnnotations: {}
 # Custom service account override that the pod will use
 serviceAccount: ""
 
-# A list of secrets and their paths to mount inside the pod
-# This is useful for mounting certificates for security other sensitive values
-secretMounts: []
-#  - name: metricbeat-certificates
-#    secretName: metricbeat-certificates
-#    path: /usr/share/metricbeat/certs
-
 # How long to wait for metricbeat pods to stop gracefully
 terminationGracePeriod: 30
 
@@ -244,4 +249,5 @@ metricbeatConfig: {}
 nodeSelector: {}
 podSecurityContext: {}
 resources: {}
+secretMounts: []
 tolerations: []

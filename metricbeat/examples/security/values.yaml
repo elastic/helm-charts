@@ -65,6 +65,10 @@ daemonset:
         hosts: ["security-master:9200"]
         ssl.certificate_authorities:
           - /usr/share/metricbeat/config/certs/elastic-certificate.pem
+  secretMounts:
+  - name: elastic-certificate-pem
+    secretName: elastic-certificate-pem
+    path: /usr/share/metricbeat/config/certs
 
 deployment:
   extraEnvs:
@@ -100,8 +104,7 @@ deployment:
         hosts: ["security-master:9200"]
         ssl.certificate_authorities:
           - /usr/share/metricbeat/config/certs/elastic-certificate.pem
-
-secretMounts:
+  secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/metricbeat/config/certs

@@ -545,18 +545,109 @@ metricbeatConfig:
 
 def test_adding_a_secret_mount():
     config = """
+daemonset:    
+  secretMounts:
+    - name: elastic-certificates
+      secretName: elastic-certificates-name
+      path: /usr/share/metricbeat/config/certs
+"""
+    r = helm_template(config)
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"][
+            "containers"
+        ][0]["volumeMounts"]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"]
+
+    config = """
+deployment:    
+  secretMounts:
+    - name: elastic-certificates
+      secretName: elastic-certificates-name
+      path: /usr/share/metricbeat/config/certs
+"""
+    r = helm_template(config)
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+            0
+        ]["volumeMounts"]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"]
+
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+
+
+def test_adding_a_deprecated_secret_mount():
+    config = """
 secretMounts:
   - name: elastic-certificates
     secretName: elastic-certificates-name
     path: /usr/share/metricbeat/config/certs
 """
     r = helm_template(config)
-    s = r["daemonset"][name]["spec"]["template"]["spec"]
-    assert s["containers"][0]["volumeMounts"][0] == {
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["volumeMounts"][0] == {
         "mountPath": "/usr/share/metricbeat/config/certs",
         "name": "elastic-certificates",
     }
-    assert s["volumes"][0] == {
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"][
+        0
+    ] == {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
     }
