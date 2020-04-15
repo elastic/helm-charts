@@ -28,6 +28,7 @@ chart_version = versions[7]
 file_patterns = [
     "*/examples/*/*.y*ml",
     "helpers/examples.mk",
+    "*/README.md",
     "*/values.y*ml",
     "*/Chart.y*ml",
 ]
