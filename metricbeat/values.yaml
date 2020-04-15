@@ -60,6 +60,7 @@ daemonset:
     limits:
       cpu: "1000m"
       memory: "200Mi"
+  tolerations: []
 
 deployment:
   affinity: {}
@@ -88,6 +89,7 @@ deployment:
     limits:
       cpu: "1000m"
       memory: "200Mi"
+  tolerations: []
 
 # DEPRECATED
 # Allows you to add any config files in /usr/share/metricbeat
@@ -215,8 +217,6 @@ secretMounts: []
 # How long to wait for metricbeat pods to stop gracefully
 terminationGracePeriod: 30
 
-tolerations: []
-
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
@@ -232,3 +232,4 @@ fullnameOverride: ""
 affinity: {}
 nodeSelector: {}
 resources: {}
+tolerations: []

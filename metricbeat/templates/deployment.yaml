@@ -34,10 +34,7 @@ spec:
     spec:
       affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}
-      {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 6 }}
-      {{- end }}
+      tolerations: {{ toYaml ( .Values.tolerations | default .Values.deployment.tolerations ) | nindent 8 }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName  }}
       {{- end }}

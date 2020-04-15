@@ -27,9 +27,14 @@ def test_defaults():
 
     assert "metricbeat test output" in c["readinessProbe"]["exec"]["command"][-1]
 
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"] == []
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"]
+        == []
+    )
+
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["daemonset"][name]["spec"]["template"]["spec"]
-    assert "tolerations" not in r["daemonset"][name]["spec"]["template"]["spec"]
 
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "RollingUpdate"
 
@@ -187,6 +192,45 @@ imagePullSecrets:
 
 def test_adding_tolerations():
     config = """
+daemonset:
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoExecute"
+    tolerationSeconds: 3600
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"][0]["key"]
+        == "key1"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"]
+        == []
+    )
+
+    config = """
+deployment:
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoExecute"
+    tolerationSeconds: 3600
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"][
+            0
+        ]["key"]
+        == "key1"
+    )
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"] == []
+
+
+def test_adding_deprecated_tolerations():
+    config = """
 tolerations:
 - key: "key1"
   operator: "Equal"
@@ -197,6 +241,12 @@ tolerations:
     r = helm_template(config)
     assert (
         r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"][0]["key"]
+        == "key1"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"][
+            0
+        ]["key"]
         == "key1"
     )
 
