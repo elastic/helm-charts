@@ -33,6 +33,31 @@ def test_defaults():
         == []
     )
 
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 0
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 0
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["daemonset"][name]["spec"]["template"]["spec"]
 
@@ -283,14 +308,101 @@ managedServiceAccount: false
 
 def test_setting_pod_security_context():
     config = """
+daemonset:
+  securityContext:
+    runAsUser: 1001
+    privileged: false
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 0
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+
+    config = """
+deployment:
+  securityContext:
+    runAsUser: 1001
+    privileged: false
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == False
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+
+
+def test_setting_deprecated_pod_security_context():
+    config = """
 podSecurityContext:
   runAsUser: 1001
   privileged: false
 """
     r = helm_template(config)
-    c = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
-    assert c["securityContext"]["runAsUser"] == 1001
-    assert c["securityContext"]["privileged"] == False
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
 
 
 def test_adding_in_metricbeat_config():

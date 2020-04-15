@@ -53,6 +53,13 @@ daemonset:
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
   nodeSelector: {}
+  # Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
+  # - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
+  # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
+  # - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
   resources:
     requests:
       cpu: "100m"
@@ -82,6 +89,9 @@ deployment:
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
   nodeSelector: {}
+  securityContext:
+    runAsUser: 0
+    privileged: false
   resources:
     requests:
       cpu: "100m"
@@ -190,15 +200,6 @@ clusterRoleRules:
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
-# Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
-#
-# - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
-# - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
-# - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
-podSecurityContext:
-  runAsUser: 0
-  privileged: false
-
 # Custom service account override that the pod will use
 serviceAccount: ""
 
@@ -229,5 +230,6 @@ affinity: {}
 # such as metricbeat.yml for both daemonset and deployment
 metricbeatConfig: {}
 nodeSelector: {}
+podSecurityContext: {}
 resources: {}
 tolerations: []
