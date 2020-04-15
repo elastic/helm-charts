@@ -105,14 +105,14 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 | `fullnameOverride`            | Overrides the full name of the resources. If not set the name will default to "`.Release.Name`-`.Values.nameOverride or .Chart.Name`"                                            | `""`                                                                                                                      |
 
 ### Deprecated
-| Parameter                | Description                                                                                                                              | Default                                                                                           |
-| ---                      | ---                                                                                                                                      | ---                                                                                               |
-| `affinity`               | Configurable [affinity][] for Metricbeat `DaemonSet`.                                                                                    | `{}`                                                                                              |
-| `metricbeatConfig`       | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for both Metricbeat `DaemonSet` and `Deployment`. | see [values.yaml][]                                                                               |
-| `nodeSelector`           | Configurable [nodeSelector][] for Metricbeat `DaemonSet`.                                                                                | `{}`                                                                                              |
-| `podSecurityContext`     | Configurable [securityContext][] for Metricbeat `DaemonSet` and `Deployment` pod execution environment.                                  | `runAsUser: 0`<br>`privileged: false`                                                             |
-| `resources`              | Allows you to set the [resources][] for both Metricbeat `DaemonSet` and `Deployment`.                                                    | `requests.cpu: 100m`<br>`requests.memory: 100Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 200Mi` |
-| `tolerations`            | Configurable [tolerations][] for both Metricbeat `DaemonSet` and `Deployment`.                                                           | `[]`                                                                                              |
+| Parameter                | Description                                                                                                                              | Default |
+| ---                      | ---                                                                                                                                      | ---     |
+| `affinity`               | Configurable [affinity][] for Metricbeat `DaemonSet`.                                                                                    | `{}`    |
+| `metricbeatConfig`       | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for both Metricbeat `DaemonSet` and `Deployment`. | `{}`    |
+| `nodeSelector`           | Configurable [nodeSelector][] for Metricbeat `DaemonSet`.                                                                                | `{}`    |
+| `podSecurityContext`     | Configurable [securityContext][] for Metricbeat `DaemonSet` and `Deployment` pod execution environment.                                  | `{}`    |
+| `resources`              | Allows you to set the [resources][] for both Metricbeat `DaemonSet` and `Deployment`.                                                    | `{}`    |
+| `tolerations`            | Configurable [tolerations][] for both Metricbeat `DaemonSet` and `Deployment`.                                                           | `[]`    |
 
 ## Examples
 
