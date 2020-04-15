@@ -13,5 +13,5 @@ purge:
 	helm del --purge $(RELEASE)
 
 secrets:
-	encryptionkey=$$(echo $$(docker run --rm docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION) /bin/sh -c "< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c50")) && \
+	encryptionkey=$$(docker run --rm busybox:1.31.1 /bin/sh -c "< /dev/urandom tr -dc _A-Za-z0-9 | head -c50") && \
 	kubectl create secret generic kibana --from-literal=encryptionkey=$$encryptionkey
