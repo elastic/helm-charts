@@ -1,4 +1,15 @@
 daemonset:
+  extraEnvs:
+    - name: 'ELASTICSEARCH_USERNAME'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: username
+    - name: 'ELASTICSEARCH_PASSWORD'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: password
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for daemonset
   metricbeatConfig:
@@ -56,6 +67,17 @@ daemonset:
           - /usr/share/metricbeat/config/certs/elastic-certificate.pem
 
 deployment:
+  extraEnvs:
+    - name: 'ELASTICSEARCH_USERNAME'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: username
+    - name: 'ELASTICSEARCH_PASSWORD'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: password
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for deployment
   metricbeatConfig:
@@ -83,15 +105,3 @@ secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/metricbeat/config/certs
-
-extraEnvs:
-  - name: 'ELASTICSEARCH_USERNAME'
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: username
-  - name: 'ELASTICSEARCH_PASSWORD'
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: password

@@ -2,6 +2,10 @@
 
 daemonset:
   affinity: {}
+  # Extra environment variables for Metricbeat container.
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for daemonset
   metricbeatConfig:
@@ -71,6 +75,10 @@ daemonset:
 
 deployment:
   affinity: {}
+  # Extra environment variables for Metricbeat container.
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for deployment
   metricbeatConfig:
@@ -113,13 +121,6 @@ extraInitContainers: ""
 # - name: dummy-init
 #   image: busybox
 #   command: ['echo', 'hey']
-
-# Extra environment variables to append to the DaemonSet pod spec.
-# This will be appended to the current 'env:' key. You can use any of the kubernetes env
-# syntax here
-extraEnvs: []
-#  - name: MY_ENVIRONMENT_VAR
-#    value: the_value_goes_here
 
 extraVolumeMounts: []
   # - name: extras
@@ -226,6 +227,7 @@ fullnameOverride: ""
 
 # DEPRECATED
 affinity: {}
+extraEnvs: []
 # Allows you to add any config files in /usr/share/metricbeat
 # such as metricbeat.yml for both daemonset and deployment
 metricbeatConfig: {}

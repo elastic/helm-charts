@@ -110,8 +110,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-{{- if .Values.extraEnvs }}
-{{ toYaml .Values.extraEnvs | indent 8 }}
+{{- if .Values.extraEnvs | default .Values.daemonset.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.daemonset.extraEnvs ) | indent 8 }}
 {{- end }}
 {{- if .Values.envFrom }}
         envFrom:

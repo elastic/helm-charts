@@ -194,13 +194,47 @@ extraInitContainers: |
 
 def test_adding_envs():
     config = """
+daemonset:
+  extraEnvs:
+  - name: LOG_LEVEL
+    value: DEBUG
+"""
+    r = helm_template(config)
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["containers"][0]["env"]
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} not in r["deployment"][
+        name + "-metrics"
+    ]["spec"]["template"]["spec"]["containers"][0]["env"]
+
+    config = """
+deployment:
+  extraEnvs:
+  - name: LOG_LEVEL
+    value: DEBUG
+"""
+    r = helm_template(config)
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["deployment"][
+        name + "-metrics"
+    ]["spec"]["template"]["spec"]["containers"][0]["env"]
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} not in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["containers"][0]["env"]
+
+
+def test_adding_deprecated_envs():
+    config = """
 extraEnvs:
 - name: LOG_LEVEL
   value: DEBUG
 """
     r = helm_template(config)
-    envs = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["env"]
-    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in envs
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["containers"][0]["env"]
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["deployment"][
+        name + "-metrics"
+    ]["spec"]["template"]["spec"]["containers"][0]["env"]
 
 
 def test_adding_image_pull_secrets():
