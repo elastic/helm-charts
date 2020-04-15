@@ -43,7 +43,7 @@ blacklist = re.compile(r".*127.0.0.1.*")
 print("Updating versions...")
 
 for major, version in versions.iteritems():
-    r = re.compile(r"{0}\.[0-9]*\.[0-9]*-?[0-9]?".format(major))
+    r = re.compile(r"{0}\.[0-9]*\.[0-9]*-?(SNAPSHOT)?".format(major))
     for pattern in file_patterns:
         for f in glob.glob(pattern):
             print(f)
