@@ -91,11 +91,6 @@ deployment:
       memory: "200Mi"
   tolerations: []
 
-# DEPRECATED
-# Allows you to add any config files in /usr/share/metricbeat
-# such as metricbeat.yml for both daemonset and deployment
-metricbeatConfig: {}
-
 # Replicas being used for the kube-state-metrics metricbeat deployment
 replicas: 1
 
@@ -230,6 +225,9 @@ fullnameOverride: ""
 
 # DEPRECATED
 affinity: {}
+# Allows you to add any config files in /usr/share/metricbeat
+# such as metricbeat.yml for both daemonset and deployment
+metricbeatConfig: {}
 nodeSelector: {}
 resources: {}
 tolerations: []
