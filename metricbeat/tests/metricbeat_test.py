@@ -766,15 +766,51 @@ labels:
 
 def test_adding_env_from():
     config = """
+daemonset:
+  envFrom:
+  - configMapRef:
+      name: configmap-name
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["envFrom"][
+        0
+    ]["configMapRef"] == {"name": "configmap-name"}
+    assert (
+        "envFrom"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"][
+            "containers"
+        ][0]
+    )
+
+    config = """
+deployment:
+  envFrom:
+  - configMapRef:
+      name: configmap-name
+"""
+    r = helm_template(config)
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["envFrom"][0]["configMapRef"] == {"name": "configmap-name"}
+    assert (
+        "envFrom"
+        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
+    )
+
+
+def test_adding_deprecated_env_from():
+    config = """
 envFrom:
 - configMapRef:
     name: configmap-name
 """
     r = helm_template(config)
-    configMapRef = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-        "envFrom"
-    ][0]["configMapRef"]
-    assert configMapRef == {"name": "configmap-name"}
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["envFrom"][
+        0
+    ]["configMapRef"] == {"name": "configmap-name"}
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["envFrom"][0]["configMapRef"] == {"name": "configmap-name"}
 
 
 def test_overriding_resources():

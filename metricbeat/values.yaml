@@ -3,6 +3,9 @@
 daemonset:
   affinity: {}
   # Extra environment variables for Metricbeat container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
   extraEnvs: []
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
@@ -76,6 +79,9 @@ daemonset:
 deployment:
   affinity: {}
   # Extra environment variables for Metricbeat container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
   extraEnvs: []
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
@@ -130,10 +136,6 @@ extraVolumeMounts: []
 extraVolumes: []
   # - name: extras
   #   emptyDir: {}
-
-envFrom: []
-  # - configMapRef:
-  #     name: config-secret
 
 # Root directory where metricbeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
@@ -227,6 +229,7 @@ fullnameOverride: ""
 
 # DEPRECATED
 affinity: {}
+envFrom: []
 extraEnvs: []
 # Allows you to add any config files in /usr/share/metricbeat
 # such as metricbeat.yml for both daemonset and deployment
