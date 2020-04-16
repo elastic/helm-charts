@@ -6,6 +6,8 @@ metadata:
   annotations:
     "helm.sh/hook": test-success
 spec:
+  securityContext:
+{{ toYaml .Values.podSecurityContext | indent 4 }}
   containers:
   - name: "{{ .Release.Name }}-{{ randAlpha 5 | lower }}-test"
     image: "{{ .Values.image }}:{{ .Values.imageTag }}"
