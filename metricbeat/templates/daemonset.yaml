@@ -113,9 +113,7 @@ spec:
 {{- if .Values.extraEnvs | default .Values.daemonset.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.daemonset.extraEnvs ) | indent 8 }}
 {{- end }}
-{{- if .Values.envFrom | default .Values.daemonset.envFrom }}
         envFrom: {{ toYaml ( .Values.envFrom | default .Values.daemonset.envFrom ) | nindent 10 }}
-{{- end }}
         securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.daemonset.securityContext ) | nindent 10 }}
         volumeMounts:
         {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}

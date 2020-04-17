@@ -925,10 +925,10 @@ daemonset:
         0
     ]["configMapRef"] == {"name": "configmap-name"}
     assert (
-        "envFrom"
-        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"][
-            "containers"
-        ][0]
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "envFrom"
+        ]
+        == []
     )
 
     config = """
@@ -942,8 +942,8 @@ deployment:
         0
     ]["envFrom"][0]["configMapRef"] == {"name": "configmap-name"}
     assert (
-        "envFrom"
-        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["envFrom"]
+        == []
     )
 
 
