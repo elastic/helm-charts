@@ -16,6 +16,7 @@ daemonset:
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
+  hostNetworking: false
   # Allows you to add any config files in /usr/share/metricbeat
   # such as metricbeat.yml for daemonset
   metricbeatConfig:
