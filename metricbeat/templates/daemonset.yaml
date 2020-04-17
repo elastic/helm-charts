@@ -41,6 +41,10 @@ spec:
       affinity: {{ toYaml ( .Values.affinity | default .Values.daemonset.affinity ) | nindent 8 }}
       nodeSelector: {{ toYaml ( .Values.nodeSelector | default .Values.daemonset.nodeSelector ) | nindent 8 }}
       tolerations: {{ toYaml ( .Values.tolerations | default .Values.daemonset.tolerations ) | nindent 8 }}
+      {{- if .Values.daemonset.hostNetworking }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName  }}
       {{- end }}

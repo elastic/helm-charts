@@ -28,6 +28,18 @@ def test_defaults():
     assert "metricbeat test output" in c["readinessProbe"]["exec"]["command"][-1]
 
     assert r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"] == []
+
+    assert "hostNetwork" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    assert "dnsPolicy" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    assert (
+        "hostNetwork"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+    assert (
+        "dnsPolicy"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+
     assert (
         r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"]
         == []
@@ -246,6 +258,27 @@ imagePullSecrets:
     assert (
         r["daemonset"][name]["spec"]["template"]["spec"]["imagePullSecrets"][0]["name"]
         == "test-registry"
+    )
+
+
+def test_adding_host_networking():
+    config = """
+daemonset:
+  hostNetworking: true
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["hostNetwork"] is True
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["dnsPolicy"]
+        == "ClusterFirstWithHostNet"
+    )
+    assert (
+        "hostNetwork"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+    assert (
+        "dnsPolicy"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
     )
 
 
