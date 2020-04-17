@@ -73,7 +73,6 @@ def test_defaults():
 
     assert "curl" in c["readinessProbe"]["exec"]["command"][-1]
     assert "http://127.0.0.1:9200" in c["readinessProbe"]["exec"]["command"][-1]
-    assert "/_cluster/health?timeout=0s" in c["readinessProbe"]["exec"]["command"][-1]
 
     # Resources
     assert c["resources"] == {
