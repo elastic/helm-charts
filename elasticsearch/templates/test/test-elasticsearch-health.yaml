@@ -15,4 +15,8 @@ spec:
       - |
         #!/usr/bin/env bash -e
         curl -XGET --fail '{{ template "elasticsearch.uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
+  {{- if .Values.imagePullSecrets }}
+  imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 4 }}
+  {{- end }}
   restartPolicy: Never
