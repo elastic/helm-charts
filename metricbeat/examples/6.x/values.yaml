@@ -1,4 +1,4 @@
-imageTag: 6.8.7
+imageTag: 6.8.8
 
 extraEnvs:
   - name: ELASTICSEARCH_HOSTS

@@ -27,9 +27,51 @@ def test_defaults():
 
     assert "metricbeat test output" in c["readinessProbe"]["exec"]["command"][-1]
 
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"] == []
+
+    assert "hostNetwork" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    assert "dnsPolicy" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    assert (
+        "hostNetwork"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+    assert (
+        "dnsPolicy"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"]
+        == []
+    )
+
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 0
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 0
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["daemonset"][name]["spec"]["template"]["spec"]
-    assert "tolerations" not in r["daemonset"][name]["spec"]["template"]["spec"]
 
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "RollingUpdate"
 
@@ -37,14 +79,75 @@ def test_defaults():
         r["daemonset"][name]["spec"]["template"]["spec"]["serviceAccountName"] == name
     )
 
-    volumes = r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+    cfg = r["configmap"]
+
+    assert name + "-config" not in cfg
+    assert name + "-daemonset-config" in cfg
+    assert name + "-deployment-config" in cfg
+
+    assert "metricbeat.yml" in cfg[name + "-daemonset-config"]["data"]
+    assert "metricbeat.yml" in cfg[name + "-deployment-config"]["data"]
+
+    assert "module: system" in cfg[name + "-daemonset-config"]["data"]["metricbeat.yml"]
+    assert (
+        "module: system"
+        not in cfg[name + "-deployment-config"]["data"]["metricbeat.yml"]
+    )
+    assert "state_pod" not in cfg[name + "-daemonset-config"]["data"]["metricbeat.yml"]
+    assert "state_pod" in cfg[name + "-deployment-config"]["data"]["metricbeat.yml"]
+
+    daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
+
+    assert {
+        "configMap": {"name": name + "-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } not in daemonset["volumes"]
+    assert {
+        "configMap": {"name": name + "-daemonset-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } in daemonset["volumes"]
+
     assert {
         "name": "data",
         "hostPath": {
             "path": "/var/lib/" + name + "-default-data",
             "type": "DirectoryOrCreate",
         },
-    } in volumes
+    } in daemonset["volumes"]
+
+    assert {
+        "mountPath": "/usr/share/metricbeat/metricbeat.yml",
+        "name": project + "-config",
+        "subPath": "metricbeat.yml",
+        "readOnly": True,
+    } in daemonset["containers"][0]["volumeMounts"]
+
+    deployment = r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+
+    assert {
+        "configMap": {"name": name + "-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } not in deployment["volumes"]
+    assert {
+        "configMap": {"name": name + "-deployment-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } in deployment["volumes"]
+
+    assert {
+        "mountPath": "/usr/share/metricbeat/metricbeat.yml",
+        "name": project + "-config",
+        "subPath": "metricbeat.yml",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
+
+    assert daemonset["containers"][0]["resources"] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+    assert deployment["containers"][0]["resources"] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
 
 
 def test_adding_a_extra_container():
@@ -103,13 +206,47 @@ extraInitContainers: |
 
 def test_adding_envs():
     config = """
+daemonset:
+  extraEnvs:
+  - name: LOG_LEVEL
+    value: DEBUG
+"""
+    r = helm_template(config)
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["containers"][0]["env"]
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} not in r["deployment"][
+        name + "-metrics"
+    ]["spec"]["template"]["spec"]["containers"][0]["env"]
+
+    config = """
+deployment:
+  extraEnvs:
+  - name: LOG_LEVEL
+    value: DEBUG
+"""
+    r = helm_template(config)
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["deployment"][
+        name + "-metrics"
+    ]["spec"]["template"]["spec"]["containers"][0]["env"]
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} not in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["containers"][0]["env"]
+
+
+def test_adding_deprecated_envs():
+    config = """
 extraEnvs:
 - name: LOG_LEVEL
   value: DEBUG
 """
     r = helm_template(config)
-    envs = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["env"]
-    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in envs
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["containers"][0]["env"]
+    assert {"name": "LOG_LEVEL", "value": "DEBUG"} in r["deployment"][
+        name + "-metrics"
+    ]["spec"]["template"]["spec"]["containers"][0]["env"]
 
 
 def test_adding_image_pull_secrets():
@@ -124,7 +261,67 @@ imagePullSecrets:
     )
 
 
+def test_adding_host_networking():
+    config = """
+daemonset:
+  hostNetworking: true
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["hostNetwork"] is True
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["dnsPolicy"]
+        == "ClusterFirstWithHostNet"
+    )
+    assert (
+        "hostNetwork"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+    assert (
+        "dnsPolicy"
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    )
+
+
 def test_adding_tolerations():
+    config = """
+daemonset:
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoExecute"
+    tolerationSeconds: 3600
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"][0]["key"]
+        == "key1"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"]
+        == []
+    )
+
+    config = """
+deployment:
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoExecute"
+    tolerationSeconds: 3600
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"][
+            0
+        ]["key"]
+        == "key1"
+    )
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"] == []
+
+
+def test_adding_deprecated_tolerations():
     config = """
 tolerations:
 - key: "key1"
@@ -136,6 +333,12 @@ tolerations:
     r = helm_template(config)
     assert (
         r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"][0]["key"]
+        == "key1"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["tolerations"][
+            0
+        ]["key"]
         == "key1"
     )
 
@@ -172,17 +375,161 @@ managedServiceAccount: false
 
 def test_setting_pod_security_context():
     config = """
+daemonset:
+  securityContext:
+    runAsUser: 1001
+    privileged: false
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 0
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+
+    config = """
+deployment:
+  securityContext:
+    runAsUser: 1001
+    privileged: false
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == False
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+
+
+def test_setting_deprecated_pod_security_context():
+    config = """
 podSecurityContext:
   runAsUser: 1001
   privileged: false
 """
     r = helm_template(config)
-    c = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
-    assert c["securityContext"]["runAsUser"] == 1001
-    assert c["securityContext"]["privileged"] == False
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["runAsUser"]
+        == 1001
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "securityContext"
+        ]["privileged"]
+        == False
+    )
 
 
 def test_adding_in_metricbeat_config():
+    config = """
+daemonset:
+  metricbeatConfig:
+    metricbeat.yml: |
+      key: daemonset
+    daemonset-config.yml: |
+      hello = daemonset
+
+deployment:
+  metricbeatConfig:
+    metricbeat.yml: |
+      key: deployment
+    deployment-config.yml: |
+      hello = deployment
+"""
+    r = helm_template(config)
+    cfg = r["configmap"]
+
+    assert "metricbeat.yml" in cfg[name + "-daemonset-config"]["data"]
+    assert "daemonset-config.yml" in cfg[name + "-daemonset-config"]["data"]
+    assert "deployment-config.yml" not in cfg[name + "-daemonset-config"]["data"]
+    assert "metricbeat.yml" in cfg[name + "-deployment-config"]["data"]
+    assert "deployment-config.yml" in cfg[name + "-deployment-config"]["data"]
+    assert "daemonset-config.yml" not in cfg[name + "-deployment-config"]["data"]
+
+    assert "key: daemonset" in cfg[name + "-daemonset-config"]["data"]["metricbeat.yml"]
+    assert (
+        "key: deployment" in cfg[name + "-deployment-config"]["data"]["metricbeat.yml"]
+    )
+
+    assert (
+        "hello = daemonset"
+        in cfg[name + "-daemonset-config"]["data"]["daemonset-config.yml"]
+    )
+    assert (
+        "hello = deployment"
+        in cfg[name + "-deployment-config"]["data"]["deployment-config.yml"]
+    )
+
+    daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
+    assert {
+        "mountPath": "/usr/share/metricbeat/daemonset-config.yml",
+        "name": project + "-config",
+        "subPath": "daemonset-config.yml",
+        "readOnly": True,
+    } in daemonset["containers"][0]["volumeMounts"]
+
+    deployment = r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+    assert {
+        "mountPath": "/usr/share/metricbeat/deployment-config.yml",
+        "name": project + "-config",
+        "subPath": "deployment-config.yml",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
+
+
+def test_adding_in_deprecated_metricbeat_config():
     config = """
 metricbeatConfig:
   metricbeat.yml: |
@@ -231,24 +578,171 @@ metricbeatConfig:
 
 def test_adding_a_secret_mount():
     config = """
+daemonset:    
+  secretMounts:
+    - name: elastic-certificates
+      secretName: elastic-certificates-name
+      path: /usr/share/metricbeat/config/certs
+"""
+    r = helm_template(config)
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"][
+            "containers"
+        ][0]["volumeMounts"]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"]
+
+    config = """
+deployment:    
+  secretMounts:
+    - name: elastic-certificates
+      secretName: elastic-certificates-name
+      path: /usr/share/metricbeat/config/certs
+"""
+    r = helm_template(config)
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+            0
+        ]["volumeMounts"]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"]
+
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+
+
+def test_adding_a_deprecated_secret_mount():
+    config = """
 secretMounts:
   - name: elastic-certificates
     secretName: elastic-certificates-name
     path: /usr/share/metricbeat/config/certs
 """
     r = helm_template(config)
-    s = r["daemonset"][name]["spec"]["template"]["spec"]
-    assert s["containers"][0]["volumeMounts"][0] == {
+    assert (
+        {
+            "mountPath": "/usr/share/metricbeat/config/certs",
+            "name": "elastic-certificates",
+        }
+        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certificates-name"},
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["volumeMounts"][0] == {
         "mountPath": "/usr/share/metricbeat/config/certs",
         "name": "elastic-certificates",
     }
-    assert s["volumes"][0] == {
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"][
+        0
+    ] == {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
     }
 
 
 def test_adding_a_extra_volume_with_volume_mount():
+    config = """
+daemonset:
+  extraVolumes:
+    - name: extras
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: extras
+      mountPath: /usr/share/extras
+      readOnly: true
+"""
+    r = helm_template(config)
+    assert {"name": "extras", "emptyDir": {}} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "daemonset"
+    ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
+    assert {"name": "extras", "emptyDir": {}} not in r["deployment"][name + "-metrics"][
+        "spec"
+    ]["template"]["spec"]["volumes"]
+    assert (
+        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
+        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"][
+            "containers"
+        ][0]["volumeMounts"]
+    )
+
+    config = """
+deployment:
+  extraVolumes:
+    - name: extras
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: extras
+      mountPath: /usr/share/extras
+      readOnly: true
+"""
+    r = helm_template(config)
+    assert {"name": "extras", "emptyDir": {}} in r["deployment"][name + "-metrics"][
+        "spec"
+    ]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "deployment"
+    ][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
+    assert {"name": "extras", "emptyDir": {}} not in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["volumes"]
+    assert (
+        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
+        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+
+
+def test_adding_a_deprecated_extra_volume_with_volume_mount():
     config = """
 extraVolumes:
   - name: extras
@@ -259,19 +753,52 @@ extraVolumeMounts:
     readOnly: true
 """
     r = helm_template(config)
-    extraVolume = r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
-    assert {"name": "extras", "emptyDir": {}} in extraVolume
-    extraVolumeMounts = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][
-        0
-    ]["volumeMounts"]
-    assert {
-        "name": "extras",
-        "mountPath": "/usr/share/extras",
-        "readOnly": True,
-    } in extraVolumeMounts
+    assert {"name": "extras", "emptyDir": {}} in r["daemonset"][name]["spec"][
+        "template"
+    ]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "daemonset"
+    ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
+    assert {"name": "extras", "emptyDir": {}} in r["deployment"][name + "-metrics"][
+        "spec"
+    ]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+        "deployment"
+    ][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
 
 
 def test_adding_a_node_selector():
+    config = """
+daemonset:
+  nodeSelector:
+    disktype: ssd
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["nodeSelector"]["disktype"]
+        == "ssd"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["nodeSelector"]
+        == {}
+    )
+
+    config = """
+deployment:
+  nodeSelector:
+    disktype: ssd
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["nodeSelector"][
+            "disktype"
+        ]
+        == "ssd"
+    )
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["nodeSelector"] == {}
+
+
+def test_adding_deprecated_node_selector():
     config = """
 nodeSelector:
   disktype: ssd
@@ -304,6 +831,53 @@ affinity:
         ][0]["topologyKey"]
         == "kubernetes.io/hostname"
     )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["affinity"] == {}
+    )
+
+    config = """
+daemonset:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - metricbeat
+        topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["affinity"]["podAntiAffinity"][
+            "requiredDuringSchedulingIgnoredDuringExecution"
+        ][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
+
+    config = """
+deployment:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - metricbeat
+        topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["affinity"][
+            "podAntiAffinity"
+        ]["requiredDuringSchedulingIgnoredDuringExecution"][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
 
 
 def test_priority_class_name():
@@ -334,9 +908,9 @@ def test_cluster_role_rules():
     config = ""
     r = helm_template(config)
     rules = r["clusterrole"]["release-name-metricbeat-cluster-role"]["rules"][0]
-    assert rules["apiGroups"][0] == "extensions"
+    assert rules["apiGroups"][0] == ""
     assert rules["verbs"][0] == "get"
-    assert rules["resources"][0] == "namespaces"
+    assert rules["resources"][0] == "nodes"
 
     config = """
 clusterRoleRules:
@@ -374,15 +948,126 @@ labels:
 
 def test_adding_env_from():
     config = """
+daemonset:
+  envFrom:
+  - configMapRef:
+      name: configmap-name
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["envFrom"][
+        0
+    ]["configMapRef"] == {"name": "configmap-name"}
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][0][
+            "envFrom"
+        ]
+        == []
+    )
+
+    config = """
+deployment:
+  envFrom:
+  - configMapRef:
+      name: configmap-name
+"""
+    r = helm_template(config)
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["envFrom"][0]["configMapRef"] == {"name": "configmap-name"}
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["envFrom"]
+        == []
+    )
+
+
+def test_adding_deprecated_env_from():
+    config = """
 envFrom:
 - configMapRef:
     name: configmap-name
 """
     r = helm_template(config)
-    configMapRef = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-        "envFrom"
-    ][0]["configMapRef"]
-    assert configMapRef == {"name": "configmap-name"}
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]["envFrom"][
+        0
+    ]["configMapRef"] == {"name": "configmap-name"}
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["envFrom"][0]["configMapRef"] == {"name": "configmap-name"}
+
+
+def test_overriding_resources():
+    config = """
+daemonset:
+  resources:
+    limits:
+      cpu: "25m"
+      memory: "128Mi"
+    requests:
+      cpu: "25m"
+      memory: "128Mi"
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "resources"
+    ] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["resources"] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+
+    config = """
+deployment:
+  resources:
+    limits:
+      cpu: "25m"
+      memory: "128Mi"
+    requests:
+      cpu: "25m"
+      memory: "128Mi"
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "resources"
+    ] == {
+        "requests": {"cpu": "100m", "memory": "100Mi"},
+        "limits": {"cpu": "1000m", "memory": "200Mi"},
+    }
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["resources"] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
+
+
+def test_adding_deprecated_resources():
+    config = """
+resources:
+  limits:
+    cpu: "25m"
+    memory: "128Mi"
+  requests:
+    cpu: "25m"
+    memory: "128Mi"
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "resources"
+    ] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["resources"] == {
+        "requests": {"cpu": "25m", "memory": "128Mi"},
+        "limits": {"cpu": "25m", "memory": "128Mi"},
+    }
 
 
 def test_setting_fullnameOverride():

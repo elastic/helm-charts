@@ -75,6 +75,9 @@ spec:
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
+      - name: varlog
+        hostPath:
+          path: /var/log
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
@@ -87,7 +90,17 @@ spec:
       {{- end }}
       {{- if .Values.extraInitContainers }}
       initContainers:
+      # All the other beats accept a string here while
+      # filebeat accepts a valid yaml array. We're keeping
+      # this as a backwards compatible change, while adding
+      # also a way to pass a string as other templates to
+      # make these implementations consistent.
+      # https://github.com/elastic/helm-charts/issues/490
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
+{{ tpl .Values.extraInitContainers . | indent 8 }}
+      {{- else }}
 {{ toYaml .Values.extraInitContainers | indent 8 }}
+      {{- end }}
       {{- end }}
       containers:
       - name: "filebeat"
@@ -141,6 +154,9 @@ spec:
           mountPath: /usr/share/filebeat/data
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: varlog
+          mountPath: /var/log
           readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
