@@ -89,6 +89,19 @@ def test_overriding_the_port():
     assert r["service"][name]["spec"]["ports"][0]["targetPort"] == 5602
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
