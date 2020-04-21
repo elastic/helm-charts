@@ -17,6 +17,7 @@ This helm chart is a lightweight way to configure and run our official [Logstash
 * It is important to verify that the JVM heap size in `logstashJavaOpts` and to set the CPU/Memory `resources` to something suitable for your cluster
 * We have designed this chart to be very un-opinionated about how to configure Logstash. It exposes ways to set environment variables and mount secrets inside of the container. Doing this makes it much easier for this chart to support multiple versions with minimal changes.
 * `logstash.yml` configuration files can be set either by a ConfigMap using `logstashConfig` in `values.yml` or by environment variables using `extraEnvs` in `values.yml`, however Logstash Docker image can't mix both methods as defining settings with environment variables causes `logstash.yml` to be modified in place while using ConfigMap bind-mount the same file (more details in this [Note](https://www.elastic.co/guide/en/logstash/6.7/docker-config.html#docker-env-config)).
+* When overriding `logstash.yml`, `http.host: 0.0.0.0` should always be included to make default probes work. If restricting HTTP API to 127.0.0.1 is required by using `http.host: 127.0.0.1`, default probes should be disabled or overrided (see [values.yaml](https://github.com/elastic/helm-charts/tree/master/logstash/values.yaml) for the good syntax).
 
 ## Installing
 
