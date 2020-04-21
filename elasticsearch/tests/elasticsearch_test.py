@@ -306,6 +306,7 @@ extraVolumeMounts: |
         "readOnly": True,
     } in extraVolumeMounts
 
+
 def test_adding_a_extra_volume_with_volume_mount_as_yaml():
     config = """
 extraVolumes:
@@ -344,6 +345,7 @@ extraContainers: |
         "command": ["do", "something"],
     } in extraContainer
 
+
 def test_adding_a_extra_container_as_yaml():
     config = """
 extraContainers:
@@ -358,6 +360,7 @@ extraContainers:
         "image": "busybox",
         "command": ["do", "something"],
     } in extraContainer
+
 
 def test_adding_a_extra_init_container():
     config = """
@@ -376,6 +379,7 @@ extraInitContainers: |
         "command": ["do", "something"],
     } in extraInitContainer
 
+
 def test_adding_a_extra_init_container_as_yaml():
     config = """
 extraInitContainers:
@@ -392,6 +396,7 @@ extraInitContainers:
         "image": "busybox",
         "command": ["do", "something"],
     } in extraInitContainer
+
 
 def test_sysctl_init_container_disabled():
     config = """
