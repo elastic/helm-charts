@@ -284,6 +284,19 @@ extraEnvs:
     assert {"name": "hello", "value": "world"} in env
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_a_extra_volume_with_volume_mount():
     config = """
 extraVolumes: |
