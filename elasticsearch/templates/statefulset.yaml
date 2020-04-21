@@ -214,7 +214,7 @@ spec:
                   RC=$?
                   if [[ ${RC} -ne 0 ]]; then
                     echo "curl -XGET -s -k ${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/ failed with RC ${RC}"
-                    exit 1
+                    exit ${RC}
                   fi
                   # ready if HTTP code 200, 503 is tolerable if ES version is 6.x
                   if [[ ${HTTP_CODE} == "200" ]]; then
