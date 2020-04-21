@@ -213,7 +213,7 @@ spec:
                   HTTP_CODE=$(curl -XGET -s -k ${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/)
                   RC=$?
                   if [[ ${RC} -ne 0 ]]; then
-                    echo "curl -XGET -s -k ${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/ failed with RC ${RC}"
+                    echo "curl -XGET -s -k \${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/ failed with RC ${RC}"
                     exit ${RC}
                   fi
                   # ready if HTTP code 200, 503 is tolerable if ES version is 6.x
@@ -222,7 +222,7 @@ spec:
                   elif [[ ${HTTP_CODE} == "503" && "{{ include "elasticsearch.esMajorVersion" . }}" == "6" ]]; then
                     exit 0
                   else
-                    echo "curl -XGET -s -k ${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/ failed with HTTP code ${HTTP_CODE}"
+                    echo "curl -XGET -s -k \${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/ failed with HTTP code ${HTTP_CODE}"
                     exit 1
                   fi
 
