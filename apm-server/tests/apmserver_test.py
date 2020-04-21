@@ -72,6 +72,19 @@ extraEnvs:
     assert {"name": "LOG_LEVEL", "value": "DEBUG"} in envs
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
