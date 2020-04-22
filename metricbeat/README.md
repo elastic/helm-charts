@@ -132,19 +132,19 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 
 ### Deprecated
 
-| Parameter            | Description                                                                                                                                                | Default |
-|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| `affinity`           | Configurable [affinity][] for Metricbeat `DaemonSet`                                                                                                       | `{}`    |
-| `envFrom`            | Templatable string to be passed to the [environment from variables][] which will be appended to Metricbeat container for both `DaemonSet` and `Deployment` | `[]`    |
-| `extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for both `DaemonSet` and `Deployment`                                       | `[]`    |
-| `extraVolumeMounts`  | Templatable string of additional volumeMounts to be passed to the `tpl` function for both `DaemonSet` and `Deployment`                                     | `[]`    |
-| `extraVolumes`       | Templatable string of additional volumes to be passed to the `tpl` function for both `DaemonSet` and `Deployment`                                          | `[]`    |
-| `metricbeatConfig`   | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for both Metricbeat `DaemonSet` and `Deployment`                    | `{}`    |
-| `nodeSelector`       | Configurable [nodeSelector][] for Metricbeat `DaemonSet`                                                                                                   | `{}`    |
-| `podSecurityContext` | Configurable [securityContext][] for Metricbeat `DaemonSet` and `Deployment` pod execution environment                                                     | `{}`    |
-| `resources`          | Allows you to set the [resources][] for both Metricbeat `DaemonSet` and `Deployment`                                                                       | `{}`    |
-| `secretMounts`       | Allows you easily mount a secret as a file inside `DaemonSet` and `Deployment` Useful for mounting certificates and other secrets                          | `[]`    |
-| `tolerations`        | Configurable [tolerations][] for both Metricbeat `DaemonSet` and `Deployment`                                                                              | `[]`    |
+| Parameter            | Description                                                                                                                                            | Default |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| `affinity`           | Configurable [affinity][] for Metricbeat DaemonSet                                                                                                     | `{}`    |
+| `envFrom`            | Templatable string to be passed to the [environment from variables][] which will be appended to Metricbeat container for both DaemonSet and Deployment | `[]`    |
+| `extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for both DaemonSet and Deployment                                       | `[]`    |
+| `extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function for both DaemonSet and Deployment                                   | `[]`    |
+| `extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function for both DaemonSet and Deployment                                        | `[]`    |
+| `metricbeatConfig`   | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for both Metricbeat DaemonSet and Deployment                    | `{}`    |
+| `nodeSelector`       | Configurable [nodeSelector][] for Metricbeat DaemonSet                                                                                                 | `{}`    |
+| `podSecurityContext` | Configurable [securityContext][] for Metricbeat DaemonSet and Deployment pod execution environment                                                     | `{}`    |
+| `resources`          | Allows you to set the [resources][] for both Metricbeat DaemonSet and Deployment                                                                       | `{}`    |
+| `secretMounts`       | Allows you easily mount a secret as a file inside DaemonSet and Deployment Useful for mounting certificates and other secrets                          | `[]`    |
+| `tolerations`        | Configurable [tolerations][] for both Metricbeat DaemonSet and Deployment                                                                              | `[]`    |
 
 ## Examples
 
