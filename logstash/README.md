@@ -173,49 +173,19 @@ random times.
 2. Mutating the state of a running Docker image (by installing plugins) goes
 against best practices of containers and immutable infrastructure.
 
-## Testing
+## Contributing
 
-This chart uses [pytest][] to test the templating logic. The dependencies for
-testing can be installed from the [requirements.txt][] in the parent directory:
-
-```
-pip install -r ../requirements.txt
-make pytest
-```
-
-You can also use `helm template` to look at the YAML being generated:
-
-```
-make template
-```
-
-It is possible to run all of the tests and linting inside of a Docker container:
-
-```
-make test
-```
-
-## Integration Testing
-
-Integration tests are run using [goss][] which is a serverspec like tool written
-in golang. See [goss.yaml][] for an example of what the tests look like.
-
-To run the goss tests against the default example:
-
-```
-cd examples/default
-make goss
-```
+Please check [CONTRIBUTING.md][] before any contribution or for any questions
+about our development and testing process.
 
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
 [custom docker image]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/logstash/examples
-[goss]: https://github.com/aelsabbahy/goss/blob/master/docs/manual.md
-[goss.yaml]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/default/test/goss.yaml
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
@@ -228,8 +198,6 @@ make goss
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
-[pytest]: https://docs.pytest.org/en/latest/
-[requirements.txt]: https://github.com/elastic/helm-charts/tree/master/requirements.txt
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod

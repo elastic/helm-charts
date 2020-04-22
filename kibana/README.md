@@ -180,29 +180,13 @@ random times.
 2. Mutating the state of a running Docker image (by installing plugins) goes
 against best practices of containers and immutable infrastructure.
 
-## Testing
+## Contributing
 
-This chart uses [pytest][] to test the templating logic. The dependencies for
-testing can be installed from the [requirements.txt][] in the parent directory:
-
-```
-pip install -r ../requirements.txt
-make test
-```
-
-You can also use `helm template` to look at the YAML being generated:
-
-```
-make template
-```
-
-It is possible to run all of the tests and linting inside of a Docker container:
-
-```
-make test
-```
+Please check [CONTRIBUTING.md][] before any contribution or for any questions
+about our development and testing process.
 
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [kibana docker image]: https://www.elastic.co/guide/en/kibana/current/docker.html
@@ -216,8 +200,6 @@ make test
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
-[pytest]: https://docs.pytest.org/en/latest/
-[requirements.txt]: https://github.com/elastic/helm-charts/tree/master/requirements.txt
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#security
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod

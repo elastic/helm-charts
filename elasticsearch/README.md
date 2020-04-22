@@ -421,39 +421,10 @@ For an example of deploying both a group master nodes and data nodes using
 multiple releases of this chart, see the accompanying values files in
 `examples/multi`.
 
-## Testing
+## Contributing
 
-This chart uses [pytest][] to test the templating logic. The dependencies for
-testing can be installed from the [requirements.txt][] in the parent directory:
-
-```
-pip install -r ../requirements.txt
-make pytest
-```
-
-You can also use `helm template` to look at the YAML being generated:
-
-```
-make template
-```
-
-It is possible to run all of the tests and linting inside of a Docker container:
-
-```
-make test
-```
-
-## Integration Testing
-
-Integration tests are run using [goss][] which is a serverspec like tool written
-in golang. See [goss.yaml][] for an example of what the tests look like.
-
-To run the goss tests against the default example:
-
-```
-cd examples/default
-make goss
-```
+Please check [CONTRIBUTING.md][] before any contribution or for any questions
+about our development and testing process.
 
 [#63]: https://github.com/elastic/helm-charts/issues/63
 [#458]: https://github.com/elastic/helm-charts/pull/458
@@ -461,6 +432,7 @@ make goss
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.name.html
 [clustering and node discovery]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#clustering-and-node-discovery
 [config example]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/config/values.yaml
@@ -473,8 +445,6 @@ make goss
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/
-[goss]: https://github.com/aelsabbahy/goss/blob/master/docs/manual.md
-[goss.yaml]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/default/test/goss.yaml
 [helm]: https://helm.sh
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#how-to-install-plugins
@@ -502,8 +472,6 @@ make goss
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
-[pytest]: https://docs.pytest.org/en/latest/
-[requirements.txt]: https://github.com/elastic/helm-charts/tree/master/requirements.txt
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [roles]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
 [secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets

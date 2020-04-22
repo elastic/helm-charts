@@ -130,48 +130,18 @@ used for the automated testing of this Helm chart.
   curl localhost:9200/_cat/indices
   ```
 
-## Testing
+## Contributing
 
-This chart uses [pytest][] to test the templating logic. The dependencies for
-testing can be installed from the [requirements.txt][] in the parent directory:
-
-```
-pip install -r ../requirements.txt
-make pytest
-```
-
-You can also use `helm template` to look at the YAML being generated:
-
-```
-make template
-```
-
-It is possible to run all of the tests and linting inside of a Docker container:
-
-```
-make test
-```
-
-## Integration Testing
-
-Integration tests are run using [goss][] which is a serverspec like tool written
-in golang. See [goss.yaml][] for an example of what the tests look like.
-
-To run the goss tests against the default example:
-
-```
-cd examples/default
-make goss
-```
+Please check [CONTRIBUTING.md][] before any contribution or for any questions
+about our development and testing process.
 
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
+[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples
-[goss]: https://github.com/aelsabbahy/goss/blob/master/docs/manual.md
-[goss.yaml]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/default/test/goss.yaml
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
@@ -183,8 +153,6 @@ make goss
 [podSecurityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
-[pytest]: https://docs.pytest.org/en/latest/
-[requirements.txt]: https://github.com/elastic/helm-charts/tree/master/requirements.txt
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
