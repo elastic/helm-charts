@@ -8,59 +8,34 @@ features.
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
-## Breaking Changes
-
-[7.5.1][] release is introducing a breaking change for Metricbeat users
-upgrading from a previous chart version.
-The breaking change tracked in [#395][] is failing `helm upgrade` command with
-the following error:
-
-```
-UPGRADE FAILED
-Error: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.1", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
-Error: UPGRADE FAILED: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.1", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
-```
-
-This is caused by the update of [kube-state-metrics][] chart dependency which is
-renaming some labels in [helm/charts#15261][].
-
-The workaround is to use `--force` argument for `helm upgrade` command which
-will force Metricbeat resources update through delete/recreate.
 
 ## Requirements
 
 * [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
 * Kubernetes >=1.9
 
+
 ## Installing
 
 ### Using Helm repository
 
-* Add the Elastic Helm charts repo:
+* Add the Elastic Helm charts repo: 
+`helm repo add elastic https://helm.elastic.co`
 
-  ```
-  helm repo add elastic https://helm.elastic.co
-  ```
-
-* Install it:
-
-  ```
-  helm install --name metricbeat elastic/metricbeat
-  ```
+* Install it: `helm install --name metricbeat elastic/metricbeat`
 
 ### Using master branch
 
-* Clone the git repo:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```
-  git clone git@github.com:elastic/helm-charts.git
-  ```
+* Install it: `helm install --name metricbeat ./helm-charts/metricbeat`
 
-* Install it:
 
-  ```
-  helm install --name metricbeat ./helm-charts/metricbeat
-  ```
+## Upgrading
+
+Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
+upgrading to a new chart version.
+
 
 ## Compatibility
 
@@ -81,6 +56,7 @@ Metricbeat it would look like this:
 ```
 helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 ```
+
 
 ## Configuration
 
@@ -146,6 +122,7 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 | `secretMounts`       | Allows you easily mount a secret as a file inside DaemonSet and Deployment Useful for mounting certificates and other secrets                          | `[]`    |
 | `tolerations`        | Configurable [tolerations][] for both Metricbeat DaemonSet and Deployment                                                                              | `[]`    |
 
+
 ## Examples
 
 In [examples][] you will find some example configurations. These examples are
@@ -169,23 +146,24 @@ indices:
   curl localhost:9200/_cat/indices
   ```
 
+
 ## Contributing
 
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[#395]: https://github.com/elastic/helm-charts/issues/395
-[7.5.1]: https://github.com/elastic/helm-charts/releases/tag/7.5.1
+
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples
 [helm]: https://helm.sh
-[helm/charts#15261]: https://github.com/helm/charts/pull/15261
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

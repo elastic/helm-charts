@@ -8,40 +8,34 @@ features.
 This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
+
 ## Requirements
 
 * [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
 * Kubernetes >=1.9
 
+
 ## Installing
 
 ### Using Helm repository
 
-* Add the Elastic Helm charts repo:
+* Add the Elastic Helm charts repo: 
+`helm repo add elastic https://helm.elastic.co`
 
-  ```
-  helm repo add elastic https://helm.elastic.co
-  ```
-
-* Install it:
-
-  ```
-  helm install --name kibana elastic/kibana
-  ```
+* Install it: `helm install --name kibana elastic/kibana`
 
 ### Using master branch
 
-* Clone the git repo:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```
-  git clone git@github.com:elastic/helm-charts.git
-  ```
+* Install it: `helm install --name kibana ./helm-charts/kibana`
 
-* Install it:
 
-  ```
-  helm install --name kibana ./helm-charts/kibana
-  ```
+## Upgrading
+
+Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
+upgrading to a new chart version.
+
 
 ## Compatibility
 
@@ -62,6 +56,7 @@ Kibana it would look like this:
 ```
 helm install --name kibana elastic/kibana --set imageTag=7.6.2
 ```
+
 
 ## Configuration
 
@@ -105,6 +100,7 @@ helm install --name kibana elastic/kibana --set imageTag=7.6.2
 | Parameter          | Description                                                                          | Default |
 |--------------------|--------------------------------------------------------------------------------------|---------|
 | `elasticsearchURL` | The URL used to connect to Elasticsearch. needs to be used for Kibana versions < 6.6 | `""`    |
+
 
 ## Examples
 
@@ -153,6 +149,7 @@ used for the automated testing of this Helm chart.
   curl -I -k -u elastic:$password https://localhost:5601/app/kibana
   ```
 
+
 ## FAQ
 
 ### How to install plugins?
@@ -180,13 +177,17 @@ random times.
 2. Mutating the state of a running Docker image (by installing plugins) goes
 against best practices of containers and immutable infrastructure.
 
+
 ## Contributing
 
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
+
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [kibana docker image]: https://www.elastic.co/guide/en/kibana/current/docker.html

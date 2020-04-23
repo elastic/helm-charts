@@ -8,59 +8,34 @@ features.
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
+
 ## Requirements
 
 * [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
 * Kubernetes >=1.9
 
-## Usage notes and getting started
-
-* The default Filebeat configuration file for this chart is configured to use an
-Elasticsearch endpoint. Without any additional changes, Filebeat will send
-documents to the service URL that the Elasticsearch Helm chart sets up by
-default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
-`extraEnvs` to override this endpoint or modify the default `filebeatConfig` to
-change this behavior.
-* The default Filebeat configuration file is also configured to capture
-container logs and enrich them with Kubernetes metadata by default. This will
-capture all container logs in the cluster.
-* This chart disables the [HostNetwork][] setting by default for compatibility
-reasons with the majority of kubernetes providers and scenarios. Some kubernetes
-providers may not allow enabling `hostNetwork` and deploying multiple Filebeat
-pods on the same node isn't possible with `hostNetwork` However Filebeat does
-recommend activating it. If your kubernetes provider is compatible with
-`hostNetwork` and you don't need to run multiple Filebeat DaemonSets, you can
-activate it by setting `hostNetworking: true` in [values.yaml][].
 
 ## Installing
 
 ### Using Helm repository
 
-* Add the Elastic Helm charts repo:
+* Add the Elastic Helm charts repo: 
+`helm repo add elastic https://helm.elastic.co`
 
-  ```
-  helm repo add elastic https://helm.elastic.co
-  ```
-
-* Install it:
-
-  ```
-  helm install --name filebeat elastic/filebeat
-  ```
+* Install it: `helm install --name filebeat elastic/filebeat`
 
 ### Using master branch
 
-* Clone the git repo:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```
-  git clone git@github.com:elastic/helm-charts.git
-  ```
+* Install it: `helm install --name filebeat ./helm-charts/filebeat`
 
-* Install it:
 
-  ```
-  helm install --name filebeat ./helm-charts/filebeat
-  ```
+## Upgrading
+
+Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
+upgrading to a new chart version.
+
 
 ## Compatibility
 
@@ -81,6 +56,27 @@ Filebeat it would look like this:
 ```
 helm install --name filebeat elastic/filebeat --set imageTag=7.6.2
 ```
+
+
+## Usage notes
+
+* The default Filebeat configuration file for this chart is configured to use an
+Elasticsearch endpoint. Without any additional changes, Filebeat will send
+documents to the service URL that the Elasticsearch Helm chart sets up by
+default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
+`extraEnvs` to override this endpoint or modify the default `filebeatConfig` to
+change this behavior.
+* The default Filebeat configuration file is also configured to capture
+container logs and enrich them with Kubernetes metadata by default. This will
+capture all container logs in the cluster.
+* This chart disables the [HostNetwork][] setting by default for compatibility
+reasons with the majority of kubernetes providers and scenarios. Some kubernetes
+providers may not allow enabling `hostNetwork` and deploying multiple Filebeat
+pods on the same node isn't possible with `hostNetwork` However Filebeat does
+recommend activating it. If your kubernetes provider is compatible with
+`hostNetwork` and you don't need to run multiple Filebeat DaemonSets, you can
+activate it by setting `hostNetworking: true` in [values.yaml][].
+
 
 ## Configuration
 
@@ -117,6 +113,7 @@ helm install --name filebeat elastic/filebeat --set imageTag=7.6.2
 | `tolerations`            | Configurable [tolerations][]                                                                                                                                                    | `[]`                               |
 | `updateStrategy`         | The [updateStrategy][] for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
 
+
 ## Examples
 
 In [examples][] you will find some example configurations. These examples are
@@ -140,14 +137,18 @@ indices:
   curl localhost:9200/_cat/indices
   ```
 
+
 ## Contributing
 
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
+
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [default Elasticsearch Helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples

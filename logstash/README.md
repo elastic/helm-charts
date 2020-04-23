@@ -8,12 +8,56 @@ features.
 This Helm chart is a lightweight way to configure and run our official
 [Logstash Docker image][].
 
+
 ## Requirements
 
 * [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
 * Kubernetes >=1.8
 
-## Usage notes and getting started
+
+## Installing
+
+### Using Helm repository
+
+* Add the Elastic Helm charts repo: 
+`helm repo add elastic https://helm.elastic.co`
+
+* Install it: `helm install --name logstash elastic/logstash`
+
+### Using master branch
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it: `helm install --name logstash ./helm-charts/logstash`
+
+
+## Upgrading
+
+Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
+upgrading to a new chart version.
+
+
+## Compatibility
+
+This chart is tested with the latest supported versions. The currently tested
+versions are:
+
+| 6.x   | 7.x   |
+|-------|-------|
+| 6.8.8 | 7.6.2 |
+
+Examples of installing older major versions can be found in the [examples][]
+directory.
+
+While only the latest releases are tested, it is possible to easily install old
+or new releases by overriding the `imageTag` To install version `7.6.2` of
+Logstash it would look like this:
+
+```
+helm install --name logstash elastic/logstash --set imageTag=7.6.2
+```
+
+## Usage notes
 
 * This repo includes a number of [examples][] configurations which can be used
 as a reference. They are also used in the automated testing of this chart
@@ -36,55 +80,6 @@ defining settings with environment variables causes `logstash.yml` to be
 modified in place while using ConfigMap bind-mount the same file (more details
 in this [note][]).
 
-## Installing
-
-### Using Helm repository
-
-* Add the Elastic Helm charts repo:
-
-  ```
-  helm repo add elastic https://helm.elastic.co
-  ```
-
-* Install it:
-
-  ```
-  helm install --name logstash elastic/logstash
-  ```
-
-### Using master branch
-
-* Clone the git repo:
-
-  ```
-  git clone git@github.com:elastic/helm-charts.git
-  ```
-
-* Install it:
-
-  ```
-  helm install --name logstash ./helm-charts/logstash
-  ```
-
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested
-versions are:
-
-| 6.x   | 7.x   |
-|-------|-------|
-| 6.8.8 | 7.6.2 |
-
-Examples of installing older major versions can be found in the [examples][]
-directory.
-
-While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag` To install version `7.6.2` of
-Logstash it would look like this:
-
-```
-helm install --name logstash elastic/logstash --set imageTag=7.6.2
-```
 
 ## Configuration
 
@@ -133,6 +128,7 @@ helm install --name logstash elastic/logstash --set imageTag=7.6.2
 | `updateStrategy`          | The [updateStrategy][] for the StatefulSet. By default Kubernetes will wait for the cluster to be green after upgrading each pod. Setting this to `OnDelete` will allow you to manually delete each pod during upgrades              | `RollingUpdate`                       |
 | `volumeClaimTemplate`     | Configuration for the [volumeClaimTemplate for StatefulSets][]. You will want to adjust the storage (default `30Gi` ) and the `storageClassName` if you are using a different storage class                                          | see [values.yaml][]                   |
 
+
 ## Try it out
 
 In [examples][] you will find some example configurations. These examples are
@@ -147,9 +143,10 @@ cd examples/default
 make
 ```
 
-### FAQ
 
-#### How to install plugins?
+## FAQ
+
+### How to install plugins?
 
 The recommended way to install plugins into our Docker images is to create a
 [custom Docker image][].
@@ -173,15 +170,19 @@ random times.
 2. Mutating the state of a running Docker image (by installing plugins) goes
 against best practices of containers and immutable infrastructure.
 
+
 ## Contributing
 
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
+
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
 [custom docker image]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config

@@ -33,12 +33,6 @@
 
 ### Kibana
 
-**Warning**
-[#540](https://github.com/elastic/helm-charts/pull/540) increase default CPU and memory requests/limits. This may impact the resources (nodes) required in your Kubernetes cluster to deploy Kibana chart.
-
-If you wish to come back to former values, you need to override CPU and Memory requests/limits as well as `NODE_OPTIONS` `extraEnvs` variable when deploying your Helm Chart.
-
-
 | PR                                                     | Author                                   | Title                                                                                  |
 | ------------------------------------------------------ | ---------------------------------------- | -------------------------------------------------------------------------------------- |
 |[#493](https://github.com/elastic/helm-charts/pull/493) | [@jamoflaw](https://github.com/jamoflaw) | Fix Mismatch Between Service Selector and Pod Labels when using Helm Aliases in Kibana |
@@ -238,9 +232,6 @@ If you wish to come back to former values, you need to override CPU and Memory r
 |[#367](https://github.com/elastic/helm-charts/pull/367) | [@jmlrt](https://github.com/jmlrt) | Update default values for memory requirements|
 
 ### Metricbeat
-
-**Warning**
-[#352](https://github.com/elastic/helm-charts/pull/352) is introducing a breaking change, please refer to [Metricbeat Breaking Changes](./metricbeat/README.md#breaking-changes) section for users upgrading from a chart version < 7.5.0.
 
 | PR                                                     | Author                                           | Title                                                                                     |
 | ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
@@ -507,19 +498,3 @@ If you wish to come back to former values, you need to override CPU and Memory r
 ### Elasticsearch
 
 * [#94](https://github.com/elastic/helm-charts/pull/94) - @kimxogus - Remove hardcoded storageClassName
-
-### Notes
-
-If you were using the default Elasticsearch version from the previous release (6.6.2-alpha1) you will first need to upgrade to Elasticsearch 6.7.1 before being able to upgrade to 7.0.0. You can do this by adding this to your values file:
-
-```
-esMajorVersion: 6
-imageTag: 6.7.1
-```
-
-If you are upgrading an existing cluster that did not override the default `storageClassName` you will now need to specify the `storageClassName`. This only affects existing clusters and was changed in https://github.com/elastic/helm-charts/pull/94. The advantage of this is that now the helm chart will just use the default storageClassName rather than needing to override it for any providers where it is not called `standard`.
-
-```
-volumeClaimTemplate:
-  storageClassName: "standard"
-```

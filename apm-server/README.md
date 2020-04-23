@@ -8,47 +8,34 @@ features.
 This Helm chart is a lightweight way to configure and run our official
 [APM Server Docker image][].
 
+
 ## Requirements
 
 * Kubernetes >= 1.9
 * [Helm][] >= 2.8.0
 
-## Usage notes and getting started
-
-* The default APM Server configuration file for this chart is configured to use
-an Elasticsearch endpoint as configured by the rest of these Helm charts. This
-can easily be overridden in the config value `apmConfig.apm-server.yml`.
-
-* Automated testing of this chart is currently only run against GKE (Google
-Kubernetes Engine).
 
 ## Installing
 
-* Add the Elastic Helm charts repo:
+### Using Helm repository
 
-  ```
-  helm repo add elastic https://helm.elastic.co
-  ```
+* Add the Elastic Helm charts repo: 
+`helm repo add elastic https://helm.elastic.co`
 
-* Install it:
-
-  ```
-  helm install --name apm-server elastic/apm-server
-  ```
+* Install it: `helm install --name apm-server elastic/apm-server`
 
 ### Using master branch
 
-* Clone the git repo:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```
-  git clone git@github.com:elastic/helm-charts.git
-  ```
+* Install it: `helm install --name apm-server ./helm-charts/apm-server`
 
-* Install it:
 
-  ```
-  helm install --name apm-server ./helm-charts/apm-server
-  ```
+## Upgrading
+
+Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
+upgrading to a new chart version.
+
 
 ## Compatibility
 
@@ -69,6 +56,17 @@ Server it would look like this:
 ```
 helm install --name apm-server elastic/apm-server --set imageTag=7.6.2
 ```
+
+
+## Usage notes
+
+* The default APM Server configuration file for this chart is configured to use
+an Elasticsearch endpoint as configured by the rest of these Helm charts. This
+can easily be overridden in the config value `apmConfig.apm-server.yml`.
+
+* Automated testing of this chart is currently only run against GKE (Google
+Kubernetes Engine).
+
 
 ## Configuration
 
@@ -107,6 +105,7 @@ helm install --name apm-server elastic/apm-server --set imageTag=7.6.2
 | `tolerations`            | Configurable [tolerations][]                                                                                                                               | `[]`                               |
 | `updateStrategy`         | Allows you to change the default [updateStrategy][] for the deployment                                                                                     | see [values.yaml][]                |
 
+
 ## Examples
 
 In [examples][] you will find some example configurations. These examples are
@@ -130,15 +129,19 @@ used for the automated testing of this Helm chart.
   curl localhost:9200/_cat/indices
   ```
 
+
 ## Contributing
 
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
+
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
-[contributing.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples
