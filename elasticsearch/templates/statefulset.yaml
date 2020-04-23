@@ -113,6 +113,9 @@ spec:
         - name: {{ .name }}
           secret:
             secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+            {{- end }}
         {{- end }}
         {{- if .Values.esConfig }}
         - name: esconfig
