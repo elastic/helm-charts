@@ -161,6 +161,10 @@ spec:
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
+{{- if .Values.envFrom }}
+        envFrom:
+{{ toYaml .Values.envFrom | indent 10 }}
+{{- end }}
         volumeMounts:
           {{- if .Values.persistence.enabled }}
           - name: "{{ template "logstash.fullname" . }}"
