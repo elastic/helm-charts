@@ -73,7 +73,6 @@ def test_defaults():
 
     assert "curl" in c["readinessProbe"]["exec"]["command"][-1]
     assert "http://127.0.0.1:9200" in c["readinessProbe"]["exec"]["command"][-1]
-    assert "/_cluster/health?timeout=0s" in c["readinessProbe"]["exec"]["command"][-1]
 
     # Resources
     assert c["resources"] == {
@@ -284,12 +283,48 @@ extraEnvs:
     assert {"name": "hello", "value": "world"} in env
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_a_extra_volume_with_volume_mount():
     config = """
 extraVolumes: |
   - name: extras
     emptyDir: {}
 extraVolumeMounts: |
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+"""
+    r = helm_template(config)
+    extraVolume = r["statefulset"][uname]["spec"]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "emptyDir": {}} in extraVolume
+    extraVolumeMounts = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "containers"
+    ][0]["volumeMounts"]
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } in extraVolumeMounts
+
+
+def test_adding_a_extra_volume_with_volume_mount_as_yaml():
+    config = """
+extraVolumes:
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts:
   - name: extras
     mountPath: /usr/share/extras
     readOnly: true
@@ -323,9 +358,43 @@ extraContainers: |
     } in extraContainer
 
 
+def test_adding_a_extra_container_as_yaml():
+    config = """
+extraContainers:
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraContainer = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraContainer
+
+
 def test_adding_a_extra_init_container():
     config = """
 extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraInitContainer = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraInitContainer
+
+
+def test_adding_a_extra_init_container_as_yaml():
+    config = """
+extraInitContainers:
   - name: do-something
     image: busybox
     command: ['do', 'something']
