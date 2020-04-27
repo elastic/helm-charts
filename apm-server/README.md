@@ -11,8 +11,9 @@
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
-- [Examples](#examples)
-  - [Default](#default)
+- [FAQ](#faq)
+  - [How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-apm-server-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of APM Server](#how-to-install-oss-version-of-apm-server)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -87,6 +88,9 @@ can easily be overridden in the config value `apmConfig.apm-server.yml`.
 * Automated testing of this chart is currently only run against GKE (Google
 Kubernetes Engine).
 
+* This repo includes a number of [examples][] configurations which can be used
+as a reference. They are also used in the automated testing of this chart.
+
 
 ## Configuration
 
@@ -127,28 +131,23 @@ Kubernetes Engine).
 | `updateStrategy`         | Allows you to change the default [updateStrategy][] for the deployment                                                                                     | see [values.yaml][]                |
 
 
-## Examples
+## FAQ
 
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
+### How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?
 
-### Default
+This Helm chart can use existing [Kubernetes secrets][] to setup
+credentials or certificates for examples. These secrets should be created
+outside of this chart and accessed using [environment variables][] and volumes.
 
-* Deploy the [default Elasticsearch Helm chart][].
+An example can be found in [examples/security][].
 
-* Deploy APM Server with the default values:
+### How to install OSS version of APM Server
 
-  ```
-  cd examples/default
-  make
-  ```
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[APM Server OSS Docker image][]
 
-* You can now setup a port forward for Elasticsearch to observe APM indices:
-
-  ```
-  kubectl port-forward svc/elasticsearch-master 9200
-  curl localhost:9200/_cat/indices
-  ```
+An example of APM Server deployment using OSS version can be found in
+[examples/oss][].
 
 
 ## Contributing
@@ -163,14 +162,18 @@ about our development and testing process.
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
+[apm server oss docker image]: https://www.docker.elastic.co/#apm-server-7-6-2-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/security
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
