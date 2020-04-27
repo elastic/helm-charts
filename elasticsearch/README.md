@@ -1,4 +1,41 @@
 # Elasticsearch Helm Chart
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Using Helm repository](#using-helm-repository)
+  - [Using master branch](#using-master-branch)
+- [Upgrading](#upgrading)
+- [Compatibility](#compatibility)
+- [Usage notes](#usage-notes)
+- [Migration from helm/charts stable](#migration-from-helmcharts-stable)
+- [Configuration](#configuration)
+  - [Deprecated](#deprecated)
+- [Try it out](#try-it-out)
+  - [Default](#default)
+  - [Multi](#multi)
+  - [Security](#security)
+- [FAQ](#faq)
+  - [How to install plugins?](#how-to-install-plugins)
+  - [How to use the keystore?](#how-to-use-the-keystore)
+    - [Basic example](#basic-example)
+    - [Multiple keys](#multiple-keys)
+    - [Custom paths and keys](#custom-paths-and-keys)
+  - [How to enable snapshotting?](#how-to-enable-snapshotting)
+- [Local development environments](#local-development-environments)
+  - [Minikube](#minikube)
+  - [Docker for Mac - Kubernetes](#docker-for-mac---kubernetes)
+  - [KIND - Kubernetes](#kind---kubernetes)
+  - [MicroK8S](#microk8s)
+- [Clustering and Node Discovery](#clustering-and-node-discovery)
+- [Contributing](#contributing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- Use this to update TOC: -->
+<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
 
 This functionality is in beta and is subject to change. The design and code is
 less mature than official GA features and is being provided as-is with no
@@ -23,7 +60,7 @@ default settings. All of these settings are configurable.
 
 ### Using Helm repository
 
-* Add the Elastic Helm charts repo: 
+* Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it: `helm install --name elasticsearch elastic/elasticsearch`

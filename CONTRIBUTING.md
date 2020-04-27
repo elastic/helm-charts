@@ -1,4 +1,21 @@
 # Contributing to the Elastic helm charts
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+  - [Requirements for submiting a pull request](#requirements-for-submiting-a-pull-request)
+  - [CLA (Contributor License Agreement)](#cla-contributor-license-agreement)
+  - [Branches workflow](#branches-workflow)
+  - [Releases](#releases)
+  - [Testing](#testing)
+    - [Templating tests](#templating-tests)
+    - [Integration tests](#integration-tests)
+  - [Adding new features](#adding-new-features)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- Use this to update TOC: -->
+<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
 
 ## Requirements for submiting a pull request
 

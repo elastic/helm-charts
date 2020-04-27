@@ -1,4 +1,24 @@
 # Filebeat Helm Chart
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Using Helm repository](#using-helm-repository)
+  - [Using master branch](#using-master-branch)
+- [Upgrading](#upgrading)
+- [Compatibility](#compatibility)
+- [Usage notes](#usage-notes)
+- [Configuration](#configuration)
+- [Examples](#examples)
+  - [Default](#default)
+- [Contributing](#contributing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- Use this to update TOC: -->
+<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
 
 This functionality is in beta and is subject to change. The design and code is
 less mature than official GA features and is being provided as-is with no
@@ -19,7 +39,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 ### Using Helm repository
 
-* Add the Elastic Helm charts repo: 
+* Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it: `helm install --name filebeat elastic/filebeat`
