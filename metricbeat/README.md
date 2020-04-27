@@ -9,10 +9,12 @@
   - [Using master branch](#using-master-branch)
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
+- [Usage notes](#usage-notes)
 - [Configuration](#configuration)
   - [Deprecated](#deprecated)
-- [Examples](#examples)
-  - [Default](#default)
+- [FAQ](#faq)
+  - [How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-metricbeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of Metricbeat](#how-to-install-oss-version-of-metricbeat)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -76,6 +78,25 @@ Metricbeat it would look like this:
 ```
 helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 ```
+
+
+## Usage notes
+
+* The default Metricbeat configuration file for this chart is configured to use
+an Elasticsearch endpoint. Without any additional changes, Metricbeat will send
+documents to the service URL that the Elasticsearch Helm chart sets up by
+default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
+`extraEnvs` to override this endpoint or modify the default `metricbeatConfig`
+to change this behavior.
+* This chart disables the [HostNetwork][] setting by default for compatibility
+reasons with the majority of kubernetes providers and scenarios. Some kubernetes
+providers may not allow enabling `hostNetwork` and deploying multiple Metricbeat
+pods on the same node isn't possible with `hostNetwork` However Metricbeat does
+recommend activating it. If your kubernetes provider is compatible with
+`hostNetwork` and you don't need to run multiple Metricbeat DaemonSets, you can
+activate it by setting `hostNetworking: true` in [values.yaml][].
+* This repo includes a number of [examples][] configurations which can be used
+as a reference. They are also used in the automated testing of this chart.
 
 
 ## Configuration
@@ -143,28 +164,23 @@ helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
 | `tolerations`        | Configurable [tolerations][] for both Metricbeat DaemonSet and Deployment                                                                              | `[]`    |
 
 
-## Examples
+## FAQ
 
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
+### How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?
 
-### Default
+This Helm chart can use existing [Kubernetes secrets][] to setup
+credentials or certificates for examples. These secrets should be created
+outside of this chart and accessed using [environment variables][] and volumes.
 
-* Deploy the [default Elasticsearch Helm chart][].
-* Deploy Metricbeat with the default values:
+An example can be found in [examples/security][].
 
-  ```
-  cd examples/default
-  make
-  ```
+### How to install OSS version of Metricbeat
 
-* You can now setup a port forward for Elasticsearch to observe Metricbeat
-indices:
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[Metricbeat OSS Docker image][]
 
-  ```
-  kubectl port-forward svc/elasticsearch-master 9200
-  curl localhost:9200/_cat/indices
-  ```
+An example of Metricbeat deployment using OSS version can be found in
+[examples/oss][].
 
 
 ## Contributing
@@ -183,11 +199,15 @@ about our development and testing process.
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/security
 [helm]: https://helm.sh
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
+[hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kube-state-metrics]: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
