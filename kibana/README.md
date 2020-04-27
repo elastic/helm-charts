@@ -9,12 +9,13 @@
   - [Using master branch](#using-master-branch)
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
+- [Usage notes](#usage-notes)
 - [Configuration](#configuration)
   - [Deprecated](#deprecated)
-- [Examples](#examples)
-  - [Default](#default)
-  - [Security](#security)
 - [FAQ](#faq)
+  - [How to deploy this chart on a specific K8S distribution?](#how-to-deploy-this-chart-on-a-specific-k8s-distribution)
+  - [How to use Kibana with security (authentication and TLS) enabled?](#how-to-use-kibana-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of Kibana](#how-to-install-oss-version-of-kibana)
   - [How to install plugins?](#how-to-install-plugins)
 - [Contributing](#contributing)
 
@@ -81,6 +82,15 @@ helm install --name kibana elastic/kibana --set imageTag=7.6.2
 ```
 
 
+## Usage notes
+
+* Automated testing of this chart is currently only run against GKE (Google
+Kubernetes Engine).
+
+* This repo includes a number of [examples][] configurations which can be used
+as a reference. They are also used in the automated testing of this chart.
+
+
 ## Configuration
 
 | Parameter             | Description                                                                                                                                                                                    | Default                            |
@@ -126,55 +136,32 @@ helm install --name kibana elastic/kibana --set imageTag=7.6.2
 | `elasticsearchURL` | The URL used to connect to Elasticsearch. needs to be used for Kibana versions < 6.6 | `""`    |
 
 
-## Examples
-
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
-
-### Default
-
-* Deploy the [default Elasticsearch Helm chart][].
-* Deploy Kibana with the default values:
-
-  ```
-  cd examples/default
-  make
-  ```
-
-* You can now setup a port forward and access Kibana at http://localhost:5601:
-
-  ```
-  kubectl port-forward deployment/helm-kibana-default-kibana 5601
-  ```
-
-### Security
-
-* Deploy a [security enabled Elasticsearch cluster][].
-* Deploy Kibana with the security example:
-
-  ```
-  cd examples/security
-  make
-  ```
-
-* Setup a port forward and access Kibana at https://localhost:5601:
-
-  ```
-  # Setup the port forward
-  kubectl port-forward deployment/helm-kibana-security-kibana 5601
-
-  # Run this in a seperate terminal
-  # Get the auto generated password
-  password=$(kubectl get secret elastic-credentials -o jsonpath='{.data.password}' | base64 --decode)
-  echo password
-
-  # Test Kibana is working with curl or access it with your browser at https://localhost:5601
-  # The example certificate is self signed so you may see a warning about the certificate
-  curl -I -k -u elastic:$password https://localhost:5601/app/kibana
-  ```
-
-
 ## FAQ
+
+### How to deploy this chart on a specific K8S distribution?
+
+This chart is highly tested with [GKE][], but some K8S distribution also
+requires specific configurations.
+
+We provide examples of configuration for the following K8S providers:
+
+- [OpenShift][]
+
+### How to use Kibana with security (authentication and TLS) enabled?
+
+This Helm chart can use existing [Kubernetes secrets][] to setup
+credentials or certificates for examples. These secrets should be created
+outside of this chart and accessed using [environment variables][] and volumes.
+
+An example can be found in [examples/security][].
+
+### How to install OSS version of Kibana
+
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[kibana OSS Docker image][]
+
+An example of APM Server deployment using OSS version can be found in
+[examples/oss][].
 
 ### How to install plugins?
 
@@ -214,14 +201,19 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
-[kibana docker image]: https://www.elastic.co/guide/en/kibana/current/docker.html
 [examples]: https://github.com/elastic/helm-charts/tree/master/kibana/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
+[kibana docker image]: https://www.elastic.co/guide/en/kibana/current/docker.html
+[kibana oss docker image]: https://www.docker.elastic.co/#kibana-7-6-2-oss
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+[openshift]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/openshift
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
