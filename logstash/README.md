@@ -11,9 +11,8 @@
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
-- [Try it out](#try-it-out)
-  - [Default](#default)
 - [FAQ](#faq)
+  - [How to install OSS version of Logstash](#how-to-install-oss-version-of-logstash)
   - [How to install plugins?](#how-to-install-plugins)
 - [Contributing](#contributing)
 
@@ -156,22 +155,15 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `volumeClaimTemplate`     | Configuration for the [volumeClaimTemplate for StatefulSets][]. You will want to adjust the storage (default `30Gi` ) and the `storageClassName` if you are using a different storage class                                          | see [values.yaml][]                   |
 
 
-## Try it out
-
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
-
-### Default
-
-To deploy a cluster with all default values and run the integration tests:
-
-```
-cd examples/default
-make
-```
-
-
 ## FAQ
+
+### How to install OSS version of Logstash
+
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[Logstash OSS Docker image][]
+
+An example of APM Server deployment using OSS version can be found in
+[examples/oss][].
 
 ### How to install plugins?
 
@@ -214,11 +206,14 @@ about our development and testing process.
 [custom docker image]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/master/logstash/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/oss
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
+[logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-6-2-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
