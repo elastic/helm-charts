@@ -19,7 +19,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 ### Using Helm repository
 
-* Add the Elastic Helm charts repo: 
+* Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it: `helm install --name logstash elastic/logstash`
@@ -79,6 +79,10 @@ in `values.yml` , however Logstash Docker image can't mix both methods as
 defining settings with environment variables causes `logstash.yml` to be
 modified in place while using ConfigMap bind-mount the same file (more details
 in this [note][]).
+* When overriding `logstash.yml`, `http.host: 0.0.0.0` should always be included
+to make default probes work. If restricting HTTP API to 127.0.0.1 is required by
+using `http.host: 127.0.0.1`, default probes should be disabled or overrided
+(see [values.yaml][] for the good syntax).
 
 
 ## Configuration
