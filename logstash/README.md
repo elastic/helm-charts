@@ -10,9 +10,8 @@
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
-- [Try it out](#try-it-out)
-  - [Default](#default)
 - [FAQ](#faq)
+  - [How to install OSS version of Logstash?](#how-to-install-oss-version-of-logstash)
   - [How to install plugins?](#how-to-install-plugins)
 - [Contributing](#contributing)
 
@@ -145,22 +144,15 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `volumeClaimTemplate`     | Configuration for the [volumeClaimTemplate for StatefulSets][]. You will want to adjust the storage (default `30Gi` ) and the `storageClassName` if you are using a different storage class                                          | see [values.yaml][]                   |
 
 
-## Try it out
-
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
-
-### Default
-
-To deploy a cluster with all default values and run the integration tests:
-
-```
-cd examples/default
-make
-```
-
-
 ## FAQ
+
+### How to install OSS version of Logstash?
+
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[Logstash OSS Docker image][]
+
+An example of APM Server deployment using OSS version can be found in
+[examples/oss][].
 
 ### How to install plugins?
 
@@ -200,26 +192,30 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[custom docker image]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images
+[custom docker image]: https://www.elastic.co/guide/en/logstash/7.7/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/7.7/logstash/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.7/logstash/examples/oss
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
+[logstash docker image]: https://www.elastic.co/guide/en/logstash/7.7/docker.html
+[logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-7-0-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[note]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#docker-env-config
+[note]: https://www.elastic.co/guide/en/logstash/7.7/docker-config.html#docker-env-config
 [parent readme]: https://github.com/elastic/helm-charts/tree/7.7/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+[service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [values.yaml]: https://github.com/elastic/helm-charts/tree/7.7/logstash/values.yaml
-[updateStrategy]: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage

@@ -204,7 +204,7 @@ readinessProbe:
   successThreshold: 3
   timeoutSeconds: 5
 
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params wait_for_status
+# https://www.elastic.co/guide/en/elasticsearch/reference/7.7/cluster-health.html#request-params wait_for_status
 clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
 
 ## Use an alternate scheduler.
