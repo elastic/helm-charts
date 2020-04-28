@@ -13,7 +13,7 @@
 - [Configuration](#configuration)
 - [FAQ](#faq)
   - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of Filebeat](#how-to-install-oss-version-of-filebeat)
+  - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -147,7 +147,7 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of Filebeat
+### How to install OSS version of Filebeat?
 
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [Filebeat OSS Docker image][]

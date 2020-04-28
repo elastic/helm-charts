@@ -15,7 +15,7 @@
 - [FAQ](#faq)
   - [How to deploy this chart on a specific K8S distribution?](#how-to-deploy-this-chart-on-a-specific-k8s-distribution)
   - [How to use Kibana with security (authentication and TLS) enabled?](#how-to-use-kibana-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of Kibana](#how-to-install-oss-version-of-kibana)
+  - [How to install OSS version of Kibana?](#how-to-install-oss-version-of-kibana)
   - [How to install plugins?](#how-to-install-plugins)
   - [How to import objects post-deployment?](#how-to-import-objects-post-deployment)
 - [Contributing](#contributing)
@@ -156,7 +156,7 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of Kibana
+### How to install OSS version of Kibana?
 
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [kibana OSS Docker image][]

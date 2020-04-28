@@ -18,7 +18,7 @@
     - [Clustering and Node Discovery](#clustering-and-node-discovery)
   - [How to deploy clusters with security (authentication and TLS) enabled?](#how-to-deploy-clusters-with-security-authentication-and-tls-enabled)
   - [How to migrate from helm/charts stable chart?](#how-to-migrate-from-helmcharts-stable-chart)
-  - [How to install OSS version of Elasticsearch](#how-to-install-oss-version-of-elasticsearch)
+  - [How to install OSS version of Elasticsearch?](#how-to-install-oss-version-of-elasticsearch)
   - [How to install plugins?](#how-to-install-plugins)
   - [How to use the keystore?](#how-to-use-the-keystore)
     - [Basic example](#basic-example)
@@ -264,7 +264,7 @@ An example of Elasticsearch cluster using security can be found in
 If you currently have a cluster deployed with the [helm/charts stable][] chart
 you can follow the [migration guide][].
 
-### How to install OSS version of Elasticsearch
+### How to install OSS version of Elasticsearch?
 
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [Elasticsearch OSS Docker image][]

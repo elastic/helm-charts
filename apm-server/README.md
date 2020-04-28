@@ -13,7 +13,7 @@
 - [Configuration](#configuration)
 - [FAQ](#faq)
   - [How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-apm-server-with-elasticsearch-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of APM Server](#how-to-install-oss-version-of-apm-server)
+  - [How to install OSS version of APM Server?](#how-to-install-oss-version-of-apm-server)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -141,7 +141,7 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of APM Server
+### How to install OSS version of APM Server?
 
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [APM Server OSS Docker image][]
