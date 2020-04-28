@@ -12,7 +12,7 @@
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
 - [FAQ](#faq)
-  - [How to install OSS version of Logstash](#how-to-install-oss-version-of-logstash)
+  - [How to install OSS version of Logstash?](#how-to-install-oss-version-of-logstash)
   - [How to install plugins?](#how-to-install-plugins)
 - [Contributing](#contributing)
 
@@ -157,7 +157,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 
 ## FAQ
 
-### How to install OSS version of Logstash
+### How to install OSS version of Logstash?
 
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [Logstash OSS Docker image][]
