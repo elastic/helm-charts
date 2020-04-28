@@ -1,4 +1,84 @@
 # Changelog
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [7.6.2 - 2020/03/31](#762---20200331)
+  - [APM Server](#apm-server)
+  - [Elasticsearch](#elasticsearch)
+  - [Filebeat](#filebeat)
+  - [Kibana](#kibana)
+  - [Logstash](#logstash)
+- [7.6.1 - 2020/03/04](#761---20200304)
+  - [APM Server](#apm-server-1)
+  - [Elasticsearch](#elasticsearch-1)
+- [7.6.0 - 2020/02/11](#760---20200211)
+  - [APM Server](#apm-server-2)
+  - [Elasticsearch](#elasticsearch-2)
+  - [Filebeat](#filebeat-1)
+  - [Kibana](#kibana-1)
+  - [Logstash](#logstash-1)
+  - [Metricbeat](#metricbeat)
+- [7.5.2 - 2020/01/21](#752---20200121)
+  - [Elasticsearch](#elasticsearch-3)
+  - [Filebeat](#filebeat-2)
+  - [Kibana](#kibana-2)
+  - [Logstash](#logstash-2)
+  - [Metricbeat](#metricbeat-1)
+- [7.5.1 - 2019/12/18](#751---20191218)
+  - [Filebeat](#filebeat-3)
+  - [Kibana](#kibana-3)
+  - [Metricbeat](#metricbeat-2)
+- [7.5.0 - 2019/12/02](#750---20191202)
+  - [Elasticsearch](#elasticsearch-4)
+  - [Filebeat](#filebeat-4)
+  - [Kibana](#kibana-4)
+  - [Logstash](#logstash-3)
+  - [Metricbeat](#metricbeat-3)
+- [7.4.1 - 2019/10/23](#741---20191023)
+  - [Elasticsearch](#elasticsearch-5)
+  - [Kibana](#kibana-5)
+  - [Metricbeat](#metricbeat-4)
+- [7.4.0 - 2019/10/01](#740---20191001)
+  - [Elasticsearch](#elasticsearch-6)
+  - [Kibana](#kibana-6)
+  - [Filebeat](#filebeat-5)
+  - [Metricbeat](#metricbeat-5)
+- [7.3.2 - 2019/09/19](#732---20190919)
+  - [Elasticsearch](#elasticsearch-7)
+  - [Kibana](#kibana-7)
+  - [Filebeat](#filebeat-6)
+  - [Metricbeat](#metricbeat-6)
+- [7.3.0 - 2019/07/31](#730---20190731)
+  - [Elasticsearch](#elasticsearch-8)
+  - [Kibana](#kibana-8)
+- [7.2.1-0 - 2019/07/18](#721-0---20190718)
+  - [Elasticsearch](#elasticsearch-9)
+  - [Kibana](#kibana-9)
+  - [Filebeat](#filebeat-7)
+  - [Metricbeat](#metricbeat-7)
+- [7.2.0 - 2019/07/01](#720---20190701)
+  - [Elasticsearch](#elasticsearch-10)
+  - [Kibana](#kibana-10)
+  - [Filebeat](#filebeat-8)
+- [7.1.1 - 2019/06/07](#711---20190607)
+  - [Elasticsearch](#elasticsearch-11)
+  - [Kibana](#kibana-11)
+  - [Filebeat](#filebeat-9)
+- [7.1.0 - 2019/05/21](#710---20190521)
+  - [Elasticsearch](#elasticsearch-12)
+  - [Kibana](#kibana-12)
+  - [Filebeat](#filebeat-10)
+- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
+  - [Elasticsearch](#elasticsearch-13)
+  - [Kibana](#kibana-13)
+- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Elasticsearch](#elasticsearch-14)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- Use this to update TOC: -->
+<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
 
 ## 7.6.2 - 2020/03/31
 
@@ -32,12 +112,6 @@
 |[#530](https://github.com/elastic/helm-charts/pull/530) | [@flaper87](https://github.com/flaper87) | Accept a string as `extraInitContainers` value for Filebeat |
 
 ### Kibana
-
-**Warning**
-[#540](https://github.com/elastic/helm-charts/pull/540) increase default CPU and memory requests/limits. This may impact the resources (nodes) required in your Kubernetes cluster to deploy Kibana chart.
-
-If you wish to come back to former values, you need to override CPU and Memory requests/limits as well as `NODE_OPTIONS` `extraEnvs` variable when deploying your Helm Chart.
-
 
 | PR                                                     | Author                                   | Title                                                                                  |
 | ------------------------------------------------------ | ---------------------------------------- | -------------------------------------------------------------------------------------- |
@@ -238,9 +312,6 @@ If you wish to come back to former values, you need to override CPU and Memory r
 |[#367](https://github.com/elastic/helm-charts/pull/367) | [@jmlrt](https://github.com/jmlrt) | Update default values for memory requirements|
 
 ### Metricbeat
-
-**Warning**
-[#352](https://github.com/elastic/helm-charts/pull/352) is introducing a breaking change, please refer to [Metricbeat Breaking Changes](./metricbeat/README.md#breaking-changes) section for users upgrading from a chart version < 7.5.0.
 
 | PR                                                     | Author                                           | Title                                                                                     |
 | ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
@@ -507,19 +578,3 @@ If you wish to come back to former values, you need to override CPU and Memory r
 ### Elasticsearch
 
 * [#94](https://github.com/elastic/helm-charts/pull/94) - @kimxogus - Remove hardcoded storageClassName
-
-### Notes
-
-If you were using the default Elasticsearch version from the previous release (6.6.2-alpha1) you will first need to upgrade to Elasticsearch 6.7.1 before being able to upgrade to 7.0.0. You can do this by adding this to your values file:
-
-```
-esMajorVersion: 6
-imageTag: 6.7.1
-```
-
-If you are upgrading an existing cluster that did not override the default `storageClassName` you will now need to specify the `storageClassName`. This only affects existing clusters and was changed in https://github.com/elastic/helm-charts/pull/94. The advantage of this is that now the helm chart will just use the default storageClassName rather than needing to override it for any providers where it is not called `standard`.
-
-```
-volumeClaimTemplate:
-  storageClassName: "standard"
-```
