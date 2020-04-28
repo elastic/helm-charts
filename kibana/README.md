@@ -17,6 +17,7 @@
   - [How to use Kibana with security (authentication and TLS) enabled?](#how-to-use-kibana-with-security-authentication-and-tls-enabled)
   - [How to install OSS version of Kibana](#how-to-install-oss-version-of-kibana)
   - [How to install plugins?](#how-to-install-plugins)
+  - [How to import objects post-deployment?](#how-to-import-objects-post-deployment)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -111,7 +112,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `ingress`             | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                |
 | `kibanaConfig`        | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                               |
 | `labels`              | Configurable [labels][] applied to all Kibana pods                                                                                                                                             | `{}`                               |
-| `lifecycle`           | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                | `{}`                               |
+| `lifecycle`           | Allows you to add [lifecycle hooks][]. See [values.yaml][] for an example of the formatting                                                                                                | `{}`                               |
 | `nameOverride`        | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                                      | `""`                               |
 | `nodeSelector`        | Configurable [nodeSelector][] so that you can target specific nodes for your Kibana instances                                                                                                  | `{}`                               |
 | `podAnnotations`      | Configurable [annotations][] applied to all Kibana pods                                                                                                                                        | `{}`                               |
@@ -188,6 +189,29 @@ random times.
 2. Mutating the state of a running Docker image (by installing plugins) goes
 against best practices of containers and immutable infrastructure.
 
+### How to import objects post-deployment?
+
+You can use `postStart` [lifecycle hooks][] to run code triggered after a
+container is created.
+
+Here is an example of `postStart` hook to import an index-pattern and a
+dashboard:
+
+```yaml
+lifecycle:
+  postStart:
+    exec:
+      command:
+        - bash
+        - -c
+        - |
+          #!/bin/bash
+          # Import a dashboard
+          KB_URL=http://localhost:5601
+          while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' -L $KB_URL)" != "200" ]]; do sleep 1; done
+          curl -XPOST "$KB_URL/api/kibana/dashboards/import" -H "Content-Type: application/json" -H 'kbn-xsrf: true' -d'"objects":[{"type":"index-pattern","id":"my-pattern","attributes":{"title":"my-pattern-*"}},{"type":"dashboard","id":"my-dashboard","attributes":{"title":"Look at my dashboard"}}]}'
+```
+
 
 ## Contributing
 
@@ -214,6 +238,7 @@ about our development and testing process.
 [kibana oss docker image]: https://www.docker.elastic.co/#kibana-7-6-2-oss
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+[lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [openshift]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/openshift
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md

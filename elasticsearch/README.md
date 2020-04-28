@@ -10,7 +10,6 @@
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
-- [Migration from helm/charts stable](#migration-from-helmcharts-stable)
 - [Configuration](#configuration)
   - [Deprecated](#deprecated)
 - [FAQ](#faq)
@@ -18,12 +17,15 @@
   - [How to deploy dedicated nodes types?](#how-to-deploy-dedicated-nodes-types)
     - [Clustering and Node Discovery](#clustering-and-node-discovery)
   - [How to deploy clusters with security (authentication and TLS) enabled?](#how-to-deploy-clusters-with-security-authentication-and-tls-enabled)
+  - [How to migrate from helm/charts stable chart?](#how-to-migrate-from-helmcharts-stable-chart)
+  - [How to install OSS version of Elasticsearch](#how-to-install-oss-version-of-elasticsearch)
   - [How to install plugins?](#how-to-install-plugins)
   - [How to use the keystore?](#how-to-use-the-keystore)
     - [Basic example](#basic-example)
     - [Multiple keys](#multiple-keys)
     - [Custom paths and keys](#custom-paths-and-keys)
   - [How to enable snapshotting?](#how-to-enable-snapshotting)
+  - [How to configure templates post-deployment?](#how-to-configure-templates-post-deployment)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -145,7 +147,7 @@ support multiple versions with minimal changes.
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
 | `keystore`                         | Allows you map Kubernetes secrets into the keystore. See the [config example][] and [how to use the keystore][]                                                                                                                                           | `[]`                                            |
 | `labels`                           | Configurable [labels][] applied to all Elasticsearch pods                                                                                                                                                                                                 | `{}`                                            |
-| `lifecycle`                        | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                                           | `{}`                                            |
+| `lifecycle`                        | Allows you to add [lifecycle hooks][]. See [values.yaml][] for an example of the formatting                                                                                                                                                               | `{}`                                            |
 | `masterService`                    | The service name used to connect to the masters. You only need to set this if your master `nodeGroup` is set to something other than `master`. See [Clustering and Node Discovery][] for more information                                                 | `""`                                            |
 | `masterTerminationFix`             | A workaround needed for Elasticsearch < 7.2 to prevent master status being lost during restarts [#63][]                                                                                                                                                   | `false`                                         |
 | `maxUnavailable`                   | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                                               | `1`                                             |
@@ -367,6 +369,32 @@ following the [how to use the keystore][] guide.
 there are plans to have Elasticsearch manage automated snapshots with
 [Snapshot Lifecycle Management][].
 
+### How to configure templates post-deployment?
+
+You can use `postStart` [lifecycle hooks][] to run code triggered after a
+container is created.
+
+Here is an example of `postStart` hook to configure templates:
+
+```yaml
+lifecycle:
+  postStart:
+    exec:
+      command:
+        - bash
+        - -c
+        - |
+          #!/bin/bash
+          # Add a template to adjust number of shards/replicas
+          TEMPLATE_NAME=my_template
+          INDEX_PATTERN="logstash-*"
+          SHARD_COUNT=8
+          REPLICA_COUNT=1
+          ES_URL=http://localhost:9200
+          while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+          curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
+```
+
 
 ## Contributing
 
@@ -412,6 +440,7 @@ about our development and testing process.
 [kind]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/kubernetes-kind
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+[lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [loadBalancer annotations]: https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws
 [loadBalancer]: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
