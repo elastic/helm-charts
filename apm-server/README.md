@@ -165,6 +165,7 @@ about our development and testing process.
 [apm server oss docker image]: https://www.docker.elastic.co/#apm-server-7-6-2-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/security
