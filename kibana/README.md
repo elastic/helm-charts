@@ -223,7 +223,7 @@ about our development and testing process.
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [kibana docker image]: https://www.elastic.co/guide/en/kibana/7.7/docker.html
-[kibana oss docker image]: https://www.docker.elastic.co/#kibana-7-6-2-oss
+[kibana oss docker image]: https://www.docker.elastic.co/#kibana-7-7-0-oss
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
