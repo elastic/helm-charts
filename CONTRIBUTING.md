@@ -12,6 +12,7 @@
   - [Commits and Merging](#commits-and-merging)
     - [Rebasing and fixing merge conflicts](#rebasing-and-fixing-merge-conflicts)
   - [What Goes Into a Pull Request](#what-goes-into-a-pull-request)
+- [Submitting a Pull Request](#submitting-a-pull-request)
 - [Releases](#releases)
 - [Testing](#testing)
   - [Templating tests](#templating-tests)
