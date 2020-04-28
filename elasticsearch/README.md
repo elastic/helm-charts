@@ -10,26 +10,22 @@
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
-- [Migration from helm/charts stable](#migration-from-helmcharts-stable)
 - [Configuration](#configuration)
   - [Deprecated](#deprecated)
-- [Try it out](#try-it-out)
-  - [Default](#default)
-  - [Multi](#multi)
-  - [Security](#security)
 - [FAQ](#faq)
+  - [How to deploy this chart on a specific K8S distribution?](#how-to-deploy-this-chart-on-a-specific-k8s-distribution)
+  - [How to deploy dedicated nodes types?](#how-to-deploy-dedicated-nodes-types)
+    - [Clustering and Node Discovery](#clustering-and-node-discovery)
+  - [How to deploy clusters with security (authentication and TLS) enabled?](#how-to-deploy-clusters-with-security-authentication-and-tls-enabled)
+  - [How to migrate from helm/charts stable chart?](#how-to-migrate-from-helmcharts-stable-chart)
+  - [How to install OSS version of Elasticsearch?](#how-to-install-oss-version-of-elasticsearch)
   - [How to install plugins?](#how-to-install-plugins)
   - [How to use the keystore?](#how-to-use-the-keystore)
     - [Basic example](#basic-example)
     - [Multiple keys](#multiple-keys)
     - [Custom paths and keys](#custom-paths-and-keys)
   - [How to enable snapshotting?](#how-to-enable-snapshotting)
-- [Local development environments](#local-development-environments)
-  - [Minikube](#minikube)
-  - [Docker for Mac - Kubernetes](#docker-for-mac---kubernetes)
-  - [KIND - Kubernetes](#kind---kubernetes)
-  - [MicroK8S](#microk8s)
-- [Clustering and Node Discovery](#clustering-and-node-discovery)
+  - [How to configure templates post-deployment?](#how-to-configure-templates-post-deployment)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -124,12 +120,6 @@ inside of the container. Doing this makes it much easier for this chart to
 support multiple versions with minimal changes.
 
 
-## Migration from helm/charts stable
-
-If you currently have a cluster deployed with the [helm/charts stable][] chart
-you can follow the [migration guide][].
-
-
 ## Configuration
 
 | Parameter                          | Description                                                                                                                                                                                                                                               | Default                                         |
@@ -157,7 +147,7 @@ you can follow the [migration guide][].
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
 | `keystore`                         | Allows you map Kubernetes secrets into the keystore. See the [config example][] and [how to use the keystore][]                                                                                                                                           | `[]`                                            |
 | `labels`                           | Configurable [labels][] applied to all Elasticsearch pods                                                                                                                                                                                                 | `{}`                                            |
-| `lifecycle`                        | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                                           | `{}`                                            |
+| `lifecycle`                        | Allows you to add [lifecycle hooks][]. See [values.yaml][] for an example of the formatting                                                                                                                                                               | `{}`                                            |
 | `masterService`                    | The service name used to connect to the masters. You only need to set this if your master `nodeGroup` is set to something other than `master`. See [Clustering and Node Discovery][] for more information                                                 | `""`                                            |
 | `masterTerminationFix`             | A workaround needed for Elasticsearch < 7.2 to prevent master status being lost during restarts [#63][]                                                                                                                                                   | `false`                                         |
 | `maxUnavailable`                   | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                                               | `1`                                             |
@@ -207,47 +197,80 @@ you can follow the [migration guide][].
 | `fsGroup` | The Group ID (GID) for [securityContext][] so that the Elasticsearch user can read from the persistent volume | `""`    |
 
 
-## Try it out
-
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
-
-### Default
-
-To deploy a cluster with all default values and run the integration tests:
-
-```
-cd examples/default
-make
-```
-
-### Multi
-
-A cluster with dedicated node types:
-
-```
-cd examples/multi
-make
-```
-
-### Security
-
-A cluster with node to node security and https enabled. This example uses
-autogenerated certificates and password, for a production deployment you want to
-generate SSL certificates following the [official docs][node-certificates].
-
-Generate the certificates and install Elasticsearch:
-
-```
-cd examples/security
-make
-
-# Run a curl command to interact with the cluster
-kubectl exec -ti security-master-0 -- sh -c 'curl -u $ELASTIC_USERNAME:$ELASTIC_PASSWORD -k https://localhost:9200/_cluster/health?pretty'
-```
-
-
 ## FAQ
+
+### How to deploy this chart on a specific K8S distribution?
+
+This chart is designed to run on production scale Kubernetes clusters with
+multiple nodes, lots of memory and persistent storage. For that reason it can be
+a bit tricky to run them against local Kubernetes environments such as
+[Minikube][].
+
+This chart is highly tested with [GKE][], but some K8S distribution also
+requires specific configurations.
+
+We provide examples of configuration for the following K8S providers:
+
+- [Docker for Mac][]
+- [KIND][]
+- [Minikube][]
+- [MicroK8S][]
+- [OpenShift][]
+
+### How to deploy dedicated nodes types?
+
+All the Elasticsearch pods deployed share the same configuration. If you need to
+deploy dedicated [nodes types][] (for example dedicated master and data nodes),
+you can deploy multiple releases of this chart with different configurations
+while they share the same `clusterName` value.
+
+For each Helm release, the nodes types can then be defined using `roles` value.
+
+An example of Elasticsearch cluster using 2 different Helm releases for master
+and data nodes can be found in [examples/multi][].
+
+#### Clustering and Node Discovery
+
+This chart facilitates Elasticsearch node discovery and services by creating two
+`Service` definitions in Kubernetes, one with the name `$clusterName-$nodeGroup`
+and another named `$clusterName-$nodeGroup-headless`.
+Only `Ready` pods are a part of the `$clusterName-$nodeGroup` service, while all
+pods ( `Ready` or not) are a part of `$clusterName-$nodeGroup-headless`.
+
+If your group of master nodes has the default `nodeGroup: master` then you can
+just add new groups of nodes with a different `nodeGroup` and they will
+automatically discover the correct master. If your master nodes have a different
+`nodeGroup` name then you will need to set `masterService` to
+`$clusterName-$masterNodeGroup`.
+
+The chart value for `masterService` is used to populate
+`discovery.zen.ping.unicast.hosts` , which Elasticsearch nodes will use to
+contact master nodes and form a cluster.
+Therefore, to add a group of nodes to an existing cluster, setting
+`masterService` to the desired `Service` name of the related cluster is
+sufficient.
+
+### How to deploy clusters with security (authentication and TLS) enabled?
+
+This Helm chart can use existing [Kubernetes secrets][] to setup
+credentials or certificates for examples. These secrets should be created
+outside of this chart and accessed using [environment variables][] and volumes.
+
+An example of Elasticsearch cluster using security can be found in
+[examples/security][].
+
+### How to migrate from helm/charts stable chart?
+
+If you currently have a cluster deployed with the [helm/charts stable][] chart
+you can follow the [migration guide][].
+
+### How to install OSS version of Elasticsearch?
+
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[Elasticsearch OSS Docker image][]
+
+An example of Elasticsearch cluster using OSS version can be found in
+[examples/oss][].
 
 ### How to install plugins?
 
@@ -346,91 +369,31 @@ following the [how to use the keystore][] guide.
 there are plans to have Elasticsearch manage automated snapshots with
 [Snapshot Lifecycle Management][].
 
+### How to configure templates post-deployment?
 
-## Local development environments
+You can use `postStart` [lifecycle hooks][] to run code triggered after a
+container is created.
 
-This chart is designed to run on production scale Kubernetes clusters with
-multiple nodes, lots of memory and persistent storage. For that reason it can be
-a bit tricky to run them against local Kubernetes environments such as minikube.
-Below are some examples of how to get this working locally.
+Here is an example of `postStart` hook to configure templates:
 
-### Minikube
-
-This chart also works successfully on [minikube][] in addition to typical hosted
-Kubernetes environments. An example `values.yaml` file for minikube is provided
-under `examples/`.
-
-In order to properly support the required persistent volume claims for the
-Elasticsearch `StatefulSet` , the `default-storageclass` and
-`storage-provisioner` minikube addons must be enabled:
-
+```yaml
+lifecycle:
+  postStart:
+    exec:
+      command:
+        - bash
+        - -c
+        - |
+          #!/bin/bash
+          # Add a template to adjust number of shards/replicas
+          TEMPLATE_NAME=my_template
+          INDEX_PATTERN="logstash-*"
+          SHARD_COUNT=8
+          REPLICA_COUNT=1
+          ES_URL=http://localhost:9200
+          while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+          curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 ```
-minikube addons enable default-storageclass
-minikube addons enable storage-provisioner
-cd examples/minikube
-make
-```
-
-Note that if `helm` or `kubectl` timeouts occur, you may consider creating a
-minikube VM with more CPU cores or memory allocated.
-
-### Docker for Mac - Kubernetes
-
-It is also possible to run this chart with the built in Kubernetes cluster that
-comes with [docker-for-mac][]:
-
-```
-cd examples/docker-for-mac
-make
-```
-
-### KIND - Kubernetes
-
-It is also possible to run this chart using a Kubernetes [KIND][] (Kubernetes in
-Docker) cluster:
-
-```
-cd examples/kubernetes-kind
-make
-```
-
-### MicroK8S
-
-It is also possible to run this chart using [MicroK8S][]:
-
-```
-microk8s.enable dns
-microk8s.enable helm
-microk8s.enable storage
-cd examples/microk8s
-make
-```
-
-
-## Clustering and Node Discovery
-
-This chart facilitates Elasticsearch node discovery and services by creating two
-`Service` definitions in Kubernetes, one with the name `$clusterName-$nodeGroup`
-and another named `$clusterName-$nodeGroup-headless`.
-Only `Ready` pods are a part of the `$clusterName-$nodeGroup` service, while all
-pods ( `Ready` or not) are a part of `$clusterName-$nodeGroup-headless`.
-
-If your group of master nodes has the default `nodeGroup: master` then you can
-just add new groups of nodes with a different `nodeGroup` and they will
-automatically discover the correct master. If your master nodes have a different
-`nodeGroup` name then you will need to set `masterService` to
-`$clusterName-$masterNodeGroup`.
-
-The chart value for `masterService` is used to populate
-`discovery.zen.ping.unicast.hosts` , which Elasticsearch nodes will use to
-contact master nodes and form a cluster.
-Therefore, to add a group of nodes to an existing cluster, setting
-`masterService` to the desired `Service` name of the related cluster is
-sufficient.
-
-For an example of deploying both a group master nodes and data nodes using
-multiple releases of this chart, see the accompanying values files in
-`examples/multi`.
 
 
 ## Contributing
@@ -453,11 +416,17 @@ about our development and testing process.
 [custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_c_customized_image
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
 [discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/current/discovery-settings.html#minimum_master_nodes
-[docker-for-mac]: https://docs.docker.com/docker-for-mac/kubernetes/
+[docker for mac]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/docker-for-mac
 [elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+[elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-7-6-2-oss
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/
+[examples/multi]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/multi
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/security
+[gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#how-to-install-plugins
@@ -468,20 +437,24 @@ about our development and testing process.
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [java options]: https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html
 [jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
-[kind]: https://github.com/kubernetes-sigs/kind
+[kind]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/kubernetes-kind
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+[lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [loadBalancer annotations]: https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws
 [loadBalancer]: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [migration guide]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/migration/README.md
-[minikube]: https://kubernetes.io/docs/setup/minikube/
-[microk8s]: https://microk8s.io
+[minikube]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/minikube
+[microk8s]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/microk8s
 [multi]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/multi/
 [network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/current/network.host.html
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#node-certificates
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
+[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+[openshift]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/

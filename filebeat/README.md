@@ -11,8 +11,10 @@
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
-- [Examples](#examples)
-  - [Default](#default)
+- [FAQ](#faq)
+  - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
+  - [Why is Filebeat host.name field set to Kubernetes pod name?](#why-is-filebeat-hostname-field-set-to-kubernetes-pod-name)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -96,6 +98,8 @@ pods on the same node isn't possible with `hostNetwork` However Filebeat does
 recommend activating it. If your kubernetes provider is compatible with
 `hostNetwork` and you don't need to run multiple Filebeat DaemonSets, you can
 activate it by setting `hostNetworking: true` in [values.yaml][].
+* This repo includes a number of [examples][] configurations which can be used
+as a reference. They are also used in the automated testing of this chart.
 
 
 ## Configuration
@@ -134,28 +138,36 @@ activate it by setting `hostNetworking: true` in [values.yaml][].
 | `updateStrategy`         | The [updateStrategy][] for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
 
 
-## Examples
+## FAQ
 
-In [examples][] you will find some example configurations. These examples are
-used for the automated testing of this Helm chart.
+### How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?
 
-### Default
+This Helm chart can use existing [Kubernetes secrets][] to setup
+credentials or certificates for examples. These secrets should be created
+outside of this chart and accessed using [environment variables][] and volumes.
 
-* Deploy the [default Elasticsearch Helm chart][].
-* Deploy Filebeat with the default values:
+An example can be found in [examples/security][].
 
-  ```
-  cd examples/default
-  make
-  ```
+### How to install OSS version of Filebeat?
 
-* You can now setup a port forward for Elasticsearch to observe Filebeat
-indices:
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[Filebeat OSS Docker image][]
 
-  ```
-  kubectl port-forward svc/elasticsearch-master 9200
-  curl localhost:9200/_cat/indices
-  ```
+An example of Filebeat deployment using OSS version can be found in
+[examples/oss][].
+
+### Why is Filebeat host.name field set to Kubernetes pod name?
+
+The default Filebeat configuration is using Filebeat pod name for
+`agent.hostname` and `host.name` fields. The `hostname` of the Kubernetes nodes
+can be find in `kubernetes.node.name` field. If you would like to have
+`agent.hostname` and `host.name` fields set to the hostname of the nodes, you'll
+need to set `daemonset.hostNetworking` value to true.
+
+Note that enabling [hostNetwork][] make Filebeat pod use the host network
+namespace which gives it access to the host loopback device, services listening
+on localhost, could be used to snoop on network activity of other pods on the
+same node.
 
 
 ## Contributing
@@ -171,13 +183,18 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [default Elasticsearch Helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples/security
 [filebeat docker image]: https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
+[filebeat oss docker image]: https://www.docker.elastic.co/#filebeat-7-6-2-oss
 [helm]: https://helm.sh
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

@@ -12,6 +12,7 @@
   - [Commits and Merging](#commits-and-merging)
     - [Rebasing and fixing merge conflicts](#rebasing-and-fixing-merge-conflicts)
   - [What Goes Into a Pull Request](#what-goes-into-a-pull-request)
+- [Submitting a Pull Request](#submitting-a-pull-request)
 - [Releases](#releases)
 - [Testing](#testing)
   - [Templating tests](#templating-tests)
@@ -167,6 +168,21 @@ important and useful.
 * Please update any tests that pertain to your code, and add new tests where
 appropriate.
 * See [Submitting a Pull Request](#submitting-a-pull-request) for more info.
+
+
+## Submitting a Pull Request
+
+Push your local changes to your forked copy of the repository and submit a Pull
+Request. In the Pull Request, describe what your changes do and mention the
+number of the issue where discussion has taken place, e.g., “Closes #123″.
+
+Always submit your pull against `master` unless the bug is only present in an
+older version. If the bug affects both master and another branch say so in your
+pull.
+
+Then sit back and wait. There will probably be discussion about the Pull Request
+and, if any changes are needed, we'll work with you to get your Pull Request
+merged into Kibana.
 
 
 ## Releases

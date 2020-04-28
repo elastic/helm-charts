@@ -35,7 +35,17 @@ While we are checking backward compatibility, the charts are only tested with
 Helm version mentioned in [helm-tester Dockerfile][] (currently 2.16.6).
 Note that we don't support [Helm 3][] version.
 
+## ECK
+
+In addition of these Helm charts, Elastic also provides
+[Elastic Cloud on Kubernetes][] which is based on [Operator pattern][] and is
+Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
+Kubernetes.
+
+
 [currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+master/
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [helm 3]: https://v3.helm.sh
 [helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/master/helpers/helm-tester/Dockerfile
 [helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/master/helpers/matrix.yml
+[operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
