@@ -16,12 +16,12 @@ added below.
 
 | Chart                                      | Docker documentation                                                            |
 |--------------------------------------------|---------------------------------------------------------------------------------|
-| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       |
-| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html     |
-| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   |
-| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/current/docker.html                      |
-| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/current/docker.html                    |
-| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html |
+| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/7.7/running-on-docker.html       |
+| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/7.7/docker.html     |
+| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/7.7/running-on-docker.html   |
+| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/7.7/docker.html                      |
+| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/7.7/docker.html                    |
+| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/7.7/running-on-docker.html |
 
 ## Kubernetes Versions
 
@@ -35,7 +35,17 @@ While we are checking backward compatibility, the charts are only tested with
 Helm version mentioned in [helm-tester Dockerfile][] (currently 2.16.6).
 Note that we don't support [Helm 3][] version.
 
+## ECK
+
+In addition of these Helm charts, Elastic also provides
+[Elastic Cloud on Kubernetes][] which is based on [Operator pattern][] and is
+Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
+Kubernetes.
+
+
 [currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.7/
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [helm 3]: https://v3.helm.sh
 [helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.7/helpers/helm-tester/Dockerfile
 [helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.7/helpers/matrix.yml
+[operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
