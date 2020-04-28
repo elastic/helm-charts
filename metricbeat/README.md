@@ -14,7 +14,9 @@
   - [Deprecated](#deprecated)
 - [FAQ](#faq)
   - [How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-metricbeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of Metricbeat](#how-to-install-oss-version-of-metricbeat)
+  - [How to install OSS version of Metricbeat?](#how-to-install-oss-version-of-metricbeat)
+  - [How to use Kubelet read-only port instead of secure port?](#how-to-use-kubelet-read-only-port-instead-of-secure-port)
+  - [Why is Metricbeat host.name field set to Kubernetes pod name?](#why-is-metricbeat-hostname-field-set-to-kubernetes-pod-name)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -174,13 +176,38 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of Metricbeat
+### How to install OSS version of Metricbeat?
 
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [Metricbeat OSS Docker image][]
 
 An example of Metricbeat deployment using OSS version can be found in
 [examples/oss][].
+
+### How to use Kubelet read-only port instead of secure port?
+
+Default Metricbeat configuration has been switched to Kubelet secure port
+(10250/TCP) instead of read-only port (10255/TCP) in [#471][] because read-only
+port usage is now discouraged and not enabled by default in most Kubernetes
+configurations.
+
+However, if you need to use read-only port, you can replace
+`hosts: ["https://${NODE_NAME}:10250"]` by `hosts: ["${NODE_NAME}:10255"]` and
+comment `bearer_token_file` and `ssl.verification_mode` in
+`daemonset.metricbeatConfig` in [values.yaml][].
+
+### Why is Metricbeat host.name field set to Kubernetes pod name?
+
+The default Metricbeat configuration is using Metricbeat pod name for
+`agent.hostname` and `host.name` fields. The `hostname` of the Kubernetes nodes
+can be find in `kubernetes.node.name` field. If you would like to have
+`agent.hostname` and `host.name` fields set to the hostname of the nodes, you'll
+need to set `daemonset.hostNetworking` value to true.
+
+Note that enabling [hostNetwork][] make Metricbeat pod use the host network
+namespace which gives it access to the host loopback device, services listening
+on localhost, could be used to snoop on network activity of other pods on the
+same node.
 
 
 ## Contributing
@@ -189,6 +216,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[#471]: https://github.com/elastic/helm-charts/pull/471
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md

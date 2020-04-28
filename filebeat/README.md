@@ -14,6 +14,7 @@
 - [FAQ](#faq)
   - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
   - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
+  - [Why is Filebeat host.name field set to Kubernetes pod name?](#why-is-filebeat-hostname-field-set-to-kubernetes-pod-name)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -154,6 +155,20 @@ Deploying OSS version of Elasticsearch can be done by setting `image` value to
 
 An example of Filebeat deployment using OSS version can be found in
 [examples/oss][].
+
+### Why is Filebeat host.name field set to Kubernetes pod name?
+
+The default Filebeat configuration is using Filebeat pod name for
+`agent.hostname` and `host.name` fields. The `hostname` of the Kubernetes nodes
+can be find in `kubernetes.node.name` field. If you would like to have
+`agent.hostname` and `host.name` fields set to the hostname of the nodes, you'll
+need to set `daemonset.hostNetworking` value to true.
+
+Note that enabling [hostNetwork][] make Filebeat pod use the host network
+namespace which gives it access to the host loopback device, services listening
+on localhost, could be used to snoop on network activity of other pods on the
+same node.
+
 
 ## Contributing
 
