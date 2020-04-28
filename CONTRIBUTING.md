@@ -169,6 +169,21 @@ appropriate.
 * See [Submitting a Pull Request](#submitting-a-pull-request) for more info.
 
 
+## Submitting a Pull Request
+
+Push your local changes to your forked copy of the repository and submit a Pull
+Request. In the Pull Request, describe what your changes do and mention the
+number of the issue where discussion has taken place, e.g., “Closes #123″.
+
+Always submit your pull against `master` unless the bug is only present in an
+older version. If the bug affects both master and another branch say so in your
+pull.
+
+Then sit back and wait. There will probably be discussion about the Pull Request
+and, if any changes are needed, we'll work with you to get your Pull Request
+merged into Kibana.
+
+
 ## Releases
 
 Just like with the rest of the stack, all versions in this helm chart repo are
