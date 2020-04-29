@@ -1,6 +1,6 @@
 # OpenShift
 
-This example deploy a 3 nodes Elasticsearch 7.7.0-SNAPSHOT cluster on [OpenShift][]
+This example deploy a 3 nodes Elasticsearch 6.8.9-SNAPSHOT cluster on [OpenShift][]
 using [custom values][].
 
 ## Usage
@@ -19,6 +19,6 @@ using [custom values][].
 You can also run [goss integration tests][] using `make test`
 
 
-[custom values]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/openshift/values.yaml
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/openshift/test/goss.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/openshift/values.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/openshift/test/goss.yaml
 [openshift]: https://www.openshift.com/

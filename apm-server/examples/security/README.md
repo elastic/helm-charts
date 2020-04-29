@@ -1,6 +1,6 @@
 # Security
 
-This example deploy APM Server 7.7.0-SNAPSHOT using authentication and TLS to connect to
+This example deploy APM Server 6.8.9-SNAPSHOT using authentication and TLS to connect to
 Elasticsearch (see [values][]).
 
 
@@ -23,6 +23,6 @@ Elasticsearch (see [values][]).
 You can also run [goss integration tests][] using `make test`
 
 
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/security/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.7/apm-server/examples/security/test/goss.yaml
-[values]: https://github.com/elastic/helm-charts/tree/7.7/apm-server/examples/security/values.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/security/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/security/test/goss.yaml
+[values]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/security/values.yaml

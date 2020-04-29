@@ -6,7 +6,7 @@
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.7 branch](#using-the-77-branch)
+  - [Using the 6.8 branch](#using-the-68-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -37,27 +37,27 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Installing
 
-This chart is tested with the latest 7.7.0-SNAPSHOT versions.
+This chart is tested with the latest 6.8.9-SNAPSHOT versions.
 
 ### Using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
-`helm install --name logstash elastic/logstash --version=7.7.0`
+* Install the latest 6.8 release:
+`helm install --name logstash elastic/logstash --version=6.8.9`
 
-### Using the 7.7 branch
+### Using the 6.8 branch
 
 * Clone the git repo and checkout the right branch:
 
   ```shell
   git clone git@github.com:elastic/helm-charts.git
   cd helm-charts
-  git checkout -b 7.7 origin/7.7
+  git checkout -b 6.8 origin/6.8
   ````
 
-* Install the latest 7.7.0-SNAPSHOT:
+* Install the latest 6.8.9-SNAPSHOT:
 `helm install --name logstash ./helm-charts/logstash`
 
 
@@ -112,7 +112,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.7.0-SNAPSHOT`                               |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `6.8.9-SNAPSHOT`                               |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
@@ -192,23 +192,23 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[custom docker image]: https://www.elastic.co/guide/en/logstash/7.7/docker-config.html#_custom_images
+[custom docker image]: https://www.elastic.co/guide/en/logstash/6.8/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.7/logstash/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.7/logstash/examples/oss
+[examples]: https://github.com/elastic/helm-charts/tree/6.8/logstash/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/logstash/examples/oss
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[logstash docker image]: https://www.elastic.co/guide/en/logstash/7.7/docker.html
-[logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-7-0-oss
+[logstash docker image]: https://www.elastic.co/guide/en/logstash/6.8/docker.html
+[logstash oss docker image]: https://www.docker.elastic.co/#logstash-6-8-9-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[note]: https://www.elastic.co/guide/en/logstash/7.7/docker-config.html#docker-env-config
-[parent readme]: https://github.com/elastic/helm-charts/tree/7.7/README.md
+[note]: https://www.elastic.co/guide/en/logstash/6.8/docker-config.html#docker-env-config
+[parent readme]: https://github.com/elastic/helm-charts/tree/6.8/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -217,5 +217,5 @@ about our development and testing process.
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.7/logstash/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/6.8/logstash/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage

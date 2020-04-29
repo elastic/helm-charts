@@ -1,6 +1,6 @@
 # MicroK8S
 
-This example deploy a 3 nodes Elasticsearch 7.7.0-SNAPSHOT cluster on [MicroK8S][]
+This example deploy a 3 nodes Elasticsearch 6.8.9-SNAPSHOT cluster on [MicroK8S][]
 using [custom values][].
 
 Note that this configuration should be used for test only and isn't recommended
@@ -28,5 +28,5 @@ The following MicroK8S [addons][] need to be enabled:
 
 
 [addons]: https://microk8s.io/docs/addons
-[custom values]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/microk8s/values.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/microk8s/values.yaml
 [MicroK8S]: https://microk8s.io

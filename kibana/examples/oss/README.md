@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy Kibana 7.7.0-SNAPSHOT using [Kibana OSS][] version.
+This example deploy Kibana 6.8.9-SNAPSHOT using [Kibana OSS][] version.
 
 
 ## Usage
@@ -23,5 +23,5 @@ You can also run [goss integration tests][] using `make test`
 
 
 [kibana oss]: https://www.elastic.co/downloads/kibana-oss
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/oss/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.7/kibana/examples/oss/test/goss.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/oss/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/6.8/kibana/examples/oss/test/goss.yaml

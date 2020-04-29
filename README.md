@@ -1,6 +1,6 @@
 # Elastic Stack Kubernetes Helm Charts
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.7.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.7/)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+6.8.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+6.8/)
 
 This functionality is in beta and is subject to change. The design and code is
 less mature than official GA features and is being provided as-is with no
@@ -16,12 +16,12 @@ added below.
 
 | Chart                                      | Docker documentation                                                            |
 |--------------------------------------------|---------------------------------------------------------------------------------|
-| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/7.7/running-on-docker.html       |
-| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/7.7/docker.html     |
-| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/7.7/running-on-docker.html   |
-| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/7.7/docker.html                      |
-| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/7.7/docker.html                    |
-| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/7.7/running-on-docker.html |
+| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/6.8/running-on-docker.html       |
+| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/6.8/docker.html     |
+| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/6.8/running-on-docker.html   |
+| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/6.8/docker.html                      |
+| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/6.8/docker.html                    |
+| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/6.8/running-on-docker.html |
 
 ## Kubernetes Versions
 
@@ -43,9 +43,9 @@ Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
 Kubernetes.
 
 
-[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.7/
+[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+6.8/
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [helm 3]: https://v3.helm.sh
-[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.7/helpers/helm-tester/Dockerfile
-[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.7/helpers/matrix.yml
+[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/6.8/helpers/helm-tester/Dockerfile
+[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/6.8/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/

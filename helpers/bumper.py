@@ -6,7 +6,6 @@
 #
 # Configurable environment variables:
 # - BUMPER_VERSION_6 overrides the 6.x.x version.
-# - BUMPER_VERSION_7 overrides the 7.x.x version.
 # - BUMPER_USE_STAGING_IMAGES set to "true" causes the
 #   docker.elastic.co/staging/ docker registry namespace to be used.
 #
@@ -20,7 +19,7 @@ import fileinput
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
 versions = {
-    7: os.environ.get("BUMPER_VERSION_7", "7.7.0-SNAPSHOT"),
+    6: os.environ.get("BUMPER_VERSION_6", "6.8.9-SNAPSHOT"),
 }
 
 chart_version = versions[7]
@@ -41,7 +40,7 @@ goss_files = ["*/examples/*/test/goss*.y*ml"]
 # This was happening because strings like 127.0.0.1 match for 7.0.0
 # "7.0.0-alpha1" is also used in elasticsearch upgrade test and so shouldn't
 # been bump
-blacklist = re.compile(r".*127.0.0.1.*|.*7.0.0-alpha1.*")
+blacklist = re.compile(r".*127.0.0.1.*")
 
 print("Updating versions...")
 

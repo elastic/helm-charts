@@ -1,6 +1,6 @@
 # Multi
 
-This example deploy an Elasticsearch 7.7.0-SNAPSHOT cluster composed of 2 different Helm
+This example deploy an Elasticsearch 6.8.9-SNAPSHOT cluster composed of 2 different Helm
 releases:
 
 - `helm-es-multi-master` for the 3 master nodes using [master values][]
@@ -22,6 +22,6 @@ releases:
 You can also run [goss integration tests][] using `make test`
 
 
-[data values]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/multi/data.yaml
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/multi/test/goss.yaml
-[master values]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/multi/master.yaml
+[data values]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/multi/data.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/multi/test/goss.yaml
+[master values]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/multi/master.yaml
