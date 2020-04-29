@@ -13,10 +13,6 @@ http:
       - '"version" : "6.8.9"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"name" : "helm-logstash-default-logstash-0"'
-      - '"status" : "green"'
-      - '"workers" : 1'
-      - '"batch_size" : 125'
-      - '"batch_delay" : 50'
 
 file:
   /usr/share/logstash/config/logstash.yml:
