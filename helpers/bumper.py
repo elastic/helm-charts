@@ -22,7 +22,7 @@ versions = {
     6: os.environ.get("BUMPER_VERSION_6", "6.8.9-SNAPSHOT"),
 }
 
-chart_version = versions[7]
+chart_version = versions[6]
 
 file_patterns = [
     "*/examples/*/*.y*ml",
