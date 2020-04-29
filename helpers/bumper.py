@@ -28,6 +28,7 @@ chart_version = versions[7]
 
 file_patterns = [
     "*/examples/*/*.y*ml",
+    "*/examples/*/README.md",
     "helpers/examples.mk",
     "*/README.md",
     "*/values.y*ml",
@@ -39,7 +40,9 @@ goss_files = ["*/examples/*/test/goss*.y*ml"]
 
 # Anything matching this regex won't have version bumps changed
 # This was happening because strings like 127.0.0.1 match for 7.0.0
-blacklist = re.compile(r".*127.0.0.1.*")
+# "7.0.0-alpha1" is also used in elasticsearch upgrade test and so shouldn't
+# been bump
+blacklist = re.compile(r".*127.0.0.1.*|.*7.0.0-alpha1.*")
 
 print("Updating versions...")
 
