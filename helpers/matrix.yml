@@ -10,7 +10,6 @@ ES_SUITE:
   - multi
   - oss
   - security
-  - upgrade
 KIBANA_SUITE:
   - default
   - oss
