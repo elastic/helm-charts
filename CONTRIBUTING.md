@@ -75,7 +75,7 @@ that will go into the next minor release. For example, if the next minor release
 is `7.8.0`, work for it should go into the `7.x` branch.
 * Past minor release branches are named `{majorVersion}.{minorVersion}`. They
 contain work that will go into the next patch release. For example, if the next
-patch release is `7.7.1`, work for it should go into the `7.7` branch.
+patch release is `7.8.1`, work for it should go into the `7.8` branch.
 * All work is done on feature branches and merged into one of these branches.
 * Where appropriate, we'll backport changes into older release branches.
 
@@ -261,12 +261,12 @@ make goss
 [elastic helm repository]: https://helm.elastic.co
 [github forking model]: https://help.github.com/articles/fork-a-repo/
 [goss]: https://github.com/aelsabbahy/goss/blob/master/docs/manual.md
-[integration test example]: https://github.com/elastic/helm-charts/blob/7.7/elasticsearch/examples/default/test/goss.yaml
+[integration test example]: https://github.com/elastic/helm-charts/blob/7.x/elasticsearch/examples/default/test/goss.yaml
 [integration tests section]: #integration-tests
 [pytest]: https://docs.pytest.org/en/latest/
 [serverspec]: https://serverspec.org
-[templating test example]: https://github.com/elastic/helm-charts/blob/7.7/elasticsearch/tests/elasticsearch_test.py
+[templating test example]: https://github.com/elastic/helm-charts/blob/7.x/elasticsearch/tests/elasticsearch_test.py
 [templating tests section]: #templating-tests
 [release.md]: https://github.com/elastic/helm-charts/blob/master/helpers/release.md
 [releases section]: #releases
-[requirements.txt]: https://github.com/elastic/helm-charts/blob/7.7/requirements.txt
+[requirements.txt]: https://github.com/elastic/helm-charts/blob/7.x/requirements.txt

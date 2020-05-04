@@ -6,7 +6,7 @@
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.7 branch](#using-the-77-branch)
+  - [Using the 7.x branch](#using-the-7x-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -40,27 +40,27 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Installing
 
-This chart is tested with the latest 7.7.0-SNAPSHOT versions.
+This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 
 ### Using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
-`helm install --name metricbeat elastic/metricbeat --version=7.7.0`
+* Install the latest 7.8 release:
+`helm install --name metricbeat elastic/metricbeat --version=7.8.0`
 
-### Using the 7.7 branch
+### Using the 7.x branch
 
 * Clone the git repo and checkout the right branch:
 
   ```shell
   git clone git@github.com:elastic/helm-charts.git
   cd helm-charts
-  git checkout -b 7.7 origin/7.7
+  git checkout -b 7.x origin/7.x
   ````
 
-* Install the latest 7.7.0-SNAPSHOT:
+* Install the latest 7.8.0-SNAPSHOT:
 `helm install --name metricbeat ./helm-charts/metricbeat`
 
 
@@ -123,7 +123,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.7.0-SNAPSHOT`                              |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.8.0-SNAPSHOT`                              |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
@@ -209,29 +209,29 @@ about our development and testing process.
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/README.md#default
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#default
 [cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.7/metricbeat/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.7/metricbeat/examples/oss
-[examples/security]: https://github.com/elastic/helm-charts/tree/7.7/metricbeat/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/security
 [helm]: https://helm.sh
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
-[kube-state-metrics]: https://github.com/helm/charts/tree/7.7/stable/kube-state-metrics
+[kube-state-metrics]: https://github.com/helm/charts/tree/7.x/stable/kube-state-metrics
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/7.7/running-on-docker.html
+[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/7.8/running-on-docker.html
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[parent readme]: https://github.com/elastic/helm-charts/tree/7.7/README.md
+[parent readme]: https://github.com/elastic/helm-charts/tree/7.x/README.md
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.7/metricbeat/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/values.yaml
