@@ -38,11 +38,7 @@ def test_defaults():
             "name": "node.name",
             "valueFrom": {"fieldRef": {"fieldPath": "metadata.name"}},
         },
-        {
-            "name": "cluster.initial_master_nodes",
-            "value": uname + "-0," + uname + "-1," + uname + "-2,",
-        },
-        {"name": "discovery.seed_hosts", "value": uname + "-headless"},
+        {"name": "discovery.zen.ping.unicast.hosts", "value": uname + "-headless"},
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
         {"name": "ES_JAVA_OPTS", "value": "-Xmx1g -Xms1g"},
@@ -211,54 +207,6 @@ nodeGroup: "data"
         "name": "discovery.zen.ping.unicast.hosts",
         "value": "custom-master-headless",
     } in env
-
-
-def test_set_initial_master_nodes_when_using_v_7():
-    config = """
-esMajorVersion: 7
-roles:
-  master: "true"
-"""
-    r = helm_template(config)
-    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
-    assert {
-        "name": "cluster.initial_master_nodes",
-        "value": "elasticsearch-master-0,"
-        + "elasticsearch-master-1,"
-        + "elasticsearch-master-2,",
-    } in env
-
-    for e in env:
-        assert e["name"] != "discovery.zen.minimum_master_nodes"
-
-
-def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
-    config = """
-esMajorVersion: 7
-roles:
-  master: "false"
-"""
-    r = helm_template(config)
-    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
-    for e in env:
-        assert e["name"] != "cluster.initial_master_nodes"
-
-
-def test_set_discovery_seed_host_when_using_v_7():
-    config = """
-esMajorVersion: 7
-roles:
-  master: "true"
-"""
-    r = helm_template(config)
-    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
-    assert {
-        "name": "discovery.seed_hosts",
-        "value": "elasticsearch-master-headless",
-    } in env
-
-    for e in env:
-        assert e["name"] != "discovery.zen.ping.unicast.hosts"
 
 
 def test_enabling_machine_learning_role():
@@ -908,26 +856,26 @@ def test_esMajorVersion_detect_default_version():
     config = ""
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
 
 
-def test_esMajorVersion_default_to_7_if_not_elastic_image():
+def test_esMajorVersion_default_to_6_if_not_elastic_image():
     config = """
     image: notElastic
     imageTag: 1.0.0
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
 
 
-def test_esMajorVersion_default_to_7_if_no_version_is_found():
+def test_esMajorVersion_default_to_6_if_no_version_is_found():
     config = """
     imageTag: not_a_number
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
 
 
 def test_esMajorVersion_set_to_6_based_on_image_tag():
@@ -937,16 +885,6 @@ def test_esMajorVersion_set_to_6_based_on_image_tag():
 
     r = helm_template(config)
     assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
-
-
-def test_esMajorVersion_always_wins():
-    config = """
-    esMajorVersion: 7
-    imageTag: 6.0.0
-    """
-
-    r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
 
 
 def test_esMajorVersion_parse_image_tag_for_oss_image():

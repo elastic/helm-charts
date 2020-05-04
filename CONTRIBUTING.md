@@ -261,12 +261,12 @@ make goss
 [elastic helm repository]: https://helm.elastic.co
 [github forking model]: https://help.github.com/articles/fork-a-repo/
 [goss]: https://github.com/aelsabbahy/goss/blob/master/docs/manual.md
-[integration test example]: https://github.com/elastic/helm-charts/blob/7.7/elasticsearch/examples/default/test/goss.yaml
+[integration test example]: https://github.com/elastic/helm-charts/blob/6.8/elasticsearch/examples/default/test/goss.yaml
 [integration tests section]: #integration-tests
 [pytest]: https://docs.pytest.org/en/latest/
 [serverspec]: https://serverspec.org
-[templating test example]: https://github.com/elastic/helm-charts/blob/7.7/elasticsearch/tests/elasticsearch_test.py
+[templating test example]: https://github.com/elastic/helm-charts/blob/6.8/elasticsearch/tests/elasticsearch_test.py
 [templating tests section]: #templating-tests
 [release.md]: https://github.com/elastic/helm-charts/blob/master/helpers/release.md
 [releases section]: #releases
-[requirements.txt]: https://github.com/elastic/helm-charts/blob/7.7/requirements.txt
+[requirements.txt]: https://github.com/elastic/helm-charts/blob/6.8/requirements.txt
