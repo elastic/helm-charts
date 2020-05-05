@@ -3,7 +3,7 @@ replicas: 1
 
 # Allows you to add any config files in /usr/share/logstash/config/
 # such as logstash.yml and log4j2.properties
-# 
+#
 # Note that when overriding logstash.yml, `http.host: 0.0.0.0` should always be included
 # to make default probes work.
 logstashConfig: {}
@@ -43,7 +43,7 @@ envFrom: []
 secretMounts: []
 
 image: "docker.elastic.co/logstash/logstash"
-imageTag: "7.7.0-SNAPSHOT"
+imageTag: "7.8.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -163,9 +163,9 @@ securityContext:
 terminationGracePeriod: 120
 
 # Probes
-# Default probes are using `httpGet` which requires that `http.host: 0.0.0.0` is part of 
+# Default probes are using `httpGet` which requires that `http.host: 0.0.0.0` is part of
 # `logstash.yml`. If needed probes can be disabled or overrided using the following syntaxes:
-# 
+#
 # disable livenessProbe
 # livenessProbe: null
 #

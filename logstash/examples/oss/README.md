@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy Logstash 7.7.0-SNAPSHOT using [Logstash OSS][] version.
+This example deploy Logstash 7.8.0-SNAPSHOT using [Logstash OSS][] version.
 
 
 ## Usage
@@ -14,4 +14,4 @@ You can also run [goss integration tests][] using `make test`
 
 
 [logstash oss]: https://www.elastic.co/downloads/logstash-oss
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.7/logstash/examples/oss/test/goss.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples/oss/test/goss.yaml

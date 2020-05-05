@@ -1,6 +1,6 @@
 # Minikube
 
-This example deploy a 3 nodes Elasticsearch 7.7.0-SNAPSHOT cluster on [Minikube][]
+This example deploy a 3 nodes Elasticsearch 7.8.0-SNAPSHOT cluster on [Minikube][]
 using [custom values][].
 
 If helm or kubectl timeouts occur, you may consider creating a minikube VM with
@@ -34,5 +34,5 @@ minikube addons enable storage-provisioner
   ```
 
 
-[custom values]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/minikube/values.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/minikube/values.yaml
 [minikube]: https://minikube.sigs.k8s.io/docs/
