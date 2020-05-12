@@ -6,7 +6,7 @@ version, then upgrade it to 7.7.0 version.
 
 ## Usage
 
-Running `make install` command will do both 7.0.0-alpha1 install and 7.6.2
+Running `make install` command will do both 7.0.0-alpha1 install and 7.7.0
 upgrade
 
 

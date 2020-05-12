@@ -149,7 +149,7 @@ volumeClaimTemplate:
 [#540]: https://github.com/elastic/helm-charts/pull/540
 [#568]: https://github.com/elastic/helm-charts/pull/568
 [#572]: https://github.com/elastic/helm-charts/pull/572
-[container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html)
+[container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
