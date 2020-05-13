@@ -25,12 +25,12 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-6.8.9'
+      - 'metricbeat-7.7.0'
   http://oss-master:9200/_search?q=metricset.name:container:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-6.8.9'
+      - 'metricbeat-7.7.0'
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
@@ -44,4 +44,4 @@ command:
     exit-status: 0
     stdout:
       - 'elasticsearch: http://oss-master:9200'
-      - 'version: 6.8.9'
+      - 'version: 7.7.0'

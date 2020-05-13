@@ -1,6 +1,6 @@
 # Default
 
-This example deploy Filebeat 6.8.9-SNAPSHOT using [default values][].
+This example deploy Filebeat 7.7.0 using [default values][].
 
 
 ## Usage
