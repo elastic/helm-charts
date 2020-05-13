@@ -61,8 +61,8 @@ for major, version in versions.iteritems():
         for f in glob.glob(pattern):
             print(f)
             for line in fileinput.input([f], inplace=True):
-                # If we have a version with a build id, like 7.6.2-abcdabcd,
-                # strip off the latter part and only use the 7.6.2 in the goss
+                # If we have a version with a build id, like 6.8.9-abcdabcd,
+                # strip off the latter part and only use the 6.8.9 in the goss
                 # tests
                 version_without_build_id = re.sub(r"-.*", "", version)
                 if re.match(blacklist, line):

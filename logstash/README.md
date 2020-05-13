@@ -1,12 +1,25 @@
 # Logstash Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Logstash Docker image][].
+
+**Warning**: This functionality is in beta and is subject to change.
+The design and code is less mature than official GA features and is being
+provided as-is with no warranties. Alpha features are not subject to the support
+SLA of official GA features (see [supported configurations][] for more details).
+
+**Warning**: This branch is used for development, please use [6.8.9][] release
+for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using the 6.8 branch](#using-the-68-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 6.8 branch and 6.8.10-SNAPSHOT versions](#install-development-version-using-68-branch-and-6810-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -20,45 +33,32 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Logstash Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.8
+
+See [supported configurations][] for more details.
 
 
 ## Installing
 
 This chart is tested with the latest 6.8.10-SNAPSHOT versions.
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install the latest 6.8 release:
-`helm install --name logstash elastic/logstash --version=6.8.10-SNAPSHOT`
+`helm install --name logstash elastic/logstash`
+* Install it: `helm install --name logstash elastic/logstash`
 
-### Using the 6.8 branch
+### Install development version using 6.8 branch and 6.8.10-SNAPSHOT versions
 
-* Clone the git repo and checkout the right branch:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```shell
-  git clone git@github.com:elastic/helm-charts.git
-  cd helm-charts
-  git checkout -b 6.8 origin/6.8
-  ````
-
-* Install the latest 6.8.10-SNAPSHOT:
-`helm install --name logstash ./helm-charts/logstash`
+* Install it: `helm install --name logstash ./helm-charts/logstash`
 
 
 ## Upgrading
@@ -185,6 +185,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[6.8.9]: https://github.com/elastic/helm-charts/blob/6.8.9/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -208,13 +209,13 @@ about our development and testing process.
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/6.8/docker-config.html#docker-env-config
-[parent readme]: https://github.com/elastic/helm-charts/tree/6.8/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/6.8/README.md#supported-configurations
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [values.yaml]: https://github.com/elastic/helm-charts/tree/6.8/logstash/values.yaml
