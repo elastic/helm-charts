@@ -40,7 +40,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Installing
 
-This chart is tested with the latest 6.8.9-SNAPSHOT versions.
+This chart is tested with the latest 6.8.10-SNAPSHOT versions.
 
 ### Using Helm repository
 
@@ -48,7 +48,7 @@ This chart is tested with the latest 6.8.9-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install the latest 6.8 release:
-`helm install --name metricbeat elastic/metricbeat --version=6.8.9`
+`helm install --name metricbeat elastic/metricbeat --version=6.8.10-SNAPSHOT`
 
 ### Using the 6.8 branch
 
@@ -60,7 +60,7 @@ This chart is tested with the latest 6.8.9-SNAPSHOT versions.
   git checkout -b 6.8 origin/6.8
   ````
 
-* Install the latest 6.8.9-SNAPSHOT:
+* Install the latest 6.8.10-SNAPSHOT:
 `helm install --name metricbeat ./helm-charts/metricbeat`
 
 
@@ -123,7 +123,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `6.8.9-SNAPSHOT`                              |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `6.8.10-SNAPSHOT`                              |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
