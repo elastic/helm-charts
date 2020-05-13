@@ -86,7 +86,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`           | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
-| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `7.7.0`                            |
+| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `6.8.9`                            |
 | `image`                  | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
 | `labels`                 | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
 | `livenessProbe`          | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
@@ -143,7 +143,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/filebeat/README.md
+[6.8.9]: https://github.com/elastic/helm-charts/blob/6.8.9/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -169,7 +169,7 @@ about our development and testing process.
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.7/README.md#supported-configurations
+[supported configurations]: https://github.com/elastic/helm-charts/tree/6.8/README.md#supported-configurations
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy

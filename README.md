@@ -34,7 +34,7 @@ added below.
 
 ## Supported Configurations
 
-Starting with 7.7.0 release, some charts are reaching GA.
+Starting with 6.8.9 release, some charts are reaching GA.
 
 Note that only the released charts coming from [Elastic Helm repo][] or
 [GitHub releases][] are supported.

@@ -108,7 +108,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.7.0`                                         |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `6.8.9`                                         |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
@@ -370,7 +370,7 @@ about our development and testing process.
 
 
 [#63]: https://github.com/elastic/helm-charts/issues/63
-[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/elasticsearch/README.md
+[6.8.9]: https://github.com/elastic/helm-charts/blob/6.8.9/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -422,7 +422,7 @@ about our development and testing process.
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
 [nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[openshift]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/openshift
+[openshift]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -431,10 +431,10 @@ about our development and testing process.
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
 [snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
-[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.7/repository.html
-[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-snapshots.html
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.7/README.md#supported-configurations
-[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/vm-max-map-count.html#vm-max-map-count
+[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/6.8/repository.html
+[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-snapshots.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/6.8/README.md#supported-configurations
+[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/vm-max-map-count.html#vm-max-map-count
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [transport port configuration]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-transport.html#_transport_settings
