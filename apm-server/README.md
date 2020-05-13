@@ -12,8 +12,6 @@ SLA of official GA features (see [supported configurations][] for more details).
 for released version.
 
 
-
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
