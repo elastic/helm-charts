@@ -38,7 +38,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Installing
 
-This chart is tested with the latest 7.7.0-SNAPSHOT versions.
+This chart is tested with the latest 7.7.0 versions.
 
 ### Using Helm repository
 
@@ -58,7 +58,7 @@ This chart is tested with the latest 7.7.0-SNAPSHOT versions.
   git checkout -b 7.7 origin/7.7
   ````
 
-* Install the latest 7.7.0-SNAPSHOT:
+* Install the latest 7.7.0:
 `helm install --name filebeat ./helm-charts/filebeat`
 
 
@@ -107,7 +107,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`           | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
-| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `7.7.0-SNAPSHOT`                            |
+| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `7.7.0`                            |
 | `image`                  | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
 | `labels`                 | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
 | `livenessProbe`          | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
