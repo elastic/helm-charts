@@ -54,6 +54,10 @@ Metricbeat is now using dedicated values for daemonset and deployment config.
 The old values are still working but are now deprecated. See [#572][] for more
 details.
 
+## 6.8.9 - 2020/05/13
+
+See [7.7.0 Breaking changes](#770---20200513)
+
 
 ## 7.6.2 - 2020/03/31
 
