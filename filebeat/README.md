@@ -37,11 +37,20 @@ See [supported configurations][] for more details.
 
 ## Installing
 
+This chart is tested with the latest 7.7.1-SNAPSHOT versions.
+
+### Install released version using Helm repository
+
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
-`helm install --name apm-server elastic/apm-server`
+* Install it: `helm install --name filebeat elastic/filebeat`
+
+### Install development version using 7.7 branch and 7.7.1-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it: `helm install --name filebeat ./helm-charts/filebeat`
 
 
 ## Upgrading
