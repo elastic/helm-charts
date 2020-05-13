@@ -31,7 +31,7 @@ are supported by Elastic following these limitations:
 - only released charts coming from [Elastic Helm repo][] or
 [GitHub releases][] are supported.
 - released charts are only supported when using the same chart version and
-application version (ie: using 7.70.0 chart with 6.8.8 or 7.6.2 application is
+application version (ie: using 7.7.0 chart with 6.8.8 or 7.6.2 application is
 not supported).
 
 ### New branching model
