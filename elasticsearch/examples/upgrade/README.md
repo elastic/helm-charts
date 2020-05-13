@@ -1,12 +1,12 @@
 # Upgrade
 
 This example deploy a 3 nodes Elasticsearch cluster using [7.0.0-alpha1][] chart
-version, then upgrade it to 7.6.2 version.
+version, then upgrade it to 7.7.0 version.
 
 
 ## Usage
 
-Running `make install` command will do both 7.0.0-alpha1 install and 7.6.2
+Running `make install` command will do both 7.0.0-alpha1 install and 7.7.0
 upgrade
 
 

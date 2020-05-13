@@ -1,12 +1,24 @@
 # Logstash Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Logstash Docker image][].
+
+**Warning**: This functionality is in beta and is subject to change.
+The design and code is less mature than official GA features and is being
+provided as-is with no warranties. Alpha features are not subject to the support
+SLA of official GA features (see [supported configurations][] for more details).
+
+**Warning**: This branch is used for development, please use [7.7.0][] release
+for released version.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using master branch](#using-master-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using master branch](#install-development-version-using-master-branch)
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
@@ -21,35 +33,27 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Logstash Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.8
 
+See [supported configurations][] for more details.
 
 ## Installing
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it: `helm install --name logstash elastic/logstash`
 
-### Using master branch
+### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name logstash ./helm-charts/logstash`
+* Install it: `helm install --name logstash ./helm-charts/logstash  --set imageTag=7.7.0`
 
 
 ## Upgrading
@@ -65,17 +69,17 @@ versions are:
 
 | 6.x   | 7.x   |
 |-------|-------|
-| 6.8.8 | 7.6.2 |
+| 6.8.8 | 7.7.0 |
 
 Examples of installing older major versions can be found in the [examples][]
 directory.
 
 While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag` To install version `7.6.2` of
+or new releases by overriding the `imageTag` To install version `7.7.0` of
 Logstash it would look like this:
 
 ```
-helm install --name logstash elastic/logstash --set imageTag=7.6.2
+helm install --name logstash elastic/logstash --set imageTag=7.7.0
 ```
 
 ## Usage notes
@@ -123,7 +127,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.6.2`                               |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.7.0`                               |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
@@ -196,6 +200,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -214,18 +219,18 @@ about our development and testing process.
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
-[logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-6-2-oss
+[logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-7-0-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#docker-env-config
-[parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [values.yaml]: https://github.com/elastic/helm-charts/tree/master/logstash/values.yaml

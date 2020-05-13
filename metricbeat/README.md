@@ -1,12 +1,19 @@
 # Metricbeat Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Metricbeat Docker image][].
+
+**Warning**: This branch is used for development, please use [7.7.0][] release
+for supported version.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using master branch](#using-master-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using master branch](#install-development-version-using-master-branch)
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
@@ -24,35 +31,28 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Metricbeat Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.9
+
+See [supported configurations][] for more details.
 
 
 ## Installing
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it: `helm install --name metricbeat elastic/metricbeat`
 
-### Using master branch
+### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name metricbeat ./helm-charts/metricbeat`
+* Install it: `helm install --name metricbeat ./helm-charts/metricbeat  --set imageTag=7.7.0`
 
 
 ## Upgrading
@@ -68,17 +68,17 @@ versions are:
 
 | 6.x   | 7.x   |
 |-------|-------|
-| 6.8.8 | 7.6.2 |
+| 6.8.8 | 7.7.0 |
 
 Examples of installing older major versions can be found in the [examples][]
 directory.
 
 While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag` To install version `7.6.2` of
+or new releases by overriding the `imageTag` To install version `7.7.0` of
 Metricbeat it would look like this:
 
 ```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.2
+helm install --name metricbeat elastic/metricbeat --set imageTag=7.7.0
 ```
 
 
@@ -135,7 +135,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.6.2`                              |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.7.0`                              |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
@@ -217,6 +217,7 @@ about our development and testing process.
 
 
 [#471]: https://github.com/elastic/helm-charts/pull/471
+[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -240,11 +241,11 @@ about our development and testing process.
 [metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy
 [values.yaml]: https://github.com/elastic/helm-charts/tree/master/metricbeat/values.yaml

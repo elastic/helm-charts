@@ -1,12 +1,19 @@
 # Elasticsearch Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Elasticsearch Docker image][].
+
+**Warning**: This branch is used for development, please use [7.7.0][] release
+for supported version.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using master branch](#using-master-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using master branch](#install-development-version-using-master-branch)
 - [Upgrading](#upgrading)
 - [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
@@ -33,39 +40,32 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Elasticsearch Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.8
 * Minimum cluster requirements include the following to run this chart with
 default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
   * 1GB of RAM for the JVM heap
 
+See [supported configurations][] for more details.
+
 
 ## Installing
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it: `helm install --name elasticsearch elastic/elasticsearch`
 
-### Using master branch
+### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch`
+* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch  --set imageTag=7.7.0`
 
 
 ## Upgrading
@@ -81,17 +81,17 @@ versions are:
 
 | 6.x   | 7.x   |
 |-------|-------|
-| 6.8.8 | 7.6.2 |
+| 6.8.8 | 7.7.0 |
 
 Examples of installing older major versions can be found in the [examples][]
 directory.
 
 While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag`. To install version `7.6.2` of
+or new releases by overriding the `imageTag`. To install version `7.7.0` of
 Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.6.2
+helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.7.0
 ```
 
 
@@ -141,7 +141,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.6.2`                                         |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.7.0`                                         |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
@@ -402,10 +402,11 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[#63]: https://github.com/elastic/helm-charts/issues/63
+[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
-[#63]: https://github.com/elastic/helm-charts/issues/63
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -419,7 +420,7 @@ about our development and testing process.
 [docker for mac]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/docker-for-mac
 [elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-[elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-7-6-2-oss
+[elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-7-7-0-oss
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/
@@ -455,7 +456,6 @@ about our development and testing process.
 [nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [openshift]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift
-[parent readme]: https://github.com/elastic/helm-charts/tree/master/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -466,6 +466,7 @@ about our development and testing process.
 [snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
 [snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/current/repository.html
 [snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
 [sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html#vm-max-map-count
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

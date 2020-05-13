@@ -3,81 +3,145 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [7.6.2 - 2020/03/31](#762---20200331)
+- [7.7.0 - 2020/05/13](#770---20200513)
   - [APM Server](#apm-server)
   - [Elasticsearch](#elasticsearch)
   - [Filebeat](#filebeat)
   - [Kibana](#kibana)
   - [Logstash](#logstash)
-- [7.6.1 - 2020/03/04](#761---20200304)
+  - [Metricbeat](#metricbeat)
+- [7.6.2 - 2020/03/31](#762---20200331)
   - [APM Server](#apm-server-1)
   - [Elasticsearch](#elasticsearch-1)
-- [7.6.0 - 2020/02/11](#760---20200211)
-  - [APM Server](#apm-server-2)
-  - [Elasticsearch](#elasticsearch-2)
   - [Filebeat](#filebeat-1)
   - [Kibana](#kibana-1)
   - [Logstash](#logstash-1)
-  - [Metricbeat](#metricbeat)
-- [7.5.2 - 2020/01/21](#752---20200121)
+- [7.6.1 - 2020/03/04](#761---20200304)
+  - [APM Server](#apm-server-2)
+  - [Elasticsearch](#elasticsearch-2)
+- [7.6.0 - 2020/02/11](#760---20200211)
+  - [APM Server](#apm-server-3)
   - [Elasticsearch](#elasticsearch-3)
   - [Filebeat](#filebeat-2)
   - [Kibana](#kibana-2)
   - [Logstash](#logstash-2)
   - [Metricbeat](#metricbeat-1)
-- [7.5.1 - 2019/12/18](#751---20191218)
+- [7.5.2 - 2020/01/21](#752---20200121)
+  - [Elasticsearch](#elasticsearch-4)
   - [Filebeat](#filebeat-3)
   - [Kibana](#kibana-3)
+  - [Logstash](#logstash-3)
   - [Metricbeat](#metricbeat-2)
-- [7.5.0 - 2019/12/02](#750---20191202)
-  - [Elasticsearch](#elasticsearch-4)
+- [7.5.1 - 2019/12/18](#751---20191218)
   - [Filebeat](#filebeat-4)
   - [Kibana](#kibana-4)
-  - [Logstash](#logstash-3)
   - [Metricbeat](#metricbeat-3)
-- [7.4.1 - 2019/10/23](#741---20191023)
+- [7.5.0 - 2019/12/02](#750---20191202)
   - [Elasticsearch](#elasticsearch-5)
+  - [Filebeat](#filebeat-5)
   - [Kibana](#kibana-5)
+  - [Logstash](#logstash-4)
   - [Metricbeat](#metricbeat-4)
-- [7.4.0 - 2019/10/01](#740---20191001)
+- [7.4.1 - 2019/10/23](#741---20191023)
   - [Elasticsearch](#elasticsearch-6)
   - [Kibana](#kibana-6)
-  - [Filebeat](#filebeat-5)
   - [Metricbeat](#metricbeat-5)
-- [7.3.2 - 2019/09/19](#732---20190919)
+- [7.4.0 - 2019/10/01](#740---20191001)
   - [Elasticsearch](#elasticsearch-7)
   - [Kibana](#kibana-7)
   - [Filebeat](#filebeat-6)
   - [Metricbeat](#metricbeat-6)
-- [7.3.0 - 2019/07/31](#730---20190731)
+- [7.3.2 - 2019/09/19](#732---20190919)
   - [Elasticsearch](#elasticsearch-8)
   - [Kibana](#kibana-8)
-- [7.2.1-0 - 2019/07/18](#721-0---20190718)
-  - [Elasticsearch](#elasticsearch-9)
-  - [Kibana](#kibana-9)
   - [Filebeat](#filebeat-7)
   - [Metricbeat](#metricbeat-7)
-- [7.2.0 - 2019/07/01](#720---20190701)
+- [7.3.0 - 2019/07/31](#730---20190731)
+  - [Elasticsearch](#elasticsearch-9)
+  - [Kibana](#kibana-9)
+- [7.2.1-0 - 2019/07/18](#721-0---20190718)
   - [Elasticsearch](#elasticsearch-10)
   - [Kibana](#kibana-10)
   - [Filebeat](#filebeat-8)
-- [7.1.1 - 2019/06/07](#711---20190607)
+  - [Metricbeat](#metricbeat-8)
+- [7.2.0 - 2019/07/01](#720---20190701)
   - [Elasticsearch](#elasticsearch-11)
   - [Kibana](#kibana-11)
   - [Filebeat](#filebeat-9)
-- [7.1.0 - 2019/05/21](#710---20190521)
+- [7.1.1 - 2019/06/07](#711---20190607)
   - [Elasticsearch](#elasticsearch-12)
   - [Kibana](#kibana-12)
   - [Filebeat](#filebeat-10)
-- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
+- [7.1.0 - 2019/05/21](#710---20190521)
   - [Elasticsearch](#elasticsearch-13)
   - [Kibana](#kibana-13)
-- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Filebeat](#filebeat-11)
+- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
   - [Elasticsearch](#elasticsearch-14)
+  - [Kibana](#kibana-14)
+- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Elasticsearch](#elasticsearch-15)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
+
+## 7.7.0 - 2020/05/13
+
+* 7.7.0 as the default stack version
+* Using [new branching model](https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md#branching) in [#541](https://github.com/elastic/helm-charts/pull/541) [@mgreau](https://github.com/mgreau)
+* Helm 2.16.7 support in [#607](https://github.com/elastic/helm-charts/pull/607) [@jmlrt](https://github.com/jmlrt)
+* Docs improvements in [#593](https://github.com/elastic/helm-charts/pull/593) and [#598](https://github.com/elastic/helm-charts/pull/598) [@jmlrt](https://github.com/jmlrt)
+* Tests with SNAPSHOT Docker images in [#581](https://github.com/elastic/helm-charts/pull/581) [@mgreau](https://github.com/mgreau)
+* Version bumping script enhancements in [#601](https://github.com/elastic/helm-charts/pull/601) [@jmlrt](https://github.com/jmlrt)
+
+
+### APM Server
+
+| PR                                                      | Author                                                 | Title                   |
+|---------------------------------------------------------|--------------------------------------------------------|-------------------------|
+| [#569](https://github.com/elastic/helm-charts/pull/569) | [@cartonalexandre](https://github.com/cartonalexandre) | Add support for envFrom |
+
+### Elasticsearch
+
+| PR                                                      | Author                                                 | Title                                             |
+|---------------------------------------------------------|--------------------------------------------------------|---------------------------------------------------|
+| [#522](https://github.com/elastic/helm-charts/pull/522) | [@domgoodwin](https://github.com/domgoodwin)           | Update defaults for extra values to support lists |
+| [#569](https://github.com/elastic/helm-charts/pull/569) | [@cartonalexandre](https://github.com/cartonalexandre) | Add support for envFrom                           |
+| [#583](https://github.com/elastic/helm-charts/pull/583) | [@Conky5](https://github.com/Conky5)                   | Use busybox for key generation in testing         |
+| [#584](https://github.com/elastic/helm-charts/pull/584) | [@michelesr](https://github.com/michelesr)             | Set securityContext for test pod                  |
+| [#586](https://github.com/elastic/helm-charts/pull/586) | [@jmlrt](https://github.com/jmlrt)                     | Update readiness probe endpoint                   |
+| [#590](https://github.com/elastic/helm-charts/pull/590) | [@marcostvz](https://github.com/marcostvz)             | Adds imagePullSecrets for test Pod                |
+
+### Filebeat
+
+| PR                                                      | Author                             | Title                 |
+|---------------------------------------------------------|------------------------------------|-----------------------|
+| [#568](https://github.com/elastic/helm-charts/pull/568) | [@jmlrt](https://github.com/jmlrt) | Filebeat improvements |
+
+### Kibana
+
+| PR                                                      | Author                                                 | Title                                       |
+|---------------------------------------------------------|--------------------------------------------------------|---------------------------------------------|
+| [#549](https://github.com/elastic/helm-charts/pull/549) | [@kuisathaverat](https://github.com/kuisathaverat)     | Fix allow redirection on the readinessProbe |
+| [#583](https://github.com/elastic/helm-charts/pull/583) | [@Conky5](https://github.com/Conky5)                   | Use busybox for key generation in testing   |
+| [#569](https://github.com/elastic/helm-charts/pull/569) | [@cartonalexandre](https://github.com/cartonalexandre) | Add support for envFrom                     |
+
+### Logstash
+
+| PR                                                      | Author                                                 | Title                                           |
+|---------------------------------------------------------|--------------------------------------------------------|-------------------------------------------------|
+| [#569](https://github.com/elastic/helm-charts/pull/569) | [@cartonalexandre](https://github.com/cartonalexandre) | Add support for envFrom                         |
+| [#591](https://github.com/elastic/helm-charts/pull/591) | [@jmlrt](https://github.com/jmlrt)                     | Update doc and values.yaml for http.host issues |
+
+### Metricbeat
+
+| PR                                                      | Author                             | Title                                     |
+|---------------------------------------------------------|------------------------------------|-------------------------------------------|
+| [#567](https://github.com/elastic/helm-charts/pull/567) | [@jmlrt](https://github.com/jmlrt) | Metricbeat improvements                   |
+| [#572](https://github.com/elastic/helm-charts/pull/572) | [@jmlrt](https://github.com/jmlrt) | Split values for daemonset and deployment |
+| [#585](https://github.com/elastic/helm-charts/pull/585) | [@jmlrt](https://github.com/jmlrt) | Add host networking option                |
 
 
 ## 7.6.2 - 2020/03/31
@@ -92,38 +156,38 @@
 
 ### APM Server
 
-| PR                                                     | Author                                 | Title                          |
-| ------------------------------------------------------ | -------------------------------------- | ------------------------------ |
-|[#508](https://github.com/elastic/helm-charts/pull/508) | [@kawat55](https://github.com/kawat55) | Fix `fullnameOverride` setting |
-|[#509](https://github.com/elastic/helm-charts/pull/509) | [@qqshfox](https://github.com/qqshfox) | Fix `apiVersion` of HPA        |
+| PR                                                      | Author                                 | Title                          |
+|---------------------------------------------------------|----------------------------------------|--------------------------------|
+| [#508](https://github.com/elastic/helm-charts/pull/508) | [@kawat55](https://github.com/kawat55) | Fix `fullnameOverride` setting |
+| [#509](https://github.com/elastic/helm-charts/pull/509) | [@qqshfox](https://github.com/qqshfox) | Fix `apiVersion` of HPA        |
 
 ### Elasticsearch
 
-| PR                                                     | Author                                               | Title                                                         |
-| ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------- |
-|[#485](https://github.com/elastic/helm-charts/pull/485) | [@mschmidt291](https://github.com/mschmidt291)       | Add possibility to define custom `readinessProbe`             |
-|[#517](https://github.com/elastic/helm-charts/pull/517) | [@maksim-m](https://github.com/maksim-m)             | Add namespace parameter to the test function to `NOTES.txt`   |
-|[#539](https://github.com/elastic/helm-charts/pull/539) | [@adulescentulus](https://github.com/adulescentulus) | Add `loadBalancerIP` option to service                        |
+| PR                                                      | Author                                               | Title                                                       |
+|---------------------------------------------------------|------------------------------------------------------|-------------------------------------------------------------|
+| [#485](https://github.com/elastic/helm-charts/pull/485) | [@mschmidt291](https://github.com/mschmidt291)       | Add possibility to define custom `readinessProbe`           |
+| [#517](https://github.com/elastic/helm-charts/pull/517) | [@maksim-m](https://github.com/maksim-m)             | Add namespace parameter to the test function to `NOTES.txt` |
+| [#539](https://github.com/elastic/helm-charts/pull/539) | [@adulescentulus](https://github.com/adulescentulus) | Add `loadBalancerIP` option to service                      |
 
 ### Filebeat
 
-| PR                                                     | Author                                   | Title                                                       |
-| ------------------------------------------------------ | ---------------------------------------- | ----------------------------------------------------------- |
-|[#530](https://github.com/elastic/helm-charts/pull/530) | [@flaper87](https://github.com/flaper87) | Accept a string as `extraInitContainers` value for Filebeat |
+| PR                                                      | Author                                   | Title                                                       |
+|---------------------------------------------------------|------------------------------------------|-------------------------------------------------------------|
+| [#530](https://github.com/elastic/helm-charts/pull/530) | [@flaper87](https://github.com/flaper87) | Accept a string as `extraInitContainers` value for Filebeat |
 
 ### Kibana
 
-| PR                                                     | Author                                   | Title                                                                                  |
-| ------------------------------------------------------ | ---------------------------------------- | -------------------------------------------------------------------------------------- |
-|[#493](https://github.com/elastic/helm-charts/pull/493) | [@jamoflaw](https://github.com/jamoflaw) | Fix Mismatch Between Service Selector and Pod Labels when using Helm Aliases in Kibana |
-|[#540](https://github.com/elastic/helm-charts/pull/540) | [@jmlrt](https://github.com/jmlrt)       | Optimize Kibana memory usage                                                           |
+| PR                                                      | Author                                   | Title                                                                                  |
+|---------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------|
+| [#493](https://github.com/elastic/helm-charts/pull/493) | [@jamoflaw](https://github.com/jamoflaw) | Fix Mismatch Between Service Selector and Pod Labels when using Helm Aliases in Kibana |
+| [#540](https://github.com/elastic/helm-charts/pull/540) | [@jmlrt](https://github.com/jmlrt)       | Optimize Kibana memory usage                                                           |
 
 ### Logstash
 
-| PR                                                     | Author                                               | Title                                          |
-| ------------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------- |
-|[#500](https://github.com/elastic/helm-charts/pull/500) | [@zeph](https://github.com/zeph)                     | Add warn to override Logstash default pipeline |
-|[#505](https://github.com/elastic/helm-charts/pull/505) | [@ChiefAlexander](https://github.com/ChiefAlexander) | Update Logstash chart to support custom ports  |
+| PR                                                      | Author                                               | Title                                          |
+|---------------------------------------------------------|------------------------------------------------------|------------------------------------------------|
+| [#500](https://github.com/elastic/helm-charts/pull/500) | [@zeph](https://github.com/zeph)                     | Add warn to override Logstash default pipeline |
+| [#505](https://github.com/elastic/helm-charts/pull/505) | [@ChiefAlexander](https://github.com/ChiefAlexander) | Update Logstash chart to support custom ports  |
 
 ## 7.6.1 - 2020/03/04
 
@@ -131,15 +195,15 @@
 
 ### APM Server
 
-| PR                                                     | Author                                   | Title             |
-| ------------------------------------------------------ | ---------------------------------------- | ----------------- |
-|[#479](https://github.com/elastic/helm-charts/pull/479) | [@vhatsura](https://github.com/vhatsura) | Fix template name |
+| PR                                                      | Author                                   | Title             |
+|---------------------------------------------------------|------------------------------------------|-------------------|
+| [#479](https://github.com/elastic/helm-charts/pull/479) | [@vhatsura](https://github.com/vhatsura) | Fix template name |
 
 ### Elasticsearch
 
-| PR                                                     | Author                                 | Title                                   |
-| ------------------------------------------------------ | -------------------------------------- | --------------------------------------- |
-|[#483](https://github.com/elastic/helm-charts/pull/483) | [@ta-ando](https://github.com/ta-ando) | Ad support for loadBalancerSourceRanges |
+| PR                                                      | Author                                 | Title                                   |
+|---------------------------------------------------------|----------------------------------------|-----------------------------------------|
+| [#483](https://github.com/elastic/helm-charts/pull/483) | [@ta-ando](https://github.com/ta-ando) | Ad support for loadBalancerSourceRanges |
 
 
 ## 7.6.0 - 2020/02/11
@@ -150,45 +214,45 @@
 
 ### APM Server
 
-| PR                                                     | Author                                   | Title                                       |
-| ------------------------------------------------------ | ---------------------------------------- | ------------------------------------------- |
-|[#324](https://github.com/elastic/helm-charts/pull/324) | [@pbecotte](https://github.com/pbecotte) | Add apm-server helm chart                   |
-|[#459](https://github.com/elastic/helm-charts/pull/459) | [@jmlrt](https://github.com/jmlrt)       | Add ci tests for apm-server chart           |
-|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)       | Add extraContainers and extraInitContainers |
+| PR                                                      | Author                                   | Title                                       |
+|---------------------------------------------------------|------------------------------------------|---------------------------------------------|
+| [#324](https://github.com/elastic/helm-charts/pull/324) | [@pbecotte](https://github.com/pbecotte) | Add apm-server helm chart                   |
+| [#459](https://github.com/elastic/helm-charts/pull/459) | [@jmlrt](https://github.com/jmlrt)       | Add ci tests for apm-server chart           |
+| [#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)       | Add extraContainers and extraInitContainers |
 
 ### Elasticsearch
 
-| PR                                                     | Author                                       | Title                       |
-| ------------------------------------------------------ | -------------------------------------------- | --------------------------- |
-|[#455](https://github.com/elastic/helm-charts/pull/455) | [@sachinmsft](https://github.com/sachinmsft) | Fixing typo                 |
-|[#458](https://github.com/elastic/helm-charts/pull/458) | [@jmlrt](https://github.com/jmlrt)           | Set cpu request = cpu limit |
-|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)           | Add extraContainers         |
+| PR                                                      | Author                                       | Title                       |
+|---------------------------------------------------------|----------------------------------------------|-----------------------------|
+| [#455](https://github.com/elastic/helm-charts/pull/455) | [@sachinmsft](https://github.com/sachinmsft) | Fixing typo                 |
+| [#458](https://github.com/elastic/helm-charts/pull/458) | [@jmlrt](https://github.com/jmlrt)           | Set cpu request = cpu limit |
+| [#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)           | Add extraContainers         |
 
 ### Filebeat
 
-| PR                                                     | Author                               | Title                   |
-| ------------------------------------------------------ | ------------------------------------ | ----------------------- |
-|[#466](https://github.com/elastic/helm-charts/pull/466) | [@vasrem](https://github.com/vasrem) | Add extraInitContainers |
-|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)   | Add extraContainers     |
+| PR                                                      | Author                               | Title                   |
+|---------------------------------------------------------|--------------------------------------|-------------------------|
+| [#466](https://github.com/elastic/helm-charts/pull/466) | [@vasrem](https://github.com/vasrem) | Add extraInitContainers |
+| [#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)   | Add extraContainers     |
 
 ### Kibana
 
-| PR                                                     | Author                             | Title                                       |
-| ------------------------------------------------------ | ---------------------------------- | ------------------------------------------- |
-|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt) | Add extraContainers and extraInitContainers |
+| PR                                                      | Author                             | Title                                       |
+|---------------------------------------------------------|------------------------------------|---------------------------------------------|
+| [#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt) | Add extraContainers and extraInitContainers |
 
 ### Logstash
 
-| PR                                                     | Author                                                         | Title                           |
-| ------------------------------------------------------ | -------------------------------------------------------------- | ------------------------------- |
-|[#457](https://github.com/elastic/helm-charts/pull/457) | [@morganchristiansson](https://github.com/morganchristiansson) | Add fullnameOverride setting    |
-|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)                             | Remove duplicate line in README |
+| PR                                                      | Author                                                         | Title                           |
+|---------------------------------------------------------|----------------------------------------------------------------|---------------------------------|
+| [#457](https://github.com/elastic/helm-charts/pull/457) | [@morganchristiansson](https://github.com/morganchristiansson) | Add fullnameOverride setting    |
+| [#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt)                             | Remove duplicate line in README |
 
 ### Metricbeat
 
-| PR                                                     | Author                             | Title                                       |
-| ------------------------------------------------------ | ---------------------------------- | ------------------------------------------- |
-|[#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt) | Add extraContainers and extraInitContainers |
+| PR                                                      | Author                             | Title                                       |
+|---------------------------------------------------------|------------------------------------|---------------------------------------------|
+| [#473](https://github.com/elastic/helm-charts/pull/473) | [@jmlrt](https://github.com/jmlrt) | Add extraContainers and extraInitContainers |
 
 
 ## 7.5.2 - 2020/01/21
@@ -200,47 +264,47 @@
 
 ### Elasticsearch
 
-| PR                                                     | Author                                           | Title                                                           |
-| ------------------------------------------------------ | ------------------------------------------------ | --------------------------------------------------------------- |
-|[#382](https://github.com/elastic/helm-charts/pull/382) | [@jaumann](https://github.com/jaumann)           | Allow for name overrides of resources                           |
-|[#433](https://github.com/elastic/helm-charts/pull/433) | [@jmlrt](https://github.com/jmlrt)               | Add example for [Microk8s](https://microk8s.io/)                |
-|[#428](https://github.com/elastic/helm-charts/pull/428) | [@mmisztal1980](https://github.com/mmisztal1980) | Remove duplicate label                                          |
-|[#434](https://github.com/elastic/helm-charts/pull/434) | [@jmlrt](https://github.com/jmlrt)               | Add workaround to fix [kind])https://kind.sigs.k8s.io/) example |
-|[#444](https://github.com/elastic/helm-charts/pull/444) | [@naseemkullah](https://github.com/naseemkullah) | Add commented out example of a useful post start hook           |
+| PR                                                      | Author                                           | Title                                                           |
+|---------------------------------------------------------|--------------------------------------------------|-----------------------------------------------------------------|
+| [#382](https://github.com/elastic/helm-charts/pull/382) | [@jaumann](https://github.com/jaumann)           | Allow for name overrides of resources                           |
+| [#433](https://github.com/elastic/helm-charts/pull/433) | [@jmlrt](https://github.com/jmlrt)               | Add example for [Microk8s](https://microk8s.io/)                |
+| [#428](https://github.com/elastic/helm-charts/pull/428) | [@mmisztal1980](https://github.com/mmisztal1980) | Remove duplicate label                                          |
+| [#434](https://github.com/elastic/helm-charts/pull/434) | [@jmlrt](https://github.com/jmlrt)               | Add workaround to fix [kind])https://kind.sigs.k8s.io/) example |
+| [#444](https://github.com/elastic/helm-charts/pull/444) | [@naseemkullah](https://github.com/naseemkullah) | Add commented out example of a useful post start hook           |
 
 ### Filebeat
 
-| PR                                                     | Author                                         | Title                                                                 |
-| ------------------------------------------------------ | ---------------------------------------------- | --------------------------------------------------------------------- |
-|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)             | Add custom labels to pods                                             |
-|[#369](https://github.com/elastic/helm-charts/pull/369) | [@jmymy](https://github.com/jmymy)             | Add support for `envfrom`                                             |
-|[#420](https://github.com/elastic/helm-charts/pull/420) | [@jmlrt](https://github.com/jmlrt)             | Override probes commands                                              |
-|[#430](https://github.com/elastic/helm-charts/pull/430) | [@krichter722](https://github.com/krichter722) | Fix default value of `extraVolumeMounts` and `extraVolumes` in README |
+| PR                                                      | Author                                         | Title                                                                 |
+|---------------------------------------------------------|------------------------------------------------|-----------------------------------------------------------------------|
+| [#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)             | Add custom labels to pods                                             |
+| [#369](https://github.com/elastic/helm-charts/pull/369) | [@jmymy](https://github.com/jmymy)             | Add support for `envfrom`                                             |
+| [#420](https://github.com/elastic/helm-charts/pull/420) | [@jmlrt](https://github.com/jmlrt)             | Override probes commands                                              |
+| [#430](https://github.com/elastic/helm-charts/pull/430) | [@krichter722](https://github.com/krichter722) | Fix default value of `extraVolumeMounts` and `extraVolumes` in README |
 
 ### Kibana
 
-| PR                                                     | Author                                           | Title                                           |
-| ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------- |
-|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)               | Add custom labels to pods                       |
-|[#422](https://github.com/elastic/helm-charts/pull/422) | [@victorsalaun](https://github.com/victorsalaun) | Remove useless `maxUnavailable` in Kibana chart |
-|[#408](https://github.com/elastic/helm-charts/pull/408) | [@ichylinux](https://github.com/ichylinux)       | Add support for `loadBalancerSourceRanges`      |
-|[#419](https://github.com/elastic/helm-charts/pull/419) | [@jmlrt](https://github.com/jmlrt)               | Add doc for plugin install                      |
+| PR                                                      | Author                                           | Title                                           |
+|---------------------------------------------------------|--------------------------------------------------|-------------------------------------------------|
+| [#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)               | Add custom labels to pods                       |
+| [#422](https://github.com/elastic/helm-charts/pull/422) | [@victorsalaun](https://github.com/victorsalaun) | Remove useless `maxUnavailable` in Kibana chart |
+| [#408](https://github.com/elastic/helm-charts/pull/408) | [@ichylinux](https://github.com/ichylinux)       | Add support for `loadBalancerSourceRanges`      |
+| [#419](https://github.com/elastic/helm-charts/pull/419) | [@jmlrt](https://github.com/jmlrt)               | Add doc for plugin install                      |
 
 ### Logstash
 
-| PR                                                     | Author                             | Title                     |
-| ------------------------------------------------------ | ---------------------------------- | ------------------------- |
-|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt) | Add custom labels to pods |
+| PR                                                      | Author                             | Title                     |
+|---------------------------------------------------------|------------------------------------|---------------------------|
+| [#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt) | Add custom labels to pods |
 
 ### Metricbeat
 
-| PR                                                     | Author                                   | Title                                                         |
-| ------------------------------------------------------ | ---------------------------------------- | ------------------------------------------------------------- |
-|[#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)       | Add custom labels to pods                                     |
-|[#369](https://github.com/elastic/helm-charts/pull/369) | [@jmymy](https://github.com/jmymy)       | Add support for `envfrom`                                     |
-|[#420](https://github.com/elastic/helm-charts/pull/420) | [@jmlrt](https://github.com/jmlrt)       | Override probes commands                                      |
-|[#425](https://github.com/elastic/helm-charts/pull/425) | [@pbecotte](https://github.com/pbecotte) | Update `hostfs` to be a CLI option instead of a config option |
-|[#436](https://github.com/elastic/helm-charts/pull/436) | [@gadiener](https://github.com/gadiener) | Add `priorityClassName` config                                |
+| PR                                                      | Author                                   | Title                                                         |
+|---------------------------------------------------------|------------------------------------------|---------------------------------------------------------------|
+| [#415](https://github.com/elastic/helm-charts/pull/415) | [@jmlrt](https://github.com/jmlrt)       | Add custom labels to pods                                     |
+| [#369](https://github.com/elastic/helm-charts/pull/369) | [@jmymy](https://github.com/jmymy)       | Add support for `envfrom`                                     |
+| [#420](https://github.com/elastic/helm-charts/pull/420) | [@jmlrt](https://github.com/jmlrt)       | Override probes commands                                      |
+| [#425](https://github.com/elastic/helm-charts/pull/425) | [@pbecotte](https://github.com/pbecotte) | Update `hostfs` to be a CLI option instead of a config option |
+| [#436](https://github.com/elastic/helm-charts/pull/436) | [@gadiener](https://github.com/gadiener) | Add `priorityClassName` config                                |
 
 
 ## 7.5.1 - 2019/12/18
@@ -253,21 +317,21 @@
 
 ### Filebeat
 
-| PR                                                     | Author                                   | Title                                                 |
-| ------------------------------------------------------ | ---------------------------------------- | ----------------------------------------------------- |
-|[#403](https://github.com/elastic/helm-charts/pull/403) | [@ChrsMark](https://github.com/ChrsMark) | Remove in_cluster config from add_kubernetes_metadata |
+| PR                                                      | Author                                   | Title                                                 |
+|---------------------------------------------------------|------------------------------------------|-------------------------------------------------------|
+| [#403](https://github.com/elastic/helm-charts/pull/403) | [@ChrsMark](https://github.com/ChrsMark) | Remove in_cluster config from add_kubernetes_metadata |
 
 ### Kibana
 
-| PR                                                     | Author                                               | Title                                |
-| ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------ |
-|[#411](https://github.com/elastic/helm-charts/pull/411) | [@usamaahmadkhan](https://github.com/usamaahmadkhan) | Enable labels to be added to service |
+| PR                                                      | Author                                               | Title                                |
+|---------------------------------------------------------|------------------------------------------------------|--------------------------------------|
+| [#411](https://github.com/elastic/helm-charts/pull/411) | [@usamaahmadkhan](https://github.com/usamaahmadkhan) | Enable labels to be added to service |
 
 ### Metricbeat
 
-| PR                                                     | Author                             | Title                                                 |
-| ------------------------------------------------------ | ---------------------------------- | ----------------------------------------------------- |
-|[#397](https://github.com/elastic/helm-charts/pull/397) | [@jmlrt](https://github.com/jmlrt) | Add a notice about kube-state-metrics breaking change |
+| PR                                                      | Author                             | Title                                                 |
+|---------------------------------------------------------|------------------------------------|-------------------------------------------------------|
+| [#397](https://github.com/elastic/helm-charts/pull/397) | [@jmlrt](https://github.com/jmlrt) | Add a notice about kube-state-metrics breaking change |
 
 
 ## 7.5.0 - 2019/12/02
@@ -283,41 +347,41 @@
 ### Elasticsearch
 
 | PR                                                      | Author                                               | Title                                                                        |
-| ------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
-|[#344](https://github.com/elastic/helm-charts/pull/344)  | [@usamaahmadkhan](https://github.com/usamaahmadkhan) | Add support for labels on services                                           |
-|[#350](https://github.com/elastic/helm-charts/pull/350)  | [@crgstar](https://github.com/crgstar)               | Use same imagePullPolicy in initContainer                                    |
-|[#380](https://github.com/elastic/helm-charts/pull/380)  | [@fatmcgav](https://github.com/fatmcgav)             | Tweak the 'readinessProbe' command to verify that master nodes are available |
-|[#383](https://github.com/elastic/helm-charts/pull/383)  | [@tanakapayam](https://github.com/tanakapayam)       | Apply labels to all pods                                                     |
+|---------------------------------------------------------|------------------------------------------------------|------------------------------------------------------------------------------|
+| [#344](https://github.com/elastic/helm-charts/pull/344) | [@usamaahmadkhan](https://github.com/usamaahmadkhan) | Add support for labels on services                                           |
+| [#350](https://github.com/elastic/helm-charts/pull/350) | [@crgstar](https://github.com/crgstar)               | Use same imagePullPolicy in initContainer                                    |
+| [#380](https://github.com/elastic/helm-charts/pull/380) | [@fatmcgav](https://github.com/fatmcgav)             | Tweak the 'readinessProbe' command to verify that master nodes are available |
+| [#383](https://github.com/elastic/helm-charts/pull/383) | [@tanakapayam](https://github.com/tanakapayam)       | Apply labels to all pods                                                     |
 
 ### Filebeat
 
-| PR                                                     | Author                                           | Title                                                                     |
-| ------------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------- |
-|[#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                  |
-|[#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node informations  |
-|[#322](https://github.com/elastic/helm-charts/pull/322) | [@pbecotte](https://github.com/pbecotte)         | Use a list for extra volume mounts to match the comments and other values |
+| PR                                                      | Author                                           | Title                                                                     |
+|---------------------------------------------------------|--------------------------------------------------|---------------------------------------------------------------------------|
+| [#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                  |
+| [#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node informations  |
+| [#322](https://github.com/elastic/helm-charts/pull/322) | [@pbecotte](https://github.com/pbecotte)         | Use a list for extra volume mounts to match the comments and other values |
 
 ### Kibana
 
-| PR                                                     | Author                                           | Title                    |
-| ------------------------------------------------------ | -------------------------------------------------| ------------------------ |
-|[#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride |
+| PR                                                      | Author                                           | Title                    |
+|---------------------------------------------------------|--------------------------------------------------|--------------------------|
+| [#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride |
 
 ### Logstash
 
-| PR                                                     | Author                             | Title                                        |
-| ------------------------------------------------------ | ---------------------------------- | -------------------------------------------- |
-|[#333](https://github.com/elastic/helm-charts/pull/333) | [@jmlrt](https://github.com/jmlrt) | First version of logstash helm chart         |
-|[#347](https://github.com/elastic/helm-charts/pull/347) | [@jmlrt](https://github.com/jmlrt) | Remove goss port test                        |
-|[#367](https://github.com/elastic/helm-charts/pull/367) | [@jmlrt](https://github.com/jmlrt) | Update default values for memory requirements|
+| PR                                                      | Author                             | Title                                         |
+|---------------------------------------------------------|------------------------------------|-----------------------------------------------|
+| [#333](https://github.com/elastic/helm-charts/pull/333) | [@jmlrt](https://github.com/jmlrt) | First version of logstash helm chart          |
+| [#347](https://github.com/elastic/helm-charts/pull/347) | [@jmlrt](https://github.com/jmlrt) | Remove goss port test                         |
+| [#367](https://github.com/elastic/helm-charts/pull/367) | [@jmlrt](https://github.com/jmlrt) | Update default values for memory requirements |
 
 ### Metricbeat
 
-| PR                                                     | Author                                           | Title                                                                                     |
-| ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-|[#352](https://github.com/elastic/helm-charts/pull/352) | [@masterkain](https://github.com/masterkain)     | Bump kube-state-metrics to latest chart and app version                                   |
-|[#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                                  |
-|[#314](https://github.com/elastic/helm-charts/pull/314) | [@pbecotte](https://github.com/pbecotte)         | Add a couple extra mounts to pick up all the metrics from the host nodes on Digital Ocean |
+| PR                                                      | Author                                           | Title                                                                                     |
+|---------------------------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [#352](https://github.com/elastic/helm-charts/pull/352) | [@masterkain](https://github.com/masterkain)     | Bump kube-state-metrics to latest chart and app version                                   |
+| [#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                                  |
+| [#314](https://github.com/elastic/helm-charts/pull/314) | [@pbecotte](https://github.com/pbecotte)         | Add a couple extra mounts to pick up all the metrics from the host nodes on Digital Ocean |
 
 
 ## 7.4.1 - 2019/10/23
@@ -328,25 +392,25 @@
 
 ### Elasticsearch
 
-| PR                                                      | Author                                    | Title                                        |
-| ------------------------------------------------------- | ----------------------------------------- | -------------------------------------------- |
-|[#313](https://github.com/elastic/helm-charts/pull/313) | [@Crazybus](https://github.com/Crazybus)   | Add logging when adding password to keystore |
-|[#301](https://github.com/elastic/helm-charts/pull/301) | [@ravishivt](https://github.com/ravishivt) | Fix bug in keystore initContainer            |
-|[#274](https://github.com/elastic/helm-charts/pull/274) | [@salaboy](https://github.com/salaboy)     | Add Example for Kubernetes KIND              |
-|[#335](https://github.com/elastic/helm-charts/pull/335) | [@jmlrt](https://github.com/jmlrt)         | Fix deprecated note                          |
-|[#337](https://github.com/elastic/helm-charts/pull/337) | [@jmlrt](https://github.com/jmlrt)         | Remove unused default value                  |
+| PR                                                      | Author                                     | Title                                        |
+|---------------------------------------------------------|--------------------------------------------|----------------------------------------------|
+| [#313](https://github.com/elastic/helm-charts/pull/313) | [@Crazybus](https://github.com/Crazybus)   | Add logging when adding password to keystore |
+| [#301](https://github.com/elastic/helm-charts/pull/301) | [@ravishivt](https://github.com/ravishivt) | Fix bug in keystore initContainer            |
+| [#274](https://github.com/elastic/helm-charts/pull/274) | [@salaboy](https://github.com/salaboy)     | Add Example for Kubernetes KIND              |
+| [#335](https://github.com/elastic/helm-charts/pull/335) | [@jmlrt](https://github.com/jmlrt)         | Fix deprecated note                          |
+| [#337](https://github.com/elastic/helm-charts/pull/337) | [@jmlrt](https://github.com/jmlrt)         | Remove unused default value                  |
 
 ### Kibana
 
-| PR                                                     | Author                             | Title                           |
-| ------------------------------------------------------ | ---------------------------------- | ------------------------------- |
-|[#326](https://github.com/elastic/helm-charts/pull/326) | [@jmlrt](https://github.com/jmlrt) | Remove unused antiAffinity keys |
+| PR                                                      | Author                             | Title                           |
+|---------------------------------------------------------|------------------------------------|---------------------------------|
+| [#326](https://github.com/elastic/helm-charts/pull/326) | [@jmlrt](https://github.com/jmlrt) | Remove unused antiAffinity keys |
 
 ### Metricbeat
 
-| PR                                                     | Author                             | Title                                                  |
-| ------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------ |
-|[#339](https://github.com/elastic/helm-charts/pull/339) | [@jmlrt](https://github.com/jmlrt) | Allow adding additional labels to Metricbeat Daemonset |
+| PR                                                      | Author                             | Title                                                  |
+|---------------------------------------------------------|------------------------------------|--------------------------------------------------------|
+| [#339](https://github.com/elastic/helm-charts/pull/339) | [@jmlrt](https://github.com/jmlrt) | Allow adding additional labels to Metricbeat Daemonset |
 
 
 ## 7.4.0 - 2019/10/01
@@ -357,34 +421,34 @@
 
 ### Elasticsearch
 
-| PR                                                      | Author                                             | Title                                                                               |
-| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
-|[#296](https://github.com/elastic/helm-charts/pull/296)  | [@jmlrt](https://github.com/jmlrt)                 | Fix "; \" when there is no additional command in the Makefiles                      |
-|[#298](https://github.com/elastic/helm-charts/pull/298)  | [@floretan](https://github.com/floretan)           | Make it possible to override the endpoint template.                                 |
-|[#263](https://github.com/elastic/helm-charts/pull/263)  | [@Crazybus](https://github.com/Crazybus)           | Add working examples for running Elasticsearch and Kibana on OpenShift              |
-|[#301](https://github.com/elastic/helm-charts/pull/301)  | [@ravishivt](https://github.com/ravishivt)         | Fix bug in keystore initContainer                                                   |
+| PR                                                      | Author                                     | Title                                                                  |
+|---------------------------------------------------------|--------------------------------------------|------------------------------------------------------------------------|
+| [#296](https://github.com/elastic/helm-charts/pull/296) | [@jmlrt](https://github.com/jmlrt)         | Fix "; \" when there is no additional command in the Makefiles         |
+| [#298](https://github.com/elastic/helm-charts/pull/298) | [@floretan](https://github.com/floretan)   | Make it possible to override the endpoint template.                    |
+| [#263](https://github.com/elastic/helm-charts/pull/263) | [@Crazybus](https://github.com/Crazybus)   | Add working examples for running Elasticsearch and Kibana on OpenShift |
+| [#301](https://github.com/elastic/helm-charts/pull/301) | [@ravishivt](https://github.com/ravishivt) | Fix bug in keystore initContainer                                      |
 
 ### Kibana
 
-| PR                                                      | Author                                             | Title                                                                               |
-| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
-|[#295](https://github.com/elastic/helm-charts/pull/295)  | [@karlbohlmark](https://github.com/karlbohlmark)   | Allow configuring lifecycle events                                                  |
-|[#263](https://github.com/elastic/helm-charts/pull/263)  | [@Crazybus](https://github.com/Crazybus)           | Add working examples for running Elasticsearch and Kibana on OpenShift              |
-|[#303](https://github.com/elastic/helm-charts/pull/303)  | [@code-chris](https://github.com/code-chris)       | Add compatibility for k8s 1.16 and change min k8s version due to ingress apiVersion |
+| PR                                                      | Author                                           | Title                                                                               |
+|---------------------------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------------|
+| [#295](https://github.com/elastic/helm-charts/pull/295) | [@karlbohlmark](https://github.com/karlbohlmark) | Allow configuring lifecycle events                                                  |
+| [#263](https://github.com/elastic/helm-charts/pull/263) | [@Crazybus](https://github.com/Crazybus)         | Add working examples for running Elasticsearch and Kibana on OpenShift              |
+| [#303](https://github.com/elastic/helm-charts/pull/303) | [@code-chris](https://github.com/code-chris)     | Add compatibility for k8s 1.16 and change min k8s version due to ingress apiVersion |
 
 
 ### Filebeat
 
-| PR                                                      | Author                                             | Title                                                                               |
-| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
-|[#304](https://github.com/elastic/helm-charts/pull/304)  | [@code-chris](https://github.com/code-chris)       | Change min k8s version due to daemonset apiVersion                                  |
+| PR                                                      | Author                                       | Title                                              |
+|---------------------------------------------------------|----------------------------------------------|----------------------------------------------------|
+| [#304](https://github.com/elastic/helm-charts/pull/304) | [@code-chris](https://github.com/code-chris) | Change min k8s version due to daemonset apiVersion |
 
 ### Metricbeat
 
-| PR                                                      | Author                                             | Title                                                                               |
-| ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [#310](https://github.com/elastic/helm-charts/pull/310) | [@Crazybus](https://github.com/Crazybus)           | Make cluster role rules configurable                                                |
-|[#305](https://github.com/elastic/helm-charts/pull/305)  | [@code-chris](https://github.com/code-chris)       | Change min k8s version due to used apiVersions                                      |
+| PR                                                      | Author                                       | Title                                          |
+|---------------------------------------------------------|----------------------------------------------|------------------------------------------------|
+| [#310](https://github.com/elastic/helm-charts/pull/310) | [@Crazybus](https://github.com/Crazybus)     | Make cluster role rules configurable           |
+| [#305](https://github.com/elastic/helm-charts/pull/305) | [@code-chris](https://github.com/code-chris) | Change min k8s version due to used apiVersions |
 
 
 ## 7.3.2 - 2019/09/19
@@ -396,7 +460,7 @@
 ### Elasticsearch
 
 | PR                                                      | Author                                             | Title                                                                       |
-| ------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- |
+|---------------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------------|
 | [#238](https://github.com/elastic/helm-charts/pull/238) | [@Crazybus](https://github.com/Crazybus)           | Update documentation and defaults for tmpl values                           |
 | [#245](https://github.com/elastic/helm-charts/pull/245) | [@skitle](https://github.com/skitle)               | Fixed indent on elasticsearch extraVolumes tpl. Was causing parsing errors. |
 | [#250](https://github.com/elastic/helm-charts/pull/250) | [@tanordheim](https://github.com/tanordheim)       | Update priorityClassName default values in READMEs                          |
@@ -410,7 +474,7 @@
 ### Kibana
 
 | PR                                                      | Author                                       | Title                                              |
-| ------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
+|---------------------------------------------------------|----------------------------------------------|----------------------------------------------------|
 | [#250](https://github.com/elastic/helm-charts/pull/250) | [@tanordheim](https://github.com/tanordheim) | Update priorityClassName default values in READMEs |
 | [#268](https://github.com/elastic/helm-charts/pull/268) | [@accek](https://github.com/accek)           | fixed bogus request of 500 millibytes mem          |
 | [#272](https://github.com/elastic/helm-charts/pull/272) | [@rccrdpccl](https://github.com/rccrdpccl)   | use same env variable as application               |
@@ -419,7 +483,7 @@
 ### Filebeat
 
 | PR                                                      | Author                                       | Title                                              |
-| ------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
+|---------------------------------------------------------|----------------------------------------------|----------------------------------------------------|
 | [#243](https://github.com/elastic/helm-charts/pull/243) | [@Crazybus](https://github.com/Crazybus)     | Add configurable nodeSelector and affinity spec    |
 | [#248](https://github.com/elastic/helm-charts/pull/248) | [@tanordheim](https://github.com/tanordheim) | Add priorityClassName to filebeat chart            |
 | [#250](https://github.com/elastic/helm-charts/pull/250) | [@tanordheim](https://github.com/tanordheim) | Update priorityClassName default values in READMEs |
@@ -427,7 +491,7 @@
 ### Metricbeat
 
 | PR                                                      | Author                                   | Title                                                |
-| ------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+|---------------------------------------------------------|------------------------------------------|------------------------------------------------------|
 | [#243](https://github.com/elastic/helm-charts/pull/243) | [@Crazybus](https://github.com/Crazybus) | Add configurable nodeSelector and affinity spec      |
 | [#251](https://github.com/elastic/helm-charts/pull/251) | [@Crazybus](https://github.com/Crazybus) | Fix default configuration for kubernetes module      |
 | [#289](https://github.com/elastic/helm-charts/pull/289) | [@Crazybus](https://github.com/Crazybus) | Remove default kube static metrics host to avoid co… |
@@ -440,13 +504,13 @@
 
 ### Elasticsearch
 | PR                                                      | Author                                                     | Title                                                                     |
-| ------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
+|---------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------|
 | [#226](https://github.com/elastic/helm-charts/pull/226) | [@MichaelMarieJulie](https://github.com/MichaelMarieJulie) | Add configurable pods labels                                              |
 | [#237](https://github.com/elastic/helm-charts/pull/237) | [@MichaelSp](https://github.com/MichaelSp)                 | Add back `service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"` |
 
 ### Kibana
 | PR                                                      | Author                                     | Title                               |
-| ------------------------------------------------------- | ------------------------------------------ | ----------------------------------- |
+|---------------------------------------------------------|--------------------------------------------|-------------------------------------|
 | [#225](https://github.com/elastic/helm-charts/pull/225) | [@plumcraft](https://github.com/plumcraft) | Add configurable pod labels         |
 | [#230](https://github.com/elastic/helm-charts/pull/230) | [@Crazybus](https://github.com/Crazybus)   | Add subPath support to secretMounts |
 
