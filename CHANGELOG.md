@@ -143,6 +143,12 @@
 | [#572](https://github.com/elastic/helm-charts/pull/572) | [@jmlrt](https://github.com/jmlrt) | Split values for daemonset and deployment |
 | [#585](https://github.com/elastic/helm-charts/pull/585) | [@jmlrt](https://github.com/jmlrt) | Add host networking option                |
 
+## 6.8.9 - 2020/05/13
+
+* First 6.x release
+* 6.8.9 as the default stack version
+* See [7.7.0 CHANGELOG](#770---20200513) for other changes
+
 
 ## 7.6.2 - 2020/03/31
 
