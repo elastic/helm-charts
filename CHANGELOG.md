@@ -90,6 +90,10 @@
 ## 7.7.0 - 2020/05/13
 
 * 7.7.0 as the default stack version
+* Elasticsearch chart is moving to GA
+* Kibana chart is moving to GA
+* Filebeat chart is moving to GA
+* Metricbeat chart is moving to GA
 * Using [new branching model](https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md#branching) in [#541](https://github.com/elastic/helm-charts/pull/541) [@mgreau](https://github.com/mgreau)
 * Helm 2.16.7 support in [#607](https://github.com/elastic/helm-charts/pull/607) [@jmlrt](https://github.com/jmlrt)
 * Docs improvements in [#593](https://github.com/elastic/helm-charts/pull/593) and [#598](https://github.com/elastic/helm-charts/pull/598) [@jmlrt](https://github.com/jmlrt)
