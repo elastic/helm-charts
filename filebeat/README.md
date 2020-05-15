@@ -3,6 +3,9 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
+**Warning**: This branch is used for development, please use [7.7.0][] release
+for released version.
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -10,6 +13,8 @@ This Helm chart is a lightweight way to configure and run our official
 
 - [Requirements](#requirements)
 - [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.7 branch and 7.7.1-SNAPSHOT versions](#install-development-version-using-77-branch-and-771-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -34,11 +39,20 @@ See [supported configurations][] for more details.
 
 ## Installing
 
+This chart is tested with the latest 7.7.1-SNAPSHOT versions.
+
+### Install released version using Helm repository
+
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
-`helm install --name apm-server elastic/apm-server`
+* Install it: `helm install --name filebeat elastic/filebeat`
+
+### Install development version using 7.7 branch and 7.7.1-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it: `helm install --name filebeat ./helm-charts/filebeat`
 
 
 ## Upgrading
@@ -86,7 +100,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`           | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
-| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `7.7.0`                            |
+| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `7.7.1-SNAPSHOT`                            |
 | `image`                  | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
 | `labels`                 | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
 | `livenessProbe`          | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
