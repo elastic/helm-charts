@@ -13,7 +13,6 @@ spec:
   selector:
     matchLabels:
       app: '{{ template "metricbeat.fullname" . }}-metrics'
-      chart: '{{ .Chart.Name }}'
       heritage: '{{ .Release.Service }}'
       release: '{{ .Release.Name }}'
   template:
