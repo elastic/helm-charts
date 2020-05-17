@@ -218,14 +218,14 @@ spec:
                 START_FILE=/tmp/.es_start_file
 
                 if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
-                  BASIC_AUTH="-u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
+                  BASIC_AUTH="-u \"${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}\""
                 else
                   BASIC_AUTH=''
                 fi
 
                 if [ -f "${START_FILE}" ]; then
                   echo 'Elasticsearch is already running, lets check the node is healthy'
-                  HTTP_CODE=$(curl -XGET -s -k ${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/)
+                  HTTP_CODE=$(curl -XGET -s -k "${BASIC_AUTH}" -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/)
                   RC=$?
                   if [[ ${RC} -ne 0 ]]; then
                     echo "curl -XGET -s -k \${BASIC_AUTH} -o /dev/null -w '%{http_code}' {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/ failed with RC ${RC}"
@@ -243,7 +243,7 @@ spec:
 
                 else
                   echo 'Waiting for elasticsearch cluster to become ready (request params: "{{ .Values.clusterHealthCheckParams }}" )'
-                  if curl -XGET -s -k --fail ${BASIC_AUTH} {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }} ; then
+                  if curl -XGET -s -k --fail "${BASIC_AUTH}" {{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }} ; then
                     touch ${START_FILE}
                     exit 0
                   else
