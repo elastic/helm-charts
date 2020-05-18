@@ -14,4 +14,12 @@ data:
   {{ $path }}: |
 {{ $config | indent 4 -}}
 {{- end -}}
+
+{{- if .Values.logstashPipelineFiles }}
+{{- range $path, $_ := .Files.Glob .Values.logstashPipelineFiles }}
+  {{ base $path }}: |
+{{ tpl ($.Files.Get $path) $ | indent 4 }}
+{{- end -}}
+{{- end -}}
+
 {{- end -}}

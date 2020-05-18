@@ -25,6 +25,9 @@ logstashPipeline: {}
 #    }
 #    output { stdout { } }
 
+# Allows you to add any pipeline files in `/usr/share/logstash/pipeline/` from your local files
+logstashPipelineFiles: ""
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here

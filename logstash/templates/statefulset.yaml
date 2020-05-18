@@ -185,6 +185,13 @@ spec:
             mountPath: /usr/share/logstash/pipeline/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
+          {{- if .Values.logstashPipelineFiles }}
+          {{- range $path, $_ := .Files.Glob .Values.logstashPipelineFiles }}
+          - name: logstashpipeline
+            mountPath: /usr/share/logstash/pipeline/{{ base $path }}
+            subPath: {{ base $path }}
+          {{- end -}}
+          {{- end -}}
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 10 }}
         {{- end }}
