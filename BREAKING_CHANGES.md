@@ -7,7 +7,9 @@
   - [GA support](#ga-support)
   - [New branching model](#new-branching-model)
   - [Filebeat container inputs](#filebeat-container-inputs)
+  - [Metricbeat upgrade issue](#metricbeat-upgrade-issue)
   - [Metricbeat split values for daemonset and deployment](#metricbeat-split-values-for-daemonset-and-deployment)
+- [6.8.9 - 2020/05/13](#689---20200513)
 - [7.6.2 - 2020/03/31](#762---20200331)
   - [Kibana default resources](#kibana-default-resources)
 - [7.6.0 - 2020/02/11](#760---20200211)
@@ -47,6 +49,14 @@ Docker images
 
 Filebeat chart default config is now using [container input][] instead of
 [docker input][] in [#568][].
+
+### Metricbeat upgrade issue
+
+Metricbeat upgrade are failing with
+`spec.selector: Invalid value: ... field is immutable` error. This is related to
+Metricbeat deployment selector including chart version which is not immutable.
+You should use `helm upgrade --force` to upgrade Metricbeat. See [#621][] for
+more details.
 
 ### Metricbeat split values for daemonset and deployment
 
@@ -153,6 +163,7 @@ volumeClaimTemplate:
 [#540]: https://github.com/elastic/helm-charts/pull/540
 [#568]: https://github.com/elastic/helm-charts/pull/568
 [#572]: https://github.com/elastic/helm-charts/pull/572
+[#621]: https://github.com/elastic/helm-charts/pull/621
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic helm repo]: https://helm.elastic.co
