@@ -9,6 +9,10 @@ mount:
     exists: true
     opts:
       - ro
+  /usr/share/logstash/pipeline/uptime_from_files.conf:
+    exists: true
+    opts:
+      - ro
 
 user:
   logstash:
@@ -46,6 +50,15 @@ file:
       - 'http.host: 0.0.0.0'
       - 'xpack.monitoring.enabled: false'
   /usr/share/logstash/pipeline/uptime.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: logstash
+    filetype: file
+    contains:
+      - 'input { exec { command => "uptime" interval => 30 } }'
+      - 'output { elasticsearch { hosts => ["http://elasticsearch-master:9200"] index => "logstash" } }'
+  /usr/share/logstash/pipeline/uptime_from_files.conf:
     exists: true
     mode: "0644"
     owner: root
