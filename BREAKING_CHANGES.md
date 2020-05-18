@@ -64,6 +64,14 @@ Metricbeat is now using dedicated values for daemonset and deployment config.
 The old values are still working but are now deprecated. See [#572][] for more
 details.
 
+Warning: When upgrading Metricbeat while using custom `metricbeatConfig` value
+for `kube-state-metrics-metricbeat.yml`, Metricbeat deployment fails with
+`missing field accessing 'metricbeat.modules.0.hosts.0' (source:'metricbeat.yml')`.
+
+In this case `metricbeatConfig.kube-state-metrics-metricbeat.yml` value should
+be migrated to `deployment.metricbeatConfig.metricbeat.yml`. See [#623][] for
+more details.
+
 ## 6.8.9 - 2020/05/13
 
 See [7.7.0 Breaking changes](#770---20200513)
@@ -164,6 +172,7 @@ volumeClaimTemplate:
 [#568]: https://github.com/elastic/helm-charts/pull/568
 [#572]: https://github.com/elastic/helm-charts/pull/572
 [#621]: https://github.com/elastic/helm-charts/pull/621
+[#623]: https://github.com/elastic/helm-charts/pull/623
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic helm repo]: https://helm.elastic.co
