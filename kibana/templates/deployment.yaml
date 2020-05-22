@@ -33,8 +33,8 @@ spec:
 {{- end }}
       securityContext:
 {{ toYaml .Values.podSecurityContext | indent 8 }}
-      {{- if .Values.serviceAccount }}
-      serviceAccount: {{ .Values.serviceAccount }}
+      {{- if .Values.rbac.serviceAccountName }}
+      serviceAccount: {{ .Values.rbac.serviceAccountName }}
       {{- end }}
       volumes:
         {{- range .Values.secretMounts }}
