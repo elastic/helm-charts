@@ -23,8 +23,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Use the fullname if the serviceAccount value is not set
 */}}
 {{- define "filebeat.serviceAccount" -}}
-{{- if .Values.serviceAccount }}
-{{- .Values.serviceAccount -}}
+{{- if and .Values.rbac.serviceAccountName not eq .Values.podSecurityPolicy.name "" -}}
+{{- .Values.rbac.serviceAccountName -}}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}

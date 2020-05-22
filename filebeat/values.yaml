@@ -107,8 +107,29 @@ resources:
     cpu: "1000m"
     memory: "200Mi"
 
-# Custom service account override that the pod will use
-serviceAccount: ""
+rbac:
+  create: false
+  serviceAccountName: ""
+
+podSecurityPolicy:
+  create: false
+  name: ""
+  spec:
+    privileged: true
+    fsGroup:
+      rule: RunAsAny
+    runAsUser:
+      rule: RunAsAny
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - secret
+      - configMap
+      - persistentVolumeClaim
+      - projected
+      - emptyDir
 
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security other sensitive values
