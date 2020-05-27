@@ -4,6 +4,7 @@
 
 
 - [7.7.0 - 2020/05/13](#770---20200513)
+  - [Known Issues](#known-issues)
   - [GA support](#ga-support)
   - [New branching model](#new-branching-model)
   - [Filebeat container inputs](#filebeat-container-inputs)
@@ -25,6 +26,11 @@
 
 
 ## 7.7.0 - 2020/05/13
+
+### Known Issues
+
+Elasticsearch nodes could be restarted too quickly during an upgrade or rolling restart, potentially resulting in service disruption.
+This is due to a bug introduced by the changes to the Elasticsearch `readinessProbe` in [#586][].
 
 ### GA support
 
@@ -163,6 +169,7 @@ volumeClaimTemplate:
 [#540]: https://github.com/elastic/helm-charts/pull/540
 [#568]: https://github.com/elastic/helm-charts/pull/568
 [#572]: https://github.com/elastic/helm-charts/pull/572
+[#586]: https://github.com/elastic/helm-charts/pull/586
 [#621]: https://github.com/elastic/helm-charts/pull/621
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
