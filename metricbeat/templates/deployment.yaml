@@ -22,7 +22,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.metricbeatConfig }}
+        {{- if or  .Values.metricbeatConfig .Values.deployment.metricbeatConfig }}
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
       labels:
