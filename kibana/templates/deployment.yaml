@@ -69,8 +69,15 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
     {{- end }}
       {{- if .Values.extraInitContainers }}
+      # Currently some extra blocks accept strings
+      # to continue with backwards compatibility this is being kept
+      # whilst also allowing for yaml to be specified too.
       initContainers:
+      {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
 {{ tpl .Values.extraInitContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
       {{- end }}
       containers:
       - name: kibana
@@ -143,5 +150,12 @@ spec:
             subPath: {{ $path }}
           {{- end -}}
       {{- if .Values.extraContainers }}
+      # Currently some extra blocks accept strings
+      # to continue with backwards compatibility this is being kept
+      # whilst also allowing for yaml to be specified too.
+      {{- if eq "string" (printf "%T" .Values.extraContainers) }}
 {{ tpl .Values.extraContainers . | indent 6 }}
+      {{- else }}
+{{ toYaml .Values.extraContainers | indent 6 }}
+      {{- end }}
       {{- end }}

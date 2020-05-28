@@ -537,48 +537,77 @@ metricbeatConfig:
       nestedkey: value
     dot.notation: test
 
-  other-config.yml: |
+  kube-state-metrics-metricbeat.yml: |
     hello = world
 """
     r = helm_template(config)
     c = r["configmap"][name + "-config"]["data"]
 
     assert "metricbeat.yml" in c
-    assert "other-config.yml" in c
+    assert "kube-state-metrics-metricbeat.yml" in c
 
     assert "nestedkey: value" in c["metricbeat.yml"]
     assert "dot.notation: test" in c["metricbeat.yml"]
 
-    assert "hello = world" in c["other-config.yml"]
+    assert "hello = world" in c["kube-state-metrics-metricbeat.yml"]
 
-    d = r["daemonset"][name]["spec"]["template"]["spec"]
+    daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
 
     assert {
         "configMap": {"name": name + "-config", "defaultMode": 0o600},
         "name": project + "-config",
-    } in d["volumes"]
+    } in daemonset["volumes"]
     assert {
         "mountPath": "/usr/share/metricbeat/metricbeat.yml",
         "name": project + "-config",
         "subPath": "metricbeat.yml",
         "readOnly": True,
-    } in d["containers"][0]["volumeMounts"]
+    } in daemonset["containers"][0]["volumeMounts"]
     assert {
-        "mountPath": "/usr/share/metricbeat/other-config.yml",
+        "mountPath": "/usr/share/metricbeat/kube-state-metrics-metricbeat.yml",
         "name": project + "-config",
-        "subPath": "other-config.yml",
+        "subPath": "kube-state-metrics-metricbeat.yml",
         "readOnly": True,
-    } in d["containers"][0]["volumeMounts"]
+    } in daemonset["containers"][0]["volumeMounts"]
 
     assert (
         "configChecksum"
         in r["daemonset"][name]["spec"]["template"]["metadata"]["annotations"]
     )
 
+    deployment = r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+
+    assert {
+        "configMap": {"name": name + "-config", "defaultMode": 0o600},
+        "name": project + "-config",
+    } in deployment["volumes"]
+    assert {
+        "mountPath": "/usr/share/metricbeat/metricbeat.yml",
+        "name": project + "-config",
+        "subPath": "metricbeat.yml",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
+    assert {
+        "mountPath": "/usr/share/metricbeat/kube-state-metrics-metricbeat.yml",
+        "name": project + "-config",
+        "subPath": "kube-state-metrics-metricbeat.yml",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
+    assert ("/usr/share/metricbeat/kube-state-metrics-metricbeat.yml") in deployment[
+        "containers"
+    ][0]["args"]
+
+    assert (
+        "configChecksum"
+        in r["deployment"][name + "-metrics"]["spec"]["template"]["metadata"][
+            "annotations"
+        ]
+    )
+
 
 def test_adding_a_secret_mount():
     config = """
-daemonset:    
+daemonset:
   secretMounts:
     - name: elastic-certificates
       secretName: elastic-certificates-name
@@ -614,7 +643,7 @@ daemonset:
     } not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["volumes"]
 
     config = """
-deployment:    
+deployment:
   secretMounts:
     - name: elastic-certificates
       secretName: elastic-certificates-name
