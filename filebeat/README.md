@@ -44,13 +44,13 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name filebeat elastic/filebeat`
+* Install it: `helm install filebeat elastic/filebeat`
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name filebeat ./helm-charts/filebeat  --set imageTag=7.7.0`
+* Install it: `helm install filebeat ./helm-charts/filebeat  --set imageTag=7.7.0`
 
 
 ## Upgrading
