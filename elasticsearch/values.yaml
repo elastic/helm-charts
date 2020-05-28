@@ -48,6 +48,7 @@ secretMounts: []
 #  - name: elastic-certificates
 #    secretName: elastic-certificates
 #    path: /usr/share/elasticsearch/config/certs
+#    defaultMode: 0755
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
 imageTag: "7.8.0-SNAPSHOT"
