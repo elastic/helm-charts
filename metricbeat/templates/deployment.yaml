@@ -72,7 +72,7 @@ spec:
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         args:
-        {{- if ".Values.metricbeatConfig.kube-state-metrics-metricbeat.yml" }}
+        {{- if index .Values "metricbeatConfig" "kube-state-metrics-metricbeat.yml" }}
           - "-c"
           - "/usr/share/metricbeat/kube-state-metrics-metricbeat.yml"
         {{- end }}
