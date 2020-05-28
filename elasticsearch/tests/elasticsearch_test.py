@@ -462,6 +462,24 @@ secretMounts:
     }
 
 
+def test_adding_a_secret_mount_with_default_mode():
+    config = """
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certs
+    path: /usr/share/elasticsearch/config/certs
+    subPath: cert.crt
+    defaultMode: 0755
+"""
+    r = helm_template(config)
+    s = r["statefulset"][uname]["spec"]["template"]["spec"]
+    assert s["containers"][0]["volumeMounts"][-1] == {
+        "mountPath": "/usr/share/elasticsearch/config/certs",
+        "subPath": "cert.crt",
+        "name": "elastic-certificates",
+    }
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
