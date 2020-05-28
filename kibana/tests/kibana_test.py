@@ -427,6 +427,21 @@ service:
     ]
     assert s == "0.0.0.0/0"
 
+def test_adding_a_loadBalancerIP():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "loadBalancerIP" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      loadBalancerIP: 12.4.19.82
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["loadBalancerIP"] == "12.4.19.82"
 
 def test_service_load_balancer_source_ranges():
     config = """
