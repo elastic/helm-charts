@@ -5,6 +5,7 @@ ENV TERRAFORM_VERSION=0.11.7
 ENV KUBECTL_VERSION=1.16.10
 ENV HELM_VERSION=2.16.7
 ENV DOCKER_VERSION=18.09.7
+ENV JQ_VERSION=1.6
 
 RUN yum -y install \
     make \
@@ -44,3 +45,8 @@ RUN curl -O https://download.docker.com/linux/static/stable/x86_64/docker-${DOCK
     mv docker/docker /usr/local/bin && \
     rm -rf docker/ && \
     docker
+
+RUN curl -O https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 && \
+    mv jq-linux64 /usr/local/bin/jq && \
+    chmod a+x /usr/local/bin/jq && \
+    jq --version
