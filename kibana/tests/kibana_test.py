@@ -443,6 +443,7 @@ def test_adding_a_loadBalancerIP():
     r = helm_template(config)
 
     assert r["service"][uname]["spec"]["loadBalancerIP"] == "12.4.19.82"
+    
 
 def test_service_load_balancer_source_ranges():
     config = """
