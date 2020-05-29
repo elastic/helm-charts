@@ -46,7 +46,7 @@ RUN curl -O https://download.docker.com/linux/static/stable/x86_64/docker-${DOCK
     rm -rf docker/ && \
     docker
 
-RUN curl -O https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 && \
+RUN curl -O -L https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 && \
     mv jq-linux64 /usr/local/bin/jq && \
     chmod a+x /usr/local/bin/jq && \
     jq --version
