@@ -66,11 +66,11 @@ fi
 helm repo add elastic https://helm.elastic.co
 
 # Initial install
-echo "Installing Elasticsearch chart $FROM\n"
+printf "Installing Elasticsearch chart %s\n" "$FROM"
 helm upgrade --wait --timeout=600 --install "$RELEASE" elastic/elasticsearch --version "$FROM" --set clusterName=upgrade -f ../docker-for-mac/values.yaml
 kubectl rollout status sts/upgrade-master --timeout=600s
 
 # Upgrade
-echo "Upgrading Elasticsearch chart\n"
+printf "Upgrading Elasticsearch chart\n"
 helm upgrade --wait --timeout=600 --set terminationGracePeriod=121 --install "$RELEASE" ../../ --set clusterName=upgrade -f ../docker-for-mac/values.yaml
 kubectl rollout status sts/upgrade-master --timeout=600s
