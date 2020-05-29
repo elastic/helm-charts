@@ -53,7 +53,7 @@ fi
 # Elasticsearch chart < 7.4.0 are not compatible with K8S >= 1.16)
 if [[ -z $FROM ]]
 then
-  KUBE_MINOR_VERSION=$(kubectl version -o json | jq -c '.serverVersion.minor' | sed 's/[^0-9]*//g')
+  KUBE_MINOR_VERSION=$(kubectl version -o json | jq --raw-output --exit-status '.serverVersion.minor' | sed 's/[^0-9]*//g')
 
   if [ "$KUBE_MINOR_VERSION" -lt 16 ]
   then
@@ -66,9 +66,11 @@ fi
 helm repo add elastic https://helm.elastic.co
 
 # Initial install
+echo "Installing Elasticsearch chart $FROM\n"
 helm upgrade --wait --timeout=600 --install "$RELEASE" elastic/elasticsearch --version "$FROM" --set clusterName=upgrade -f ../docker-for-mac/values.yaml
 kubectl rollout status sts/upgrade-master --timeout=600s
 
 # Upgrade
+echo "Upgrading Elasticsearch chart\n"
 helm upgrade --wait --timeout=600 --set terminationGracePeriod=121 --install "$RELEASE" ../../ --set clusterName=upgrade -f ../docker-for-mac/values.yaml
 kubectl rollout status sts/upgrade-master --timeout=600s
