@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-set -exo pipefail
+set -euo pipefail
 
 usage() {
   cat <<-EOF
 	USAGE:
-	  $0 [--release <release-name>] [--from <elasticsearch-version>] --to <elasticsearch-version>
+	  $0 [--release <release-name>] [--from <elasticsearch-version>]
 	  $0 --help
 
 	OPTIONS:
-    --release <release-name>
+	  --release <release-name>
 	    Name of the Helm release to install
 	  --from <elasticsearch-version>
 	    Elasticsearch version to use for first install
@@ -43,10 +43,17 @@ do
   esac
 done
 
+if ! command -v jq > /dev/null
+then
+  echo 'jq is required to use this script'
+  echo 'please check https://stedolan.github.io/jq/download/ to install it'
+  exit 1
+fi
+
 # Elasticsearch chart < 7.4.0 are not compatible with K8S >= 1.16)
 if [[ -z $FROM ]]
 then
-  KUBE_MINOR_VERSION=$(kubectl version --client -o yaml | grep minor | sed 's/[^0-9]*//g')
+  KUBE_MINOR_VERSION=$(kubectl version -o json | jq -c '.serverVersion.minor' | sed 's/[^0-9]*//g')
 
   if [ "$KUBE_MINOR_VERSION" -lt 16 ]
   then

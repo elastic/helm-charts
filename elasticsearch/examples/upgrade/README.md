@@ -11,14 +11,17 @@ not compatible with K8S >= 1.16)
 
 ## Usage
 
-Running `make install` command will do first install and 7.7.0 upgrade
+Running `make install` command will do first install and 7.7.0 upgrade.
+
+Note: [jq][] is a requirement for this make target.
 
 
 ## Testing
 
-You can also run [goss integration tests][] using `make test`
+You can also run [goss integration tests][] using `make test`.
 
 
 [7.0.0-alpha1]: https://github.com/elastic/helm-charts/releases/tag/7.0.0-alpha1
 [7.4.0]: https://github.com/elastic/helm-charts/releases/tag/7.4.0
 [goss integration tests]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/upgrade/test/goss.yaml
+[jq]: https://stedolan.github.io/jq/
