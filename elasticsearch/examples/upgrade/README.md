@@ -1,7 +1,7 @@
 # Upgrade
 
-This example deploy a 3 nodes Elasticsearch cluster using an old chart version,
-then upgrade it to 7.7.0 version.
+This example will deploy a 3 node Elasticsearch cluster using an old chart version,
+then upgrade it to version 7.7.0.
 
 The following upgrades are tested:
 - Upgrade from [7.0.0-alpha1][] version on K8S <1.16
