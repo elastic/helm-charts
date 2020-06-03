@@ -1,7 +1,7 @@
 GOSS_VERSION := v0.3.6
 GOSS_FILE ?= goss.yaml
 GOSS_SELECTOR ?= release=$(RELEASE)
-STACK_VERSION := 6.8.10-SNAPSHOT
+STACK_VERSION := 6.8.10
 
 .PHONY: help
 help: ## Display this help

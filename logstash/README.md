@@ -8,9 +8,6 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [6.8.9][] release
-for released version.
-
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -18,8 +15,6 @@ for released version.
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.10-SNAPSHOT versions](#install-development-version-using-68-branch-and-6810-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -43,22 +38,10 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.10-SNAPSHOT versions.
-
-### Install released version using Helm repository
-
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 6.8 release:
-`helm install --name logstash elastic/logstash`
-* Install it: `helm install --name logstash elastic/logstash`
-
-### Install development version using 6.8 branch and 6.8.10-SNAPSHOT versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it: `helm install --name logstash ./helm-charts/logstash`
+* Install it: `helm install --name logstash --version 6.8.10 elastic/logstash`
 
 
 ## Upgrading
@@ -112,7 +95,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `6.8.10-SNAPSHOT`                               |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `6.8.10`                               |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
@@ -185,7 +168,6 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[6.8.9]: https://github.com/elastic/helm-charts/blob/6.8.9/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
