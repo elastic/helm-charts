@@ -10,8 +10,6 @@ This Helm chart is a lightweight way to configure and run our official
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.10 versions](#install-development-version-using-68-branch-and-6810-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -37,22 +35,10 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.10 versions.
-
-### Install released version using Helm repository
-
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 6.8 release:
-`helm install --name metricbeat elastic/metricbeat`
-* Install it: `helm install --name metricbeat elastic/metricbeat`
-
-### Install development version using 6.8 branch and 6.8.10 versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it: `helm install --name metricbeat ./helm-charts/metricbeat`
+* Install it: `helm install --name metricbeat --version 6.8.10 elastic/metricbeat`
 
 
 ## Upgrading
