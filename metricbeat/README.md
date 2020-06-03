@@ -3,9 +3,6 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
-**Warning**: This branch is used for development, please use [6.8.10][] release
-for released version.
-
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -199,7 +196,6 @@ about our development and testing process.
 
 
 [#471]: https://github.com/elastic/helm-charts/pull/471
-[6.8.10]: https://github.com/elastic/helm-charts/blob/6.8.10/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
