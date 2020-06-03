@@ -1,6 +1,6 @@
 # MicroK8S
 
-This example deploy a 3 nodes Elasticsearch 7.7.0 cluster on [MicroK8S][]
+This example deploy a 3 nodes Elasticsearch 7.7.1 cluster on [MicroK8S][]
 using [custom values][].
 
 Note that this configuration should be used for test only and isn't recommended

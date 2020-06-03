@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
-**Warning**: This branch is used for development, please use [7.7.0][] release
+**Warning**: This branch is used for development, please use [7.7.1][] release
 for supported version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -65,7 +65,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch  --set imageTag=7.7.0`
+* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch  --set imageTag=7.7.1`
 
 
 ## Upgrading
@@ -81,17 +81,17 @@ versions are:
 
 | 6.x   | 7.x   |
 |-------|-------|
-| 6.8.8 | 7.7.0 |
+| 6.8.10 | 7.7.1 |
 
 Examples of installing older major versions can be found in the [examples][]
 directory.
 
 While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag`. To install version `7.7.0` of
+or new releases by overriding the `imageTag`. To install version `7.7.1` of
 Elasticsearch it would look like this:
 
 ```
-helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.7.0
+helm install --name elasticsearch elastic/elasticsearch --set imageTag=7.7.1
 ```
 
 
@@ -141,7 +141,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.7.0`                                         |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.7.1`                                         |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
@@ -403,7 +403,7 @@ about our development and testing process.
 
 
 [#63]: https://github.com/elastic/helm-charts/issues/63
-[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/elasticsearch/README.md
+[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md

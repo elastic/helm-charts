@@ -5,13 +5,13 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Elastic Stack Kubernetes Helm Charts](#elastic-stack-kubernetes-helm-charts)
-  - [Charts](#charts)
-  - [Supported Configurations](#supported-configurations)
-    - [Support Matrix](#support-matrix)
-    - [Kubernetes Versions](#kubernetes-versions)
-    - [Helm versions](#helm-versions)
-  - [ECK](#eck)
+
+- [Charts](#charts)
+- [Supported Configurations](#supported-configurations)
+  - [Support Matrix](#support-matrix)
+  - [Kubernetes Versions](#kubernetes-versions)
+  - [Helm versions](#helm-versions)
+- [ECK](#eck)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

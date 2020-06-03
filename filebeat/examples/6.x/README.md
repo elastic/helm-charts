@@ -1,6 +1,6 @@
 # 6.x
 
-This example deploy Filebeat 6.8.8.
+This example deploy Filebeat 6.8.10.
 
 
 ## Usage
