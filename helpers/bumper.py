@@ -20,8 +20,8 @@ import fileinput
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
 versions = {
-    6: os.environ.get("BUMPER_VERSION_6", "6.8.8"),
-    7: os.environ.get("BUMPER_VERSION_7", "7.7.0"),
+    6: os.environ.get("BUMPER_VERSION_6", "6.8.10"),
+    7: os.environ.get("BUMPER_VERSION_7", "7.7.1"),
 }
 
 chart_version = versions[7]
@@ -40,9 +40,9 @@ goss_files = ["*/examples/*/test/goss*.y*ml"]
 
 # Anything matching this regex won't have version bumps changed
 # This was happening because strings like 127.0.0.1 match for 7.0.0
-# "7.0.0-alpha1" is also used in elasticsearch upgrade test and so shouldn't
-# been bump
-blacklist = re.compile(r".*127.0.0.1.*|.*7.0.0-alpha1.*")
+# "7.0.0-alpha1" and "7.4.0" are also used in elasticsearch upgrade test and so
+# shouldn't be bumped
+blacklist = re.compile(r".*127.0.0.1.*|.*7.0.0-alpha1.*|.*7.4.0.*")
 
 print("Updating versions...")
 

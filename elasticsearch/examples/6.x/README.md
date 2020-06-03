@@ -1,6 +1,6 @@
 # 6.x
 
-This example deploy a 3 nodes Elasticsearch 6.8.8 cluster.
+This example deploy a 3 nodes Elasticsearch 6.8.10 cluster.
 
 
 ## Usage
