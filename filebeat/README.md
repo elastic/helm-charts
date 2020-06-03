@@ -10,8 +10,6 @@ This Helm chart is a lightweight way to configure and run our official
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.7 branch and 7.7.1 versions](#install-development-version-using-77-branch-and-771-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -36,20 +34,10 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.7.1 versions.
-
-### Install released version using Helm repository
-
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name filebeat elastic/filebeat`
-
-### Install development version using 7.7 branch and 7.7.1 versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it: `helm install --name filebeat ./helm-charts/filebeat`
+* Install it: `helm install --name filebeat --version 7.7.1 elastic/filebeat`
 
 
 ## Upgrading
