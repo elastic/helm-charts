@@ -3,89 +3,129 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [7.7.1 - 2020/06/03](#771---20200603)
+  - [Elasticsearch](#elasticsearch)
+  - [Kibana](#kibana)
+  - [Metricbeat](#metricbeat)
+- [6.8.10 - 2020/06/03](#6810---20200603)
 - [7.7.0 - 2020/05/13](#770---20200513)
   - [APM Server](#apm-server)
-  - [Elasticsearch](#elasticsearch)
+  - [Elasticsearch](#elasticsearch-1)
   - [Filebeat](#filebeat)
-  - [Kibana](#kibana)
+  - [Kibana](#kibana-1)
   - [Logstash](#logstash)
-  - [Metricbeat](#metricbeat)
+  - [Metricbeat](#metricbeat-1)
+- [6.8.9 - 2020/05/13](#689---20200513)
 - [7.6.2 - 2020/03/31](#762---20200331)
   - [APM Server](#apm-server-1)
-  - [Elasticsearch](#elasticsearch-1)
+  - [Elasticsearch](#elasticsearch-2)
   - [Filebeat](#filebeat-1)
-  - [Kibana](#kibana-1)
+  - [Kibana](#kibana-2)
   - [Logstash](#logstash-1)
 - [7.6.1 - 2020/03/04](#761---20200304)
   - [APM Server](#apm-server-2)
-  - [Elasticsearch](#elasticsearch-2)
+  - [Elasticsearch](#elasticsearch-3)
 - [7.6.0 - 2020/02/11](#760---20200211)
   - [APM Server](#apm-server-3)
-  - [Elasticsearch](#elasticsearch-3)
-  - [Filebeat](#filebeat-2)
-  - [Kibana](#kibana-2)
-  - [Logstash](#logstash-2)
-  - [Metricbeat](#metricbeat-1)
-- [7.5.2 - 2020/01/21](#752---20200121)
   - [Elasticsearch](#elasticsearch-4)
-  - [Filebeat](#filebeat-3)
+  - [Filebeat](#filebeat-2)
   - [Kibana](#kibana-3)
-  - [Logstash](#logstash-3)
+  - [Logstash](#logstash-2)
   - [Metricbeat](#metricbeat-2)
+- [7.5.2 - 2020/01/21](#752---20200121)
+  - [Elasticsearch](#elasticsearch-5)
+  - [Filebeat](#filebeat-3)
+  - [Kibana](#kibana-4)
+  - [Logstash](#logstash-3)
+  - [Metricbeat](#metricbeat-3)
 - [7.5.1 - 2019/12/18](#751---20191218)
   - [Filebeat](#filebeat-4)
-  - [Kibana](#kibana-4)
-  - [Metricbeat](#metricbeat-3)
-- [7.5.0 - 2019/12/02](#750---20191202)
-  - [Elasticsearch](#elasticsearch-5)
-  - [Filebeat](#filebeat-5)
   - [Kibana](#kibana-5)
-  - [Logstash](#logstash-4)
   - [Metricbeat](#metricbeat-4)
-- [7.4.1 - 2019/10/23](#741---20191023)
+- [7.5.0 - 2019/12/02](#750---20191202)
   - [Elasticsearch](#elasticsearch-6)
+  - [Filebeat](#filebeat-5)
   - [Kibana](#kibana-6)
+  - [Logstash](#logstash-4)
   - [Metricbeat](#metricbeat-5)
-- [7.4.0 - 2019/10/01](#740---20191001)
+- [7.4.1 - 2019/10/23](#741---20191023)
   - [Elasticsearch](#elasticsearch-7)
   - [Kibana](#kibana-7)
-  - [Filebeat](#filebeat-6)
   - [Metricbeat](#metricbeat-6)
-- [7.3.2 - 2019/09/19](#732---20190919)
+- [7.4.0 - 2019/10/01](#740---20191001)
   - [Elasticsearch](#elasticsearch-8)
   - [Kibana](#kibana-8)
-  - [Filebeat](#filebeat-7)
+  - [Filebeat](#filebeat-6)
   - [Metricbeat](#metricbeat-7)
-- [7.3.0 - 2019/07/31](#730---20190731)
+- [7.3.2 - 2019/09/19](#732---20190919)
   - [Elasticsearch](#elasticsearch-9)
   - [Kibana](#kibana-9)
-- [7.2.1-0 - 2019/07/18](#721-0---20190718)
+  - [Filebeat](#filebeat-7)
+  - [Metricbeat](#metricbeat-8)
+- [7.3.0 - 2019/07/31](#730---20190731)
   - [Elasticsearch](#elasticsearch-10)
   - [Kibana](#kibana-10)
-  - [Filebeat](#filebeat-8)
-  - [Metricbeat](#metricbeat-8)
-- [7.2.0 - 2019/07/01](#720---20190701)
+- [7.2.1-0 - 2019/07/18](#721-0---20190718)
   - [Elasticsearch](#elasticsearch-11)
   - [Kibana](#kibana-11)
-  - [Filebeat](#filebeat-9)
-- [7.1.1 - 2019/06/07](#711---20190607)
+  - [Filebeat](#filebeat-8)
+  - [Metricbeat](#metricbeat-9)
+- [7.2.0 - 2019/07/01](#720---20190701)
   - [Elasticsearch](#elasticsearch-12)
   - [Kibana](#kibana-12)
-  - [Filebeat](#filebeat-10)
-- [7.1.0 - 2019/05/21](#710---20190521)
+  - [Filebeat](#filebeat-9)
+- [7.1.1 - 2019/06/07](#711---20190607)
   - [Elasticsearch](#elasticsearch-13)
   - [Kibana](#kibana-13)
-  - [Filebeat](#filebeat-11)
-- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
+  - [Filebeat](#filebeat-10)
+- [7.1.0 - 2019/05/21](#710---20190521)
   - [Elasticsearch](#elasticsearch-14)
   - [Kibana](#kibana-14)
-- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Filebeat](#filebeat-11)
+- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
   - [Elasticsearch](#elasticsearch-15)
+  - [Kibana](#kibana-15)
+- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Elasticsearch](#elasticsearch-16)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
+
+## 7.7.1 - 2020/06/03
+
+* 7.7.1 as the default stack version
+* K8S 1.16 support in [#635](https://github.com/elastic/helm-charts/pull/635) [@jmlrt](https://github.com/jmlrt)
+
+
+### Elasticsearch
+
+| PR                                                      | Author                                      | Title                                           |
+|---------------------------------------------------------|---------------------------------------------|-------------------------------------------------|
+| [#596](https://github.com/elastic/helm-charts/pull/596) | [domgoodwin](https://github.com/domgoodwin) | Elasticsearch secret mount mode                 |
+| [#638](https://github.com/elastic/helm-charts/pull/638) | [@fatmcgav](https://github.com/fatmcgav)    | Fix issue with `readinessProbe` causing outages |
+| [#639](https://github.com/elastic/helm-charts/pull/639) | [@coolbaluk](https://github.com/coolbaluk)  | Fix values links in `examples/multi/README.md`  |
+
+### Kibana
+
+| PR                                                      | Author                                         | Title                                                                      |
+|---------------------------------------------------------|------------------------------------------------|----------------------------------------------------------------------------|
+| [#555](https://github.com/elastic/helm-charts/pull/555) | [@ramrodo](https://github.com/ramrodo)         | Add extensible label support on Kibana                                     |
+| [#637](https://github.com/elastic/helm-charts/pull/637) | [@maxkochubey](https://github.com/maxkochubey) | String/YAML conditions for `.Values.{extraContainers,extraInitContainers}` |
+
+### Metricbeat
+
+| PR                                                      | Author                                 | Title                                                                            |
+|---------------------------------------------------------|----------------------------------------|----------------------------------------------------------------------------------|
+| [#622](https://github.com/elastic/helm-charts/pull/622) | [@jmlrt](https://github.com/jmlrt)     | Fix deployment upgrade by removing chart label from `.spec.selector.matchLabels` |
+| [#624](https://github.com/elastic/helm-charts/pull/624) | [@jmlrt](https://github.com/jmlrt)     | Use deprecated `kube-state-metrics-metricbeat.yml` when existing                 |
+| [#634](https://github.com/elastic/helm-charts/pull/634) | [@MaxRink](https://github.com/MaxRink) | Fix `configChecksum` not being set                                               |
+
+## 6.8.10 - 2020/06/03
+
+* 6.8.10 as the default stack version
+* See [7.7.1 CHANGELOG](#771---20200603) for other changes
 
 ## 7.7.0 - 2020/05/13
 
