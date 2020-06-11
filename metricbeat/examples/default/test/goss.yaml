@@ -25,12 +25,12 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-6.8.10'
+      - 'metricbeat-6.8.11'
   'http://elasticsearch-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat':
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-6.8.10'
+      - 'metricbeat-6.8.11'
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
@@ -45,4 +45,4 @@ command:
     exit-status: 0
     stdout:
       - 'elasticsearch: http://elasticsearch-master:9200'
-      - 'version: 6.8.10'
+      - 'version: 6.8.11'

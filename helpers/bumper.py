@@ -19,7 +19,7 @@ import fileinput
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
 versions = {
-    6: os.environ.get("BUMPER_VERSION_6", "6.8.10-SNAPSHOT"),
+    6: os.environ.get("BUMPER_VERSION_6", "6.8.11-SNAPSHOT"),
 }
 
 chart_version = versions[6]
@@ -61,8 +61,8 @@ for major, version in versions.iteritems():
         for f in glob.glob(pattern):
             print(f)
             for line in fileinput.input([f], inplace=True):
-                # If we have a version with a build id, like 6.8.9-abcdabcd,
-                # strip off the latter part and only use the 6.8.9 in the goss
+                # If we have a version with a build id, like 6.8.10-abcdabcd,
+                # strip off the latter part and only use the 6.8.10 in the goss
                 # tests
                 version_without_build_id = re.sub(r"-.*", "", version)
                 if re.match(blacklist, line):
