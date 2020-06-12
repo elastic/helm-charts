@@ -49,8 +49,7 @@ This chart is tested with the latest 6.8.11-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install the latest 6.8 release:
-`helm install --name kibana elastic/kibana`
-* Install it: `helm install --name kibana elastic/kibana`
+`helm install --name kibana --version 6.8.10 elastic/kibana`
 
 ### Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions
 

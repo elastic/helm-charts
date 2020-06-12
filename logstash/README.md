@@ -51,8 +51,7 @@ This chart is tested with the latest 6.8.11-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install the latest 6.8 release:
-`helm install --name logstash elastic/logstash`
-* Install it: `helm install --name logstash elastic/logstash`
+`helm install --name logstash --version 6.8.10 elastic/logstash`
 
 ### Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions
 
