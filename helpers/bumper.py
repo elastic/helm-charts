@@ -6,7 +6,7 @@
 #
 # Configurable environment variables:
 # - BUMPER_VERSION_6 overrides the 6.x.x version.
-# - BUMPER_VERSION_7 overrides the 7.x.x version.
+# - BUMPER_VERSION_7 overrides the 7.8.x version.
 # - BUMPER_USE_STAGING_IMAGES set to "true" causes the
 #   docker.elastic.co/staging/ docker registry namespace to be used.
 #

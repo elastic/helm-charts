@@ -6,7 +6,7 @@
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.x branch](#using-the-7x-branch)
+  - [Using the 7.8 branch](#using-the-78-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -47,14 +47,14 @@ This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 * Install the latest 7.8 release:
 `helm install --name logstash elastic/logstash --version=7.8.0`
 
-### Using the 7.x branch
+### Using the 7.8 branch
 
 * Clone the git repo and checkout the right branch:
 
   ```shell
   git clone git@github.com:elastic/helm-charts.git
   cd helm-charts
-  git checkout -b 7.x origin/7.x
+  git checkout -b 7.8 origin/7.8
   ````
 
 * Install the latest 7.8.0-SNAPSHOT:
@@ -195,8 +195,8 @@ about our development and testing process.
 [custom docker image]: https://www.elastic.co/guide/en/logstash/7.8/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples/oss
+[examples]: https://github.com/elastic/helm-charts/tree/7.8/logstash/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.8/logstash/examples/oss
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
@@ -208,7 +208,7 @@ about our development and testing process.
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/7.8/docker-config.html#docker-env-config
-[parent readme]: https://github.com/elastic/helm-charts/tree/7.x/README.md
+[parent readme]: https://github.com/elastic/helm-charts/tree/7.8/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -217,5 +217,5 @@ about our development and testing process.
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/logstash/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.8/logstash/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage

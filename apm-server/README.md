@@ -6,7 +6,7 @@
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.x branch](#using-the-7x-branch)
+  - [Using the 7.8 branch](#using-the-78-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -47,14 +47,14 @@ This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 * Install the latest 7.8 release:
 `helm install --name apm-server elastic/apm-server --version=7.8.0`
 
-### Using the 7.x branch
+### Using the 7.8 branch
 
 * Clone the git repo and checkout the right branch:
 
   ```shell
   git clone git@github.com:elastic/helm-charts.git
   cd helm-charts
-  git checkout -b 7.x origin/7.x
+  git checkout -b 7.8 origin/7.8
   ````
 
 * Install the latest 7.8.0-SNAPSHOT:
@@ -151,12 +151,12 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.8/running-on-docker.html
 [apm server oss docker image]: https://www.docker.elastic.co/#apm-server-7-8-0-oss
-[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#default
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.8/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.x/apm-server/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/apm-server/examples/oss
-[examples/security]: https://github.com/elastic/helm-charts/tree/7.x/apm-server/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/7.8/apm-server/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.8/apm-server/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/7.8/apm-server/examples/security
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
@@ -174,4 +174,4 @@ about our development and testing process.
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/apm-server/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.8/apm-server/values.yaml

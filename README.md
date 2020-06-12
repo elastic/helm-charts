@@ -1,6 +1,17 @@
 # Elastic Stack Kubernetes Helm Charts
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.x.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.8.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.8/)
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Charts](#charts)
+- [Kubernetes Versions](#kubernetes-versions)
+- [Helm versions](#helm-versions)
+- [ECK](#eck)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 This functionality is in beta and is subject to change. The design and code is
 less mature than official GA features and is being provided as-is with no
@@ -43,9 +54,9 @@ Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
 Kubernetes.
 
 
-[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/
+[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.8/
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [helm 3]: https://v3.helm.sh
-[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.x/helpers/helm-tester/Dockerfile
-[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.x/helpers/matrix.yml
+[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.8/helpers/helm-tester/Dockerfile
+[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.8/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
