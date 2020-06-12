@@ -52,7 +52,6 @@ This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 
 * Install the latest 7.7 release:
 `helm install --name logstash elastic/logstash`
-* Install it: `helm install --name logstash elastic/logstash`
 
 ### Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions
 
