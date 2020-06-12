@@ -217,7 +217,7 @@ about our development and testing process.
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[kibana docker image]: https://www.elastic.co/guide/en/kibana/7.8/docker.html
+[kibana docker image]: https://www.elastic.co/guide/en/kibana/7.x/docker.html
 [kibana oss docker image]: https://www.docker.elastic.co/#kibana-7-8-0-oss
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -229,10 +229,10 @@ about our development and testing process.
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#security
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-[server.host]: https://www.elastic.co/guide/en/kibana/7.8/settings.html
+[server.host]: https://www.elastic.co/guide/en/kibana/7.x/settings.html
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-[standard upgrade]: https://www.elastic.co/guide/en/kibana/7.8/upgrade-standard.html
+[standard upgrade]: https://www.elastic.co/guide/en/kibana/7.x/upgrade-standard.html
 [supported configurations]: https://github.com/elastic/helm-charts/tree/7.x/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment

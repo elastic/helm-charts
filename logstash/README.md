@@ -193,7 +193,7 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[custom docker image]: https://www.elastic.co/guide/en/logstash/7.8/docker-config.html#_custom_images
+[custom docker image]: https://www.elastic.co/guide/en/logstash/7.x/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples
@@ -203,12 +203,12 @@ about our development and testing process.
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[logstash docker image]: https://www.elastic.co/guide/en/logstash/7.8/docker.html
+[logstash docker image]: https://www.elastic.co/guide/en/logstash/7.x/docker.html
 [logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-8-0-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[note]: https://www.elastic.co/guide/en/logstash/7.8/docker-config.html#docker-env-config
+[note]: https://www.elastic.co/guide/en/logstash/7.x/docker-config.html#docker-env-config
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/

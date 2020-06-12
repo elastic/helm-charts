@@ -220,7 +220,7 @@ about our development and testing process.
 [kube-state-metrics]: https://github.com/helm/charts/tree/7.x/stable/kube-state-metrics
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/7.8/running-on-docker.html
+[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/7.x/running-on-docker.html
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes
