@@ -51,7 +51,7 @@ secretMounts: []
 #    defaultMode: 0755
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.8.0-SNAPSHOT"
+imageTag: "7.9.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -205,7 +205,7 @@ readinessProbe:
   successThreshold: 3
   timeoutSeconds: 5
 
-# https://www.elastic.co/guide/en/elasticsearch/reference/7.8/cluster-health.html#request-params wait_for_status
+# https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-health.html#request-params wait_for_status
 clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
 
 ## Use an alternate scheduler.

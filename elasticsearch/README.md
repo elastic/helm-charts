@@ -1,12 +1,20 @@
 # Elasticsearch Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Elasticsearch Docker image][].
+
+**Warning**: This branch is used for development, please use [7.7.1][] release
+for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.x branch](#using-the-7x-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.x branch and 7.9.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-790-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -32,49 +40,34 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Elasticsearch Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.8
 * Minimum cluster requirements include the following to run this chart with
 default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
   * 1GB of RAM for the JVM heap
 
+See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.8.0-SNAPSHOT versions.
+This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.8 release:
-`helm install --name elasticsearch elastic/elasticsearch --version=7.8.0`
+* Install the latest 7.7 release:
+`helm install --name elasticsearch elastic/elasticsearch`
 
-### Using the 7.x branch
+### Install development version using 7.x branch and 7.9.0-SNAPSHOT versions
 
-* Clone the git repo and checkout the right branch:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```shell
-  git clone git@github.com:elastic/helm-charts.git
-  cd helm-charts
-  git checkout -b 7.x origin/7.x
-  ````
-
-* Install the latest 7.8.0-SNAPSHOT:
-`helm install --name elasticsearch ./helm-charts/elasticsearch`
+* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch`
 
 
 ## Upgrading
@@ -129,7 +122,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.8.0-SNAPSHOT`                                         |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.9.0-SNAPSHOT`                                |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
@@ -390,23 +383,24 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[#63]: https://github.com/elastic/helm-charts/issues/63
+[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
-[#63]: https://github.com/elastic/helm-charts/issues/63
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-[cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/cluster.name.html
+[cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster.name.html
 [clustering and node discovery]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#clustering-and-node-discovery
 [config example]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/config/values.yaml
 [curator]: https://www.elastic.co/guide/en/elasticsearch/client/curator/7.8/snapshot.html
-[custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/docker.html#_c_customized_image
+[custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docker.html#_c_customized_image
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/discovery-settings.html#minimum_master_nodes
+[discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/discovery-settings.html#minimum_master_nodes
 [docker for mac]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/docker-for-mac
-[elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/cluster-health.html#request-params
-[elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/docker.html
+[elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-health.html#request-params
+[elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docker.html
 [elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-7-8-0-oss
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
@@ -419,12 +413,12 @@ about our development and testing process.
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#how-to-install-plugins
 [how to use the keystore]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#how-to-use-the-keystore
-[http.port]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-http.html#_settings
+[http.port]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-http.html#_settings
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[java options]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/jvm-options.html
-[jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/heap-size.html
+[java options]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/jvm-options.html
+[jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/heap-size.html
 [kind]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/kubernetes-kind
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -436,28 +430,28 @@ about our development and testing process.
 [minikube]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/minikube
 [microk8s]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/microk8s
 [multi]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi/
-[network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/network.host.html
+[network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/network.host.html
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
-[node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/configuring-tls.html#node-certificates
+[node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/configuring-tls.html#node-certificates
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
-[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-node.html
+[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [openshift]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/openshift
-[parent readme]: https://github.com/elastic/helm-charts/tree/7.x/README.md
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[roles]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-node.html
+[roles]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-node.html
 [secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
 [snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
-[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.8/repository.html
-[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-snapshots.html
-[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/vm-max-map-count.html#vm-max-map-count
+[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/repository.html
+[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-snapshots.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.x/README.md#supported-configurations
+[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/vm-max-map-count.html#vm-max-map-count
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[transport port configuration]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-transport.html#_transport_settings
+[transport port configuration]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-transport.html#_transport_settings
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage
