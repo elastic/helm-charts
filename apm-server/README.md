@@ -1,12 +1,25 @@
 # APM Server Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[APM Server Docker image][].
+
+**Warning**: This functionality is in alpha and is subject to change.
+The design and code is less mature than official GA features and is being
+provided as-is with no warranties. Alpha features are not subject to the support
+SLA of official GA features (see [supported configurations][] for more details).
+
+**Warning**: This branch is used for development, please use [7.7.1][] release
+for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.8 branch](#using-the-78-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions](#install-development-version-using-78-branch-and-780-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -20,45 +33,32 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in alpha and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Alpha features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[APM Server Docker image][].
-
-
 ## Requirements
 
 * Kubernetes >= 1.9
 * [Helm][] >= 2.8.0
+
+See [supported configurations][] for more details.
 
 
 ## Installing
 
 This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.8 release:
-`helm install --name apm-server elastic/apm-server --version=7.8.0`
+* Install the latest 7.7 release:
+`helm install --name apm-server elastic/apm-server`
+* Install it: `helm install --name apm-server elastic/apm-server`
 
-### Using the 7.8 branch
+### Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions
 
-* Clone the git repo and checkout the right branch:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```shell
-  git clone git@github.com:elastic/helm-charts.git
-  cd helm-charts
-  git checkout -b 7.8 origin/7.8
-  ````
-
-* Install the latest 7.8.0-SNAPSHOT:
-`helm install --name apm-server ./helm-charts/apm-server`
+* Install it: `helm install --name apm-server ./helm-charts/apm-server`
 
 
 ## Upgrading
@@ -144,6 +144,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -172,6 +173,7 @@ about our development and testing process.
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.8/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
 [values.yaml]: https://github.com/elastic/helm-charts/tree/7.8/apm-server/values.yaml
