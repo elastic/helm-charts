@@ -34,5 +34,5 @@ minikube addons enable storage-provisioner
   ```
 
 
-[custom values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/minikube/values.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/7.8/elasticsearch/examples/minikube/values.yaml
 [minikube]: https://minikube.sigs.k8s.io/docs/
