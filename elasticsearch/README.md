@@ -1,12 +1,20 @@
 # Elasticsearch Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Elasticsearch Docker image][].
+
+**Warning**: This branch is used for development, please use [7.7.1][] release
+for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.x branch](#using-the-7x-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions](#install-development-version-using-78-branch-and-780-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -32,49 +40,35 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Elasticsearch Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.8
 * Minimum cluster requirements include the following to run this chart with
 default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
   * 1GB of RAM for the JVM heap
 
+See [supported configurations][] for more details.
 
 ## Installing
 
 This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.8 release:
-`helm install --name elasticsearch elastic/elasticsearch --version=7.8.0`
+* Install the latest 7.7 release:
+`helm install --name elasticsearch elastic/elasticsearch`
+* Install it: `helm install --name elasticsearch elastic/elasticsearch`
 
-### Using the 7.x branch
+### Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions
 
-* Clone the git repo and checkout the right branch:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```shell
-  git clone git@github.com:elastic/helm-charts.git
-  cd helm-charts
-  git checkout -b 7.x origin/7.x
-  ````
-
-* Install the latest 7.8.0-SNAPSHOT:
-`helm install --name elasticsearch ./helm-charts/elasticsearch`
+* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch`
 
 
 ## Upgrading
@@ -390,10 +384,11 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[#63]: https://github.com/elastic/helm-charts/issues/63
+[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
-[#63]: https://github.com/elastic/helm-charts/issues/63
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -442,8 +437,7 @@ about our development and testing process.
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
 [nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[openshift]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/openshift
-[parent readme]: https://github.com/elastic/helm-charts/tree/7.x/README.md
+[openshift]: https://github.com/elastic/helm-charts/tree/7.8/elasticsearch/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -454,6 +448,7 @@ about our development and testing process.
 [snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
 [snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.8/repository.html
 [snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-snapshots.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.8/README.md#supported-configurations
 [sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/vm-max-map-count.html#vm-max-map-count
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

@@ -1,12 +1,20 @@
 # Filebeat Helm Chart
+
+This Helm chart is a lightweight way to configure and run our official
+[Filebeat Docker image][].
+
+**Warning**: This branch is used for development, please use [7.7.1][] release
+for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Using Helm repository](#using-helm-repository)
-  - [Using the 7.x branch](#using-the-7x-branch)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions](#install-development-version-using-78-branch-and-780-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -21,45 +29,32 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-This functionality is in beta and is subject to change. The design and code is
-less mature than official GA features and is being provided as-is with no
-warranties. Beta features are not subject to the support SLA of official GA
-features.
-
-This Helm chart is a lightweight way to configure and run our official
-[Filebeat Docker image][].
-
-
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0 (see [parent README][] for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.9
+
+See [supported configurations][] for more details.
 
 
 ## Installing
 
 This chart is tested with the latest 7.8.0-SNAPSHOT versions.
 
-### Using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.8 release:
-`helm install --name filebeat elastic/filebeat --version=7.8.0`
+* Install the latest 7.7 release:
+`helm install --name filebeat elastic/filebeat`
+* Install it: `helm install --name filebeat elastic/filebeat`
 
-### Using the 7.x branch
+### Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions
 
-* Clone the git repo and checkout the right branch:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-  ```shell
-  git clone git@github.com:elastic/helm-charts.git
-  cd helm-charts
-  git checkout -b 7.x origin/7.x
-  ````
-
-* Install the latest 7.8.0-SNAPSHOT:
-`helm install --name filebeat ./helm-charts/filebeat`
+* Install it: `helm install --name filebeat ./helm-charts/filebeat`
 
 
 ## Upgrading
@@ -164,6 +159,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -184,12 +180,12 @@ about our development and testing process.
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[parent readme]: https://github.com/elastic/helm-charts/tree/7.x/README.md
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [podSecurityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.8/README.md#supported-configurations
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy
