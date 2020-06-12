@@ -61,8 +61,7 @@ This chart is tested with the latest 6.8.11-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install the latest 6.8 release:
-`helm install --name elasticsearch elastic/elasticsearch`
-* Install it: `helm install --name elasticsearch elastic/elasticsearch`
+`helm install --name elasticsearch --version 6.8.10 elastic/elasticsearch`
 
 ### Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions
 
