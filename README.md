@@ -1,6 +1,6 @@
 # Elastic Stack Kubernetes Helm Charts
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.8.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.8/)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.x.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -25,12 +25,12 @@ added below.
 
 | Chart                                      | Docker documentation                                                        |
 |--------------------------------------------|-----------------------------------------------------------------------------|
-| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/7.8/running-on-docker.html       |
-| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/7.8/docker.html     |
-| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/7.8/running-on-docker.html   |
-| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/7.8/docker.html                      |
-| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/7.8/docker.html                    |
-| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/7.8/running-on-docker.html |
+| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/7.x/running-on-docker.html       |
+| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docker.html     |
+| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/7.x/running-on-docker.html   |
+| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/7.x/docker.html                      |
+| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/7.x/docker.html                    |
+| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/7.x/running-on-docker.html |
 
 ## Supported Configurations
 
@@ -51,7 +51,7 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 | 7.5 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.6 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.7 | GA            | GA     | Beta     | GA       | GA         | Beta       |
-| 7.8 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.x | GA            | GA     | Beta     | GA       | GA         | Beta       |
 
 ### Kubernetes Versions
 
