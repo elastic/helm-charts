@@ -52,7 +52,6 @@ This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 
 * Install the latest 7.7 release:
 `helm install --name apm-server elastic/apm-server`
-* Install it: `helm install --name apm-server elastic/apm-server`
 
 ### Install development version using 7.x branch and 7.9.0-SNAPSHOT versions
 
