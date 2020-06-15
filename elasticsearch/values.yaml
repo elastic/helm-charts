@@ -119,6 +119,9 @@ podSecurityPolicy:
 
 persistence:
   enabled: true
+  labels:
+    # Add default labels for the volumeClaimTemplate fo the StatefulSet
+    enabled: false
   annotations: {}
 
 extraVolumes: []
