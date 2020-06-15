@@ -97,7 +97,7 @@ resources:
       memory: "100Mi"
     limits:
       cpu: "1000m"
-      memory: "200Mi"
+      memory: "512Mi"
 
 # Custom service account override that the pod will use
 serviceAccount: ""
