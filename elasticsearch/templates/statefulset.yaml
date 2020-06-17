@@ -144,6 +144,9 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
+      {{- if semverCompare ">1.13" .Capabilities.KubeVersion.GitVersion }}
+      enableServiceLinks: {{ .Values.enableServiceLinks }}
+      {{- end }}
       initContainers:
       {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl
