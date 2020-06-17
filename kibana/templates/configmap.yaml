@@ -3,10 +3,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "fullname" . }}-config
-  labels:
-    app: {{ .Chart.Name }}
-    release: {{ .Release.Name | quote }}
+  name: {{ template "kibana.fullname" . }}-config
+  labels: {{ include "kibana.labels" . | nindent 4 }}
 data:
 {{- range $path, $config := .Values.kibanaConfig }}
   {{ $path }}: |

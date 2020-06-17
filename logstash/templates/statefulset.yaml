@@ -2,9 +2,9 @@
 apiVersion: {{ template "logstash.statefulset.apiVersion" . }}
 kind: StatefulSet
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "logstash.fullname" . }}
   labels:
-    app: "{{ template "fullname" . }}"
+    app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -13,11 +13,11 @@ metadata:
     {{- end }}
 spec:
   {{- if .Values.service }}
-  serviceName: {{ template "fullname" . }}
+  serviceName: {{ template "logstash.fullname" . }}
   {{- end }}
   selector:
     matchLabels:
-      app: "{{ template "fullname" . }}"
+      app: "{{ template "logstash.fullname" . }}"
       release: {{ .Release.Name | quote }}
   replicas: {{ .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
@@ -26,7 +26,7 @@ spec:
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
-      name: {{ template "fullname" . }}
+      name: {{ template "logstash.fullname" . }}
     {{- with .Values.persistence.annotations  }}
       annotations:
 {{ toYaml . | indent 8 }}
@@ -36,12 +36,15 @@ spec:
   {{- end }}
   template:
     metadata:
-      name: "{{ template "fullname" . }}"
+      name: "{{ template "logstash.fullname" . }}"
       labels:
-        app: "{{ template "fullname" . }}"
+        app: "{{ template "logstash.fullname" . }}"
         chart: "{{ .Chart.Name }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
@@ -61,7 +64,7 @@ spec:
       securityContext:
 {{ toYaml .Values.podSecurityContext | indent 8 }}
       {{- if .Values.rbac.create }}
-      serviceAccountName: "{{ template "fullname" . }}"
+      serviceAccountName: "{{ template "logstash.fullname" . }}"
       {{- else if not (eq .Values.rbac.serviceAccountName "") }}
       serviceAccountName: {{ .Values.rbac.serviceAccountName | quote }}
       {{- end }}
@@ -87,7 +90,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - "{{ template "fullname" .}}"
+                - "{{ template "logstash.fullname" .}}"
             topologyKey: {{ .Values.antiAffinityTopologyKey }}
       {{- else if eq .Values.antiAffinity "soft" }}
         podAntiAffinity:
@@ -100,7 +103,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - "{{ template "fullname" . }}"
+                  - "{{ template "logstash.fullname" . }}"
       {{- end }}
       {{- with .Values.nodeAffinity }}
         nodeAffinity:
@@ -116,12 +119,12 @@ spec:
         {{- if .Values.logstashConfig }}
         - name: logstashconfig
           configMap:
-            name: {{ template "fullname" . }}-config
+            name: {{ template "logstash.fullname" . }}-config
         {{- end }}
         {{- if .Values.logstashPipeline }}
         - name: logstashpipeline
           configMap:
-            name: {{ template "fullname" . }}-pipeline
+            name: {{ template "logstash.fullname" . }}-pipeline
         {{- end }}
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 8 }}
@@ -135,7 +138,7 @@ spec:
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- end }}
       containers:
-      - name: "{{ template "name" . }}"
+      - name: "{{ template "logstash.name" . }}"
         securityContext:
 {{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -147,6 +150,9 @@ spec:
         ports:
         - name: http
           containerPort: {{ .Values.httpPort }}
+      {{- if .Values.extraPorts }}
+        {{- toYaml .Values.extraPorts | nindent 8 }}  
+      {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
@@ -155,9 +161,13 @@ spec:
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
+{{- if .Values.envFrom }}
+        envFrom:
+{{ toYaml .Values.envFrom | indent 10 }}
+{{- end }}
         volumeMounts:
           {{- if .Values.persistence.enabled }}
-          - name: "{{ template "fullname" . }}"
+          - name: "{{ template "logstash.fullname" . }}"
             mountPath: /usr/share/logstash/data
           {{- end }}
           {{- range .Values.secretMounts }}

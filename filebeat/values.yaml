@@ -4,12 +4,15 @@
 filebeatConfig:
   filebeat.yml: |
     filebeat.inputs:
-    - type: docker
-      containers.ids:
-      - '*'
+    - type: container
+      paths:
+        - /var/log/containers/*.log
       processors:
       - add_kubernetes_metadata:
-          in_cluster: true
+          host: ${NODE_NAME}
+          matchers:
+          - logs_path:
+              logs_path: "/var/log/containers/"
 
     output.elasticsearch:
       host: '${NODE_NAME}'
@@ -31,21 +34,49 @@ extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+extraInitContainers: []
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+envFrom: []
+# - configMapRef:
+#     name: configmap-name
+
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
-hostNetworking: true
+hostNetworking: false
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "7.4.2"
+imageTag: "7.7.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
 livenessProbe:
+  exec:
+    command:
+      - sh
+      - -c
+      - |
+        #!/usr/bin/env bash -e
+        curl --fail 127.0.0.1:5066
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
 
 readinessProbe:
+  exec:
+    command:
+      - sh
+      - -c
+      - |
+        #!/usr/bin/env bash -e
+        filebeat test output
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10

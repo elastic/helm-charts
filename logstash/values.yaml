@@ -3,6 +3,9 @@ replicas: 1
 
 # Allows you to add any config files in /usr/share/logstash/config/
 # such as logstash.yml and log4j2.properties
+#
+# Note that when overriding logstash.yml, `http.host: 0.0.0.0` should always be included
+# to make default probes work.
 logstashConfig: {}
 #  logstash.yml: |
 #    key:
@@ -11,8 +14,9 @@ logstashConfig: {}
 #    key = value
 
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
+### ***warn*** there is a hardcoded logstash.conf in the image, override it first
 logstashPipeline: {}
-#  uptime.conf: |
+#  logstash.conf: |
 #    input {
 #      exec {
 #        command => "uptime"
@@ -28,11 +32,18 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
+# Allows you to load environment variables from kubernetes secret or config map
+envFrom: []
+# - secretRef:
+#     name: env-secret
+# - configMapRef:
+#     name: config-map
+
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []
 
 image: "docker.elastic.co/logstash/logstash"
-imageTag: "7.4.2"
+imageTag: "7.7.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -124,6 +135,11 @@ podManagementPolicy: "Parallel"
 
 httpPort: 9600
 
+# Custom ports to add to logstash
+extraPorts: []
+  # - name: beats
+  #   containerPort: 5001
+
 updateStrategy: RollingUpdate
 
 # This is the max unavailable setting for the pod disruption budget
@@ -146,11 +162,26 @@ securityContext:
 # How long to wait for logstash to stop gracefully
 terminationGracePeriod: 120
 
+# Probes
+# Default probes are using `httpGet` which requires that `http.host: 0.0.0.0` is part of
+# `logstash.yml`. If needed probes can be disabled or overrided using the following syntaxes:
+#
+# disable livenessProbe
+# livenessProbe: null
+#
+# replace httpGet default readinessProbe by some exec probe
+# readinessProbe:
+#   httpGet: null
+#   exec:
+#     command:
+#       - curl
+#      - localhost:9600
+
 livenessProbe:
   httpGet:
     path: /
     port: http
-  initialDelaySeconds: 60
+  initialDelaySeconds: 300
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 3

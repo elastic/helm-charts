@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "fullname" . }}-config
+  name: {{ template "filebeat.fullname" . }}-config
   labels:
-    app: "{{ template "fullname" . }}"
+    app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

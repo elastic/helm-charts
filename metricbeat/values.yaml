@@ -1,102 +1,189 @@
 ---
-# Allows you to add any config files in /usr/share/metricbeat
-# such as metricbeat.yml
-metricbeatConfig:
-  metricbeat.yml: |
-    system:
-      hostfs: /hostfs
-    metricbeat.modules:
-    - module: kubernetes
-      metricsets:
-        - container
-        - node
-        - pod
-        - system
-        - volume
-      period: 10s
-      host: "${NODE_NAME}"
-      hosts: ["${NODE_NAME}:10255"]
-      processors:
-      - add_kubernetes_metadata:
-          in_cluster: true
-    - module: kubernetes
-      enabled: true
-      metricsets:
-        - event
-    - module: system
-      period: 10s
-      metricsets:
-        - cpu
-        - load
-        - memory
-        - network
-        - process
-        - process_summary
-      processes: ['.*']
-      process.include_top_n:
-        by_cpu: 5
-        by_memory: 5
-    - module: system
-      period: 1m
-      metricsets:
-        - filesystem
-        - fsstat
-      processors:
-      - drop_event.when.regexp:
-          system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
-    output.elasticsearch:
-      hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
 
-  kube-state-metrics-metricbeat.yml: |
-    metricbeat.modules:
-    - module: kubernetes
-      enabled: true
-      metricsets:
-        - state_node
-        - state_deployment
-        - state_replicaset
-        - state_pod
-        - state_container
-      period: 10s
-      hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
-    output.elasticsearch:
-      hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
-
-# Replicas being used for the kube-state-metrics metricbeat deployment
-
-replicas: 1
-
-# Extra environment variables to append to the DaemonSet pod spec.
-# This will be appended to the current 'env:' key. You can use any of the kubernetes env
-# syntax here
-extraEnvs: []
-#  - name: MY_ENVIRONMENT_VAR
-#    value: the_value_goes_here
-
-extraVolumeMounts: []
+daemonset:
+  affinity: {}
+  # Extra environment variables for Metricbeat container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
+  extraVolumes: []
+  # - name: extras
+  #   emptyDir: {}
+  extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
+  hostNetworking: false
+  # Allows you to add any config files in /usr/share/metricbeat
+  # such as metricbeat.yml for daemonset
+  metricbeatConfig:
+    metricbeat.yml: |
+      metricbeat.modules:
+      - module: kubernetes
+        metricsets:
+          - container
+          - node
+          - pod
+          - system
+          - volume
+        period: 10s
+        host: "${NODE_NAME}"
+        hosts: ["https://${NODE_NAME}:10250"]
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        ssl.verification_mode: "none"
+        # If using Red Hat OpenShift remove ssl.verification_mode entry and
+        # uncomment these settings:
+        #ssl.certificate_authorities:
+          #- /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+        processors:
+        - add_kubernetes_metadata: ~
+      - module: kubernetes
+        enabled: true
+        metricsets:
+          - event
+      - module: system
+        period: 10s
+        metricsets:
+          - cpu
+          - load
+          - memory
+          - network
+          - process
+          - process_summary
+        processes: ['.*']
+        process.include_top_n:
+          by_cpu: 5
+          by_memory: 5
+      - module: system
+        period: 1m
+        metricsets:
+          - filesystem
+          - fsstat
+        processors:
+        - drop_event.when.regexp:
+            system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
+      output.elasticsearch:
+        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  nodeSelector: {}
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: metricbeat-certificates
+  #    secretName: metricbeat-certificates
+  #    path: /usr/share/metricbeat/certs
+  # Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
+  # - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
+  # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
+  # - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
+  tolerations: []
 
-extraVolumes: []
+deployment:
+  affinity: {}
+  # Extra environment variables for Metricbeat container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
+  # Allows you to add any config files in /usr/share/metricbeat
+  extraVolumes: []
   # - name: extras
   #   emptyDir: {}
+  extraVolumeMounts: []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+  # such as metricbeat.yml for deployment
+  metricbeatConfig:
+    metricbeat.yml: |
+      metricbeat.modules:
+      - module: kubernetes
+        enabled: true
+        metricsets:
+          - state_node
+          - state_deployment
+          - state_replicaset
+          - state_pod
+          - state_container
+        period: 10s
+        hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
+      output.elasticsearch:
+        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  nodeSelector: {}
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: metricbeat-certificates
+  #    secretName: metricbeat-certificates
+  #    path: /usr/share/metricbeat/certs
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
+  tolerations: []
+
+# Replicas being used for the kube-state-metrics metricbeat deployment
+replicas: 1
+
+extraContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+extraInitContainers: ""
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
 
 # Root directory where metricbeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "7.4.2"
+imageTag: "7.7.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
 livenessProbe:
+  exec:
+    command:
+      - sh
+      - -c
+      - |
+        #!/usr/bin/env bash -e
+        curl --fail 127.0.0.1:5066
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
 
 readinessProbe:
+  exec:
+    command:
+      - sh
+      - -c
+      - |
+        #!/usr/bin/env bash -e
+        metricbeat test output
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
@@ -109,60 +196,40 @@ labels: {}
 managedServiceAccount: true
 
 clusterRoleRules:
-  - apiGroups:
-    - "extensions"
-    - "apps"
-    - ""
-    resources:
-    - namespaces
-    - pods
-    - events
-    - deployments
-    - nodes
-    - replicasets
-    verbs:
-    - get
-    - list
-    - watch
+- apiGroups: [""]
+  resources:
+  - nodes
+  - namespaces
+  - events
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions"]
+  resources:
+  - replicasets
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+  - statefulsets
+  - deployments
+  - replicasets
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources:
+  - nodes/stats
+  verbs: ["get"]
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
-# Various pod security context settings. Bear in mind that many of these have an impact on metricbeat functioning properly.
-#
-# - Filesystem group for the metricbeat user. The official elastic docker images always have an id of 1000.
-# - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
-# - Whether to execute the metricbeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
-podSecurityContext:
-  runAsUser: 0
-  privileged: false
-
-resources:
-  requests:
-    cpu: "100m"
-    memory: "100Mi"
-  limits:
-    cpu: "1000m"
-    memory: "200Mi"
-
 # Custom service account override that the pod will use
 serviceAccount: ""
-
-# A list of secrets and their paths to mount inside the pod
-# This is useful for mounting certificates for security other sensitive values
-secretMounts: []
-#  - name: metricbeat-certificates
-#    secretName: metricbeat-certificates
-#    path: /usr/share/metricbeat/certs
 
 # How long to wait for metricbeat pods to stop gracefully
 terminationGracePeriod: 30
 
-tolerations: []
-
-nodeSelector: {}
-
-affinity: {}
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: ""
 
 updateStrategy: RollingUpdate
 
@@ -170,3 +237,18 @@ updateStrategy: RollingUpdate
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
+
+# DEPRECATED
+affinity: {}
+envFrom: []
+extraEnvs: []
+extraVolumes: []
+extraVolumeMounts: []
+# Allows you to add any config files in /usr/share/metricbeat
+# such as metricbeat.yml for both daemonset and deployment
+metricbeatConfig: {}
+nodeSelector: {}
+podSecurityContext: {}
+resources: {}
+secretMounts: []
+tolerations: []
