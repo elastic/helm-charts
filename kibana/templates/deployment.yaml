@@ -86,7 +86,11 @@ spec:
             value: "{{ .Values.elasticsearchURL }}"
           {{- else if .Values.elasticsearchHosts }}
           - name: ELASTICSEARCH_HOSTS
+            {{- if ne (typeOf .Values.elasticsearchHosts) "string" }}
+            value: {{ toJson .Values.elasticsearchHosts | quote }}
+            {{- else }}
             value: "{{ .Values.elasticsearchHosts }}"
+            {{- end }}
           {{- end }}
           - name: SERVER_HOST
             value: "{{ .Values.serverHost }}"

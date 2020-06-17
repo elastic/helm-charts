@@ -63,6 +63,18 @@ def test_overriding_the_elasticsearch_hosts():
     assert c["env"][0]["name"] == "ELASTICSEARCH_HOSTS"
     assert c["env"][0]["value"] == "http://hello.world"
 
+    config = """
+    elasticsearchHosts:
+    - http://hello.world.1
+    - http://hello.world.2
+    - http://hello.world.3
+    """
+
+    r = helm_template(config)
+
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert c["env"][0]["name"] == "ELASTICSEARCH_HOSTS"
+    assert c["env"][0]["value"] == '["http://hello.world.1","http://hello.world.2","http://hello.world.3"]'
 
 def test_overriding_the_elasticsearch_url():
     config = """
