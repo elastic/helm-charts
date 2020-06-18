@@ -11,7 +11,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.8.0-SNAPSHOT"'
+      - '"number" : "7.8.0"'
       - '"cluster_name" : "upgrade"'
       - '"name" : "upgrade-master-0"'
       - 'You Know, for Search'

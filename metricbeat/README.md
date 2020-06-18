@@ -3,9 +3,6 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
-**Warning**: This branch is used for development, please use [7.7.1][] release
-for released version.
-
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -13,8 +10,6 @@ for released version.
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions](#install-development-version-using-78-branch-and-780-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -38,23 +33,16 @@ for released version.
 
 See [supported configurations][] for more details.
 
+
 ## Installing
 
-This chart is tested with the latest 7.8.0-SNAPSHOT versions.
-
-### Install released version using Helm repository
+This chart is tested with 7.8.0 version.
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
-`helm install --name metricbeat elastic/metricbeat`
-
-### Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it: `helm install --name metricbeat ./helm-charts/metricbeat`
+* Install 7.8.0 release:
+`helm install --name apm-server --version 7.8.0 elastic/metricbeat`
 
 
 ## Upgrading
@@ -116,7 +104,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.8.0-SNAPSHOT`                              |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.8.0`                              |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
@@ -198,7 +186,6 @@ about our development and testing process.
 
 
 [#471]: https://github.com/elastic/helm-charts/pull/471
-[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
