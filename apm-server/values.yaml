@@ -80,12 +80,20 @@ podSecurityContext:
   privileged: false
 
 livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
 
 readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10

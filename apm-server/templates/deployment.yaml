@@ -88,15 +88,9 @@ spec:
 {{ toYaml .Values.podSecurityContext | indent 10 }}
 {{- end }}
         livenessProbe:
-          httpGet:
-            path: /
-            port: http
-          initialDelaySeconds: 30
+{{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
-          httpGet:
-            path: /
-            port: http
-          initialDelaySeconds: 30
+{{ toYaml .Values.readinessProbe | indent 10 }}
         ports:
           - containerPort: {{ .Values.service.port }}
             name: http
