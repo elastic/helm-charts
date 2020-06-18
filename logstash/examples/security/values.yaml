@@ -1,3 +1,6 @@
+persistence:
+  enabled: true
+
 logstashConfig:
   logstash.yml: |
     http.host: 0.0.0.0
@@ -5,14 +8,14 @@ logstashConfig:
     xpack.monitoring.elasticsearch.username: '${ELASTICSEARCH_USERNAME}'
     xpack.monitoring.elasticsearch.password: '${ELASTICSEARCH_PASSWORD}'
     xpack.monitoring.elasticsearch.hosts: ["https://security-master:9200"]
-    xpack.monitoring.elasticsearch.ssl.certificate_authority: /usr/share/logstash/config/certs/elastic-certificate.pem
+    xpack.monitoring.elasticsearch.ssl.certificate_authority: /usr/share/logstash/config/certs/elastic-certificate.crt
 
 logstashPipeline:
   uptime.conf: |
     input { exec { command => "uptime" interval => 30 } }
     output { elasticsearch {
       hosts => ["https://security-master:9200"]
-      cacert => "/usr/share/logstash/config/certs/elastic-certificate.pem"
+      cacert => "/usr/share/logstash/config/certs/elastic-certificate.crt"
       user => '${ELASTICSEARCH_USERNAME}'
       password => '${ELASTICSEARCH_PASSWORD}'
       index => "logstash"
@@ -20,8 +23,8 @@ logstashPipeline:
     }
 
 secretMounts:
-  - name: elastic-certificate-pem
-    secretName: elastic-certificate-pem
+  - name: elastic-certificate-crt
+    secretName: elastic-certificate-crt
     path: /usr/share/logstash/config/certs
 
 extraEnvs:

@@ -1,3 +1,15 @@
+mount:
+  /usr/share/logstash/data:
+    exists: true
+  /usr/share/logstash/config/logstash.yml:
+    exists: true
+    opts:
+      - ro
+  /usr/share/logstash/pipeline/uptime.conf:
+    exists: true
+    opts:
+      - ro
+
 user:
   logstash:
     exists: true
@@ -9,35 +21,44 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-default-logstash-0"'
-      - '"version" : "7.4.1"'
+      - '"host" : "helm-logstash-security-logstash-0"'
+      - '"version" : "7.7.1"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-default-logstash-0"'
+      - '"name" : "helm-logstash-security-logstash-0"'
       - '"status" : "green"'
       - '"workers" : 1'
       - '"batch_size" : 125'
       - '"batch_delay" : 50'
+  https://security-master:9200/_cat/indices:
+    status: 200
+    timeout: 2000
+    body:
+      - 'logstash'
+    allow-insecure: true
+    username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
+    password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
 
 file:
   /usr/share/logstash/config/logstash.yml:
     exists: true
     mode: "0644"
-    owner: logstash
-    group: root
+    owner: root
+    group: logstash
     filetype: file
     contains:
-      - 'http.host: "0.0.0.0"'
-      - 'xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]'
-  /usr/share/logstash/pipeline/logstash.conf:
+      - 'http.host: 0.0.0.0'
+      - 'xpack.monitoring.enabled: true'
+      - 'xpack.monitoring.elasticsearch.hosts: ["https://security-master:9200"]'
+      - 'xpack.monitoring.elasticsearch.ssl.certificate_authority: /usr/share/logstash/config/certs/elastic-certificate.crt'
+  /usr/share/logstash/pipeline/uptime.conf:
     exists: true
     mode: "0644"
-    owner: logstash
-    group: root
+    owner: root
+    group: logstash
     filetype: file
     contains:
-      - 'input {'
-      - 'beats {'
-      - 'port => 5044'
-      - 'output {'
-      - 'stdout {'
-      - 'codec => rubydebug'
+      - 'input { exec { command => "uptime" interval => 30 } }'
+      - 'output { elasticsearch {'
+      - 'hosts => ["https://security-master:9200"]'
+      - 'cacert => "/usr/share/logstash/config/certs/elastic-certificate.crt"'
+      - 'index => "logstash"'
