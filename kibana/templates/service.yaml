@@ -28,6 +28,3 @@ spec:
   selector:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name | quote }}
-{{- if .Values.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
-{{- end }}
