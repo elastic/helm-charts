@@ -3,34 +3,78 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [7.7.0 - 2020/05/13](#770---20200513)
-  - [Known Issues](#known-issues)
-  - [GA support](#ga-support)
-  - [New branching model](#new-branching-model)
-  - [Filebeat container inputs](#filebeat-container-inputs)
-  - [Metricbeat upgrade issue](#metricbeat-upgrade-issue)
-  - [Metricbeat split values for daemonset and deployment](#metricbeat-split-values-for-daemonset-and-deployment)
-- [6.8.9 - 2020/05/13](#689---20200513)
-- [7.6.2 - 2020/03/31](#762---20200331)
-  - [Kibana default resources](#kibana-default-resources)
-- [7.6.0 - 2020/02/11](#760---20200211)
-  - [Elasticsearch default resources](#elasticsearch-default-resources)
-- [7.5.0 - 2019/12/02](#750---20191202)
-  - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
-- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
-  - [Elasticsearch upgrade from 6.x](#elasticsearch-upgrade-from-6x)
+- [7.8.0 - 2020/06/18](#780---20200618)
+    - [Stable Elasticsearch deprecated](#stable-elasticsearch-deprecated)
+    - [APM Server memory limit](#apm-server-memory-limit)
+    - [Elasticsearch service selector change](#elasticsearch-service-selector-change)
+  - [7.7.0 - 2020/05/13](#770---20200513)
+    - [Known Issues](#known-issues)
+    - [GA support](#ga-support)
+    - [New branching model](#new-branching-model)
+    - [Filebeat container inputs](#filebeat-container-inputs)
+    - [Metricbeat upgrade issue](#metricbeat-upgrade-issue)
+    - [Metricbeat split values for daemonset and deployment](#metricbeat-split-values-for-daemonset-and-deployment)
+  - [6.8.9 - 2020/05/13](#689---20200513)
+  - [7.6.2 - 2020/03/31](#762---20200331)
+    - [Kibana default resources](#kibana-default-resources)
+  - [7.6.0 - 2020/02/11](#760---20200211)
+    - [Elasticsearch default resources](#elasticsearch-default-resources)
+  - [7.5.0 - 2019/12/02](#750---20191202)
+    - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
+  - [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+    - [Elasticsearch upgrade from 6.x](#elasticsearch-upgrade-from-6x)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
+# 7.8.0 - 2020/06/18
+
+### Stable Elasticsearch deprecated
+
+[Stable Elasticsearch chart][] is now deprecated in favor of
+[Elastic Elasticsearch chart][] (see [Stable Elasticsearch chart notice][]).
+
+Existing users of [Stable Elasticsearch chart][] can use the [migration guide][].
+
+### APM Server memory limit
+
+APM Servers default memory limit is increased in [#664][].
+
+This change may impact memory available resources capacity in your Kubernetes
+cluster.
+
+To come back to former default values, use the following values:
+
+```yaml
+resources:
+  limits:
+    memory: "200Mi"
+```
+
+### Elasticsearch service selector change
+
+Elasticsearch service selector is no more including `heritage` label.
+
+This label is immutable and causes issues with the latest Helm v3 version which
+does more verification (heritage has `Tiller` value with Helm 2 but `Helm`
+value in Helm 3).
+
+As this change is forcing `Service` recreation, a short disruption of a few
+seconds can be noted during upgrade to 7.8.0.
+
+See [#437][] for more details.
+
+
 ## 7.7.0 - 2020/05/13
 
 ### Known Issues
 
-Elasticsearch nodes could be restarted too quickly during an upgrade or rolling restart, potentially resulting in service disruption.
-This is due to a bug introduced by the changes to the Elasticsearch `readinessProbe` in [#586][].
+Elasticsearch nodes could be restarted too quickly during an upgrade or rolling
+restart, potentially resulting in service disruption.
+This is due to a bug introduced by the changes to the Elasticsearch
+`readinessProbe` in [#586][].
 
 ### GA support
 
@@ -173,6 +217,7 @@ volumeClaimTemplate:
 
 [#94]: https://github.com/elastic/helm-charts/pull/94
 [#352]: https://github.com/elastic/helm-charts/pull/352
+[#437]: https://github.com/elastic/helm-charts/pull/437
 [#458]: https://github.com/elastic/helm-charts/pull/458
 [#540]: https://github.com/elastic/helm-charts/pull/540
 [#568]: https://github.com/elastic/helm-charts/pull/568
@@ -180,9 +225,14 @@ volumeClaimTemplate:
 [#586]: https://github.com/elastic/helm-charts/pull/586
 [#621]: https://github.com/elastic/helm-charts/pull/621
 [#623]: https://github.com/elastic/helm-charts/pull/623
+[#664]: https://github.com/elastic/helm-charts/pull/664
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
+[elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
+[migration guide]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/migration/README.md
 [new branching model]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md#branching
 [kube-state-metrics]: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
+[stable elasticsearch chart]: https://github.com/helm/charts/tree/master/stable/elasticsearch
+[stable elasticsearch chart notice]: https://github.com/helm/charts/tree/master/stable#elasticsearch#this-helm-chart-is-deprecated
