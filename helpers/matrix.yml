@@ -31,6 +31,7 @@ LOGSTASH_SUITE:
   - default
   - oss
   - elasticsearch
+  - security
   - 6.x
 APM_SERVER_SUITE:
   - default
