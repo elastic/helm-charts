@@ -50,7 +50,7 @@ To come back to former default values, use the following values:
 ```yaml
 resources:
   limits:
-    memory: "200Mo"
+    memory: "200Mi"
 ```
 
 ### Elasticsearch service selector change
