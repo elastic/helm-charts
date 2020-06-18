@@ -467,6 +467,23 @@ def test_adding_a_nodePort():
     assert r["service"][name]["spec"]["ports"][0]["nodePort"] == 30001
 
 
+def test_adding_a_loadBalancerIP():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "loadBalancerIP" not in r["service"][name]["spec"]
+
+    config = """
+    service:
+      loadBalancerIP: 12.4.19.81
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["loadBalancerIP"] == "12.4.19.81"
+
+
 def test_override_the_serverHost():
     config = """
     serverHost: "localhost"
