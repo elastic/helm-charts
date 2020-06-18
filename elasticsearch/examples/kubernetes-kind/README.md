@@ -6,21 +6,19 @@ using [custom values][].
 Note that this configuration should be used for test only and isn't recommended
 for production.
 
+Note that Kind < 0.7.0 are affected by a [kind issue][] with mount points
+created from PVCs not writable by non-root users. [kubernetes-sigs/kind#1157][]
+fix it in Kind 0.7.0.
 
-## Requirements
-
-There is currently an [kind issue][] with mount points created from PVCs not
-writable by non-root users. [kubernetes-sigs/kind#1157][] should fix it in a
-future release.
-
-Meanwhile, the workaround is to install manually
+The workaround for Kind < 0.7.0 is to install manually
 [Rancher Local Path Provisioner][] and use `local-path` storage class for
 Elasticsearch volumes (see [Makefile][] instructions).
 
 
 ## Usage
 
-* Deploy Elasticsearch chart with the default values: `make install`
+* For Kind >= 0.7.0: Deploy Elasticsearch chart with the default values: `make install`
+* For Kind < 0.7.0: Deploy Elasticsearch chart with `local-path` storage class: `make install-local-path`
 
 * You can now setup a port forward to query Elasticsearch API:
 
