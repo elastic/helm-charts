@@ -51,6 +51,7 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 | 7.5 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.6 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.7 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.8 | GA            | GA     | Beta     | GA       | GA         | Beta       |
 
 ### Kubernetes Versions
 
