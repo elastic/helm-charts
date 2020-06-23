@@ -22,7 +22,7 @@ http:
     timeout: 2000
     body:
       - '"host" : "helm-logstash-security-logstash-0"'
-      - '"version" : "8.0.0-SNAPSHOT"'
+      - '"version" : "8.0.0"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"name" : "helm-logstash-security-logstash-0"'
       - '"status" : "green"'
