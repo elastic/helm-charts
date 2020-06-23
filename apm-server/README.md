@@ -8,7 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [7.7.1][] release
+**Warning**: This branch is used for development, please use [7.8.0][] release
 for released version.
 
 
@@ -19,7 +19,7 @@ for released version.
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions](#install-development-version-using-78-branch-and-780-snapshot-versions)
+  - [Install development version using 7.8 branch and 7.8.1-SNAPSHOT versions](#install-development-version-using-78-branch-and-781-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -43,17 +43,17 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.8.0-SNAPSHOT versions.
+This chart is tested with the latest 7.8.1-SNAPSHOT versions.
 
 ### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
+* Install the latest 7.8 release:
 `helm install --name apm-server elastic/apm-server`
 
-### Install development version using 7.8 branch and 7.8.0-SNAPSHOT versions
+### Install development version using 7.8 branch and 7.8.1-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -95,7 +95,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.8.0-SNAPSHOT`                            |
+| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.8.1-SNAPSHOT`                            |
 | `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -143,7 +143,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/apm-server/README.md
+[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
