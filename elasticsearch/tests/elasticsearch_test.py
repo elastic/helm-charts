@@ -926,7 +926,7 @@ def test_esMajorVersion_detect_default_version():
     config = ""
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
 
 
 def test_esMajorVersion_default_to_7_if_not_elastic_image():
@@ -936,7 +936,7 @@ def test_esMajorVersion_default_to_7_if_not_elastic_image():
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
 
 
 def test_esMajorVersion_default_to_7_if_no_version_is_found():
