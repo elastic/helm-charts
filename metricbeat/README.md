@@ -51,7 +51,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name metricbeat ./helm-charts/metricbeat  --set imageTag=7.7.1`
+* Install it: `helm install --name metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -113,7 +113,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.7.1`                              |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `8.0.0-SNAPSHOT`                              |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |

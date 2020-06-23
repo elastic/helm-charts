@@ -1,7 +1,7 @@
 GOSS_VERSION := v0.3.6
 GOSS_FILE ?= goss.yaml
 GOSS_SELECTOR ?= release=$(RELEASE)
-STACK_VERSION := 7.7.1
+STACK_VERSION := 8.0.0-SNAPSHOT
 
 .PHONY: help
 help: ## Display this help
@@ -13,4 +13,3 @@ goss: ## Run goss tests
 	echo Testing with pod: $$GOSS_CONTAINER && \
 	kubectl cp test/$(GOSS_FILE) $$GOSS_CONTAINER:/tmp/$(GOSS_FILE) && \
 	kubectl exec $$GOSS_CONTAINER -- sh -c "cd /tmp/ && curl -s -L https://github.com/aelsabbahy/goss/releases/download/$(GOSS_VERSION)/goss-linux-amd64 -o goss && chmod +rx ./goss && ./goss --gossfile $(GOSS_FILE) validate --retry-timeout 300s --sleep 5s --color --format documentation"
-

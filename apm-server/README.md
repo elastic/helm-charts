@@ -53,7 +53,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name apm-server ./helm-charts/apm-server  --set imageTag=7.7.1`
+* Install it: `helm install --name apm-server ./helm-charts/apm-server  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -91,7 +91,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.7.1`                            |
+| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `8.0.0-SNAPSHOT`                            |
 | `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |

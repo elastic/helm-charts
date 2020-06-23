@@ -52,7 +52,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name logstash ./helm-charts/logstash  --set imageTag=7.7.1`
+* Install it: `helm install --name logstash ./helm-charts/logstash  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -106,7 +106,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.7.1`                               |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `8.0.0-SNAPSHOT`                               |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
