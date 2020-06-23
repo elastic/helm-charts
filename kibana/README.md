@@ -15,7 +15,6 @@ for supported version.
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
   - [Install development version using master branch](#install-development-version-using-master-branch)
 - [Upgrading](#upgrading)
-- [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
   - [Deprecated](#deprecated)
@@ -60,27 +59,6 @@ See [supported configurations][] for more details.
 
 Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
 upgrading to a new chart version.
-
-
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested
-versions are:
-
-| 6.x   | 7.x   |
-|-------|-------|
-| 6.8.10 | 7.7.1 |
-
-Examples of installing older major versions can be found in the [examples][]
-directory.
-
-While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag`. To install version `7.7.1` of
-Kibana it would look like this:
-
-```
-helm install --name kibana elastic/kibana --set imageTag=7.7.1
-```
 
 
 ## Usage notes
