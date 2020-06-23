@@ -55,7 +55,7 @@ This chart is tested with 7.8.0 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install 7.8.0 release:
-`helm install --name apm-server --version 7.8.0 elastic/elasticsearch`
+`helm install --name elasticsearch --version 7.8.0 elastic/elasticsearch`
 
 
 ## Upgrading
