@@ -28,8 +28,8 @@ tested against the corresponding production version.
 This will also ensure that the documentation and examples for the chart will work 
 with the version of the product you are installing.
 
-For example if you want to deploy an Elasticsearch `7.5.1` cluster, use the
-corresponding `7.5.1` [tag][elasticsearch-751].
+For example if you want to deploy an Elasticsearch `7.7.1` cluster, use the
+corresponding `7.7.1` [tag][elasticsearch-771].
 
 The `master` version of these charts are intended to support the latest pre-release
 versions of our products, and therefore may or may not work with current released
@@ -92,7 +92,7 @@ Kubernetes.
 [helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/master/helpers/helm-tester/Dockerfile
 [helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/master/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
-[elasticsearch-751]: https://github.com/elastic/helm-charts/tree/7.5.1/elasticsearch/
+[elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 
 [apm-7]: https://github.com/elastic/helm-charts/tree/7.8.0/apm-server/README.md
 [apm-6]: https://github.com/elastic/helm-charts/tree/6.8.10/apm-server/README.md
