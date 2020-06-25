@@ -225,7 +225,8 @@
 
 * First 6.x release
 * 6.8.9 as the default stack version
-* See [7.7.0 CHANGELOG](#770---20200513) for other changes
+* See [7.7.0 CHANGELOG](#770---20200513) except GA support (charts are
+  staying in Beta for 6.8).
 
 
 ## 7.6.2 - 2020/03/31
