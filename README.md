@@ -23,8 +23,8 @@ Helm charts are designed to be a lightweight way to configure our official
 Docker images. Links to the relevant Docker image documentation has also been
 added below.
 
-| Chart                                      | Docker documentation                                                            |
-|--------------------------------------------|---------------------------------------------------------------------------------|
+| Chart                                      | Docker documentation                                                        |
+|--------------------------------------------|-----------------------------------------------------------------------------|
 | [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/6.8/running-on-docker.html       |
 | [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/6.8/docker.html     |
 | [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/6.8/running-on-docker.html   |
@@ -43,6 +43,7 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 
 |     | Elasticsearch | Kibana | Logstash | Filebeat | Metricbeat | APM Server |
 |-----|---------------|--------|----------|----------|------------|------------|
+| 6.8 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.0 | Alpha         | Alpha  | /        | /        | /          | /          |
 | 7.1 | Beta          | Beta   | /        | Beta     | /          | /          |
 | 7.2 | Beta          | Beta   | /        | Beta     | Beta       | /          |
@@ -50,7 +51,8 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 | 7.4 | Beta          | Beta   | /        | Beta     | Beta       | /          |
 | 7.5 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.6 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
-| 7.7 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.7 | GA            | GA     | Beta     | GA       | GA         | Alpha      |
+| 7.8 | GA            | GA     | Beta     | GA       | GA         | Alpha      |
 
 ### Kubernetes Versions
 
