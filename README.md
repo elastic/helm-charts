@@ -43,6 +43,7 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 
 |     | Elasticsearch | Kibana | Logstash | Filebeat | Metricbeat | APM Server |
 |-----|---------------|--------|----------|----------|------------|------------|
+| 6.8 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.0 | Alpha         | Alpha  | /        | /        | /          | /          |
 | 7.1 | Beta          | Beta   | /        | Beta     | /          | /          |
 | 7.2 | Beta          | Beta   | /        | Beta     | Beta       | /          |
