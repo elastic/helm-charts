@@ -3,6 +3,11 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
+**Warning**: This functionality is in beta.
+The design and code is less mature than official GA features and is being
+provided as-is with no warranties. Beta features are not subject to the support
+SLA of official GA features (see [supported configurations][] for more details).
+
 **Warning**: This branch is used for development, please use [6.8.10][] release
 for released version.
 
