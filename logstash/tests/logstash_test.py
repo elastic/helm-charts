@@ -78,8 +78,11 @@ def test_defaults():
     )
 
     # Service
-    assert "serviceName" not in r["statefulset"][name]["spec"]
-    assert "service" not in r
+    assert r["statefulset"][name]["spec"]["serviceName"] == name + "-headless"
+    assert name + "-headless" in r["service"]
+    assert (
+        r["service"][name + "-headless"]["spec"]["ports"][0]["containerPort"] == 9600
+    )
 
     # Other
     assert r["statefulset"][name]["spec"]["template"]["spec"]["securityContext"] == {
