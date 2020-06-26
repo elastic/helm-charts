@@ -80,9 +80,7 @@ def test_defaults():
     # Service
     assert r["statefulset"][name]["spec"]["serviceName"] == name + "-headless"
     assert name + "-headless" in r["service"]
-    assert (
-        r["service"][name + "-headless"]["spec"]["ports"][0]["containerPort"] == 9600
-    )
+    assert r["service"][name + "-headless"]["spec"]["ports"][0]["port"] == 9600
 
     # Other
     assert r["statefulset"][name]["spec"]["template"]["spec"]["securityContext"] == {
