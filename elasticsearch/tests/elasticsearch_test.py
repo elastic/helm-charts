@@ -585,7 +585,7 @@ rbac:
 """
     r = helm_template(config)
     assert (
-        r["serviceaccount"][name]["metadata"]["annotations"][
+        r["serviceaccount"][uname]["metadata"]["annotations"][
             "eks.amazonaws.com/role-arn"
         ]
         == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
