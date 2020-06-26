@@ -353,6 +353,7 @@ podAnnotations:
 def test_adding_serviceaccount_annotations():
     config = """
 rbac:
+  create: true
   serviceAccountAnnotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 """
