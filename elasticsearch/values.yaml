@@ -34,6 +34,13 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
+# Allows you to load environment variables from kubernetes secret or config map
+envFrom: []
+# - secretRef:
+#     name: env-secret
+# - configMapRef:
+#     name: config-map
+
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security and for mounting
 # the X-Pack license
@@ -41,9 +48,10 @@ secretMounts: []
 #  - name: elastic-certificates
 #    secretName: elastic-certificates
 #    path: /usr/share/elasticsearch/config/certs
+#    defaultMode: 0755
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.4.0"
+imageTag: "7.7.1"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -56,7 +64,7 @@ esJavaOpts: "-Xmx1g -Xms1g"
 
 resources:
   requests:
-    cpu: "100m"
+    cpu: "1000m"
     memory: "2Gi"
   limits:
     cpu: "1000m"
@@ -88,6 +96,7 @@ volumeClaimTemplate:
 
 rbac:
   create: false
+  serviceAccountAnnotations: {}
   serviceAccountName: ""
 
 podSecurityPolicy:
@@ -112,16 +121,21 @@ persistence:
   enabled: true
   annotations: {}
 
-extraVolumes: ""
+extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: ""
+extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraInitContainers: ""
+extraContainers: []
+  # - name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
+
+extraInitContainers: []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
@@ -146,16 +160,25 @@ nodeAffinity: {}
 # the same time when bootstrapping the cluster
 podManagementPolicy: "Parallel"
 
+# The environment variables injected by service links are not used, but can lead to slow Elasticsearch boot times when
+# there are many services in the current namespace.
+# If you experience slow pod startups you probably want to set this to `false`.
+enableServiceLinks: true
+
 protocol: http
 httpPort: 9200
 transportPort: 9300
 
 service:
+  labels: {}
+  labelsHeadless: {}
   type: ClusterIP
-  nodePort:
+  nodePort: ""
   annotations: {}
   httpPortName: http
   transportPortName: transport
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
 
 updateStrategy: RollingUpdate
 
@@ -167,10 +190,6 @@ maxUnavailable: 1
 podSecurityContext:
   fsGroup: 1000
   runAsUser: 1000
-
-# The following value is deprecated,
-# please use the above podSecurityContext.fsGroup instead
-fsGroup: ""
 
 securityContext:
   capabilities:
@@ -231,9 +250,25 @@ lifecycle: {}
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
   # postStart:
   #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+  #     command:
+  #       - bash
+  #       - -c
+  #       - |
+  #         #!/bin/bash
+  #         # Add a template to adjust number of shards/replicas
+  #         TEMPLATE_NAME=my_template
+  #         INDEX_PATTERN="logstash-*"
+  #         SHARD_COUNT=8
+  #         REPLICA_COUNT=1
+  #         ES_URL=http://localhost:9200
+  #         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+  #         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 
 sysctlInitContainer:
   enabled: true
 
 keystore: []
+
+# Deprecated
+# please use the above podSecurityContext.fsGroup instead
+fsGroup: ""

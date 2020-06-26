@@ -4,3 +4,6 @@ elastic-certificates.p12
 *.pyc
 index.yaml
 *.tgz
+.idea/
+/venv
+.vscode/

@@ -1,0 +1,17 @@
+{{- if .Values.autoscaling.enabled }}
+apiVersion: {{ template "apm.autoscaling.apiVersion" . }}
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "apm.fullname" . }}
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "apm.fullname" . }}
+{{- end }}

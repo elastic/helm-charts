@@ -17,6 +17,8 @@
         projects:
         - name: elastic+helm-charts+master+template-testing
           current-parameters: true
+        - name: elastic+helm-charts+master+lint-python
+          current-parameters: true
         - name: elastic+helm-charts+master+cluster-creation
           current-parameters: true
     - multijob:
@@ -34,6 +36,10 @@
         - name: elastic+helm-charts+master+integration-filebeat
           current-parameters: true
         - name: elastic+helm-charts+master+integration-metricbeat
+          current-parameters: true
+        - name: elastic+helm-charts+master+integration-logstash
+          current-parameters: true
+        - name: elastic+helm-charts+master+integration-apm-server
           current-parameters: true
     publishers:
     - trigger-parameterized-builds:
