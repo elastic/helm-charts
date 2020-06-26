@@ -224,6 +224,10 @@ podAnnotations: {}
 # Custom service account override that the pod will use
 serviceAccount: ""
 
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+serviceAccountAnnotations: {}
+  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+
 # How long to wait for metricbeat pods to stop gracefully
 terminationGracePeriod: 30
 

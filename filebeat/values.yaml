@@ -110,6 +110,10 @@ resources:
 # Custom service account override that the pod will use
 serviceAccount: ""
 
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+serviceAccountAnnotations: {}
+  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security other sensitive values
 secretMounts: []
