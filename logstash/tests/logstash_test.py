@@ -350,6 +350,22 @@ podAnnotations:
     )
 
 
+def test_adding_serviceaccount_annotations():
+    config = """
+rbac:
+  create: true
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][name]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
+    )
+
+
 def test_adding_a_node_selector():
     config = """
 nodeSelector:
