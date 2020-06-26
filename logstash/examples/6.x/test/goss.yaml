@@ -9,10 +9,10 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-six-logstash-0"'
+      - '"host" : "helm-logstash-six-logstash-0.helm-logstash-six-logstash-headless.helm-charts-testing.svc.cluster.local"'
       - '"version" : "6.8.10"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-six-logstash-0"'
+      - '"name" : "helm-logstash-six-logstash-0.helm-logstash-six-logstash-headless.helm-charts-testing.svc.cluster.local"'
 
 file:
   /usr/share/logstash/config/logstash.yml:
