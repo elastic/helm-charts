@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy Kibana 7.7.1 using [Kibana OSS][] version.
+This example deploy Kibana 8.0.0-SNAPSHOT using [Kibana OSS][] version.
 
 
 ## Usage

@@ -8,7 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [7.7.1][] release
+**Warning**: This branch is used for development, please use [7.8.0][] release
 for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -20,7 +20,6 @@ for released version.
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
   - [Install development version using master branch](#install-development-version-using-master-branch)
 - [Upgrading](#upgrading)
-- [Compatibility](#compatibility)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
 - [FAQ](#faq)
@@ -53,7 +52,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name logstash ./helm-charts/logstash  --set imageTag=7.7.1`
+* Install it: `helm install --name logstash ./helm-charts/logstash  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -61,26 +60,6 @@ See [supported configurations][] for more details.
 Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
 upgrading to a new chart version.
 
-
-## Compatibility
-
-This chart is tested with the latest supported versions. The currently tested
-versions are:
-
-| 6.x   | 7.x   |
-|-------|-------|
-| 6.8.10 | 7.7.1 |
-
-Examples of installing older major versions can be found in the [examples][]
-directory.
-
-While only the latest releases are tested, it is possible to easily install old
-or new releases by overriding the `imageTag` To install version `7.7.1` of
-Logstash it would look like this:
-
-```
-helm install --name logstash elastic/logstash --set imageTag=7.7.1
-```
 
 ## Usage notes
 
@@ -127,7 +106,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.7.1`                               |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `8.0.0-SNAPSHOT`                               |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
@@ -200,7 +179,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/logstash/README.md
+[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
