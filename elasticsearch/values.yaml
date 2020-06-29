@@ -51,7 +51,7 @@ secretMounts: []
 #    defaultMode: 0755
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.8.0"
+imageTag: "7.8.1-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
