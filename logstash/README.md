@@ -145,7 +145,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [Logstash OSS Docker image][]
 
-An example of APM Server deployment using OSS version can be found in
+An example of Logstash deployment using OSS version can be found in
 [examples/oss][].
 
 ### How to install plugins?

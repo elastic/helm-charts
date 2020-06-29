@@ -139,7 +139,7 @@ An example can be found in [examples/security][].
 Deploying OSS version of Elasticsearch can be done by setting `image` value to
 [kibana OSS Docker image][]
 
-An example of APM Server deployment using OSS version can be found in
+An example of Kibana deployment using OSS version can be found in
 [examples/oss][].
 
 ### How to install plugins?
