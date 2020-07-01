@@ -45,6 +45,13 @@ extraEnvs: []
   #        name: elastic-credentials
   #        key: password
 
+# Allows you to load environment variables from kubernetes secret or config map
+envFrom: []
+# - secretRef:
+#     name: env-secret
+# - configMapRef:
+#     name: config-map
+
 extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
@@ -55,7 +62,7 @@ extraVolumes: []
   #   emptyDir: {}
 
 image: "docker.elastic.co/apm/apm-server"
-imageTag: "7.6.1"
+imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -73,12 +80,20 @@ podSecurityContext:
   privileged: false
 
 livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
 
 readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
   failureThreshold: 3
   initialDelaySeconds: 10
   periodSeconds: 10
@@ -90,10 +105,14 @@ resources:
       memory: "100Mi"
     limits:
       cpu: "1000m"
-      memory: "200Mi"
+      memory: "512Mi"
 
 # Custom service account override that the pod will use
 serviceAccount: ""
+
+# Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
+serviceAccountAnnotations: {}
+  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []

@@ -78,8 +78,9 @@ def test_defaults():
     )
 
     # Service
-    assert "serviceName" in r["statefulset"][name]["spec"]
-    assert r["service"][name]["spec"]["ports"][0]["port"] == 8080
+    assert r["statefulset"][name]["spec"]["serviceName"] == name + "-headless"
+    assert name + "-headless" in r["service"]
+    assert r["service"][name + "-headless"]["spec"]["ports"][0]["port"] == 9600
 
     # Other
     assert r["statefulset"][name]["spec"]["template"]["spec"]["securityContext"] == {
@@ -139,6 +140,19 @@ extraEnvs:
     r = helm_template(config)
     env = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0]["env"]
     assert {"name": "hello", "value": "world"} in env
+
+
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
 
 
 def test_adding_a_extra_volume_with_volume_mount():
@@ -334,6 +348,22 @@ podAnnotations:
             "iam.amazonaws.com/role"
         ]
         == "logstash-role"
+    )
+
+
+def test_adding_serviceaccount_annotations():
+    config = """
+rbac:
+  create: true
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][name]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
     )
 
 

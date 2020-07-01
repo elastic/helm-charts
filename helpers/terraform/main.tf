@@ -16,6 +16,8 @@ resource "google_container_cluster" "cluster" {
   additional_zones   = "${var.additional_zones}"
   min_master_version = "${var.kubernetes_version}"
   node_version       = "${var.kubernetes_version}"
+  logging_service    = "none"
+  monitoring_service = "none"
 
   network    = "${var.network}"
   subnetwork = "${var.subnetwork}"
