@@ -218,6 +218,9 @@ clusterRoleRules:
   - nodes/stats
   verbs: ["get"]
 
+deploymentAnnotations: {}
+  # configmap.reloader.stakater.com/auto: "true"
+
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 

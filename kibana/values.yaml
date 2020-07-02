@@ -35,6 +35,9 @@ imagePullPolicy: "IfNotPresent"
 # additionals labels
 labels: {}
 
+deploymentAnnotations: {}
+  # configmap.reloader.stakater.com/auto: "true"
+
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 

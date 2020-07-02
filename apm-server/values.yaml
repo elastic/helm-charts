@@ -69,6 +69,9 @@ imagePullSecrets: []
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
+deploymentAnnotations: {}
+  # configmap.reloader.stakater.com/auto: "true"
+
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 

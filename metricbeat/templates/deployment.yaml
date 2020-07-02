@@ -8,6 +8,9 @@ metadata:
     chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
     heritage: '{{ .Release.Service }}'
     release: '{{ .Release.Name }}'
+  {{- with .Values.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:

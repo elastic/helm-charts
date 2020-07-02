@@ -341,3 +341,17 @@ fullnameOverride: "apm-server-custom"
         ]
         == project
     )
+
+
+def test_adding_deployment_annotations():
+    config = """
+deploymentAnnotations:
+  configmap.reloader.stakater.com/auto: "true"
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["metadata"]["annotations"][
+            "configmap.reloader.stakater.com/auto"
+        ]
+        == "true"
+    )
