@@ -1299,15 +1299,16 @@ fullnameOverride: "customfullName"
     assert "customfullName" in r["statefulset"]
     assert "customfullName" in r["service"]
 
+
 def test_initial_master_nodes_when_using_full_name_override():
     config = """
 fullnameOverride: "customfullName"
 """
     r = helm_template(config)
-    env = r["statefulset"]["customfullName"]["spec"]["template"]["spec"]["containers"][0]["env"]
+    env = r["statefulset"]["customfullName"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["env"]
     assert {
-       "name": "cluster.initial_master_nodes",
-       "value": "customfullName-0,"
-                + "customfullName-1,"
-                + "customfullName-2,",
+        "name": "cluster.initial_master_nodes",
+        "value": "customfullName-0," + "customfullName-1," + "customfullName-2,",
     } in env
