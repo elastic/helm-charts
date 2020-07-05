@@ -315,14 +315,53 @@ secretCreate:
       ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
 """
     r = helm_template(config)
-    secret_name = (name + "-env")
+    secret_name = name + "-env"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 1
+    assert s["data"] == {"ELASTICSEARCH_PASSWORD": "TFMxQ1JVZEpUaUJnVUZKSlZrRlVSU0I="}
+
+
+def test_adding_secret_from_file():
+    config = """
+secretCreate:
+  - name: "tls"
+    value:
+      cert.key.filepath: "secrets/private.key"
+"""
+    content = """
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApCt3ychnqZHsS
+DylPFZn55xDaDcWco1oNFdBGzFjw+
+zkuMFMOv7ab+yOFwHeEeAAEkEgy1u
+Da1vIscBs1K0kbEFRSqySLuNHWiJp
+wK2cI/gJc+S9Qd9Qsn0XGjmjQ6P2p
+ot2hvCOtnei998OmDSYORKBq2jiv/
+-----END RSA PRIVATE KEY-----
+"""
+    work_dir = os.path.join(os.path.abspath(os.getcwd()), "secrets")
+    filename = os.path.join(work_dir, "private.key")
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, "w") as f:
+        f.write(content)
+
+    with open(filename, "r") as f:
+        data = f.read()
+        assert data == content
+
+    r = helm_template(config)
+    secret_name = name + "-tls"
     s = r["secret"][secret_name]
     assert s["metadata"]["labels"]["app"] == name
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 1
     assert s["data"] == {
-        "ELASTICSEARCH_PASSWORD": "TFMxQ1JVZEpUaUJnVUZKSlZrRlVSU0I="
+        "cert.key": "Ci0tLS0tQkVHSU4gUlNBIFBSSVZBVEUgS0VZLS0tLS0KTUlJRXBBSUJBQUtDQVFFQXBDdDN5Y2hucVpIc1MKRHlsUEZabjU1eERhRGNXY28xb05GZEJHekZqdysKemt1TUZNT3Y3YWIreU9Gd0hlRWVBQUVrRWd5MXUKRGExdklzY0JzMUswa2JFRlJTcXlTTHVOSFdpSnAKd0syY0kvZ0pjK1M5UWQ5UXNuMFhHam1qUTZQMnAKb3QyaHZDT3RuZWk5OThPbURTWU9SS0JxMmppdi8KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K",
     }
+
+    os.remove(filename)
+    os.rmdir(work_dir)
 
 
 def test_adding_multiple_data_secret():
@@ -334,14 +373,42 @@ secretCreate:
       api_key: ui2CsdUadTiBasRJRkl9tvNnw
 """
     r = helm_template(config)
-    secret_name = (name + "-env")
+    secret_name = name + "-env"
     s = r["secret"][secret_name]
     assert s["metadata"]["labels"]["app"] == name
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 2
     assert s["data"] == {
         "ELASTICSEARCH_PASSWORD": "TFMxQ1JVZEpUaUJnVUZKSlZrRlVSU0I=",
-        "api_key": "dWkyQ3NkVWFkVGlCYXNSSlJrbDl0dk5udw=="
+        "api_key": "dWkyQ3NkVWFkVGlCYXNSSlJrbDl0dk5udw==",
+    }
+
+
+def test_adding_multiple_secrets():
+    config = """
+secretCreate:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
+  - name: "tls"
+    value:
+      cert.crt: "LS0tLS1CRUdJTiBlRJRALKJDDQVRFLS0tLS0K"
+      cert.key: "LS0tLS1CRUdJTiBgUFJJVkFURSBLRVktLS0tLQo"
+
+"""
+    r = helm_template(config)
+    secret_names = {"env": name + "-env", "tls": name + "-tls"}
+    s_env = r["secret"][secret_names["env"]]
+    s_tls = r["secret"][secret_names["tls"]]
+    assert len(r["secret"]) == 2
+    assert len(s_env["data"]) == 1
+    assert s_env["data"] == {
+        "ELASTICSEARCH_PASSWORD": "TFMxQ1JVZEpUaUJnVUZKSlZrRlVSU0I=",
+    }
+    assert len(s_tls["data"]) == 2
+    assert s_tls["data"] == {
+        "cert.crt": "TFMwdExTMUNSVWRKVGlCbFJKUkFMS0pERFFWUkZMUzB0TFMwSw==",
+        "cert.key": "TFMwdExTMUNSVWRKVGlCZ1VGSkpWa0ZVUlNCTFJWa3RMUzB0TFFv",
     }
 
 
