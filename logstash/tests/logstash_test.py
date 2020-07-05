@@ -307,6 +307,44 @@ secretMounts:
     }
 
 
+def test_adding_a_secret():
+    config = """
+secretCreate:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
+"""
+    r = helm_template(config)
+    secret_name = (name + "-env")
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 1
+    assert s["data"] == {
+        "ELASTICSEARCH_PASSWORD": "TFMxQ1JVZEpUaUJnVUZKSlZrRlVSU0I="
+    }
+
+
+def test_adding_multiple_data_secret():
+    config = """
+secretCreate:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
+      api_key: ui2CsdUadTiBasRJRkl9tvNnw
+"""
+    r = helm_template(config)
+    secret_name = (name + "-env")
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 2
+    assert s["data"] == {
+        "ELASTICSEARCH_PASSWORD": "TFMxQ1JVZEpUaUJnVUZKSlZrRlVSU0I=",
+        "api_key": "dWkyQ3NkVWFkVGlCYXNSSlJrbDl0dk5udw=="
+    }
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
