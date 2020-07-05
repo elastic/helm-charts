@@ -2,17 +2,21 @@
 # Allows you to add any config files in /usr/share/filebeat
 # such as filebeat.yml
 filebeatConfig:
-  filebeat.yml: |
-    filebeat.inputs:
-    - type: container
-      paths:
-        - /var/log/containers/*.log
-      processors:
-      - add_kubernetes_metadata:
+  filebeat.yml: |-
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
           host: ${NODE_NAME}
-          matchers:
-          - logs_path:
-              logs_path: "/var/log/containers/"
+          hints.enabled: true
+          hints.default_config:
+            type: container
+            paths:
+              - /var/lib/docker/containers/*/*.log
+    processors:
+      - add_host_metadata:	      
+      - add_kubernetes_metadata:
+          in_cluster: true
+
 
     output.elasticsearch:
       host: '${NODE_NAME}'
@@ -21,7 +25,11 @@ filebeatConfig:
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
+extraEnvs: 
+  - name: NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
