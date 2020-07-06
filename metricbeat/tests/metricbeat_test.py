@@ -1123,3 +1123,25 @@ fullnameOverride: 'metricbeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
+
+
+def test_adding_annotations():
+    config = """
+daemonset:
+    annotations:
+        foo: "bar"
+"""
+    r = helm_template(config)
+    assert "foo" in r["daemonset"][name]["metadata"]["annotations"]
+    assert r["daemonset"][name]["metadata"]["annotations"]["foo"] == "bar"
+    assert "annotations" not in r["deployment"][name + "-metrics"]["metadata"]
+    config = """
+deployment:
+    annotations:
+        grault: "waldo"
+"""
+    r = helm_template(config)
+    assert "grault" in r["deployment"][name + "-metrics"]["metadata"]["annotations"]
+    assert r["deployment"][name + "-metrics"]["metadata"]["annotations"]["grault"] == "waldo"
+    assert "annotations" not in r["daemonset"][name]["metadata"]
+

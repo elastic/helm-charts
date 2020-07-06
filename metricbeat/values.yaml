@@ -1,6 +1,7 @@
 ---
-
 daemonset:
+  # Annotations to apply to the daemonset
+  annotations: {}
   affinity: {}
   # Extra environment variables for Metricbeat container.
   envFrom: []
@@ -91,6 +92,8 @@ daemonset:
   tolerations: []
 
 deployment:
+  # Annotations to apply to the deployment
+  annotations: {}
   affinity: {}
   # Extra environment variables for Metricbeat container.
   envFrom: []
@@ -196,30 +199,30 @@ labels: {}
 managedServiceAccount: true
 
 clusterRoleRules:
-- apiGroups: [""]
-  resources:
-  - nodes
-  - namespaces
-  - events
-  - pods
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["extensions"]
-  resources:
-  - replicasets
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["apps"]
-  resources:
-  - statefulsets
-  - deployments
-  - replicasets
-  verbs: ["get", "list", "watch"]
-- apiGroups: [""]
-  resources:
-  - nodes/stats
-  verbs: ["get"]
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - namespaces
+      - events
+      - pods
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["extensions"]
+    resources:
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources:
+      - statefulsets
+      - deployments
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources:
+      - nodes/stats
+    verbs: ["get"]
 
 podAnnotations: {}
-  # iam.amazonaws.com/role: es-cluster
+# iam.amazonaws.com/role: es-cluster
 
 # Custom service account override that the pod will use
 serviceAccount: ""
