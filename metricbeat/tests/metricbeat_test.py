@@ -1147,4 +1147,3 @@ deployment:
         == "waldo"
     )
     assert "annotations" not in r["daemonset"][name]["metadata"]
-
