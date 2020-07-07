@@ -307,14 +307,16 @@ secretMounts:
 
 
 def test_adding_a_secret():
-    content = 'LS1CRUdJTiBgUFJJVkFURSB'
+    content = "LS1CRUdJTiBgUFJJVkFURSB"
     config = """
 secrets:
   - name: "env"
     value:
       ELASTICSEARCH_PASSWORD: {elk_pass}
-""".format(elk_pass=content)
-    content_b64 = base64.b64encode(content.encode('ascii')).decode('ascii')
+""".format(
+        elk_pass=content
+    )
+    content_b64 = base64.b64encode(content.encode("ascii")).decode("ascii")
 
     r = helm_template(config)
     secret_name = name + "-env"
@@ -342,7 +344,7 @@ secrets:
     value:
       cert.key.filepath: "secrets/private.key"
 """
-    content_b64 = base64.b64encode(content.encode('ascii')).decode('ascii')
+    content_b64 = base64.b64encode(content.encode("ascii")).decode("ascii")
     work_dir = os.path.join(os.path.abspath(os.getcwd()), "secrets")
     filename = os.path.join(work_dir, "private.key")
     os.makedirs(os.path.dirname(filename), exist_ok=True)
@@ -369,8 +371,8 @@ secrets:
 
 def test_adding_multiple_data_secret():
     content = {
-        'elk_pass': 'LS1CRUdJTiBgUFJJVkFURSB',
-        'api_key': 'ui2CsdUadTiBasRJRkl9tvNnw'
+        "elk_pass": "LS1CRUdJTiBgUFJJVkFURSB",
+        "api_key": "ui2CsdUadTiBasRJRkl9tvNnw",
     }
     config = """
 secrets:
@@ -378,10 +380,14 @@ secrets:
     value:
       ELASTICSEARCH_PASSWORD: {elk_pass}
       api_key: {api_key}
-""".format(elk_pass=content['elk_pass'], api_key=content['api_key'])
+""".format(
+        elk_pass=content["elk_pass"], api_key=content["api_key"]
+    )
     content_b64 = {
-        'elk_pass': base64.b64encode(content['elk_pass'].encode('ascii')).decode('ascii'),
-        'api_key': base64.b64encode(content['api_key'].encode('ascii')).decode('ascii')
+        "elk_pass": base64.b64encode(content["elk_pass"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "api_key": base64.b64encode(content["api_key"].encode("ascii")).decode("ascii"),
     }
 
     r = helm_template(config)
@@ -391,16 +397,16 @@ secrets:
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 2
     assert s["data"] == {
-        "ELASTICSEARCH_PASSWORD": content_b64['elk_pass'],
-        "api_key": content_b64['api_key'],
+        "ELASTICSEARCH_PASSWORD": content_b64["elk_pass"],
+        "api_key": content_b64["api_key"],
     }
 
 
 def test_adding_multiple_secrets():
     content = {
-        'elk_pass': 'LS1CRUdJTiBgUFJJVkFURSB',
-        'cert_crt': 'LS0tLS1CRUdJTiBlRJRALKJDDQVRFLS0tLS0K',
-        'cert_key': 'LS0tLS1CRUdJTiBgUFJJVkFURSBLRVktLS0tLQo'
+        "elk_pass": "LS1CRUdJTiBgUFJJVkFURSB",
+        "cert_crt": "LS0tLS1CRUdJTiBlRJRALKJDDQVRFLS0tLS0K",
+        "cert_key": "LS0tLS1CRUdJTiBgUFJJVkFURSBLRVktLS0tLQo",
     }
     config = """
 secrets:
@@ -412,11 +418,21 @@ secrets:
       cert.crt: {cert_crt}
       cert.key: {cert_key}
 
-""".format(elk_pass=content['elk_pass'], cert_crt=content['cert_crt'], cert_key=content['cert_key'])
+""".format(
+        elk_pass=content["elk_pass"],
+        cert_crt=content["cert_crt"],
+        cert_key=content["cert_key"],
+    )
     content_b64 = {
-        'elk_pass': base64.b64encode(content['elk_pass'].encode('ascii')).decode('ascii'),
-        'cert_crt': base64.b64encode(content['cert_crt'].encode('ascii')).decode('ascii'),
-        'cert_key': base64.b64encode(content['cert_key'].encode('ascii')).decode('ascii')
+        "elk_pass": base64.b64encode(content["elk_pass"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "cert_crt": base64.b64encode(content["cert_crt"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "cert_key": base64.b64encode(content["cert_key"].encode("ascii")).decode(
+            "ascii"
+        ),
     }
 
     r = helm_template(config)
@@ -426,12 +442,12 @@ secrets:
     assert len(r["secret"]) == 2
     assert len(s_env["data"]) == 1
     assert s_env["data"] == {
-        "ELASTICSEARCH_PASSWORD": content_b64['elk_pass'],
+        "ELASTICSEARCH_PASSWORD": content_b64["elk_pass"],
     }
     assert len(s_tls["data"]) == 2
     assert s_tls["data"] == {
-        "cert.crt": content_b64['cert_crt'],
-        "cert.key": content_b64['cert_key'],
+        "cert.crt": content_b64["cert_crt"],
+        "cert.key": content_b64["cert_key"],
     }
 
 
