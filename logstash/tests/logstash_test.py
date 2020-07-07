@@ -309,7 +309,7 @@ secretMounts:
 
 def test_adding_a_secret():
     config = """
-secretCreate:
+secrets:
   - name: "env"
     value:
       ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
@@ -325,7 +325,7 @@ secretCreate:
 
 def test_adding_secret_from_file():
     config = """
-secretCreate:
+secrets:
   - name: "tls"
     value:
       cert.key.filepath: "secrets/private.key"
@@ -366,7 +366,7 @@ ot2hvCOtnei998OmDSYORKBq2jiv/
 
 def test_adding_multiple_data_secret():
     config = """
-secretCreate:
+secrets:
   - name: "env"
     value:
       ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
@@ -386,7 +386,7 @@ secretCreate:
 
 def test_adding_multiple_secrets():
     config = """
-secretCreate:
+secrets:
   - name: "env"
     value:
       ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"

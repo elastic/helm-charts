@@ -40,7 +40,7 @@ envFrom: []
 #     name: config-map
 
 # Add sensitive data to k8s secrets
-secretCreate: []
+secrets: []
 #  - name: "env"
 #    value:
 #      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
