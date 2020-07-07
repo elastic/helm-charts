@@ -1124,7 +1124,6 @@ fullnameOverride: 'metricbeat-custom'
         },
     } in volumes
 
-
 def test_adding_annotations():
     config = """
 daemonset:
@@ -1133,7 +1132,9 @@ daemonset:
 """
     r = helm_template(config)
     assert "foo" in r["daemonset"][name]["metadata"]["annotations"]
-    assert r["daemonset"][name]["metadata"]["annotations"]["foo"] == "bar"
+    assert ( 
+        r["daemonset"][name]["metadata"]["annotations"]["foo"] == "bar" 
+    )
     assert "annotations" not in r["deployment"][name + "-metrics"]["metadata"]
     config = """
 deployment:
@@ -1142,6 +1143,8 @@ deployment:
 """
     r = helm_template(config)
     assert "grault" in r["deployment"][name + "-metrics"]["metadata"]["annotations"]
-    assert r["deployment"][name + "-metrics"]["metadata"]["annotations"]["grault"] == "waldo"
+    assert ( 
+        r["deployment"][name + "-metrics"]["metadata"]["annotations"]["grault"] == "waldo" 
+    )
     assert "annotations" not in r["daemonset"][name]["metadata"]
 
