@@ -21,6 +21,7 @@ for supported version.
   - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
   - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
   - [Why is Filebeat host.name field set to Kubernetes pod name?](#why-is-filebeat-hostname-field-set-to-kubernetes-pod-name)
+  - [How to change readinessProbe for outputs which don't support testing](#how-to-change-readinessprobe-for-outputs-which-dont-support-testing)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -148,6 +149,28 @@ namespace which gives it access to the host loopback device, services listening
 on localhost, could be used to snoop on network activity of other pods on the
 same node.
 
+### How to change readinessProbe for outputs which don't support testing
+
+Some [Filebeat outputs][] like [Kafka output][] don't support testing using
+`filebeat test output` command which is used by Filebeat chart readiness probe.
+
+This makes Filebeat pods crash before being ready with the following message:
+`Readiness probe failed: kafka output doesn't support testing`.
+
+The workaround when using this kind of output is to override the readiness probe
+command to check Filebeat API instead (same as existing liveness probe).
+
+```
+readinessProbe:
+  exec:
+    command:
+      - sh
+      - -c
+      - |
+        #!/usr/bin/env bash -e
+        curl --fail 127.0.0.1:5066
+```
+
 
 ## Contributing
 
@@ -169,11 +192,13 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples/security
 [filebeat docker image]: https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
 [filebeat oss docker image]: https://www.docker.elastic.co/#filebeat-7-7-0-oss
+[filebeat output]: https://www.elastic.co/guide/en/beats/filebeat/master/configuring-output.html
 [helm]: https://helm.sh
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
+[kafka output]: https://www.elastic.co/guide/en/beats/filebeat/master/kafka-output.html
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
