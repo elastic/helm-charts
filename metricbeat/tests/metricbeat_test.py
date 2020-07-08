@@ -1139,15 +1139,25 @@ fullnameOverride: 'metricbeat-custom'
     } in volumes
 
 
-def test_adding_deployment_annotations():
+def test_adding_annotations():
     config = """
-deploymentAnnotations:
-  configmap.reloader.stakater.com/auto: "true"
+daemonset:
+    annotations:
+        foo: "bar"
 """
     r = helm_template(config)
+    assert "foo" in r["daemonset"][name]["metadata"]["annotations"]
+    assert r["daemonset"][name]["metadata"]["annotations"]["foo"] == "bar"
+    assert "annotations" not in r["deployment"][name + "-metrics"]["metadata"]
+    config = """
+deployment:
+    annotations:
+        grault: "waldo"
+"""
+    r = helm_template(config)
+    assert "grault" in r["deployment"][name + "-metrics"]["metadata"]["annotations"]
     assert (
-        r["deployment"][name + "-metrics"]["metadata"]["annotations"][
-            "configmap.reloader.stakater.com/auto"
-        ]
-        == "true"
+        r["deployment"][name + "-metrics"]["metadata"]["annotations"]["grault"]
+        == "waldo"
     )
+    assert "annotations" not in r["daemonset"][name]["metadata"]
