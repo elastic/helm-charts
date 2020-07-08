@@ -4,6 +4,7 @@ CHART:
   - filebeat
   - metricbeat
   - logstash
+  - apm-server
 ES_SUITE:
   - default
   - config
