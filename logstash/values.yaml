@@ -39,6 +39,23 @@ envFrom: []
 # - configMapRef:
 #     name: config-map
 
+# Add sensitive data to k8s secrets
+secrets: []
+#  - name: "env"
+#    value:
+#      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
+#      api_key: ui2CsdUadTiBasRJRkl9tvNnw
+#  - name: "tls"
+#    value:
+#      ca.crt: |
+#        LS0tLS1CRUdJT0K
+#        LS0tLS1CRUdJT0K
+#        LS0tLS1CRUdJT0K
+#        LS0tLS1CRUdJT0K
+#      cert.crt: "LS0tLS1CRUdJTiBlRJRklDQVRFLS0tLS0K"
+#      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
+
+
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []
 
