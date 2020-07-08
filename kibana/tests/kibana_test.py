@@ -89,6 +89,19 @@ def test_overriding_the_port():
     assert r["service"][name]["spec"]["ports"][0]["targetPort"] == 5602
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
@@ -512,6 +525,31 @@ labels:
             "app.kubernetes.io/name"
         ]
         == "kibana"
+    )
+
+
+def test_service_to_pod_label_selectors():
+    config = ""
+
+    r = helm_template(config)
+
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
+    )
+
+
+def test_service_to_pod_label_selectors_with_custom_labels():
+    config = """
+labels:
+  app.kubernetes.io/name: kibana
+"""
+
+    r = helm_template(config)
+
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
     )
 
 

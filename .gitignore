@@ -6,3 +6,4 @@ index.yaml
 *.tgz
 .idea/
 /venv
+.vscode/

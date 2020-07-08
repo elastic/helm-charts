@@ -74,12 +74,28 @@ extraContainers: |
     } in extraContainer
 
 
-def test_adding_init_containers():
+def test_adding_init_containers_as_yaml():
     config = """
 extraInitContainers:
 - name: dummy-init
   image: busybox
   command: ['echo', 'hey']
+"""
+    r = helm_template(config)
+    initContainers = r["daemonset"][name]["spec"]["template"]["spec"]["initContainers"]
+    assert {
+        "name": "dummy-init",
+        "image": "busybox",
+        "command": ["echo", "hey"],
+    } in initContainers
+
+
+def test_adding_init_containers():
+    config = """
+extraInitContainers: |
+  - name: dummy-init
+    image: busybox
+    command: ['echo', 'hey']
 """
     r = helm_template(config)
     initContainers = r["daemonset"][name]["spec"]["template"]["spec"]["initContainers"]
@@ -277,6 +293,20 @@ labels:
             "app.kubernetes.io/name"
         ]
         == "filebeat"
+    )
+
+
+def test_adding_serviceaccount_annotations():
+    config = """
+serviceAccountAnnotations:
+  eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][name]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
     )
 
 

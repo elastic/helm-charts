@@ -4,40 +4,35 @@ CHART:
   - filebeat
   - metricbeat
   - logstash
+  - apm-server
 ES_SUITE:
   - default
   - config
   - multi
   - oss
   - security
-  - upgrade
-  - 6.x
 KIBANA_SUITE:
   - default
   - oss
   - security
-  - 6.x
 FILEBEAT_SUITE:
   - default
   - oss
   - security
-  - 6.x
 METRICBEAT_SUITE:
   - default
   - oss
   - security
-  - 6.x
 LOGSTASH_SUITE:
   - default
   - oss
   - elasticsearch
-  - 6.x
+  - security
 APM_SERVER_SUITE:
   - default
   - oss
   - security
-  - 6.x
 KUBERNETES_VERSION:
-  - '1.13'
   - '1.14'
   - '1.15'
+  - '1.16'
