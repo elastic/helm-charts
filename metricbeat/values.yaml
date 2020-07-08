@@ -1,6 +1,8 @@
 ---
 
 daemonset:
+  # Annotations to apply to the daemonset
+  annotations: {}
   affinity: {}
   # Extra environment variables for Metricbeat container.
   envFrom: []
@@ -91,6 +93,8 @@ daemonset:
   tolerations: []
 
 deployment:
+  # Annotations to apply to the deployment
+  annotations: {}
   affinity: {}
   # Extra environment variables for Metricbeat container.
   envFrom: []
