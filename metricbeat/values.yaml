@@ -4,6 +4,8 @@ daemonset:
   # Annotations to apply to the daemonset
   annotations: {}
   affinity: {}
+  # Include the daemonset
+  enabled: true
   # Extra environment variables for Metricbeat container.
   envFrom: []
   # - configMapRef:
@@ -96,6 +98,8 @@ deployment:
   # Annotations to apply to the deployment
   annotations: {}
   affinity: {}
+  # Include the deployment
+  enabled: true
   # Extra environment variables for Metricbeat container.
   envFrom: []
   # - configMapRef:
