@@ -15,6 +15,7 @@ def test_defaults():
     r = helm_template(config)
 
     assert name in r["daemonset"]
+    assert name + "-metrics" in r["deployment"]
 
     c = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
     assert c["name"] == project
@@ -1161,3 +1162,23 @@ deployment:
         == "waldo"
     )
     assert "annotations" not in r["daemonset"][name]["metadata"]
+
+
+def test_disable_daemonset():
+    config = """
+daemonset:
+    enabled: false
+"""
+    r = helm_template(config)
+
+    assert name not in r.get("daemonset", {})
+
+
+def test_disable_deployment():
+    config = """
+deployment:
+    enabled: false
+"""
+    r = helm_template(config)
+
+    assert name + "-metrics" not in r.get("deployment", {})
