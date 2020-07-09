@@ -15,6 +15,7 @@ def test_defaults():
     r = helm_template(config)
 
     assert name in r["daemonset"]
+    assert name + "-metrics" in r["deployment"]
 
     c = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0]
     assert c["name"] == project
