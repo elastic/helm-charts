@@ -21,10 +21,8 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-security-logstash-0"'
       - '"version" : "6.8.11"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-security-logstash-0"'
   https://security-master:9200/_cat/indices:
     status: 200
     timeout: 2000
