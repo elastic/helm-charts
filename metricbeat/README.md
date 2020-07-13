@@ -36,13 +36,13 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with 7.8.0 version.
+This chart is tested with 7.8.1 version.
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install 7.8.0 release:
-`helm install --name apm-server --version 7.8.0 elastic/metricbeat`
+* Install 7.8.1 release:
+`helm install --name apm-server --version 7.8.1 elastic/metricbeat`
 
 
 ## Upgrading
@@ -108,7 +108,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.8.0`                              |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.8.1`                              |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |

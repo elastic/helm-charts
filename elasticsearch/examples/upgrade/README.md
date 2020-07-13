@@ -1,7 +1,7 @@
 # Upgrade
 
 This example will deploy a 3 node Elasticsearch cluster using an old chart version,
-then upgrade it to version 7.8.0.
+then upgrade it to version 7.8.1.
 
 The following upgrades are tested:
 - Upgrade from [7.0.0-alpha1][] version on K8S <1.16
@@ -11,7 +11,7 @@ not compatible with K8S >= 1.16)
 
 ## Usage
 
-Running `make install` command will do first install and 7.8.0 upgrade.
+Running `make install` command will do first install and 7.8.1 upgrade.
 
 Note: [jq][] is a requirement for this make target.
 
