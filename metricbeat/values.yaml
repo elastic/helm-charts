@@ -250,6 +250,11 @@ updateStrategy: RollingUpdate
 nameOverride: ""
 fullnameOverride: ""
 
+kube_state_metrics:
+  enabled: true
+  # host is used only when kube_state_metrics.enabled: false
+  host: ""
+
 # DEPRECATED
 affinity: {}
 envFrom: []
