@@ -21,10 +21,8 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-elasticsearch-logstash-0.helm-logstash-default-logstash-headless.default.svc.cluster.local"'
       - '"version" : "6.8.11"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-elasticsearch-logstash-0.helm-logstash-default-logstash-headless.default.svc.cluster.local"'
   http://elasticsearch-master:9200/_cat/indices:
     status: 200
     timeout: 2000
