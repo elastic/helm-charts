@@ -1,6 +1,6 @@
 # Default
 
-This example deploy Metricbeat 6.8.11-SNAPSHOT using [default values][].
+This example deploy Metricbeat 6.8.10 using [default values][].
 
 
 ## Usage
