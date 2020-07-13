@@ -98,7 +98,11 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: KUBE_STATE_METRICS_HOSTS
+          {{- if .Values.kube_state_metrics.enabled }}
           value: "$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_HOST):$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_PORT_HTTP)"
+          {{- else }}
+          value: {{ .Values.kube_state_metrics.host | default "kube-state-metrics:8080"}}
+          {{- end }}
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
 {{- end }}
