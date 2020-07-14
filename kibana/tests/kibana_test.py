@@ -51,6 +51,9 @@ def test_defaults():
     # Make sure that the default 'loadBalancerSourceRanges' list is empty
     assert "loadBalancerSourceRanges" not in r["service"][name]["spec"]
 
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in r["service"][name]["spec"]
+
 
 def test_overriding_the_elasticsearch_hosts():
     config = """
@@ -615,3 +618,13 @@ fullnameOverride: 'kibana-custom'
         ]
         == "kibana"
     )
+
+def test_adding_loadBalancerIP():
+    config = """
+    service:
+      loadBalancerIP: 12.5.11.79
+    """
+
+    r = helm_template(config)
+    
+    assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"
