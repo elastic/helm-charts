@@ -3,98 +3,168 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [7.8.0 - 2020/06/18](#780---20200618)
+- [7.8.1 - 2020/07/16](#781---20200716)
   - [APM Server](#apm-server)
   - [Elasticsearch](#elasticsearch)
-  - [Logstash](#logstash)
-- [7.7.1 - 2020/06/03](#771---20200603)
-  - [Elasticsearch](#elasticsearch-1)
+  - [Filebeat](#filebeat)
   - [Kibana](#kibana)
+  - [Logstash](#logstash)
   - [Metricbeat](#metricbeat)
+- [6.8.11 - 2020/07/16](#6811---20200716)
+- [7.8.0 - 2020/06/18](#780---20200618)
+  - [APM Server](#apm-server-1)
+  - [Elasticsearch](#elasticsearch-1)
+  - [Logstash](#logstash-1)
+- [7.7.1 - 2020/06/03](#771---20200603)
+  - [Elasticsearch](#elasticsearch-2)
+  - [Kibana](#kibana-1)
+  - [Metricbeat](#metricbeat-1)
 - [6.8.10 - 2020/06/03](#6810---20200603)
 - [7.7.0 - 2020/05/13](#770---20200513)
-  - [APM Server](#apm-server-1)
-  - [Elasticsearch](#elasticsearch-2)
-  - [Filebeat](#filebeat)
-  - [Kibana](#kibana-1)
-  - [Logstash](#logstash-1)
-  - [Metricbeat](#metricbeat-1)
-- [6.8.9 - 2020/05/13](#689---20200513)
-- [7.6.2 - 2020/03/31](#762---20200331)
   - [APM Server](#apm-server-2)
   - [Elasticsearch](#elasticsearch-3)
   - [Filebeat](#filebeat-1)
   - [Kibana](#kibana-2)
   - [Logstash](#logstash-2)
-- [7.6.1 - 2020/03/04](#761---20200304)
+  - [Metricbeat](#metricbeat-2)
+- [6.8.9 - 2020/05/13](#689---20200513)
+- [7.6.2 - 2020/03/31](#762---20200331)
   - [APM Server](#apm-server-3)
   - [Elasticsearch](#elasticsearch-4)
-- [7.6.0 - 2020/02/11](#760---20200211)
-  - [APM Server](#apm-server-4)
-  - [Elasticsearch](#elasticsearch-5)
   - [Filebeat](#filebeat-2)
   - [Kibana](#kibana-3)
   - [Logstash](#logstash-3)
-  - [Metricbeat](#metricbeat-2)
-- [7.5.2 - 2020/01/21](#752---20200121)
+- [7.6.1 - 2020/03/04](#761---20200304)
+  - [APM Server](#apm-server-4)
+  - [Elasticsearch](#elasticsearch-5)
+- [7.6.0 - 2020/02/11](#760---20200211)
+  - [APM Server](#apm-server-5)
   - [Elasticsearch](#elasticsearch-6)
   - [Filebeat](#filebeat-3)
   - [Kibana](#kibana-4)
   - [Logstash](#logstash-4)
   - [Metricbeat](#metricbeat-3)
-- [7.5.1 - 2019/12/18](#751---20191218)
+- [7.5.2 - 2020/01/21](#752---20200121)
+  - [Elasticsearch](#elasticsearch-7)
   - [Filebeat](#filebeat-4)
   - [Kibana](#kibana-5)
+  - [Logstash](#logstash-5)
   - [Metricbeat](#metricbeat-4)
-- [7.5.0 - 2019/12/02](#750---20191202)
-  - [Elasticsearch](#elasticsearch-7)
+- [7.5.1 - 2019/12/18](#751---20191218)
   - [Filebeat](#filebeat-5)
   - [Kibana](#kibana-6)
-  - [Logstash](#logstash-5)
   - [Metricbeat](#metricbeat-5)
-- [7.4.1 - 2019/10/23](#741---20191023)
+- [7.5.0 - 2019/12/02](#750---20191202)
   - [Elasticsearch](#elasticsearch-8)
+  - [Filebeat](#filebeat-6)
   - [Kibana](#kibana-7)
+  - [Logstash](#logstash-6)
   - [Metricbeat](#metricbeat-6)
-- [7.4.0 - 2019/10/01](#740---20191001)
+- [7.4.1 - 2019/10/23](#741---20191023)
   - [Elasticsearch](#elasticsearch-9)
   - [Kibana](#kibana-8)
-  - [Filebeat](#filebeat-6)
   - [Metricbeat](#metricbeat-7)
-- [7.3.2 - 2019/09/19](#732---20190919)
+- [7.4.0 - 2019/10/01](#740---20191001)
   - [Elasticsearch](#elasticsearch-10)
   - [Kibana](#kibana-9)
   - [Filebeat](#filebeat-7)
   - [Metricbeat](#metricbeat-8)
-- [7.3.0 - 2019/07/31](#730---20190731)
+- [7.3.2 - 2019/09/19](#732---20190919)
   - [Elasticsearch](#elasticsearch-11)
   - [Kibana](#kibana-10)
-- [7.2.1-0 - 2019/07/18](#721-0---20190718)
-  - [Elasticsearch](#elasticsearch-12)
-  - [Kibana](#kibana-11)
   - [Filebeat](#filebeat-8)
   - [Metricbeat](#metricbeat-9)
-- [7.2.0 - 2019/07/01](#720---20190701)
+- [7.3.0 - 2019/07/31](#730---20190731)
+  - [Elasticsearch](#elasticsearch-12)
+  - [Kibana](#kibana-11)
+- [7.2.1-0 - 2019/07/18](#721-0---20190718)
   - [Elasticsearch](#elasticsearch-13)
   - [Kibana](#kibana-12)
   - [Filebeat](#filebeat-9)
-- [7.1.1 - 2019/06/07](#711---20190607)
+  - [Metricbeat](#metricbeat-10)
+- [7.2.0 - 2019/07/01](#720---20190701)
   - [Elasticsearch](#elasticsearch-14)
   - [Kibana](#kibana-13)
   - [Filebeat](#filebeat-10)
-- [7.1.0 - 2019/05/21](#710---20190521)
+- [7.1.1 - 2019/06/07](#711---20190607)
   - [Elasticsearch](#elasticsearch-15)
   - [Kibana](#kibana-14)
   - [Filebeat](#filebeat-11)
-- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
+- [7.1.0 - 2019/05/21](#710---20190521)
   - [Elasticsearch](#elasticsearch-16)
   - [Kibana](#kibana-15)
-- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Filebeat](#filebeat-12)
+- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
   - [Elasticsearch](#elasticsearch-17)
+  - [Kibana](#kibana-16)
+- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Elasticsearch](#elasticsearch-18)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
+
+## 7.8.1 - 2020/07/16
+
+* 7.8.1 as the default stack version
+* Some documentation fixes and improvements in [#678](https://github.com/elastic/helm-charts/pull/678) and [#679](https://github.com/elastic/helm-charts/pull/679) ([@ArthurFritz](https://github.com/ArthurFritz)), [#690](https://github.com/elastic/helm-charts/pull/690) ([@fatmcgav](https://github.com/fatmcgav))
+* Some improvements in CI tests jobs in [#687](https://github.com/elastic/helm-charts/pull/687) ([@jmlrt](https://github.com/jmlrt)) , [#715](https://github.com/elastic/helm-charts/pull/715) and [#708](https://github.com/elastic/helm-charts/pull/708) ([@fatmcgav](https://github.com/fatmcgav))
+
+### APM Server
+
+| PR                                                      | Author                                             | Title                          |
+|---------------------------------------------------------|----------------------------------------------------|--------------------------------|
+| [#686](https://github.com/elastic/helm-charts/pull/686) | [@jim-barber-he](https://github.com/jim-barber-he) | Add ServiceAccount annotations |
+
+### Elasticsearch
+
+| PR                                                      | Author                                             | Title                                                                            |
+|---------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------|
+| [#655](https://github.com/elastic/helm-charts/pull/655) | [@mephinet](https://github.com/mephinet)           | `podSecurityContext.runAsUser` needs to be nulled as well for Openshift          |
+| [#686](https://github.com/elastic/helm-charts/pull/686) | [@jim-barber-he](https://github.com/jim-barber-he) | Add ServiceAccount annotations                                                   |
+| [#665](https://github.com/elastic/helm-charts/pull/665) | [@desaintmartin](https://github.com/desaintmartin) | Set PVC labels through setting all StatefulSet labels to its volumeClaimTemplate |
+| [#670](https://github.com/elastic/helm-charts/pull/670) | [@xario](https://github.com/xario)                 | Update `elasticsearch.endpoints` to use `elasticsearch.uname`                    |
+| [#727](https://github.com/elastic/helm-charts/pull/727) | [@fhaase2](https://github.com/fhaase2)             | Update test image pull policy                                                    |
+
+### Filebeat
+
+| PR                                                      | Author                                             | Title                                      |
+|---------------------------------------------------------|----------------------------------------------------|--------------------------------------------|
+| [#686](https://github.com/elastic/helm-charts/pull/686) | [@jim-barber-he](https://github.com/jim-barber-he) | Add ServiceAccount annotations             |
+| [#704](https://github.com/elastic/helm-charts/pull/704) | [@bmilescu](https://github.com/bmilescu)           | Add permission to list nodes               |
+| [#699](https://github.com/elastic/helm-charts/pull/699) | [@jmlrt](https://github.com/jmlrt)                 | Document probe workaround for Kafka output |
+
+### Kibana
+
+| PR                                                      | Author                                             | Title                                      |
+|---------------------------------------------------------|----------------------------------------------------|--------------------------------------------|
+| [#726](https://github.com/elastic/helm-charts/pull/726) | [@debojitkakoti ](https://github.com/debojitkakoti ) | Add loadbalancerIP to Service spec             |
+
+
+### Logstash
+
+| PR                                                      | Author                                             | Title                                     |
+|---------------------------------------------------------|----------------------------------------------------|-------------------------------------------|
+| [#686](https://github.com/elastic/helm-charts/pull/686) | [@jim-barber-he](https://github.com/jim-barber-he) | Add ServiceAccount annotations            |
+| [#695](https://github.com/elastic/helm-charts/pull/695) | [@jmlrt](https://github.com/jmlrt)                 | Add headless service for StatefulSet      |
+| [#712](https://github.com/elastic/helm-charts/pull/712) | [@kksudo](https://github.com/kksudo)               | Support creating secrets                  |
+| [#723](https://github.com/elastic/helm-charts/pull/723) | [@kksudo](https://github.com/kksudo)               | Restart pod when the secrets have changed |
+
+### Metricbeat
+
+| PR                                                      | Author                                               | Title                                           |
+|---------------------------------------------------------|------------------------------------------------------|-------------------------------------------------|
+| [#686](https://github.com/elastic/helm-charts/pull/686) | [@jim-barber-he](https://github.com/jim-barber-he)   | Add ServiceAccount annotations support          |
+| [#713](https://github.com/elastic/helm-charts/pull/713) | [@kernkonzentrat](https://github.com/kernkonzentrat) | Add DaemonSet and Deployment annotation support |
+| [#716](https://github.com/elastic/helm-charts/pull/716) | [@erihanse](https://github.com/erihanse)             | Make DaemonSet and Deployment optional          |
+| [#387](https://github.com/elastic/helm-charts/pull/387) | [@SergK](https://github.com/SergK)                   | Make kube-state-metrics optional                |
+
+
+## 6.8.11 - 2020/07/16
+
+* 6.8.11 as the default stack version
+* See [7.8.1 CHANGELOG](#781---20200716) for other changes
 
 
 ## 7.8.0 - 2020/06/18

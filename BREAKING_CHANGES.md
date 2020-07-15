@@ -3,6 +3,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [7.8.1 - 2020/07/16](#781---20200716)
+    - [Add headless Service for StatefulSet](#add-headless-service-for-statefulset)
+- [6.8.11 - 2020/07/16](#6811---20200716)
 - [7.8.0 - 2020/06/18](#780---20200618)
     - [Stable Elasticsearch deprecated](#stable-elasticsearch-deprecated)
     - [APM Server memory limit](#apm-server-memory-limit)
@@ -27,6 +30,26 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
+
+# 7.8.1 - 2020/07/16
+
+### Add headless Service for StatefulSet
+
+A headless `Service` has been added to Logstash chart in [#695][].
+
+Headless `Service` is required for `Statefulsets`. While Helm 2 allowed to
+deploy `Statefulset` without a `serviceName`, however Helm 3 enforce this
+requirement and fails if `serviceName` is missing.
+
+`Statefulset` don't accept `serviceName` field update during release upgrades.
+Upgrading Logstash chart from a previous version will require using
+`helm upgrade --force`.
+
+
+# 6.8.11 - 2020/07/16
+
+See [7.8.1 Breaking changes](#781---20200716)
 
 
 # 7.8.0 - 2020/06/18
@@ -226,6 +249,7 @@ volumeClaimTemplate:
 [#621]: https://github.com/elastic/helm-charts/pull/621
 [#623]: https://github.com/elastic/helm-charts/pull/623
 [#664]: https://github.com/elastic/helm-charts/pull/664
+[#695]: https://github.com/elastic/helm-charts/pull/695
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch
