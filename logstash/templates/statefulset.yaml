@@ -47,13 +47,16 @@ spec:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
-        {{/* This forces a restart if the configmap has changed */}}
+        {{- /* This forces a restart if the configmap has changed */}}
         {{- if .Values.logstashConfig }}
         configchecksum: {{ include (print .Template.BasePath "/configmap-config.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
-        {{/* This forces a restart if the configmap has changed */}}
+        {{- /* This forces a restart if the configmap has changed */}}
         {{- if .Values.logstashPipeline }}
         pipelinechecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+        {{- if .Values.secrets }}
+        secretschecksum: {{ include (print .Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
       {{- if .Values.schedulerName }}
