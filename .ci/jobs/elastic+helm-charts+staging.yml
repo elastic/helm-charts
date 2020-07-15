@@ -7,11 +7,19 @@
     parameters:
       - string:
           name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
+          description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
+      - string:
+          name: BRANCH
+          description: "The helm-charts repo branch to use. (Example: 7.8)"
     project-type: multijob
     scm:
     - git:
+        branches:
+        - $BRANCH
         wipe-workspace: 'False'
+    wrappers:
+    - build-name:
+        name: "${BUILD_NUMBER} - ${BRANCH} - ${BUILD_ID}"
     builders:
     - multijob:
         name: template testing and kubernetes cluster creation

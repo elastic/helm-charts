@@ -6,9 +6,14 @@
     parameters:
       - string:
           name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
+          description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
+      - string:
+          name: BRANCH
+          description: "The helm-charts repo branch to use. (Example: 7.8)"
     scm:
     - git:
+        branches:
+        - $BRANCH
         wipe-workspace: 'True'
     axes:
     - axis:
@@ -24,6 +29,9 @@
         type: yaml
         name: KUBERNETES_VERSION
         filename: helpers/matrix.yml
+    wrappers:
+    - build-name:
+        name: "${BUILD_NUMBER} - ${BRANCH} - ${BUILD_ID}"
     builders:
     - shell: |-
         #!/usr/local/bin/runbld
