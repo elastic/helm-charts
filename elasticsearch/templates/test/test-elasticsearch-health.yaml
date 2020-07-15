@@ -11,6 +11,7 @@ spec:
   containers:
   - name: "{{ .Release.Name }}-{{ randAlpha 5 | lower }}-test"
     image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+    imagePullPolicy: "{{ .Values.imagePullPolicy }}"
     command:
       - "sh"
       - "-c"
