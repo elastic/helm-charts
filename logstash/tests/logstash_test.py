@@ -325,6 +325,10 @@ secrets:
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 1
     assert s["data"] == {"ELASTICSEARCH_PASSWORD": content_b64}
+    assert (
+        "secretschecksum"
+        in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
 
 
 def test_adding_secret_from_file():
