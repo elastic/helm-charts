@@ -619,6 +619,7 @@ fullnameOverride: 'kibana-custom'
         == "kibana"
     )
 
+
 def test_adding_loadBalancerIP():
     config = """
     service:
@@ -626,5 +627,5 @@ def test_adding_loadBalancerIP():
     """
 
     r = helm_template(config)
-    
+
     assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"
