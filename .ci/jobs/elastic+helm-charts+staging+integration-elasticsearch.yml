@@ -4,17 +4,9 @@
     display-name: elastic / helm-charts - staging - integration elasticsearch
     description: staging - integration elasticsearch
     parameters:
-      - string:
-          name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
-      - string:
-          name: BRANCH
-          description: "The helm-charts repo branch to use. (Example: 7.8)"
-    scm:
-    - git:
-        branches:
-        - $BRANCH
-        wipe-workspace: 'True'
+    - string:
+        name: BUILD_ID
+        description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
     axes:
     - axis:
         type: slave
@@ -31,7 +23,7 @@
         filename: helpers/matrix.yml
     wrappers:
     - build-name:
-        name: "${BUILD_NUMBER} - ${BRANCH} - ${BUILD_ID}"
+        name: "${BUILD_NUMBER} - ${branch_specifier} - ${BUILD_ID}"
     builders:
     - shell: |-
         #!/usr/local/bin/runbld
