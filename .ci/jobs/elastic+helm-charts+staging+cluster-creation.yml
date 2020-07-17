@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+cluster-creation
     display-name: elastic / helm-charts - staging - cluster creation
     description: staging - cluster creation
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID

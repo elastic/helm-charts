@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+integration-filebeat
     display-name: elastic / helm-charts - staging - integration filebeat
     description: staging - integration filebeat
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID

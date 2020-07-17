@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+integration-apm-server
     display-name: elastic / helm-charts - staging - integration apm-server
     description: staging - integration apm-server
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID
