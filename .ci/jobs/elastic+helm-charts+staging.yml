@@ -8,7 +8,7 @@
     - string:
         name: BUILD_ID
         description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
-    project-type:
+    project-type: multijob
     scm:
     - git:
         wipe-workspace: 'False'
