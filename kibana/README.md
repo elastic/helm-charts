@@ -212,12 +212,13 @@ about our development and testing process.
 [examples]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples/security
+[gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [kibana docker image]: https://www.elastic.co/guide/en/kibana/7.x/docker.html
-[kibana oss docker image]: https://www.docker.elastic.co/#kibana-7-8-0-oss
+[kibana oss docker image]: https://www.docker.elastic.co/r/kibana/kibana-oss
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
