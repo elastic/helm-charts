@@ -232,6 +232,7 @@ about our development and testing process.
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/6.8/running-on-docker.html
+[metricbeat oss docker image]: https://www.docker.elastic.co/r/beats/metricbeat-oss
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes

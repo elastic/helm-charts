@@ -200,8 +200,8 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/filebeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/filebeat/examples/security
 [filebeat docker image]: https://www.elastic.co/guide/en/beats/filebeat/6.8/running-on-docker.html
-[filebeat oss docker image]: https://www.docker.elastic.co/#filebeat-6-8-10-oss
-[filebeat output]: https://www.elastic.co/guide/en/beats/filebeat/6.8/configuring-output.html
+[filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
+[filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/6.8/configuring-output.html
 [helm]: https://helm.sh
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
