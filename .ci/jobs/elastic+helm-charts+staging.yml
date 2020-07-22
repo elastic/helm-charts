@@ -48,7 +48,7 @@
         current-parameters: true
         trigger-with-no-params: false
     - slack:
-      notify-back-to-normal: True
-      notify-every-failure: True
-      room: infra-release-notify
-      team-domain: elastic
+        notify-back-to-normal: True
+        notify-every-failure: True
+        room: infra-release-notify
+        team-domain: elastic
