@@ -51,3 +51,4 @@
         notify-every-failure: True
         room: infra-release-notify
         team-domain: elastic
+        auth-token-id: release-slack-integration-token
