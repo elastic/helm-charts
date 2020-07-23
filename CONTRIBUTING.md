@@ -65,7 +65,7 @@ You only need to sign the CLA once.
 
 We follow the [GitHub forking model][] for collaborating on Helm charts code.
 This model assumes that you have a remote called `upstream` which points to the
-official Kibana repo, which we'll refer to in later code snippets.
+official helm-charts repo, which we'll refer to in later code snippets.
 
 ### Branching
 
@@ -150,7 +150,7 @@ rejection like this:
 
 ```
 ! [rejected] name-of-your-branch -> name-of-your-branch (non-fast-forward)
-error: failed to push some refs to 'https://github.com/YourGitHubHandle/kibana.git'
+error: failed to push some refs to 'https://github.com/YourGitHubHandle/helm-charts.git'
 hint: Updates were rejected because the tip of your current branch is behind
 hint: its remote counterpart. Integrate the remote changes (e.g.
 hint: 'git pull ...') before pushing again.
@@ -174,20 +174,20 @@ appropriate.
 
 Push your local changes to your forked copy of the repository and submit a Pull
 Request. In the Pull Request, describe what your changes do and mention the
-number of the issue where discussion has taken place, e.g., “Closes #123″.
+number of the issue where discussion has taken place, e.g., `Closes #123`.
 
-Always submit your pull against `master` unless the bug is only present in an
+Always submit your pull request against `master` unless the bug is only present in an
 older version. If the bug affects both master and another branch say so in your
-pull.
+pull request.
 
 Then sit back and wait. There will probably be discussion about the Pull Request
 and, if any changes are needed, we'll work with you to get your Pull Request
-merged into Kibana.
+merged into helm-charts.
 
 
 ## Releases
 
-Just like with the rest of the stack, all versions in this helm chart repo are
+Just like with the rest of the stack, all versions in this helm-charts repo are
 bumped and released at the same time. There is no need to bump the version in
 your pull request.
 
