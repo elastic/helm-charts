@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+integration-kibana
     display-name: elastic / helm-charts - staging - integration kibana
     description: staging - integration kibana
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID

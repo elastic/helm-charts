@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+integration-logstash
     display-name: elastic / helm-charts - staging - integration logstash
     description: staging - integration logstash
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID

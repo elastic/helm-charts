@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+cluster-cleanup
     display-name: elastic / helm-charts - staging - cluster cleanup
     description: staging - cluster cleanup
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID

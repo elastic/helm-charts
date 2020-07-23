@@ -3,6 +3,7 @@
     name: elastic+helm-charts+staging+integration-metricbeat
     display-name: elastic / helm-charts - staging - integration metricbeat
     description: staging - integration metricbeat
+    concurrent: true
     parameters:
     - string:
         name: BUILD_ID
