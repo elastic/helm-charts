@@ -38,12 +38,12 @@
 
 A headless `Service` has been added to Logstash chart in [#695][].
 
-Headless `Service` is required for `Statefulsets`. While Helm 2 allowed to
-deploy `Statefulset` without a `serviceName`, however Helm 3 enforce this
+The headless `Service` is required for `Statefulsets`. Helm 2 allowed
+deploying a `Statefulset` without a `serviceName`, however Helm 3 enforces this
 requirement and fails if `serviceName` is missing.
 
-`Statefulset` don't accept `serviceName` field update during release upgrades.
-Upgrading Logstash chart from a previous version will require using
+`Statefulset` does not accept the `serviceName` field update during release upgrades.
+Upgrading the Logstash chart from a previous version will require using
 `helm upgrade --force`.
 
 
