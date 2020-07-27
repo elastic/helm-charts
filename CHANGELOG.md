@@ -108,8 +108,8 @@
 ## 7.8.1 - 2020/07/28
 
 * 7.8.1 as the default stack version
-* Some documentation fixes and improvements in [#678](https://github.com/elastic/helm-charts/pull/678) and [#679](https://github.com/elastic/helm-charts/pull/679) ([@ArthurFritz](https://github.com/ArthurFritz)), [#690](https://github.com/elastic/helm-charts/pull/690) ([@fatmcgav](https://github.com/fatmcgav))
-* Some improvements in CI tests jobs in [#687](https://github.com/elastic/helm-charts/pull/687) ([@jmlrt](https://github.com/jmlrt)) , [#715](https://github.com/elastic/helm-charts/pull/715) and [#708](https://github.com/elastic/helm-charts/pull/708) ([@fatmcgav](https://github.com/fatmcgav))
+* Some documentation fixes and improvements ([@ArthurFritz](https://github.com/ArthurFritz), [@fatmcgav](https://github.com/fatmcgav) and [AhmedSamirAhmed](https://github.com/AhmedSamirAhmed))
+* Some improvements in CI tests jobs in ([@jmlrt](https://github.com/jmlrt)) and [@fatmcgav](https://github.com/fatmcgav))
 
 ### APM Server
 
@@ -164,7 +164,7 @@
 ## 6.8.11 - 2020/07/28
 
 * 6.8.11 as the default stack version
-* See [7.8.1 CHANGELOG](#781---2020xxxx) for other changes
+* See [7.8.1 CHANGELOG](#781---20200728) for other changes
 
 
 ## 7.8.0 - 2020/06/18

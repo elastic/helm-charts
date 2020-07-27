@@ -49,7 +49,7 @@ Upgrading Logstash chart from a previous version will require using
 
 # 6.8.11 - 2020/07/28
 
-See [7.8.1 Breaking changes](#781---2020xxxx)
+See [7.8.1 Breaking changes](#781---20200728)
 
 
 # 7.8.0 - 2020/06/18
