@@ -3,13 +3,11 @@
     name: elastic+helm-charts+staging+integration-logstash
     display-name: elastic / helm-charts - staging - integration logstash
     description: staging - integration logstash
+    concurrent: true
     parameters:
-      - string:
-          name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
-    scm:
-    - git:
-        wipe-workspace: 'True'
+    - string:
+        name: BUILD_ID
+        description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
     axes:
     - axis:
         type: slave
@@ -24,6 +22,9 @@
         type: yaml
         name: KUBERNETES_VERSION
         filename: helpers/matrix.yml
+    wrappers:
+    - build-name:
+        name: "${BUILD_NUMBER} - ${branch_specifier} - ${BUILD_ID}"
     builders:
     - shell: |-
         #!/usr/local/bin/runbld

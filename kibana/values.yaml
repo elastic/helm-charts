@@ -95,6 +95,7 @@ updateStrategy:
 
 service:
   type: ClusterIP
+  loadBalancerIP: ""
   port: 5601
   nodePort: ""
   labels: {}
