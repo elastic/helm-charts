@@ -3,14 +3,14 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [7.8.1 - 2020/XX/XX](#781---2020xxxx)
+- [7.8.1 - 2020/07/28](#781---20200728)
   - [APM Server](#apm-server)
   - [Elasticsearch](#elasticsearch)
   - [Filebeat](#filebeat)
   - [Kibana](#kibana)
   - [Logstash](#logstash)
   - [Metricbeat](#metricbeat)
-- [6.8.11 - 2020/XX/XX](#6811---2020xxxx)
+- [6.8.11 - 2020/07/28](#6811---20200728)
 - [7.8.0 - 2020/06/18](#780---20200618)
   - [APM Server](#apm-server-1)
   - [Elasticsearch](#elasticsearch-1)
@@ -105,7 +105,7 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-## 7.8.1 - 2020/XX/XX
+## 7.8.1 - 2020/07/28
 
 * 7.8.1 as the default stack version
 * Some documentation fixes and improvements in [#678](https://github.com/elastic/helm-charts/pull/678) and [#679](https://github.com/elastic/helm-charts/pull/679) ([@ArthurFritz](https://github.com/ArthurFritz)), [#690](https://github.com/elastic/helm-charts/pull/690) ([@fatmcgav](https://github.com/fatmcgav))
@@ -161,7 +161,7 @@
 | [#387](https://github.com/elastic/helm-charts/pull/387) | [@SergK](https://github.com/SergK)                   | Make kube-state-metrics optional                |
 
 
-## 6.8.11 - 2020/XX/XX
+## 6.8.11 - 2020/07/28
 
 * 6.8.11 as the default stack version
 * See [7.8.1 CHANGELOG](#781---2020xxxx) for other changes

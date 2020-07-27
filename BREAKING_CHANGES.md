@@ -3,9 +3,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [7.8.1 - 2020/XX/XX](#781---2020xxxx)
+- [7.8.1 - 2020/07/28](#781---20200728)
     - [Add headless Service for StatefulSet](#add-headless-service-for-statefulset)
-- [6.8.11 - 2020/XX/XX](#6811---2020xxxx)
+- [6.8.11 - 2020/07/28](#6811---20200728)
 - [7.8.0 - 2020/06/18](#780---20200618)
     - [Stable Elasticsearch deprecated](#stable-elasticsearch-deprecated)
     - [APM Server memory limit](#apm-server-memory-limit)
@@ -32,7 +32,7 @@
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-# 7.8.1 - 2020/XX/XX
+# 7.8.1 - 2020/07/28
 
 ### Add headless Service for StatefulSet
 
@@ -47,7 +47,7 @@ Upgrading Logstash chart from a previous version will require using
 `helm upgrade --force`.
 
 
-# 6.8.11 - 2020/XX/XX
+# 6.8.11 - 2020/07/28
 
 See [7.8.1 Breaking changes](#781---2020xxxx)
 
