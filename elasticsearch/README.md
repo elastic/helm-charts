@@ -390,7 +390,7 @@ about our development and testing process.
 [docker for mac]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/docker-for-mac
 [elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/cluster-health.html#request-params
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/docker.html
-[elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-6-8-9-oss
+[elasticsearch oss docker image]: https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/

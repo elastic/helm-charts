@@ -187,7 +187,7 @@ about our development and testing process.
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/6.8/docker.html
-[logstash oss docker image]: https://www.docker.elastic.co/#logstash-6-8-9-oss
+[logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
