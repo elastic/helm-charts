@@ -24,8 +24,8 @@ added below.
 
 We recommend that the Helm chart version is aligned to the version of the product
 you want to deploy. This will ensure that you using a chart version that has been
-tested against the corresponding production version.  
-This will also ensure that the documentation and examples for the chart will work 
+tested against the corresponding production version.
+This will also ensure that the documentation and examples for the chart will work
 with the version of the product you are installing.
 
 For example if you want to deploy an Elasticsearch `7.7.1` cluster, use the
@@ -76,7 +76,12 @@ exact versions are defined under `KUBERNETES_VERSIONS` in
 
 While we are checking backward compatibility, the charts are only tested with
 Helm version mentioned in [helm-tester Dockerfile][] (currently 2.16.9).
-Note that we don't support [Helm 3][] version.
+
+#### Helm 3 preview
+
+While we don't have automated tests for [Helm 3][] yet, we fixed the main
+blockers to use it. We now have enough feedbacks from internal and external
+users to add support it in preview.
 
 ## ECK
 

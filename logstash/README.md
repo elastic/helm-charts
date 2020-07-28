@@ -46,13 +46,18 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name logstash elastic/logstash`
+* Install it:
+  - with Helm 2: `helm install --name logstash elastic/logstash`
+  - with [Helm 3 (preview)][]: `helm install logstash elastic/logstash`
+
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name logstash ./helm-charts/logstash  --set imageTag=8.0.0-SNAPSHOT`
+* Install it:
+  - with Helm 2: `helm install --name logstash ./helm-charts/logstash  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (preview)][]: `helm install logstash ./helm-charts/logstash  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -194,6 +199,7 @@ about our development and testing process.
 [examples]: https://github.com/elastic/helm-charts/tree/master/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/oss
 [helm]: https://helm.sh
+[helm 3 (preview)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-preview
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
