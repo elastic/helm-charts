@@ -344,9 +344,8 @@ automated testing pipeline.
 2. Add any required secrets or credentials into an Elasticsearch keystore
 following the [how to use the keystore][] guide.
 3. Configure the [snapshot repository][] as you normally would.
-4. To automate snapshots you can use a tool like [curator][]. In the future
-there are plans to have Elasticsearch manage automated snapshots with
-[Snapshot Lifecycle Management][].
+4. To automate snapshots you can use [Snapshot Lifecycle Management][] or a tool
+like [curator][].
 
 ### How to configure templates post-deployment?
 
@@ -432,7 +431,7 @@ about our development and testing process.
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#node-certificates
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
-[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-node.html
+[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [openshift]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
@@ -442,7 +441,7 @@ about our development and testing process.
 [secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-[snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
+[snapshot lifecycle management]: https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-lifecycle-management.html
 [snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/current/repository.html
 [snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
 [supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
