@@ -48,7 +48,7 @@ See [supported configurations][] for more details.
 
 * Install it:
   - with Helm 2: `helm install --name kibana elastic/kibana`
-  - with [Helm 3 (preview)][]: `helm install kibana elastic/kibana`
+  - with [Helm 3 (beta)][]: `helm install kibana elastic/kibana`
 
 
 ### Install development version using master branch
@@ -57,7 +57,7 @@ See [supported configurations][] for more details.
 
 * Install it:
   - with Helm 2: `helm install --name kibana ./helm-charts/kibana  --set imageTag=8.0.0-SNAPSHOT`
-  - with [Helm 3 (preview)][]: `helm install kibana ./helm-charts/kibana  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install kibana ./helm-charts/kibana  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -216,7 +216,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
-[helm 3 (preview)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-preview
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/

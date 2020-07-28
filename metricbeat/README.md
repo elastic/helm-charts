@@ -47,7 +47,7 @@ See [supported configurations][] for more details.
 
 * Install it:
   - with Helm 2: `helm install --name metricbeat elastic/metricbeat`
-  - with [Helm 3 (preview)][]: `helm install metricbeat elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat elastic/metricbeat`
 
 
 ### Install development version using master branch
@@ -56,7 +56,7 @@ See [supported configurations][] for more details.
 
 * Install it:
   - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
-  - with [Helm 3 (preview)][]: `helm install metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -221,7 +221,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/security
 [helm]: https://helm.sh
-[helm 3 (preview)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-preview
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
