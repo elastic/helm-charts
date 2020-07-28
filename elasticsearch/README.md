@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.0][] release
+**Warning**: This branch is used for development, please use [7.8.1][] release
 for supported version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -382,7 +382,7 @@ about our development and testing process.
 
 
 [#63]: https://github.com/elastic/helm-charts/issues/63
-[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/elasticsearch/README.md
+[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
