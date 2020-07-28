@@ -163,5 +163,5 @@ working correctly you can cleanup leftover resources from your old cluster.
 [data.yml]: https://github.com/elastic/helm-charts/blob/7.8/elasticsearch/examples/migration/data.yml
 [helm/charts]: https://github.com/helm/charts/tree/master/stable/elasticsearch
 [master.yml]: https://github.com/elastic/helm-charts/blob/7.8/elasticsearch/examples/migration/master.yml
-[restoring to a different cluster guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.6/modules-snapshots.html#_restoring_to_a_different_cluster
-[rolling upgrades guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.6/rolling-upgrades.html
+[restoring to a different cluster guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-snapshots.html#_restoring_to_a_different_cluster
+[rolling upgrades guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/rolling-upgrades.html

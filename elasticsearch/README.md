@@ -335,9 +335,8 @@ automated testing pipeline.
 2. Add any required secrets or credentials into an Elasticsearch keystore
 following the [how to use the keystore][] guide.
 3. Configure the [snapshot repository][] as you normally would.
-4. To automate snapshots you can use a tool like [curator][]. In the future
-there are plans to have Elasticsearch manage automated snapshots with
-[Snapshot Lifecycle Management][].
+4. To automate snapshots you can use [Snapshot Lifecycle Management][] or a tool
+like [curator][].
 
 ### How to configure templates post-deployment?
 
@@ -432,7 +431,7 @@ about our development and testing process.
 [secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-[snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
+[snapshot lifecycle management]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/snapshot-lifecycle-management.html
 [snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.8/repository.html
 [snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-snapshots.html
 [supported configurations]: https://github.com/elastic/helm-charts/tree/7.8/README.md#supported-configurations
