@@ -20,7 +20,7 @@ import fileinput
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
 versions = {
-    7: os.environ.get("BUMPER_VERSION_7", "7.8.1-SNAPSHOT"),
+    7: os.environ.get("BUMPER_VERSION_7", "7.8.1"),
 }
 
 chart_version = versions[7]
@@ -41,7 +41,7 @@ goss_files = ["*/examples/*/test/goss*.y*ml"]
 # This was happening because strings like 127.0.0.1 match for 7.0.0
 # "7.0.0-alpha1" is also used in elasticsearch upgrade test and so shouldn't
 # been bump
-blacklist = re.compile(r".*127.0.0.1.*|.*7.0.0-alpha1.*")
+blacklist = re.compile(r".*127.0.0.1.*|.*7.0.0-alpha1.*|.*0.7.0.*|.*7.4.0.*")
 
 print("Updating versions...")
 
