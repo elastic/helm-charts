@@ -19,7 +19,7 @@ for released version.
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.x branch and 7.9.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-790-snapshot-versions)
+  - [Install development version using 7.x branch and 7.10.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-7100-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -43,7 +43,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.0-SNAPSHOT versions.
+This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 
 ### Install released version using Helm repository
 
@@ -53,7 +53,7 @@ This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 * Install the latest 7.7 release:
 `helm install --name apm-server elastic/apm-server`
 
-### Install development version using 7.x branch and 7.9.0-SNAPSHOT versions
+### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -95,7 +95,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.9.0-SNAPSHOT`                   |
+| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.10.0-SNAPSHOT`                   |
 | `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -150,7 +150,7 @@ about our development and testing process.
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.8/running-on-docker.html
+[apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.9/running-on-docker.html
 [apm server oss docker image]: https://www.docker.elastic.co/r/apm/apm-server-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
