@@ -24,8 +24,8 @@ added below.
 
 We recommend that the Helm chart version is aligned to the version of the product
 you want to deploy. This will ensure that you using a chart version that has been
-tested against the corresponding production version.  
-This will also ensure that the documentation and examples for the chart will work 
+tested against the corresponding production version.
+This will also ensure that the documentation and examples for the chart will work
 with the version of the product you are installing.
 
 For example if you want to deploy an Elasticsearch `7.7.1` cluster, use the
@@ -37,12 +37,12 @@ versions.
 
 | Chart                                      | Docker documentation                                                            |Latest 7 Version|Latest 6 Version|
 |--------------------------------------------|---------------------------------------------------------------------------------|-----------|-----------|
-| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       |[`7.8.0`][apm-7] |[`6.8.10`][apm-6] |
-| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html     |[`7.8.0`][elasticsearch-7] |[`6.8.10`][elasticsearch-6] |
-| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   |[`7.8.0`][filebeat-7] |[`6.8.10`][filebeat-6] |
-| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/current/docker.html                      |[`7.8.0`][kibana-7] |[`6.8.10`][kibana-6] |
-| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/current/docker.html                    |[`7.8.0`][logstash-7] |[`6.8.10`][logstash-6] |
-| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html |[`7.8.0`][metricbeat-7] |[`6.8.10`][metricbeat-6] |
+| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       |[`7.8.1`][apm-7] |[`6.8.11`][apm-6] |
+| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html     |[`7.8.1`][elasticsearch-7] |[`6.8.11`][elasticsearch-6] |
+| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   |[`7.8.1`][filebeat-7] |[`6.8.11`][filebeat-6] |
+| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/current/docker.html                      |[`7.8.1`][kibana-7] |[`6.8.11`][kibana-6] |
+| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/current/docker.html                    |[`7.8.1`][logstash-7] |[`6.8.11`][logstash-6] |
+| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html |[`7.8.1`][metricbeat-7] |[`6.8.11`][metricbeat-6] |
 
 ## Supported Configurations
 
@@ -96,15 +96,15 @@ Kubernetes.
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 
-[apm-7]: https://github.com/elastic/helm-charts/tree/7.8.0/apm-server/README.md
-[apm-6]: https://github.com/elastic/helm-charts/tree/6.8.10/apm-server/README.md
-[elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.8.0/elasticsearch/README.md
-[elasticsearch-6]: https://github.com/elastic/helm-charts/tree/6.8.10/elasticsearch/README.md
-[filebeat-7]: https://github.com/elastic/helm-charts/tree/7.8.0/filebeat/README.md
-[filebeat-6]: https://github.com/elastic/helm-charts/tree/6.8.10/filebeat/README.md
-[kibana-7]: https://github.com/elastic/helm-charts/tree/7.8.0/kibana/README.md
-[kibana-6]: https://github.com/elastic/helm-charts/tree/6.8.10/kibana/README.md
-[logstash-7]: https://github.com/elastic/helm-charts/tree/7.8.0/logstash/README.md
-[logstash-6]: https://github.com/elastic/helm-charts/tree/6.8.10/logstash/README.md
-[metricbeat-7]: https://github.com/elastic/helm-charts/tree/7.8.0/metricbeat/README.md
-[metricbeat-6]: https://github.com/elastic/helm-charts/tree/6.8.10/metricbeat/README.md
+[apm-7]: https://github.com/elastic/helm-charts/tree/7.8.1/apm-server/README.md
+[apm-6]: https://github.com/elastic/helm-charts/tree/6.8.11/apm-server/README.md
+[elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.8.1/elasticsearch/README.md
+[elasticsearch-6]: https://github.com/elastic/helm-charts/tree/6.8.11/elasticsearch/README.md
+[filebeat-7]: https://github.com/elastic/helm-charts/tree/7.8.1/filebeat/README.md
+[filebeat-6]: https://github.com/elastic/helm-charts/tree/6.8.11/filebeat/README.md
+[kibana-7]: https://github.com/elastic/helm-charts/tree/7.8.1/kibana/README.md
+[kibana-6]: https://github.com/elastic/helm-charts/tree/6.8.11/kibana/README.md
+[logstash-7]: https://github.com/elastic/helm-charts/tree/7.8.1/logstash/README.md
+[logstash-6]: https://github.com/elastic/helm-charts/tree/6.8.11/logstash/README.md
+[metricbeat-7]: https://github.com/elastic/helm-charts/tree/7.8.1/metricbeat/README.md
+[metricbeat-6]: https://github.com/elastic/helm-charts/tree/6.8.11/metricbeat/README.md
