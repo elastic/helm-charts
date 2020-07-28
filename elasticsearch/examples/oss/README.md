@@ -20,4 +20,4 @@ You can also run [goss integration tests][] using `make test`
 
 
 [elasticsearch oss]: https://www.elastic.co/downloads/elasticsearch-oss
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/oss/test/goss.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/examples/oss/test/goss.yaml

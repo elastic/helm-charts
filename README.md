@@ -1,6 +1,6 @@
 # Elastic Stack Kubernetes Helm Charts
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.x.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.9.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.9/)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -64,7 +64,8 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 | 7.5 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.6 | Beta          | Beta   | Beta     | Beta     | Beta       | Alpha      |
 | 7.7 | GA            | GA     | Beta     | GA       | GA         | Beta       |
-| 7.x | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.8 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.9 | GA            | GA     | Beta     | GA       | GA         | Beta       |
 
 ### Kubernetes Versions
 
@@ -86,13 +87,13 @@ Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
 Kubernetes.
 
 
-[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/
+[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.9/
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
 [helm 3]: https://v3.helm.sh
-[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.x/helpers/helm-tester/Dockerfile
-[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.x/helpers/matrix.yml
+[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.9/helpers/helm-tester/Dockerfile
+[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.9/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 
