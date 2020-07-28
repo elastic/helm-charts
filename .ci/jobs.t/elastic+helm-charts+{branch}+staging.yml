@@ -7,7 +7,7 @@
     parameters:
       - string:
           name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 6.8.9-abcdabcd)"
+          description: "The buildId for the staging images. (Example: 6.8.11-abcdabcd)"
     project-type: multijob
     scm:
     - git:

@@ -1,6 +1,6 @@
 # Elasticsearch
 
-This example deploy Logstash 6.8.11-SNAPSHOT which connects to Elasticsearch (see
+This example deploy Logstash 6.8.11 which connects to Elasticsearch (see
 [values][]).
 
 
