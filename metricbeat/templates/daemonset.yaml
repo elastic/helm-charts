@@ -150,7 +150,7 @@ spec:
         - name: data
           mountPath: /usr/share/metricbeat/data
         # Necessary when using autodiscovery; avoid mounting it otherwise
-        # See: https://www.elastic.co/guide/en/beats/metricbeat/7.x/configuration-autodiscover.html
+        # See: https://www.elastic.co/guide/en/beats/metricbeat/7.9/configuration-autodiscover.html
         - name: varrundockersock
           mountPath: /var/run/docker.sock
           readOnly: true

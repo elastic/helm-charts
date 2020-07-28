@@ -14,7 +14,7 @@ for released version.
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.x branch and 7.9.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-790-snapshot-versions)
+  - [Install development version using 7.9 branch and 7.9.0-SNAPSHOT versions](#install-development-version-using-79-branch-and-790-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -51,7 +51,7 @@ This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 * Install the latest 7.7 release:
 `helm install --name kibana elastic/kibana`
 
-### Install development version using 7.x branch and 7.9.0-SNAPSHOT versions
+### Install development version using 7.9 branch and 7.9.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -206,34 +206,34 @@ about our development and testing process.
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#default
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples/oss
-[examples/security]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/7.9/kibana/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.9/kibana/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/7.9/kibana/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[kibana docker image]: https://www.elastic.co/guide/en/kibana/7.x/docker.html
+[kibana docker image]: https://www.elastic.co/guide/en/kibana/7.9/docker.html
 [kibana oss docker image]: https://www.docker.elastic.co/r/kibana/kibana-oss
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[openshift]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples/openshift
+[openshift]: https://github.com/elastic/helm-charts/tree/7.9/kibana/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#security
+[security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/README.md#security
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-[server.host]: https://www.elastic.co/guide/en/kibana/7.x/settings.html
+[server.host]: https://www.elastic.co/guide/en/kibana/7.9/settings.html
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-[standard upgrade]: https://www.elastic.co/guide/en/kibana/7.x/upgrade-standard.html
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.x/README.md#supported-configurations
+[standard upgrade]: https://www.elastic.co/guide/en/kibana/7.9/upgrade-standard.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.9/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/kibana/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.9/kibana/values.yaml
