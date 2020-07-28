@@ -19,7 +19,7 @@ for released version.
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.x branch and 7.9.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-790-snapshot-versions)
+  - [Install development version using 7.x branch and 7.10.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-7100-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -43,7 +43,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.0-SNAPSHOT versions.
+This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 
 ### Install released version using Helm repository
 
@@ -53,7 +53,7 @@ This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 * Install the latest 7.7 release:
 `helm install --name logstash elastic/logstash`
 
-### Install development version using 7.x branch and 7.9.0-SNAPSHOT versions
+### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -111,7 +111,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.9.0-SNAPSHOT`                      |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.10.0-SNAPSHOT`                      |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
