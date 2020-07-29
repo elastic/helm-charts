@@ -60,14 +60,18 @@ This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.8 release:
-`helm install --name elasticsearch elastic/elasticsearch`
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch elastic/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch elastic/elasticsearch`
+
 
 ### Install development version using 7.9 branch and 7.9.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name elasticsearch ./helm-charts/elasticsearch`
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.9.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.9.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -410,6 +414,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/README.md#how-to-install-plugins
 [how to use the keystore]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/README.md#how-to-use-the-keystore

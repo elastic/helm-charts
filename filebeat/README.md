@@ -47,14 +47,18 @@ This chart is tested with the latest 7.9.0-SNAPSHOT versions.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.8 release:
-`helm install --name filebeat elastic/filebeat`
+* Install it:
+  - with Helm 2: `helm install --name filebeat elastic/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat elastic/filebeat`
+
 
 ### Install development version using 7.9 branch and 7.9.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name filebeat ./helm-charts/filebeat`
+* Install it:
+  - with Helm 2: `helm install --name filebeat ./helm-charts/filebeat --set imageTag=7.9.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install filebeat ./helm-charts/filebeat --set imageTag=7.9.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -198,6 +202,7 @@ about our development and testing process.
 [filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
 [filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/7.9/configuring-output.html
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
