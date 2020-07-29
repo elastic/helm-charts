@@ -190,7 +190,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
- [6.8.11]: https://github.com/elastic/helm-charts/blob/6.8.11/filebeat/README.md
+[6.8.11]: https://github.com/elastic/helm-charts/blob/6.8.11/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
