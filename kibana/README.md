@@ -8,6 +8,9 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Beta features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
+**Warning**: This branch is used for development, please use [6.8.11][] release
+for released version.
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -41,12 +44,24 @@ See [supported configurations][] for more details.
 
 ## Installing
 
+This chart is tested with the latest 6.8.12-SNAPSHOT versions.
+
+### Install released version using Helm repository
+
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
   - with Helm 2: `helm install --name kibana --version 6.8.11 elastic/kibana`
   - with [Helm 3 (beta)][]: `helm install kibana --version 6.8.11 elastic/kibana`
+
+### Install development version using 6.8 branch and 6.8.12-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it:
+  - with Helm 2: `helm install --name kibana ./helm-charts/kibana`
+  - with [Helm 3 (beta)][]: `helm install kibana ./helm-charts/kibana`
 
 
 ## Upgrading
@@ -191,6 +206,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+ [6.8.11]: https://github.com/elastic/helm-charts/blob/6.8.11/kibana/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
