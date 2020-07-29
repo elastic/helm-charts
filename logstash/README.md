@@ -18,6 +18,8 @@ for released version.
 
 - [Requirements](#requirements)
 - [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 6.8 branch and 6.8.12-SNAPSHOT versions](#install-development-version-using-68-branch-and-6812-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
