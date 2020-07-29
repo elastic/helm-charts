@@ -1,3 +1,5 @@
+# Deploy singleton instance in the whole cluster for some unique data sources, like kube-state-metrics
+{{- if .Values.deployment.enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -8,6 +10,12 @@ metadata:
     chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
     heritage: '{{ .Release.Service }}'
     release: '{{ .Release.Name }}'
+  {{- if .Values.deployment.annotations}}
+  annotations:
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
@@ -90,7 +98,11 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: KUBE_STATE_METRICS_HOSTS
+          {{- if .Values.kube_state_metrics.enabled }}
           value: "$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_HOST):$({{ .Release.Name | replace "-" "_" | upper }}_KUBE_STATE_METRICS_SERVICE_PORT_HTTP)"
+          {{- else }}
+          value: {{ .Values.kube_state_metrics.host | default "kube-state-metrics:8080"}}
+          {{- end }}
 {{- if .Values.extraEnvs | default .Values.deployment.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
 {{- end }}
@@ -123,3 +135,4 @@ spec:
       {{- if .Values.extraContainers }}
 {{ tpl .Values.extraContainers . | indent 6 }}
       {{- end }}
+{{- end }}

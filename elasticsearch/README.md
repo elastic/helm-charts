@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.0][] release
+**Warning**: This branch is used for development, please use [7.8.1][] release
 for supported version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -58,13 +58,18 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install elasticsearch elastic/elasticsearch`
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch elastic/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch elastic/elasticsearch`
+
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install elasticsearch ./helm-charts/elasticsearch  --set imageTag=8.0.0-SNAPSHOT`
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -344,9 +349,8 @@ automated testing pipeline.
 2. Add any required secrets or credentials into an Elasticsearch keystore
 following the [how to use the keystore][] guide.
 3. Configure the [snapshot repository][] as you normally would.
-4. To automate snapshots you can use a tool like [curator][]. In the future
-there are plans to have Elasticsearch manage automated snapshots with
-[Snapshot Lifecycle Management][].
+4. To automate snapshots you can use [Snapshot Lifecycle Management][] or a tool
+like [curator][].
 
 ### How to configure templates post-deployment?
 
@@ -382,7 +386,7 @@ about our development and testing process.
 
 
 [#63]: https://github.com/elastic/helm-charts/issues/63
-[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/elasticsearch/README.md
+[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -399,7 +403,7 @@ about our development and testing process.
 [docker for mac]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/docker-for-mac
 [elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-[elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-7-7-0-oss
+[elasticsearch oss docker image]: https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/
@@ -408,6 +412,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#how-to-install-plugins
 [how to use the keystore]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#how-to-use-the-keystore
@@ -432,7 +437,7 @@ about our development and testing process.
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#node-certificates
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
-[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.6/modules-node.html
+[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [openshift]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
@@ -442,7 +447,7 @@ about our development and testing process.
 [secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-[snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
+[snapshot lifecycle management]: https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-lifecycle-management.html
 [snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/current/repository.html
 [snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
 [supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations

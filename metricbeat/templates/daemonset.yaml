@@ -1,3 +1,4 @@
+{{- if .Values.daemonset.enabled }}
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -11,6 +12,12 @@ metadata:
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
+  {{- if .Values.daemonset.annotations}}
+  annotations:
+    {{- range $key, $value := .Values.daemonset.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
@@ -159,3 +166,4 @@ spec:
       {{- if .Values.extraContainers }}
 {{ tpl .Values.extraContainers . | indent 6 }}
       {{- end }}
+{{- end }}

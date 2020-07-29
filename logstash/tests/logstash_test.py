@@ -1,10 +1,9 @@
+import base64
 import os
 import sys
 
 sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
 from helpers import helm_template
-import yaml
-
 
 name = "release-name-logstash"
 
@@ -304,6 +303,155 @@ secretMounts:
         "mountPath": "/usr/share/logstash/config/certs",
         "subPath": "cert.crt",
         "name": "elastic-certificates",
+    }
+
+
+def test_adding_a_secret():
+    content = "LS1CRUdJTiBgUFJJVkFURSB"
+    config = """
+secrets:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: {elk_pass}
+""".format(
+        elk_pass=content
+    )
+    content_b64 = base64.b64encode(content.encode("ascii")).decode("ascii")
+
+    r = helm_template(config)
+    secret_name = name + "-env"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 1
+    assert s["data"] == {"ELASTICSEARCH_PASSWORD": content_b64}
+    assert (
+        "secretschecksum"
+        in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
+
+
+def test_adding_secret_from_file():
+    content = """
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApCt3ychnqZHsS
+DylPFZn55xDaDcWco1oNFdBGzFjw+
+zkuMFMOv7ab+yOFwHeEeAAEkEgy1u
+Da1vIscBs1K0kbEFRSqySLuNHWiJp
+wK2cI/gJc+S9Qd9Qsn0XGjmjQ6P2p
+ot2hvCOtnei998OmDSYORKBq2jiv/
+-----END RSA PRIVATE KEY-----
+"""
+    config = """
+secrets:
+  - name: "tls"
+    value:
+      cert.key.filepath: "secrets/private.key"
+"""
+    content_b64 = base64.b64encode(content.encode("ascii")).decode("ascii")
+    work_dir = os.path.join(os.path.abspath(os.getcwd()), "secrets")
+    filename = os.path.join(work_dir, "private.key")
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, "w") as f:
+        f.write(content)
+
+    with open(filename, "r") as f:
+        data = f.read()
+        assert data == content
+
+    r = helm_template(config)
+    secret_name = name + "-tls"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 1
+    assert s["data"] == {
+        "cert.key": content_b64,
+    }
+
+    os.remove(filename)
+    os.rmdir(work_dir)
+
+
+def test_adding_multiple_data_secret():
+    content = {
+        "elk_pass": "LS1CRUdJTiBgUFJJVkFURSB",
+        "api_key": "ui2CsdUadTiBasRJRkl9tvNnw",
+    }
+    config = """
+secrets:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: {elk_pass}
+      api_key: {api_key}
+""".format(
+        elk_pass=content["elk_pass"], api_key=content["api_key"]
+    )
+    content_b64 = {
+        "elk_pass": base64.b64encode(content["elk_pass"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "api_key": base64.b64encode(content["api_key"].encode("ascii")).decode("ascii"),
+    }
+
+    r = helm_template(config)
+    secret_name = name + "-env"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 2
+    assert s["data"] == {
+        "ELASTICSEARCH_PASSWORD": content_b64["elk_pass"],
+        "api_key": content_b64["api_key"],
+    }
+
+
+def test_adding_multiple_secrets():
+    content = {
+        "elk_pass": "LS1CRUdJTiBgUFJJVkFURSB",
+        "cert_crt": "LS0tLS1CRUdJTiBlRJRALKJDDQVRFLS0tLS0K",
+        "cert_key": "LS0tLS1CRUdJTiBgUFJJVkFURSBLRVktLS0tLQo",
+    }
+    config = """
+secrets:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: {elk_pass}
+  - name: "tls"
+    value:
+      cert.crt: {cert_crt}
+      cert.key: {cert_key}
+
+""".format(
+        elk_pass=content["elk_pass"],
+        cert_crt=content["cert_crt"],
+        cert_key=content["cert_key"],
+    )
+    content_b64 = {
+        "elk_pass": base64.b64encode(content["elk_pass"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "cert_crt": base64.b64encode(content["cert_crt"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "cert_key": base64.b64encode(content["cert_key"].encode("ascii")).decode(
+            "ascii"
+        ),
+    }
+
+    r = helm_template(config)
+    secret_names = {"env": name + "-env", "tls": name + "-tls"}
+    s_env = r["secret"][secret_names["env"]]
+    s_tls = r["secret"][secret_names["tls"]]
+    assert len(r["secret"]) == 2
+    assert len(s_env["data"]) == 1
+    assert s_env["data"] == {
+        "ELASTICSEARCH_PASSWORD": content_b64["elk_pass"],
+    }
+    assert len(s_tls["data"]) == 2
+    assert s_tls["data"] == {
+        "cert.crt": content_b64["cert_crt"],
+        "cert.key": content_b64["cert_key"],
     }
 
 

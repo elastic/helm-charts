@@ -8,7 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [7.8.0][] release
+**Warning**: This branch is used for development, please use [7.8.1][] release
 for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -46,13 +46,18 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install logstash elastic/logstash`
+* Install it:
+  - with Helm 2: `helm install --name logstash elastic/logstash`
+  - with [Helm 3 (beta)][]: `helm install logstash elastic/logstash`
+
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install logstash ./helm-charts/logstash  --set imageTag=8.0.0-SNAPSHOT`
+* Install it:
+  - with Helm 2: `helm install --name logstash ./helm-charts/logstash --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install logstash ./helm-charts/logstash --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -129,6 +134,7 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `replicas`                | Kubernetes replica count for the StatefulSet (i.e. how many pods)                                                                                                                                                                    | `1`                                   |
 | `resources`               | Allows you to set the [resources][] for the StatefulSet                                                                                                                                                                              | see [values.yaml][]                   |
 | `schedulerName`           | Name of the [alternate scheduler][]                                                                                                                                                                                                  | `""`                                  |
+| `secrets`                 | Allows you easily create a secret from as variables or file. For add secrets from file, add suffix `.filepath` to the key of secret key. The value will be encoded to base64. Useful for store certificates and other secrets.       | See [values.yaml][]                   |
 | `secretMounts`            | Allows you easily mount a secret as a file inside the StatefulSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                                                                            | `[]`                                  |
 | `securityContext`         | Allows you to set the [securityContext][] for the container                                                                                                                                                                          | see [values.yaml][]                   |
 | `service`                 | Configurable [service][] to expose the Logstash service.                                                                                                                                                                             | see [values.yaml][]                   |
@@ -179,7 +185,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/logstash/README.md
+[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -193,12 +199,13 @@ about our development and testing process.
 [examples]: https://github.com/elastic/helm-charts/tree/master/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/oss
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
-[logstash oss docker image]: https://www.docker.elastic.co/#logstash-7-7-0-oss
+[logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

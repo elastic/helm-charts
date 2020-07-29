@@ -5,13 +5,16 @@
     description: Staging image testing
     concurrent: true
     parameters:
-      - string:
-          name: BUILD_ID
-          description: "The buildId for the staging images. (Example: 7.6.1-abcdabcd)"
+    - string:
+        name: BUILD_ID
+        description: "The buildId for the staging images. (Example: 7.8.1-abcdabcd)"
     project-type: multijob
     scm:
     - git:
         wipe-workspace: 'False'
+    wrappers:
+    - build-name:
+        name: "${BUILD_NUMBER} - ${branch_specifier} - ${BUILD_ID}"
     builders:
     - multijob:
         name: template testing and kubernetes cluster creation
@@ -44,3 +47,10 @@
       - project: elastic+helm-charts+staging+cluster-cleanup
         current-parameters: true
         trigger-with-no-params: false
+    - slack:
+        notify-back-to-normal: True
+        notify-every-failure: True
+        room: infra-release-notify
+        team-domain: elastic
+        auth-token-id: release-slack-integration-token
+        auth-token-credential-id: release-slack-integration-token

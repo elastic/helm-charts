@@ -1,7 +1,11 @@
 ---
 
 daemonset:
+  # Annotations to apply to the daemonset
+  annotations: {}
   affinity: {}
+  # Include the daemonset
+  enabled: true
   # Extra environment variables for Metricbeat container.
   envFrom: []
   # - configMapRef:
@@ -91,7 +95,11 @@ daemonset:
   tolerations: []
 
 deployment:
+  # Annotations to apply to the deployment
+  annotations: {}
   affinity: {}
+  # Include the deployment
+  enabled: true
   # Extra environment variables for Metricbeat container.
   envFrom: []
   # - configMapRef:
@@ -241,6 +249,11 @@ updateStrategy: RollingUpdate
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
+
+kube_state_metrics:
+  enabled: true
+  # host is used only when kube_state_metrics.enabled: false
+  host: ""
 
 # DEPRECATED
 affinity: {}
