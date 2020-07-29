@@ -45,7 +45,7 @@ See [supported configurations][] for more details.
 
 This chart is tested with the latest 6.8.12-SNAPSHOT versions.
 
- ### Install released version using Helm repository
+## Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
