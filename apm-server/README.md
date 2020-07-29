@@ -50,14 +50,18 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 7.7 release:
-`helm install --name apm-server elastic/apm-server`
+* Install it:
+  - with Helm 2: `helm install --name apm-server elastic/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server elastic/apm-server`
+
 
 ### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name apm-server ./helm-charts/apm-server`
+* Install it:
+  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.10.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.10.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -159,6 +163,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/7.x/apm-server/examples/security
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
