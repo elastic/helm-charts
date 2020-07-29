@@ -8,9 +8,6 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Beta features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [6.8.10][] release
-for released version.
-
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -18,8 +15,6 @@ for released version.
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions](#install-development-version-using-68-branch-and-6811-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -45,21 +40,12 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.11-SNAPSHOT versions.
-
-### Install released version using Helm repository
-
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 6.8 release:
-`helm install --name filebeat --version 6.8.10 elastic/filebeat`
-
-### Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it: `helm install --name filebeat ./helm-charts/filebeat`
+* Install it:
+  - with Helm 2: `helm install --name filebeat --version 6.8.11 elastic/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat --version 6.8.11 elastic/filebeat`
 
 
 ## Upgrading
@@ -107,7 +93,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`           | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
-| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `6.8.11-SNAPSHOT`                            |
+| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `6.8.11`                            |
 | `image`                  | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
 | `labels`                 | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
 | `livenessProbe`          | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
@@ -187,7 +173,6 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[6.8.10]: https://github.com/elastic/helm-charts/blob/6.8.10/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -200,14 +185,15 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/filebeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/filebeat/examples/security
 [filebeat docker image]: https://www.elastic.co/guide/en/beats/filebeat/6.8/running-on-docker.html
-[filebeat oss docker image]: https://www.docker.elastic.co/#filebeat-6-8-10-oss
-[filebeat output]: https://www.elastic.co/guide/en/beats/filebeat/6.8/configuring-output.html
+[filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
+[filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/6.8/configuring-output.html
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
-[kafka output]: https://www.elastic.co/guide/en/beats/filebeat/master/kafka-output.html
+[kafka output]: https://www.elastic.co/guide/en/beats/filebeat/6.8/kafka-output.html
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

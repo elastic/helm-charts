@@ -8,9 +8,6 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [6.8.10][] release
-for released version.
-
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -18,8 +15,6 @@ for released version.
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions](#install-development-version-using-68-branch-and-6811-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -43,21 +38,12 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.11-SNAPSHOT versions.
-
-### Install released version using Helm repository
-
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install the latest 6.8 release:
-`helm install --name apm-server --version 6.8.10 elastic/apm-server`
-
-### Install development version using 6.8 branch and 6.8.11-SNAPSHOT versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it: `helm install --name apm-server ./helm-charts/apm-server`
+* Install it:
+  - with Helm 2: `helm install --name apm-server --version 6.8.11 elastic/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server --version 6.8.11 elastic/apm-server`
 
 
 ## Upgrading
@@ -95,7 +81,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `6.8.11-SNAPSHOT`                            |
+| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `6.8.11`                            |
 | `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -144,14 +130,13 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[6.8.10]: https://github.com/elastic/helm-charts/blob/6.8.10/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/6.8/running-on-docker.html
-[apm server oss docker image]: https://www.docker.elastic.co/#apm-server-6-8-9-oss
+[apm server oss docker image]: https://www.docker.elastic.co/r/apm/apm-server-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
@@ -159,6 +144,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/security
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

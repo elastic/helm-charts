@@ -5,8 +5,8 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: filebeat
-version: 6.8.11-SNAPSHOT
-appVersion: 6.8.11-SNAPSHOT
+version: 6.8.11
+appVersion: 6.8.11
 sources:
   - https://github.com/elastic/beats
 icon: https://helm.elastic.co/icons/beats.png
