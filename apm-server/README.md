@@ -41,7 +41,9 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name apm-server --version 6.8.11 elastic/apm-server`
+* Install it:
+  - with Helm 2: `helm install --name apm-server --version 6.8.11 elastic/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server --version 6.8.11 elastic/apm-server`
 
 
 ## Upgrading
@@ -142,6 +144,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/security
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

@@ -43,7 +43,9 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name metricbeat --version 6.8.11 elastic/metricbeat`
+* Install it:
+  - with Helm 2: `helm install --name metricbeat --version 6.8.11 elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version 6.8.11 elastic/metricbeat`
 
 
 ## Upgrading
@@ -207,6 +209,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/metricbeat/examples/security
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images

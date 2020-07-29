@@ -56,7 +56,9 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name elasticsearch --version 6.8.11 elastic/elasticsearch`
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch --version 6.8.11 elastic/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 6.8.11 elastic/elasticsearch`
 
 
 ## Upgrading
@@ -399,6 +401,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/README.md#how-to-install-plugins
 [how to use the keystore]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/README.md#how-to-use-the-keystore

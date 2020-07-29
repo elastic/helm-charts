@@ -41,7 +41,9 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name logstash --version 6.8.11 elastic/logstash`
+* Install it:
+  - with Helm 2: `helm install --name logstash --version 6.8.11 elastic/logstash`
+  - with [Helm 3 (beta)][]: `helm install logstash --version 6.8.11 elastic/logstash`
 
 
 ## Upgrading
@@ -182,6 +184,7 @@ about our development and testing process.
 [examples]: https://github.com/elastic/helm-charts/tree/6.8/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/logstash/examples/oss
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
