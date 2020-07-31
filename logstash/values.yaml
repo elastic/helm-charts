@@ -71,6 +71,10 @@ volumeClaimTemplate:
 rbac:
   create: false
   serviceAccountName: ""
+  annotations: {}
+    #annotation1: "value1"
+    #annotation2: "value2"
+    #annotation3: "value3"
 
 podSecurityPolicy:
   create: false
