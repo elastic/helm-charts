@@ -596,6 +596,8 @@ def test_pod_security_policy():
 rbac:
   create: true
   serviceAccountName: ""
+  annotations:
+    "eks.amazonaws.com/role-arn": "test-rbac-annotations"
 
 podSecurityPolicy:
   create: true
