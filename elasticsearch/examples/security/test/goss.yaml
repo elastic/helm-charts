@@ -21,7 +21,7 @@ http:
       - '"name" : "security-master-0"'
       - 'You Know, for Search'
 
-  https://localhost:9200/_xpack/license:
+  https://localhost:9200/_license:
     status: 200
     timeout: 2000
     allow-insecure: true

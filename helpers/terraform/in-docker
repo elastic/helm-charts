@@ -2,12 +2,24 @@
 
 [[ -n $DEBUG ]] && set -o xtrace
 
+if [[ -z $VAULT_ADDR ]]
+then
+  echo "VAULT_ADDR must be set."
+  exit 1
+fi
+
+if [[ -z $VAULT_TOKEN ]]
+then
+  echo "VAULT_TOKEN must be set."
+  exit 1
+fi
+
 make build
 
 docker run --rm --interactive \
 	--env GOOGLE_CREDENTIALS='credentials.json' \
-	--env VAULT_TOKEN=${VAULT_TOKEN} \
-	--env VAULT_ADDR=${VAULT_ADDR} \
+	--env VAULT_TOKEN="${VAULT_TOKEN}" \
+	--env VAULT_ADDR="${VAULT_ADDR}" \
 	--env HOME=/app \
 	--volume "${PWD}/../../:/app" \
 	--user "$(id -u):$(id -g)" \

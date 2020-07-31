@@ -1,148 +1,243 @@
 # Metricbeat Helm Chart
 
-This functionality is in beta and is subject to change. The design and code is less mature than official GA features and is being provided as-is with no warranties. Beta features are not subject to the support SLA of official GA features.
+This Helm chart is a lightweight way to configure and run our official
+[Metricbeat Docker image][].
 
-This helm chart is a lightweight way to configure and run our official [Metricbeat docker image](https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html).
+**Warning**: This branch is used for development, please use [7.8.1][] release
+for supported version.
 
-## Breaking Changes
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-[7.5.1](https://github.com/elastic/helm-charts/releases/tag/7.5.1) release is introducing a breaking change for Metricbeat users upgrading from a previous chart version.
-The breaking change tracked in [#395](https://github.com/elastic/helm-charts/issues/395) is failing `helm upgrade` command with the following error:
-```
-UPGRADE FAILED
-Error: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.1", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
-Error: UPGRADE FAILED: Deployment.apps "metricbeat-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable && Deployment.apps "metricbeat-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"metricbeat-metricbeat-metrics", "chart":"metricbeat-7.5.1", "heritage":"Tiller", "release":"metricbeat"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
-```
 
-This is caused by the update of [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) chart dependency which is renaming some labels in [helm/charts#15261](https://github.com/helm/charts/pull/15261).
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using master branch](#install-development-version-using-master-branch)
+- [Upgrading](#upgrading)
+- [Usage notes](#usage-notes)
+- [Configuration](#configuration)
+  - [Deprecated](#deprecated)
+- [FAQ](#faq)
+  - [How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-metricbeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of Metricbeat?](#how-to-install-oss-version-of-metricbeat)
+  - [How to use Kubelet read-only port instead of secure port?](#how-to-use-kubelet-read-only-port-instead-of-secure-port)
+  - [Why is Metricbeat host.name field set to Kubernetes pod name?](#why-is-metricbeat-hostname-field-set-to-kubernetes-pod-name)
+- [Contributing](#contributing)
 
-The workaround is to use `--force` argument for `helm upgrade` command which will force Metricbeat resources update through delete/recreate.
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- Use this to update TOC: -->
+<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
 
 ## Requirements
 
-* [Helm](https://helm.sh/) >=2.8.0 and <3.0.0 (see parent [README](https://github.com/elastic/helm-charts/tree/master/README.md) for more details)
+* [Helm][] >=2.8.0 and <3.0.0
 * Kubernetes >=1.9
+
+See [supported configurations][] for more details.
+
 
 ## Installing
 
-### Using Helm repository
+### Install released version using Helm repository
 
-* Add the elastic helm charts repo
-  ```
-  helm repo add elastic https://helm.elastic.co
-  ```
-* Install it
-  ```
-  helm install --name metricbeat elastic/metricbeat
-  ```
+* Add the Elastic Helm charts repo:
+`helm repo add elastic https://helm.elastic.co`
 
-### Using master branch
+* Install it:
+  - with Helm 2: `helm install --name metricbeat elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat elastic/metricbeat`
 
-* Clone the git repo
-  ```
-  git clone git@github.com:elastic/helm-charts.git
-  ```
-* Install it
-  ```
-  helm install --name metricbeat ./helm-charts/metricbeat
-  ```
 
-## Compatibility
+### Install development version using master branch
 
-This chart is tested with the latest supported versions. The currently tested versions are:
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-| 6.x   | 7.x   |
-| ----- | ----- |
-| 6.8.6 | 7.6.0 |
+* Install it:
+  - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
 
-Examples of installing older major versions can be found in the [examples](https://github.com/elastic/helm-charts/tree/master/metricbeat/examples) directory.
 
-While only the latest releases are tested, it is possible to easily install old or new releases by overriding the `imageTag`. To install version `7.6.0` of metricbeat it would look like this:
+## Upgrading
 
-```
-helm install --name metricbeat elastic/metricbeat --set imageTag=7.6.0
-```
+Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
+upgrading to a new chart version.
+
+
+## Usage notes
+
+* The default Metricbeat configuration file for this chart is configured to use
+an Elasticsearch endpoint. Without any additional changes, Metricbeat will send
+documents to the service URL that the Elasticsearch Helm chart sets up by
+default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
+`extraEnvs` to override this endpoint or modify the default `metricbeatConfig`
+to change this behavior.
+* This chart disables the [HostNetwork][] setting by default for compatibility
+reasons with the majority of kubernetes providers and scenarios. Some kubernetes
+providers may not allow enabling `hostNetwork` and deploying multiple Metricbeat
+pods on the same node isn't possible with `hostNetwork` However Metricbeat does
+recommend activating it. If your kubernetes provider is compatible with
+`hostNetwork` and you don't need to run multiple Metricbeat DaemonSets, you can
+activate it by setting `hostNetworking: true` in [values.yaml][].
+* This repo includes a number of [examples][] configurations which can be used
+as a reference. They are also used in the automated testing of this chart.
 
 
 ## Configuration
-| Parameter                | Description                                                                                                                                                                                                                                                                                                              | Default                                                                                                                   |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| `metricbeatConfig`       | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml`. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/metricbeat/values.yaml) for an example of the formatting with the default configuration.                                                                    | see [values.yaml](https://github.com/elastic/helm-charts/tree/master/metricbeat/values.yaml)                              |
-| `extraContainers`        | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                                                                                                                                           | `""`                                                                                                                      |
-| `extraInitContainers`    | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                                                                                                                                           | `""`                                                                                                                      |
-| `extraEnvs`              | Extra [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config) which will be appended to the `env:` definition for the container                                                                       | `[]`                                                                                                                      |
-| `extraVolumeMounts`      | Templatable string of additional volumeMounts to be passed to the `tpl` function                                                                                                                                                                                                                                         | `""`                                                                                                                      |
-| `extraVolumes`           | Templatable string of additional volumes to be passed to the `tpl` function                                                                                                                                                                                                                                              | `""`                                                                                                                      |
-| `envFrom`                | Templatable string of envFrom to be passed to the  [environment from variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) which will be appended to the `envFrom:` definition for the container | `[]`                                                                                                                      |
-| `hostPathRoot`           | Fully-qualified [hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) that will be used to persist Metricbeat registry data                                                                                                                                                                          | `/var/lib`                                                                                                                |
-| `image`                  | The Metricbeat docker image                                                                                                                                                                                                                                                                                              | `docker.elastic.co/beats/metricbeat`                                                                                      |
-| `imageTag`               | The Metricbeat docker image tag                                                                                                                                                                                                                                                                                          | `7.6.0`                                                                                                                   |
-| `imagePullPolicy`        | The Kubernetes [imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) value                                                                                                                                                                                                           | `IfNotPresent`                                                                                                            |
-| `imagePullSecrets`       | Configuration for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) so that you can use a private registry for your image                                                                                                     | `[]`                                                                                                                      |
-| `labels`                 | Configurable [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) applied to all Metricbeat pods                                                                                                                                                                                           | `{}`                                                                                                                      |
-| `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles.                                                                                                                                                                    | `true`                                                                                                                    |
-| `clusterRoleRules`       | Configurable [cluster role rules](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole) that Metricbeat uses to access Kubernetes resources.                                                                                                                                               | see [values.yaml](https://github.com/elastic/helm-charts/tree/master/metricbeat/values.yaml)                              |
-| `podAnnotations`         | Configurable [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) applied to all Metricbeat pods                                                                                                                                                                                | `{}`                                                                                                                      |
-| `podSecurityContext`     | Configurable [podSecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for Metricbeat pod execution environment                                                                                                                                                                   | `runAsUser: 0`<br>`privileged: false`                                                                                     |
-| `livenessProbe`          | Parameters to pass to [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                                                                 | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
-| `readinessProbe`         | Parameters to pass to [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) checks for values such as timeouts and thresholds.                                                                                                                                | `failureThreshold: 3`<br>`initialDelaySeconds: 10`<br>`periodSeconds: 10`<br>`successThreshold: 3`<br>`timeoutSeconds: 5` |
-| `resources`              | Allows you to set the [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for the `DaemonSet`                                                                                                                                                                             | `requests.cpu: 100m`<br>`requests.memory: 100Mi`<br>`limits.cpu: 1000m`<br>`limits.memory: 200Mi`                         |
-| `serviceAccount`         | Custom [serviceAccount](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) that Metricbeat will use during execution. By default will use the service account created by this chart.                                                                                                   | `""`                                                                                                                      |
-| `secretMounts`           | Allows you easily mount a secret as a file inside the `DaemonSet`. Useful for mounting certificates and other secrets. See [values.yaml](https://github.com/elastic/helm-charts/tree/master/metricbeat/values.yaml) for an example                                                                                       | `[]`                                                                                                                      |
-| `terminationGracePeriod` | Termination period (in seconds) to wait before killing Metricbeat pod process on pod shutdown                                                                                                                                                                                                                            | `30`                                                                                                                      |
-| `tolerations`            | Configurable [tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)                                                                                                                                                                                                                      | `[]`                                                                                                                      |
-| `nodeSelector`           | Configurable [nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector)                                                                                                                                                                                                             | `{}`                                                                                                                      |
-| `affinity`               | Configurable [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                                                                                                                                                                   | `{}`                                                                                                                      |
-| `updateStrategy`         | The [updateStrategy](https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy) for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually.                                              | `RollingUpdate`                                                                                                           |
-| `priorityClassName`      | The [name of the PriorityClass](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass). No default is supplied as the PriorityClass must be created first.                                                                                                                            | `""`                                                                                                                      |
-| `replicas`               | The replica count for the metricbeat deployment talking to kube-state-metrics                                                                                                                                                                                                                                            | `1`                                                                                                                       |
-| `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to "`.Release.Name`-`.Values.nameOverride or .Chart.Name`"                                                                                                                                                                                    | `""`                                                                                                                      |
 
-## Examples
+| Parameter                      | Description                                                                                                                                                                  | Default                              |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
+| `clusterRoleRules`             | Configurable [cluster role rules][] that Metricbeat uses to access Kubernetes resources                                                                                      | see [values.yaml][]                  |
+| `daemonset.annotations`        | Configurable [annotations][] for Metricbeat daemonset                                                                                                                        | `{}`                                 |
+| `daemonset.affinity`           | Configurable [affinity][] for Metricbeat daemonset                                                                                                                           | `{}`                                 |
+| `daemonset.enabled`            | If true, enable daemonset                                                                                                                                                    | `true`                               |
+| `daemonset.envFrom`            | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to Metricbeat container for DaemonSet                             | `[]`                                 |
+| `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for DaemonSet                                                                                 | `[]`                                 |
+| `daemonset.extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
+| `daemonset.extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function or DaemonSet                                                                                   | `[]`                                 |
+| `daemonset.hostNetworking`     | Enable Metricbeat DaemonSet to use `hostNetwork`                                                                                                                             | `false`                              |
+| `daemonset.metricbeatConfig`   | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for Metricbeat DaemonSet                                                              | see [values.yaml][]                  |
+| `daemonset.nodeSelector`       | Configurable [nodeSelector][] for Metricbeat DaemonSet                                                                                                                       | `{}`                                 |
+| `daemonset.resources`          | Allows you to set the [resources][] for Metricbeat DaemonSet                                                                                                                 | see [values.yaml][]                  |
+| `daemonset.secretMounts`       | Allows you easily mount a secret as a file inside the DaemonSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                      | `[]`                                 |
+| `daemonset.securityContext`    | Configurable [securityContext][] for Metricbeat DaemonSet pod execution environment                                                                                          | see [values.yaml][]                  |
+| `daemonset.tolerations`        | Configurable [tolerations][] for Metricbeat DaemonSet                                                                                                                        | `[]`                                 |
+| `deployment.annotations`       | Configurable [annotations][] for Metricbeat Deployment                                                                                                                       | `{}`                                 |
+| `deployment.affinity`          | Configurable [affinity][] for Metricbeat Deployment                                                                                                                          | `{}`                                 |
+| `deployment.enabled`           | If true, enable deployment                                                                                                                                                   | `true`                               |
+| `deployment.envFrom`           | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to Metricbeat container for Deployment                            | `[]`                                 |
+| `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to Metricbeat container for Deployment                                                                                | `[]`                                 |
+| `deployment.extraVolumeMounts` | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
+| `deployment.extraVolumes`      | Templatable string of additional `volumes` to be passed to the `tpl` function or Deployment                                                                                  | `[]`                                 |
+| `deployment.metricbeatConfig`  | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for Metricbeat Deployment                                                             | see [values.yaml][]                  |
+| `deployment.nodeSelector`      | Configurable [nodeSelector][] for Metricbeat Deployment                                                                                                                      | `{}`                                 |
+| `deployment.resources`         | Allows you to set the [resources][] for Metricbeat Deployment                                                                                                                | see [values.yaml][]                  |
+| `deployment.secretMounts`      | Allows you easily mount a secret as a file inside the Deployment Useful for mounting certificates and other secrets. See [values.yaml][] for an example                      | `[]`                                 |
+| `deployment.securityContext`   | Configurable [securityContext][] for Metricbeat Deployment pod execution environment                                                                                         | see [values.yaml][]                  |
+| `deployment.tolerations`       | Configurable [tolerations][] for Metricbeat Deployment                                                                                                                       | `[]`                                 |
+| `extraContainers`              | Templatable string of additional containers to be passed to the `tpl` function                                                                                               | `""`                                 |
+| `extraInitContainers`          | Templatable string of additional containers to be passed to the `tpl` function                                                                                               | `""`                                 |
+| `fullnameOverride`             | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride or .Chart.Name` "                                    | `""`                                 |
+| `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
+| `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
+| `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `8.0.0-SNAPSHOT`                     |
+| `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
+| `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
+| `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
+| `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
+| `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
+| `managedServiceAccount`        | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles                         | `true`                               |
+| `nameOverride`                 | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                    | `""`                                 |
+| `podAnnotations`               | Configurable [annotations][] applied to all Metricbeat pods                                                                                                                  | `{}`                                 |
+| `priorityClassName`            | The name of the [PriorityClass][]. No default is supplied as the PriorityClass must be created first                                                                         | `""`                                 |
+| `readinessProbe`               | Parameters to pass to readiness [probe][] checks for values such as timeouts and thresholds                                                                                  | see [values.yaml][]                  |
+| `replicas`                     | The replica count for the Metricbeat deployment talking to kube-state-metrics                                                                                                | `1`                                  |
+| `serviceAccount`               | Custom [serviceAccount][] that Metricbeat will use during execution. By default will use the service account created by this chart                                           | `""`                                 |
+| `serviceAccountAnnotations`    | Annotations to be added to the ServiceAccount that is created by this chart.                                                                                                 | `{}`                                 |
+| `terminationGracePeriod`       | Termination period (in seconds) to wait before killing Metricbeat pod process on pod shutdown                                                                                | `30`                                 |
+| `updateStrategy`               | The [updateStrategy][] for the DaemonSet By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                      |
 
-In [examples/](https://github.com/elastic/helm-charts/tree/master/metricbeat/examples) you will find some example configurations. These examples are used for the automated testing of this helm chart.
+### Deprecated
 
-### Default
+| Parameter            | Description                                                                                                                                            | Default |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| `affinity`           | Configurable [affinity][] for Metricbeat DaemonSet                                                                                                     | `{}`    |
+| `envFrom`            | Templatable string to be passed to the [environment from variables][] which will be appended to Metricbeat container for both DaemonSet and Deployment | `[]`    |
+| `extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for both DaemonSet and Deployment                                       | `[]`    |
+| `extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function for both DaemonSet and Deployment                                   | `[]`    |
+| `extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function for both DaemonSet and Deployment                                        | `[]`    |
+| `metricbeatConfig`   | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for both Metricbeat DaemonSet and Deployment                    | `{}`    |
+| `nodeSelector`       | Configurable [nodeSelector][] for Metricbeat DaemonSet                                                                                                 | `{}`    |
+| `podSecurityContext` | Configurable [securityContext][] for Metricbeat DaemonSet and Deployment pod execution environment                                                     | `{}`    |
+| `resources`          | Allows you to set the [resources][] for both Metricbeat DaemonSet and Deployment                                                                       | `{}`    |
+| `secretMounts`       | Allows you easily mount a secret as a file inside DaemonSet and Deployment Useful for mounting certificates and other secrets                          | `[]`    |
+| `tolerations`        | Configurable [tolerations][] for both Metricbeat DaemonSet and Deployment                                                                              | `[]`    |
 
-* Deploy the [default Elasticsearch helm chart](https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default)
-* Deploy Metricbeat with the default values
-  ```
-  cd examples/default
-  make
-  ```
-* You can now setup a port forward for Elasticsearch to observe Metricbeat indices
-  ```
-  kubectl port-forward svc/elasticsearch-master 9200
-  curl localhost:9200/_cat/indices
-  ```
 
-## Testing
+## FAQ
 
-This chart uses [pytest](https://docs.pytest.org/en/latest/) to test the templating logic. The dependencies for testing can be installed from the [`requirements.txt`](https://github.com/elastic/helm-charts/tree/master/requirements.txt) in the parent directory.
+### How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?
 
-```
-pip install -r ../requirements.txt
-make pytest
-```
+This Helm chart can use existing [Kubernetes secrets][] to setup
+credentials or certificates for examples. These secrets should be created
+outside of this chart and accessed using [environment variables][] and volumes.
 
-You can also use `helm template` to look at the YAML being generated
+An example can be found in [examples/security][].
 
-```
-make template
-```
+### How to install OSS version of Metricbeat?
 
-It is possible to run all of the tests and linting inside of a docker container
+Deploying OSS version of Elasticsearch can be done by setting `image` value to
+[Metricbeat OSS Docker image][]
 
-```
-make test
-```
+An example of Metricbeat deployment using OSS version can be found in
+[examples/oss][].
 
-## Integration Testing
+### How to use Kubelet read-only port instead of secure port?
 
-Integration tests are run using [goss](https://github.com/aelsabbahy/goss/blob/master/docs/manual.md) which is a serverspec like tool written in golang. See [goss.yaml](https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/default/test/goss.yaml) for an example of what the tests look like.
+Default Metricbeat configuration has been switched to Kubelet secure port
+(10250/TCP) instead of read-only port (10255/TCP) in [#471][] because read-only
+port usage is now discouraged and not enabled by default in most Kubernetes
+configurations.
 
-To run the goss tests against the default example:
-```
-cd examples/default
-make goss
-```
+However, if you need to use read-only port, you can replace
+`hosts: ["https://${NODE_NAME}:10250"]` by `hosts: ["${NODE_NAME}:10255"]` and
+comment `bearer_token_file` and `ssl.verification_mode` in
+`daemonset.metricbeatConfig` in [values.yaml][].
+
+### Why is Metricbeat host.name field set to Kubernetes pod name?
+
+The default Metricbeat configuration is using Metricbeat pod name for
+`agent.hostname` and `host.name` fields. The `hostname` of the Kubernetes nodes
+can be find in `kubernetes.node.name` field. If you would like to have
+`agent.hostname` and `host.name` fields set to the hostname of the nodes, you'll
+need to set `daemonset.hostNetworking` value to true.
+
+Note that enabling [hostNetwork][] make Metricbeat pod use the host network
+namespace which gives it access to the host loopback device, services listening
+on localhost, could be used to snoop on network activity of other pods on the
+same node.
+
+
+## Contributing
+
+Please check [CONTRIBUTING.md][] before any contribution or for any questions
+about our development and testing process.
+
+
+[#471]: https://github.com/elastic/helm-charts/pull/471
+[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/metricbeat/README.md
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
+[affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+[annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
+[cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
+[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+[examples]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/security
+[helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
+[hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
+[hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
+[imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
+[imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
+[kube-state-metrics]: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
+[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
+[labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html
+[metricbeat oss docker image]: https://www.docker.elastic.co/r/beats/metricbeat-oss
+[priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+[nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+[probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes
+[resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+[securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+[serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
+[tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+[updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy
+[values.yaml]: https://github.com/elastic/helm-charts/tree/master/metricbeat/values.yaml

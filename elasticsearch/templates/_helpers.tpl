@@ -45,7 +45,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{- define "elasticsearch.endpoints" -}}
 {{- $replicas := int (toString (.Values.replicas)) }}
-{{- $uname := printf "%s-%s" .Values.clusterName .Values.nodeGroup }}
+{{- $uname := (include "elasticsearch.uname" .) }}
   {{- range $i, $e := untilStep 0 $replicas 1 -}}
 {{ $uname }}-{{ $i }},
   {{- end -}}
@@ -59,7 +59,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- if and (contains "docker.elastic.co/elasticsearch/elasticsearch" .Values.image) (not (eq $version 0)) -}}
 {{ $version }}
   {{- else -}}
-7
+8
   {{- end -}}
 {{- end -}}
 {{- end -}}

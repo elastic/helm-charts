@@ -72,6 +72,19 @@ extraEnvs:
     assert {"name": "LOG_LEVEL", "value": "DEBUG"} in envs
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
@@ -245,6 +258,20 @@ labels:
     )
 
 
+def test_adding_serviceaccount_annotations():
+    config = """
+serviceAccountAnnotations:
+  eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][name]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
+    )
+
+
 def test_adding_a_node_selector():
     config = """
 nodeSelector:
@@ -296,3 +323,21 @@ priorityClassName: "highest"
         "priorityClassName"
     ]
     assert priority_class_name == "highest"
+
+
+def test_setting_fullnameOverride():
+    config = """
+fullnameOverride: "apm-server-custom"
+"""
+    r = helm_template(config)
+
+    custom_name = "apm-server-custom"
+    assert custom_name in r["deployment"]
+    assert custom_name in r["service"]
+
+    assert (
+        r["deployment"][custom_name]["spec"]["template"]["spec"]["containers"][0][
+            "name"
+        ]
+        == project
+    )

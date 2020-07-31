@@ -1,5 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
-apiVersion: {{ template "apm.ingress.apiVersion" . }}
+apiVersion: {{ template "apm.autoscaling.apiVersion" . }}
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "apm.fullname" . }}
