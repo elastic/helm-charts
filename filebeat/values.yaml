@@ -48,11 +48,11 @@ envFrom: []
 serviceAccount: ""
 
 rbac:
-  create: false
+  create: true
   serviceAccountName: ""
 
 podSecurityPolicy:
-  create: false
+  create: true
   name: ""
   spec:
     privileged: false
