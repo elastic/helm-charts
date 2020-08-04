@@ -8,6 +8,9 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Beta features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
+**Warning**: This branch is used for development, please use [6.8.11][] release
+for released version.
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -15,6 +18,8 @@ SLA of official GA features (see [supported configurations][] for more details).
 
 - [Requirements](#requirements)
 - [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 6.8 branch and 6.8.12-SNAPSHOT versions](#install-development-version-using-68-branch-and-6812-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -40,12 +45,24 @@ See [supported configurations][] for more details.
 
 ## Installing
 
+This chart is tested with the latest 6.8.12-SNAPSHOT versions.
+
+### Install released version using Helm repository
+
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
   - with Helm 2: `helm install --name filebeat --version 6.8.11 elastic/filebeat`
   - with [Helm 3 (beta)][]: `helm install filebeat --version 6.8.11 elastic/filebeat`
+
+### Install development version using 6.8 branch and 6.8.12-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it:
+  - with Helm 2: `helm install --name filebeat ./helm-charts/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat ./helm-charts/filebeat`
 
 
 ## Upgrading
@@ -78,39 +95,39 @@ as a reference. They are also used in the automated testing of this chart.
 
 ## Configuration
 
-| Parameter                | Description                                                                                                                                                                     | Default                            |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
-| `affinity`               | Configurable [affinity][]                                                                                                                                                       | `{}`                               |
-| `envFrom`                | Templatable string of envFrom to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                          | `[]`                               |
-| `extraContainers`        | List of additional init containers to be added at the DaemonSet                                                                                                                 | `""`                               |
-| `extraEnvs`              | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                               | `[]`                               |
-| `extraInitContainers`    | List of additional init containers to be added at the DaemonSet. It also accepts a templatable string of additional containers to be passed to the `tpl` function               | `[]`                               |
-| `extraVolumeMounts`      | List of additional volumeMounts to be mounted on the DaemonSet                                                                                                                  | `[]`                               |
-| `extraVolumes`           | List of additional volumes to be mounted on the DaemonSet                                                                                                                       | `[]`                               |
-| `filebeatConfig`         | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`                                                                                              | see [values.yaml][]                |
-| `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride or .Chart.Name` "                                       | `""`                               |
-| `hostNetworking`         | Use host networking in the DaemonSet so that hostname is reported correctly                                                                                                     | `false`                            |
-| `hostPathRoot`           | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
-| `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
-| `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
-| `imageTag`               | The Filebeat Docker image tag                                                                                                                                                   | `6.8.11`                            |
-| `image`                  | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
-| `labels`                 | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
-| `livenessProbe`          | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
-| `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this Helm chart. Set this to `false` in order to manage your own service account and related roles                            | `true`                             |
-| `nameOverride`           | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                       | `""`                               |
-| `nodeSelector`           | Configurable [nodeSelector][]                                                                                                                                                   | `{}`                               |
-| `podAnnotations`         | Configurable [annotations][] applied to all Filebeat pods                                                                                                                       | `{}`                               |
-| `podSecurityContext`     | Configurable [podSecurityContext][] for Filebeat pod execution environment                                                                                                      | see [values.yaml][]                |
-| `priorityClassName`      | The name of the [PriorityClass][]. No default is supplied as the PriorityClass must be created first                                                                            | `""`                               |
-| `readinessProbe`         | Parameters to pass to readiness [probe][] checks for values such as timeouts and thresholds                                                                                     | see [values.yaml][]                |
-| `resources`              | Allows you to set the [resources][] for the `DaemonSet`                                                                                                                         | see [values.yaml][]                |
-| `secretMounts`           | Allows you easily mount a secret as a file inside the `DaemonSet`. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                       | `[]`                               |
-| `serviceAccount`         | Custom [serviceAccount][] that Filebeat will use during execution. By default will use the service account created by this chart                                                | `""`                               |
-| `serviceAccountAnnotations` | Annotations to be added to the ServiceAccount that is created by this chart.                                                                                                 | `{}`
-| `terminationGracePeriod` | Termination period (in seconds) to wait before killing Filebeat pod process on pod shutdown                                                                                     | `30`                               |
-| `tolerations`            | Configurable [tolerations][]                                                                                                                                                    | `[]`                               |
-| `updateStrategy`         | The [updateStrategy][] for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
+| Parameter                   | Description                                                                                                                                                                     | Default                            |
+|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
+| `affinity`                  | Configurable [affinity][]                                                                                                                                                       | `{}`                               |
+| `envFrom`                   | Templatable string of envFrom to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                          | `[]`                               |
+| `extraContainers`           | List of additional init containers to be added at the DaemonSet                                                                                                                 | `""`                               |
+| `extraEnvs`                 | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                               | `[]`                               |
+| `extraInitContainers`       | List of additional init containers to be added at the DaemonSet. It also accepts a templatable string of additional containers to be passed to the `tpl` function               | `[]`                               |
+| `extraVolumeMounts`         | List of additional volumeMounts to be mounted on the DaemonSet                                                                                                                  | `[]`                               |
+| `extraVolumes`              | List of additional volumes to be mounted on the DaemonSet                                                                                                                       | `[]`                               |
+| `filebeatConfig`            | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`                                                                                              | see [values.yaml][]                |
+| `fullnameOverride`          | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride or .Chart.Name` "                                       | `""`                               |
+| `hostNetworking`            | Use host networking in the DaemonSet so that hostname is reported correctly                                                                                                     | `false`                            |
+| `hostPathRoot`              | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
+| `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
+| `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
+| `imageTag`                  | The Filebeat Docker image tag                                                                                                                                                   | `6.8.12-SNAPSHOT`                  |
+| `image`                     | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
+| `labels`                    | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
+| `livenessProbe`             | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
+| `managedServiceAccount`     | Whether the `serviceAccount` should be managed by this Helm chart. Set this to `false` in order to manage your own service account and related roles                            | `true`                             |
+| `nameOverride`              | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                       | `""`                               |
+| `nodeSelector`              | Configurable [nodeSelector][]                                                                                                                                                   | `{}`                               |
+| `podAnnotations`            | Configurable [annotations][] applied to all Filebeat pods                                                                                                                       | `{}`                               |
+| `podSecurityContext`        | Configurable [podSecurityContext][] for Filebeat pod execution environment                                                                                                      | see [values.yaml][]                |
+| `priorityClassName`         | The name of the [PriorityClass][]. No default is supplied as the PriorityClass must be created first                                                                            | `""`                               |
+| `readinessProbe`            | Parameters to pass to readiness [probe][] checks for values such as timeouts and thresholds                                                                                     | see [values.yaml][]                |
+| `resources`                 | Allows you to set the [resources][] for the `DaemonSet`                                                                                                                         | see [values.yaml][]                |
+| `secretMounts`              | Allows you easily mount a secret as a file inside the `DaemonSet`. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                       | `[]`                               |
+| `serviceAccount`            | Custom [serviceAccount][] that Filebeat will use during execution. By default will use the service account created by this chart                                                | `""`                               |
+| `serviceAccountAnnotations` | Annotations to be added to the ServiceAccount that is created by this chart.                                                                                                    | `{}`                               |
+| `terminationGracePeriod`    | Termination period (in seconds) to wait before killing Filebeat pod process on pod shutdown                                                                                     | `30`                               |
+| `tolerations`               | Configurable [tolerations][]                                                                                                                                                    | `[]`                               |
+| `updateStrategy`            | The [updateStrategy][] for the `DaemonSet`. By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
 
 
 ## FAQ
@@ -173,6 +190,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
+[6.8.11]: https://github.com/elastic/helm-charts/blob/6.8.11/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
