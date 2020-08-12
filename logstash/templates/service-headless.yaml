@@ -16,8 +16,4 @@ spec:
   selector:
     app: "{{ template "logstash.fullname" . }}"
   ports:
-  - name: http
-    port: {{ .Values.httpPort }}
-{{- if .Values.extraPorts }}
-{{- toYaml .Values.extraPorts | nindent 2 }}
-{{- end }}
+{{ toYaml .Values.service.ports | indent 4 }}
