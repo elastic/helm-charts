@@ -341,3 +341,12 @@ fullnameOverride: "apm-server-custom"
         ]
         == project
     )
+
+def test_enabling_horizontal_pod_autoscaler():
+    config = """
+autoscaling:
+  enabled: true
+"""
+    r = helm_template(config)
+
+    assert "horizontalpodautoscaler" in r
