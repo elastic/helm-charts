@@ -5,8 +5,8 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: metricbeat
-version: 6.8.12-SNAPSHOT
-appVersion: 6.8.12-SNAPSHOT
+version: 6.8.12
+appVersion: 6.8.12
 sources:
   - https://github.com/elastic/beats
 icon: https://helm.elastic.co/icons/beats.png
