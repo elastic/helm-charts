@@ -1,6 +1,6 @@
 # KIND
 
-This example deploy a 3 nodes Elasticsearch 7.9.0 cluster on [Kind][]
+This example deploy a 3 nodes Elasticsearch 7.9.1-SNAPSHOT cluster on [Kind][]
 using [custom values][].
 
 Note that this configuration should be used for test only and isn't recommended
@@ -8,7 +8,7 @@ for production.
 
 Note that Kind < 0.7.0 are affected by a [kind issue][] with mount points
 created from PVCs not writable by non-root users. [kubernetes-sigs/kind#1157][]
-fix it in Kind 0.7.0.
+fix it in Kind 0.7.9.1-SNAPSHOT
 
 The workaround for Kind < 0.7.0 is to install manually
 [Rancher Local Path Provisioner][] and use `local-path` storage class for
