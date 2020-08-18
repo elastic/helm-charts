@@ -60,7 +60,7 @@ secrets: []
 secretMounts: []
 
 image: "docker.elastic.co/logstash/logstash"
-imageTag: "6.8.12-SNAPSHOT"
+imageTag: "6.8.12"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
