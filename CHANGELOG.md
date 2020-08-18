@@ -3,6 +3,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [7.9.0 - 2020/08/18](#790---20200818)
+- [6.8.12 - 2020/08/18](#6812---20200818)
 - [7.8.1 - 2020/07/28](#781---20200728)
   - [APM Server](#apm-server)
   - [Elasticsearch](#elasticsearch)
@@ -104,6 +106,14 @@
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
+
+## 7.9.0 - 2020/08/18
+* 7.9.0 as the default stack version
+
+## 6.8.12 - 2020/08/18
+
+* 6.8.12 as the default stack version
+* See [7.9.0 CHANGELOG](#790---20200818) for other changes
 
 ## 7.8.1 - 2020/07/28
 
