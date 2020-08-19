@@ -5,8 +5,8 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: apm-server
-version: 6.8.12
-appVersion: 6.8.12
+version: 6.8.13-SNAPSHOT
+appVersion: 6.8.13-SNAPSHOT
 sources:
   - https://github.com/elastic/apm
 icon: https://helm.elastic.co/icons/apm.png

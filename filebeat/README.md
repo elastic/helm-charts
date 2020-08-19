@@ -8,6 +8,9 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Beta features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
+**Warning**: This branch is used for development, please use [6.8.12][] release
+for released version.
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -15,6 +18,8 @@ SLA of official GA features (see [supported configurations][] for more details).
 
 - [Requirements](#requirements)
 - [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -40,8 +45,9 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.12 version.
+This chart is tested with the latest 6.8.13-SNAPSHOT version.
 
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
@@ -49,6 +55,15 @@ This chart is tested with the latest 6.8.12 version.
 * Install it:
   - with Helm 2: `helm install --name filebeat --version 6.8.12 elastic/filebeat`
   - with [Helm 3 (beta)][]: `helm install filebeat --version 6.8.12 elastic/filebeat`
+
+### Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it:
+  - with Helm 2: `helm install --name filebeat ./helm-charts/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat ./helm-charts/filebeat`
+
 
 ## Upgrading
 
@@ -95,7 +110,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`              | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
-| `imageTag`                  | The Filebeat Docker image tag                                                                                                                                                   | `6.8.12`                  |
+| `imageTag`                  | The Filebeat Docker image tag                                                                                                                                                   | `6.8.13-SNAPSHOT`                  |
 | `image`                     | The Filebeat Docker image                                                                                                                                                       | `docker.elastic.co/beats/filebeat` |
 | `labels`                    | Configurable [labels][] applied to all Filebeat pods                                                                                                                            | `{}`                               |
 | `livenessProbe`             | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                      | see [values.yaml][]                |
@@ -175,7 +190,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[6.8.12]: https://github.com/elastic/helm-charts/blob/6.8.12/filebeat/README.md
+[6.8.13-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.13-SNAPSHOT/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md

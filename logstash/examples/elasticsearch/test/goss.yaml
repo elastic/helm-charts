@@ -21,7 +21,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"version" : "6.8.12"'
+      - '"version" : "6.8.13"'
       - '"http_address" : "0.0.0.0:9600"'
   http://elasticsearch-master:9200/_cat/indices:
     status: 200
