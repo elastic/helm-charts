@@ -879,20 +879,14 @@ fullnameOverride: 'logstash-custom'
 
 def test_adding_an_ingress():
     config = """
-service:
-  annotations: {}
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
 ingress:
   enabled: true
   annotations: {}
-  path: /logs
   hosts:
-    - logstash.local
+    - host: logstash.local
+      paths:
+        - path: /logs
+          servicePort: 8080
 """
     r = helm_template(config)
     s = r["ingress"][name]
