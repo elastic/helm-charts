@@ -246,3 +246,11 @@ service: {}
 #      port: 8080
 #      protocol: TCP
 #      targetPort: 8080
+
+ingress:
+  enabled: false
+#    annotations: {}
+#    path: /
+#    hosts:
+#    - http-example.local
+#    tls: []

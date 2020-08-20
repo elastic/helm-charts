@@ -234,7 +234,7 @@ persistence:
     assert c["volumeMounts"][0]["mountPath"] == "/usr/share/logstash/data"
     assert c["volumeMounts"][0]["name"] == name
 
-    v = r["statefulset"]["release-name-logstash"]["spec"]["volumeClaimTemplates"][0]
+    v = r["statefulset"][name]["spec"]["volumeClaimTemplates"][0]
     assert v["metadata"]["name"] == name
     assert v["spec"]["accessModes"] == ["ReadWriteOnce"]
     assert v["spec"]["resources"]["requests"]["storage"] == "1Gi"
@@ -540,7 +540,7 @@ nodeAffinity:
         - myvalue
 """
     r = helm_template(config)
-    assert r["statefulset"]["release-name-logstash"]["spec"]["template"]["spec"][
+    assert r["statefulset"][name]["spec"]["template"]["spec"][
         "affinity"
     ]["nodeAffinity"] == {
         "preferredDuringSchedulingIgnoredDuringExecution": [
@@ -581,7 +581,7 @@ logstashConfig:
     s = r["statefulset"][name]["spec"]["template"]["spec"]
 
     assert {
-        "configMap": {"name": "release-name-logstash-config"},
+        "configMap": {"name": name + "-config"},
         "name": "logstashconfig",
     } in s["volumes"]
     assert {
@@ -876,3 +876,40 @@ fullnameOverride: 'logstash-custom'
         ]
         == "logstash"
     )
+
+def test_adding_an_ingress():
+    config = """
+service:
+  annotations: {}
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+ingress:
+  enabled: true
+  annotations: {}
+  path: /logs
+  hosts:
+    - logstash.local
+"""
+    r = helm_template(config)
+    s = r["ingress"][name]
+    assert s["metadata"]["name"] == name
+    assert len(s["spec"]["rules"]) == 1
+    assert s["spec"]["rules"][0] == {
+        "host": "logstash.local",
+        "http": {
+            "paths": [
+                {
+                    "path": "/logs",
+                    "backend": {
+                        "serviceName": name,
+                        "servicePort": 8080
+                    }
+                }
+            ]
+        }
+    }
+    
