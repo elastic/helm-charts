@@ -157,7 +157,9 @@ spec:
       {{- if semverCompare ">1.13" .Capabilities.KubeVersion.GitVersion }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
       {{- end }}
+      {{- if or (.Values.extraInitContainers) (.Values.sysctlInitContainer.enabled) (.Values.keystore)  }}
       initContainers:
+      {{- end }}
       {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl
         securityContext:
