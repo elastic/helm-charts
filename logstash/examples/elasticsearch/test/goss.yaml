@@ -22,7 +22,7 @@ http:
     timeout: 2000
     body:
       - '"host" : "helm-logstash-elasticsearch-logstash-0"'
-      - '"version" : "7.9.0"'
+      - '"version" : "7.9.1"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"name" : "helm-logstash-elasticsearch-logstash-0"'
       - '"status" : "green"'
