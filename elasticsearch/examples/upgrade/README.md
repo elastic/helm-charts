@@ -5,7 +5,7 @@ then upgrade it to version 7.9.1-SNAPSHOT.
 
 The following upgrades are tested:
 - Upgrade from [7.0.0-alpha1][] version on K8S <1.16
-- Upgrade from [7.9.1-SNAPSHOT][] version on K8S >=1.16 (Elasticsearch chart < 7.9.1-SNAPSHOT are
+- Upgrade from [7.4.0][] version on K8S >=1.16 (Elasticsearch chart < 7.4.0 are
 not compatible with K8S >= 1.16)
 
 
@@ -22,6 +22,6 @@ You can also run [goss integration tests][] using `make test`.
 
 
 [7.0.0-alpha1]: https://github.com/elastic/helm-charts/releases/tag/7.0.0-alpha1
-[7.9.1-SNAPSHOT]: https://github.com/elastic/helm-charts/releases/tag/7.9.1-SNAPSHOT
+[7.4.0]: https://github.com/elastic/helm-charts/releases/tag/7.4.0
 [goss integration tests]: https://github.com/elastic/helm-charts/tree/7.9/elasticsearch/examples/upgrade/test/goss.yaml
 [jq]: https://stedolan.github.io/jq/

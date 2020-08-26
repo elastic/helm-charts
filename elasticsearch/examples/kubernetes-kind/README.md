@@ -8,7 +8,7 @@ for production.
 
 Note that Kind < 0.7.0 are affected by a [kind issue][] with mount points
 created from PVCs not writable by non-root users. [kubernetes-sigs/kind#1157][]
-fix it in Kind 0.7.9.1-SNAPSHOT
+fix it in Kind 0.7.0
 
 The workaround for Kind < 0.7.0 is to install manually
 [Rancher Local Path Provisioner][] and use `local-path` storage class for
