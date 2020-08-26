@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.0][] release
+**Warning**: This branch is used for development, please use [7.9.0][] release
 for supported version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -46,13 +46,18 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name kibana elastic/kibana`
+* Install it:
+  - with Helm 2: `helm install --name kibana elastic/kibana`
+  - with [Helm 3 (beta)][]: `helm install kibana elastic/kibana`
+
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name kibana ./helm-charts/kibana  --set imageTag=8.0.0-SNAPSHOT`
+* Install it:
+  - with Helm 2: `helm install --name kibana ./helm-charts/kibana  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install kibana ./helm-charts/kibana  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -197,7 +202,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/kibana/README.md
+[7.9.0]: https://github.com/elastic/helm-charts/blob/7.9.0/kibana/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -211,6 +216,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/

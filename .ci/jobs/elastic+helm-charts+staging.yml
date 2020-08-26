@@ -53,3 +53,4 @@
         room: infra-release-notify
         team-domain: elastic
         auth-token-id: release-slack-integration-token
+        auth-token-credential-id: release-slack-integration-token

@@ -8,7 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [7.8.0][] release
+**Warning**: This branch is used for development, please use [7.9.0][] release
 for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -47,13 +47,18 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name apm-server elastic/apm-server`
+* Install it:
+  - with Helm 2: `helm install --name apm-server elastic/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server elastic/apm-server`
+
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name apm-server ./helm-charts/apm-server  --set imageTag=8.0.0-SNAPSHOT`
+* Install it:
+  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -140,7 +145,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/apm-server/README.md
+[7.9.0]: https://github.com/elastic/helm-charts/blob/7.9.0/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -155,6 +160,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/security
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.0][] release
+**Warning**: This branch is used for development, please use [7.9.0][] release
 for supported version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -44,13 +44,18 @@ See [supported configurations][] for more details.
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it: `helm install --name filebeat elastic/filebeat`
+* Install it:
+  - with Helm 2: `helm install --name filebeat elastic/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat elastic/filebeat`
+
 
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install --name filebeat ./helm-charts/filebeat  --set imageTag=8.0.0-SNAPSHOT`
+* Install it:
+  - with Helm 2: `helm install --name filebeat ./helm-charts/filebeat  --set imageTag=8.0.0-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install filebeat ./helm-charts/filebeat  --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -178,7 +183,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.8.0]: https://github.com/elastic/helm-charts/blob/7.8.0/filebeat/README.md
+[7.9.0]: https://github.com/elastic/helm-charts/blob/7.9.0/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -192,13 +197,14 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples/security
 [filebeat docker image]: https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
 [filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
-[filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/master/configuring-output.html
+[filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/current/configuring-output.html
 [helm]: https://helm.sh
+[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
-[kafka output]: https://www.elastic.co/guide/en/beats/filebeat/master/kafka-output.html
+[kafka output]: https://www.elastic.co/guide/en/beats/filebeat/current/kafka-output.html
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

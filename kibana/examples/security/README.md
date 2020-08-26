@@ -25,4 +25,4 @@ You can also run [goss integration tests][] using `make test`
 
 [elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/security/
 [goss integration tests]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security/test/goss.yaml
-[values]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security/security.yaml
+[values]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security/security.yml
