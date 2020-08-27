@@ -38,6 +38,9 @@ spec:
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
         heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}
