@@ -3,6 +3,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [7.9.0 - 2020/08/18](#790---20200818)
+- [6.8.12 - 2020/08/18](#6812---20200818)
 - [7.8.1 - 2020/07/28](#781---20200728)
     - [Add headless Service for StatefulSet](#add-headless-service-for-statefulset)
 - [6.8.11 - 2020/07/28](#6811---20200728)
@@ -10,29 +12,35 @@
     - [Stable Elasticsearch deprecated](#stable-elasticsearch-deprecated)
     - [APM Server memory limit](#apm-server-memory-limit)
     - [Elasticsearch service selector change](#elasticsearch-service-selector-change)
-  - [7.7.0 - 2020/05/13](#770---20200513)
-    - [Known Issues](#known-issues)
-    - [GA support](#ga-support)
-    - [New branching model](#new-branching-model)
-    - [Filebeat container inputs](#filebeat-container-inputs)
-    - [Metricbeat upgrade issue](#metricbeat-upgrade-issue)
-    - [Metricbeat split values for daemonset and deployment](#metricbeat-split-values-for-daemonset-and-deployment)
-  - [6.8.9 - 2020/05/13](#689---20200513)
-  - [7.6.2 - 2020/03/31](#762---20200331)
-    - [Kibana default resources](#kibana-default-resources)
-  - [7.6.0 - 2020/02/11](#760---20200211)
-    - [Elasticsearch default resources](#elasticsearch-default-resources)
-  - [7.5.0 - 2019/12/02](#750---20191202)
-    - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
-  - [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
-    - [Elasticsearch upgrade from 6.x](#elasticsearch-upgrade-from-6x)
+- [7.7.0 - 2020/05/13](#770---20200513)
+  - [Known Issues](#known-issues)
+  - [GA support](#ga-support)
+  - [New branching model](#new-branching-model)
+  - [Filebeat container inputs](#filebeat-container-inputs)
+  - [Metricbeat upgrade issue](#metricbeat-upgrade-issue)
+  - [Metricbeat split values for daemonset and deployment](#metricbeat-split-values-for-daemonset-and-deployment)
+- [6.8.9 - 2020/05/13](#689---20200513)
+- [7.6.2 - 2020/03/31](#762---20200331)
+  - [Kibana default resources](#kibana-default-resources)
+- [7.6.0 - 2020/02/11](#760---20200211)
+  - [Elasticsearch default resources](#elasticsearch-default-resources)
+- [7.5.0 - 2019/12/02](#750---20191202)
+  - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
+- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
+  - [Elasticsearch upgrade from 6.x](#elasticsearch-upgrade-from-6x)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
 
-# 7.8.1 - 2020/07/28
+## 7.9.0 - 2020/08/18
+
+## 6.8.12 - 2020/08/18
+
+See [7.9.0 Breaking changes](#790---20200818)
+
+## 7.8.1 - 2020/07/28
 
 ### Add headless Service for StatefulSet
 
@@ -47,7 +55,7 @@ Upgrading the Logstash chart from a previous version will require using
 `helm upgrade --force`.
 
 
-# 6.8.11 - 2020/07/28
+## 6.8.11 - 2020/07/28
 
 See [7.8.1 Breaking changes](#781---20200728)
 

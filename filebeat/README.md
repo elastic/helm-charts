@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.1][] release
+**Warning**: This branch is used for development, please use [7.9.0][] release
 for supported version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -147,7 +147,7 @@ The default Filebeat configuration is using Filebeat pod name for
 `agent.hostname` and `host.name` fields. The `hostname` of the Kubernetes nodes
 can be find in `kubernetes.node.name` field. If you would like to have
 `agent.hostname` and `host.name` fields set to the hostname of the nodes, you'll
-need to set `daemonset.hostNetworking` value to true.
+need to set `hostNetworking` value to true.
 
 Note that enabling [hostNetwork][] make Filebeat pod use the host network
 namespace which gives it access to the host loopback device, services listening
@@ -183,7 +183,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 
-[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/filebeat/README.md
+[7.9.0]: https://github.com/elastic/helm-charts/blob/7.9.0/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
