@@ -33,9 +33,7 @@ spec:
 {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
 {{- end }}
-      {{- if .Values.serviceAccount }}
-      serviceAccountName: {{ .Values.serviceAccount }}
-      {{- end }}
+      serviceAccountName: {{ template "apm.serviceAccount" . }}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
