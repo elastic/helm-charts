@@ -1,5 +1,0 @@
----
-- view:
-    name: 'Helm Charts'
-    regex: '^elastic[-+]helm-charts.*$'
-    view-type: list
