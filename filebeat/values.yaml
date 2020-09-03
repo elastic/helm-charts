@@ -91,6 +91,15 @@ labels: {}
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
+# Options to define PodMonitor/ServiceMonitor to scrape Prometheus metrics
+metrics:
+  enabled: false
+  PodMonitor:
+    enabled: false
+    interval: 60s
+    portName: metrics
+    scrapeTimeout: 55s
+    
 # Various pod security context settings. Bear in mind that many of these have an impact on Filebeat functioning properly.
 #
 # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.

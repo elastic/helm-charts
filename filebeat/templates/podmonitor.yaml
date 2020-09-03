@@ -1,3 +1,4 @@
+{{- if .Values.metrics and .Values.metrics.PodMonitor }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -16,16 +17,15 @@ spec:
   selector:
     matchLabels:
       app: "{{ template "filebeat.fullname" . }}"
-  {{- with .Values.namespaceSelector }}
-  namespaceSelector: {{ toYaml . | nindent 4 }}
-  {{- end }}
+  namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
   podMetricsEndpoints:
-  - interval: {{ .Values.podMetricsEndpoints.interval }}
-  {{- if .Values.podMetricsEndpoints.port }}
-    port: {{ .Values.podMetricsEndpoints.port}}
+  - interval: {{ .Values.metrics.podMonitor.interval }}
+  {{- if .Values.metrics.podMonitor.portName }}
+    port: {{ .Values.metrics.podMonitor.portName }}
   {{- end }}
-  {{- if .Values.podMetricsEndpoints.scrapeTimeout }}
-    port: {{ .Values.podMetricsEndpoints.scrapeTimeout}}
+  {{- if .Values.metrics.podMonitor.scrapeTimeout }}
+    scrapeTimeout: {{ .Values.metrics.podMonitor.scrapeTimeout }}
   {{- end }}
+{{- end }}
