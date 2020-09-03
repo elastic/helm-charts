@@ -1,0 +1,31 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ template "filebeat.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: "{{ template "filebeat.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: "{{ template "filebeat.fullname" . }}"
+  {{- with .Values.namespaceSelector }}
+  namespaceSelector: {{ toYaml . | nindent 4 }}
+  {{- end }}
+    matchNames:
+    - {{ .Release.Namespace }}
+  podMetricsEndpoints:
+  - interval: {{ .Values.podMetricsEndpoints.interval }}
+  {{- if .Values.podMetricsEndpoints.port }}
+    port: {{ .Values.podMetricsEndpoints.port}}
+  {{- end }}
+  {{- if .Values.podMetricsEndpoints.scrapeTimeout }}
+    port: {{ .Values.podMetricsEndpoints.scrapeTimeout}}
+  {{- end }}
