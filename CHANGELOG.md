@@ -109,17 +109,21 @@
 
 ## 7.9.0 - 2020/08/18
 * 7.9.0 as the default stack version
+* Add Helm 3 support in beta ([@jmlrt](https://github.com/jmlrt))
+* Some improvements in CI tests jobs ([@jmlrt](https://github.com/jmlrt))
+
 
 ## 6.8.12 - 2020/08/18
 
 * 6.8.12 as the default stack version
 * See [7.9.0 CHANGELOG](#790---20200818) for other changes
 
+
 ## 7.8.1 - 2020/07/28
 
 * 7.8.1 as the default stack version
 * Some documentation fixes and improvements ([@ArthurFritz](https://github.com/ArthurFritz), [@fatmcgav](https://github.com/fatmcgav) and [AhmedSamirAhmed](https://github.com/AhmedSamirAhmed))
-* Some improvements in CI tests jobs in ([@jmlrt](https://github.com/jmlrt)) and [@fatmcgav](https://github.com/fatmcgav))
+* Some improvements in CI tests jobs ([@jmlrt](https://github.com/jmlrt)) and [@fatmcgav](https://github.com/fatmcgav))
 
 ### APM Server
 
