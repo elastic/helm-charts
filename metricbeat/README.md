@@ -3,6 +3,9 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
+**Warning**: This branch is used for development, please use [7.9.1][] release for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -10,6 +13,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.9 branch and 7.9.2-SNAPSHOT versions](#install-development-version-using-79-branch-and-792-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -35,7 +39,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.1 version.
+This chart is tested with the latest 7.9.2-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -43,8 +47,17 @@ This chart is tested with the latest 7.9.1 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat --version 7.9.1 elastic/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat --version 7.9.1 elastic/metricbeat`
+  - with Helm 2: `helm install --name metricbeat elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat elastic/metricbeat`
+
+
+### Install development version using 7.9 branch and 7.9.2-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it:
+  - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=7.9.2-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=7.9.2-SNAPSHOT`
 
 
 ## Upgrading
@@ -110,7 +123,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.9.1`                     |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.9.2-SNAPSHOT`                     |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |

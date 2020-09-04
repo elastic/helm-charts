@@ -8,6 +8,9 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
+**Warning**: This branch is used for development, please use [7.9.1][] release for released version.
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -15,6 +18,7 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using 7.9 branch and 7.9.2-SNAPSHOT versions](#install-development-version-using-79-branch-and-792-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -38,7 +42,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.1 version.
+This chart is tested with the latest 7.9.2-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -46,8 +50,17 @@ This chart is tested with the latest 7.9.1 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server --version 7.9.1 elastic/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server --version 7.9.1 elastic/apm-server`
+  - with Helm 2: `helm install --name apm-server elastic/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server elastic/apm-server`
+
+
+### Install development version using 7.9 branch and 7.9.2-SNAPSHOT versions
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Install it:
+  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.9.2-SNAPSHOT`
+  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.9.2-SNAPSHOT`
 
 
 ## Upgrading
@@ -85,7 +98,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.9.1`                   |
+| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.9.2-SNAPSHOT`                   |
 | `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
