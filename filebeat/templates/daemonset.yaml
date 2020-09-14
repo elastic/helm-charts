@@ -36,6 +36,7 @@ spec:
       maxUnavailable: {{ .Values.maxUnavailable | default 1 }}
     {{- end }}
     type: {{ .Values.updateStrategy }}
+  {{- end }}
   template:
     metadata:
       annotations:
