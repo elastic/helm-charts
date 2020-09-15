@@ -815,6 +815,23 @@ def test_adding_a_loadBalancerIP():
     assert r["service"][uname]["spec"]["loadBalancerIP"] == "12.4.19.81"
 
 
+def test_adding_an_externalTrafficPolicy():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "externalTrafficPolicy" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      externalTrafficPolicy: Local
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["externalTrafficPolicy"] == "Local"
+
+
 def test_adding_a_label_on_non_headless_service():
     config = ""
 
