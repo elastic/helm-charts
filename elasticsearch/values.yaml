@@ -182,6 +182,7 @@ service:
   transportPortName: transport
   loadBalancerIP: ""
   loadBalancerSourceRanges: []
+  externalTrafficPolicy: ""
 
 updateStrategy: RollingUpdate
 
