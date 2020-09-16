@@ -289,16 +289,16 @@ Create the secret, the key name needs to be the keystore key path. In this
 example we will create a secret from a file and from a literal string.
 
 ```
-kubectl create secret generic encryption_key --from-file=xpack.watcher.encryption_key=./watcher_encryption_key
-kubectl create secret generic slack_hook --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+kubectl create secret generic encryption-key --from-file=xpack.watcher.encryption_key=./watcher_encryption_key
+kubectl create secret generic slack-hook --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
 ```
 
 To add these secrets to the keystore:
 
 ```
 keystore:
-  - secretName: encryption_key
-  - secretName: slack_hook
+  - secretName: encryption-key
+  - secretName: slack-hook
 ```
 
 #### Multiple keys
@@ -307,12 +307,12 @@ All keys in the secret will be added to the keystore. To create the previous
 example in one secret you could also do:
 
 ```
-kubectl create secret generic keystore_secrets --from-file=xpack.watcher.encryption_key=./watcher_encryption_key --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+kubectl create secret generic keystore-secrets --from-file=xpack.watcher.encryption_key=./watcher_encryption_key --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
 ```
 
 ```
 keystore:
-  - secretName: keystore_secrets
+  - secretName: keystore-secrets
 ```
 
 #### Custom paths and keys
@@ -325,7 +325,7 @@ example we will only add the `slack_hook` key from a secret that also has other
 keys. Our secret looks like this:
 
 ```
-kubectl create secret generic slack_secrets --from-literal=slack_channel='#general' --from-literal=slack_hook='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+kubectl create secret generic slack-secrets --from-literal=slack_channel='#general' --from-literal=slack_hook='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
 ```
 
 We only want to add the `slack_hook` key to the keystore at path
@@ -333,7 +333,7 @@ We only want to add the `slack_hook` key to the keystore at path
 
 ```
 keystore:
-  - secretName: slack_secrets
+  - secretName: slack-secrets
     items:
     - key: slack_hook
       path: xpack.notification.slack.account.monitoring.secure_url
