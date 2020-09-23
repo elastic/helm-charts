@@ -17,7 +17,6 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.9 branch and 7.9.2-SNAPSHOT versions](#install-development-version-using-79-branch-and-792-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -41,7 +40,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.2-SNAPSHOT version.
+This chart is tested with the latest 7.9.2 version.
 
 ### Install released version using Helm repository
 
@@ -51,15 +50,6 @@ This chart is tested with the latest 7.9.2-SNAPSHOT version.
 * Install it:
   - with Helm 2: `helm install --name apm-server elastic/apm-server`
   - with [Helm 3 (beta)][]: `helm install apm-server elastic/apm-server`
-
-
-### Install development version using 7.9 branch and 7.9.2-SNAPSHOT versions
-
-* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
-
-* Install it:
-  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.9.2-SNAPSHOT`
-  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.9.2-SNAPSHOT`
 
 
 ## Upgrading

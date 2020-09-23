@@ -40,7 +40,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.2-SNAPSHOT version.
+This chart is tested with the latest 7.9.2 version.
 
 ### Install released version using Helm repository
 
