@@ -103,15 +103,15 @@ Kubernetes.
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 
-[apm-7]: https://github.com/elastic/helm-charts/tree/7.9.1/apm-server/README.md
+[apm-7]: https://github.com/elastic/helm-charts/tree/7.9.2/apm-server/README.md
 [apm-6]: https://github.com/elastic/helm-charts/tree/6.8.12/apm-server/README.md
-[elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.9.1/elasticsearch/README.md
+[elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.9.2/elasticsearch/README.md
 [elasticsearch-6]: https://github.com/elastic/helm-charts/tree/6.8.12/elasticsearch/README.md
-[filebeat-7]: https://github.com/elastic/helm-charts/tree/7.9.1/filebeat/README.md
+[filebeat-7]: https://github.com/elastic/helm-charts/tree/7.9.2/filebeat/README.md
 [filebeat-6]: https://github.com/elastic/helm-charts/tree/6.8.12/filebeat/README.md
-[kibana-7]: https://github.com/elastic/helm-charts/tree/7.9.1/kibana/README.md
+[kibana-7]: https://github.com/elastic/helm-charts/tree/7.9.2/kibana/README.md
 [kibana-6]: https://github.com/elastic/helm-charts/tree/6.8.12/kibana/README.md
-[logstash-7]: https://github.com/elastic/helm-charts/tree/7.9.1/logstash/README.md
+[logstash-7]: https://github.com/elastic/helm-charts/tree/7.9.2/logstash/README.md
 [logstash-6]: https://github.com/elastic/helm-charts/tree/6.8.12/logstash/README.md
-[metricbeat-7]: https://github.com/elastic/helm-charts/tree/7.9.1/metricbeat/README.md
+[metricbeat-7]: https://github.com/elastic/helm-charts/tree/7.9.2/metricbeat/README.md
 [metricbeat-6]: https://github.com/elastic/helm-charts/tree/6.8.12/metricbeat/README.md
