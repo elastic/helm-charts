@@ -117,6 +117,7 @@
 
 ## 7.9.2 - 2020/09/24
 * 7.9.2 as the default stack version
+* Bump Helm version to 2.16.12 ([@jmlrt](https://github.com/jmlrt))
 
 ### Elasticsearch
 
