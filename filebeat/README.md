@@ -45,8 +45,8 @@ This chart is tested with the latest 7.9.2 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name filebeat elastic/filebeat`
-  - with [Helm 3 (beta)][]: `helm install filebeat elastic/filebeat`
+  - with Helm 2: `helm install --name filebeat --version 7.9.2 elastic/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat --version 7.9.2 elastic/filebeat`
 
 
 ## Upgrading
