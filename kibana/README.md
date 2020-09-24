@@ -46,8 +46,8 @@ This chart is tested with the latest 7.9.2 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name kibana elastic/kibana`
-  - with [Helm 3 (beta)][]: `helm install kibana elastic/kibana`
+  - with Helm 2: `helm install --name kibana --version 7.9.2 elastic/kibana`
+  - with [Helm 3 (beta)][]: `helm install kibana --version 7.9.2 elastic/kibana`
 
 
 ## Upgrading

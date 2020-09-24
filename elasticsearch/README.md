@@ -58,8 +58,8 @@ This chart is tested with the latest 7.9.2 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name elasticsearch elastic/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch elastic/elasticsearch`
+  - with Helm 2: `helm install --name elasticsearch --version 7.9.2 elastic/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 7.9.2 elastic/elasticsearch`
 
 
 ## Upgrading

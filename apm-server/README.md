@@ -48,7 +48,7 @@ This chart is tested with the latest 7.9.2 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server elastic/apm-server`
+  - with Helm 2: `helm install --name apm-server --version 7.9.2 elastic/apm-server`
   - with [Helm 3 (beta)][]: `helm install apm-server --version 7.9.2 elastic/apm-server`
 
 

@@ -48,8 +48,8 @@ This chart is tested with the latest 7.9.2 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name logstash elastic/logstash`
-  - with [Helm 3 (beta)][]: `helm install logstash elastic/logstash`
+  - with Helm 2: `helm install --name logstash --version 7.9.2 elastic/logstash`
+  - with [Helm 3 (beta)][]: `helm install logstash --version 7.9.2 elastic/logstash`
 
 
 ## Upgrading
