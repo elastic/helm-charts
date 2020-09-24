@@ -56,6 +56,9 @@ imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
+# Choice between DaemonSet (default) and Deployment
+deploymentType: daemonset
+
 livenessProbe:
   exec:
     command:

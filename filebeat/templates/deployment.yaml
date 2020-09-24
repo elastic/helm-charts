@@ -1,7 +1,7 @@
 ---
-{{- if eq (printf "%s" (.Values.deploymentType | lower | default "daemonset")) "daemonset" }}
+{{- if eq (printf "%s" .Values.deploymentType | lower) "deployment" }}
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: {{ template "filebeat.fullname" . }}
   labels:
@@ -17,8 +17,6 @@ spec:
     matchLabels:
       app: "{{ template "filebeat.fullname" . }}"
       release: {{ .Release.Name | quote }}
-  updateStrategy:
-    type: {{ .Values.updateStrategy }}
   template:
     metadata:
       annotations:
@@ -170,4 +168,5 @@ spec:
       {{- if .Values.extraContainers }}
 {{ tpl .Values.extraContainers . | indent 6 }}
       {{- end }}
+
 {{- end }}
