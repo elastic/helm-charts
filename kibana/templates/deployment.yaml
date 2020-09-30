@@ -105,6 +105,11 @@ spec:
               - -c
               - |
                 #!/usr/bin/env bash -e
+
+                # Disable nss cache to avoid filling dentry cache when calling curl
+                # This is required with Kibana Docker using nss < 3.52
+                export NSS_SDB_USE_CACHE=no
+
                 http () {
                     local path="${1}"
                     set -- -XGET -s --fail -L
