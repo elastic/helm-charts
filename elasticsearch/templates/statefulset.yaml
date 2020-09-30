@@ -233,6 +233,10 @@ spec:
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
 
+                # Disable nss cache to avoid filling dentry cache when calling curl
+                # This is required with Elasticsearch Docker using nss < 3.52
+                export NSS_SDB_USE_CACHE=no
+
                 http () {
                   local path="${1}"
                   local args="${2}"
