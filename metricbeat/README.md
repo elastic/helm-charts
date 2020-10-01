@@ -12,6 +12,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version from a branch](#install-development-version-from-a-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -45,9 +46,18 @@ This chart is tested with the latest 7.9.3-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat --version 7.9.3-SNAPSHOT elastic/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat --version 7.9.3-SNAPSHOT elastic/metricbeat`
+  - with Helm 2: `helm install --name metricbeat --version <version> elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version <version> elastic/metricbeat`
 
+### Install development version from a branch
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Checkout the branch : `git checkout 7.9`
+
+* Install it:
+  - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat`
 
 ## Upgrading
 
