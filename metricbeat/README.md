@@ -56,8 +56,8 @@ This chart is tested with the latest 7.9.3-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.9`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat`
+  - with Helm 2: `helm install --name metricbeat --version 7.9.3-SNAPSHOT ./helm-charts/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version 7.9.3-SNAPSHOT ./helm-charts/metricbeat`
 
 ## Upgrading
 

@@ -69,8 +69,8 @@ This chart is tested with the latest 7.9.3-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.9`
 
 * Install it:
-  - with Helm 2: `helm install --name elasticsearch ./helm-charts/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch ./helm-charts/elasticsearch`
+  - with Helm 2: `helm install --name elasticsearch --version 7.9.3-SNAPSHOT ./helm-charts/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 7.9.3-SNAPSHOT ./helm-charts/elasticsearch`
 
 ## Upgrading
 
