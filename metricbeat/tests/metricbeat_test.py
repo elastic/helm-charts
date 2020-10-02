@@ -968,7 +968,7 @@ clusterRoleRules:
     assert rules["resources"][0] == "something"
 
 
-def test_adding_legacy_labels():
+def test_adding_deprecated_labels():
     config = """
 labels:
   app-test: metricbeat
