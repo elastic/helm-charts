@@ -12,6 +12,6 @@ metadata:
 data:
 {{- range $path, $config := .Values.logstashConfig }}
   {{ $path }}: |
-{{ $config | indent 4 -}}
+{{ tpl $config $ | indent 4 -}}
 {{- end -}}
 {{- end -}}
