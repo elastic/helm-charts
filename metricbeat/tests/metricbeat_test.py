@@ -968,21 +968,98 @@ clusterRoleRules:
     assert rules["resources"][0] == "something"
 
 
-def test_adding_pod_labels():
+def test_adding_deprecated_labels():
     config = """
 labels:
-  app.kubernetes.io/name: metricbeat
+  app-test: metricbeat
 """
     r = helm_template(config)
+    assert r["daemonset"][name]["metadata"]["labels"]["app-test"] == "metricbeat"
     assert (
-        r["daemonset"][name]["metadata"]["labels"]["app.kubernetes.io/name"]
+        r["deployment"][name + "-metrics"]["metadata"]["labels"]["app-test"]
         == "metricbeat"
     )
     assert (
-        r["daemonset"][name]["spec"]["template"]["metadata"]["labels"][
-            "app.kubernetes.io/name"
+        r["daemonset"][name]["spec"]["template"]["metadata"]["labels"]["app-test"]
+        == "metricbeat"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["metadata"]["labels"][
+            "app-test"
         ]
         == "metricbeat"
+    )
+
+
+def test_adding_daemonset_labels():
+    config = """
+daemonset:
+  labels:
+    app-test: metricbeat
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["metadata"]["labels"]["app-test"] == "metricbeat"
+    assert (
+        r["daemonset"][name]["spec"]["template"]["metadata"]["labels"]["app-test"]
+        == "metricbeat"
+    )
+
+
+def test_adding_daemonset_labels_surpasses_root_labels():
+    config = """
+labels:
+  app-test: root-metricbeat
+daemonset:
+  labels:
+    app-test: daemonset-metricbeat
+"""
+    r = helm_template(config)
+    assert (
+        r["daemonset"][name]["metadata"]["labels"]["app-test"] == "daemonset-metricbeat"
+    )
+    assert (
+        r["daemonset"][name]["spec"]["template"]["metadata"]["labels"]["app-test"]
+        == "daemonset-metricbeat"
+    )
+
+
+def test_adding_deployment_labels():
+    config = """
+deployment:
+  labels:
+    app-test: metricbeat
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["metadata"]["labels"]["app-test"]
+        == "metricbeat"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["metadata"]["labels"][
+            "app-test"
+        ]
+        == "metricbeat"
+    )
+
+
+def test_adding_deployment_labels_surpasses_root_labels():
+    config = """
+labels:
+  app-test: root-metricbeat
+deployment:
+  labels:
+    app-test: deployment-metricbeat
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name + "-metrics"]["metadata"]["labels"]["app-test"]
+        == "deployment-metricbeat"
+    )
+    assert (
+        r["deployment"][name + "-metrics"]["spec"]["template"]["metadata"]["labels"][
+            "app-test"
+        ]
+        == "deployment-metricbeat"
     )
 
 

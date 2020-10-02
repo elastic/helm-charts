@@ -96,6 +96,7 @@ as a reference. They are also used in the automated testing of this chart.
 |--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
 | `clusterRoleRules`             | Configurable [cluster role rules][] that Metricbeat uses to access Kubernetes resources                                                                                      | see [values.yaml][]                  |
 | `daemonset.annotations`        | Configurable [annotations][] for Metricbeat daemonset                                                                                                                        | `{}`                                 |
+| `daemonset.labels`             | Configurable [labels][] applied to all Metricbeat DaemonSet pods                                                                                                             | `{}`                                 |
 | `daemonset.affinity`           | Configurable [affinity][] for Metricbeat daemonset                                                                                                                           | `{}`                                 |
 | `daemonset.enabled`            | If true, enable daemonset                                                                                                                                                    | `true`                               |
 | `daemonset.envFrom`            | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to Metricbeat container for DaemonSet                             | `[]`                                 |
@@ -110,6 +111,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.securityContext`    | Configurable [securityContext][] for Metricbeat DaemonSet pod execution environment                                                                                          | see [values.yaml][]                  |
 | `daemonset.tolerations`        | Configurable [tolerations][] for Metricbeat DaemonSet                                                                                                                        | `[]`                                 |
 | `deployment.annotations`       | Configurable [annotations][] for Metricbeat Deployment                                                                                                                       | `{}`                                 |
+| `deployment.labels`            | Configurable [labels][] applied to all Metricbeat Deployment pods                                                                                                            | `{}`                                 |
 | `deployment.affinity`          | Configurable [affinity][] for Metricbeat Deployment                                                                                                                          | `{}`                                 |
 | `deployment.enabled`           | If true, enable deployment                                                                                                                                                   | `true`                               |
 | `deployment.envFrom`           | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to Metricbeat container for Deployment                            | `[]`                                 |
@@ -132,7 +134,6 @@ as a reference. They are also used in the automated testing of this chart.
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
-| `labels`                       | Configurable [labels][] applied to all Metricbeat pods                                                                                                                       | `{}`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
 | `managedServiceAccount`        | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles                         | `true`                               |
 | `nameOverride`                 | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                    | `""`                                 |
@@ -161,6 +162,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `resources`          | Allows you to set the [resources][] for both Metricbeat DaemonSet and Deployment                                                                       | `{}`    |
 | `secretMounts`       | Allows you easily mount a secret as a file inside DaemonSet and Deployment Useful for mounting certificates and other secrets                          | `[]`    |
 | `tolerations`        | Configurable [tolerations][] for both Metricbeat DaemonSet and Deployment                                                                              | `[]`    |
+| `labels`             | Configurable [labels][] applied to all Metricbeat pods                                                                                                 | `[]`    |
 
 
 ## FAQ
