@@ -3,6 +3,8 @@
 daemonset:
   # Annotations to apply to the daemonset
   annotations: {}
+  # additionals labels
+  labels: {}
   affinity: {}
   # Include the daemonset
   enabled: true
@@ -97,6 +99,8 @@ daemonset:
 deployment:
   # Annotations to apply to the deployment
   annotations: {}
+  # additionals labels
+  labels: {}
   affinity: {}
   # Include the deployment
   enabled: true
@@ -197,9 +201,6 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 5
 
-# additionals labels
-labels: {}
-
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
@@ -285,3 +286,4 @@ podSecurityContext: {}
 resources: {}
 secretMounts: []
 tolerations: []
+labels: {}

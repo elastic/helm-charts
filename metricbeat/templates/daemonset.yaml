@@ -9,8 +9,14 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
+    {{- if .Values.daemonset.labels }}
+    {{- range $key, $value := .Values.daemonset.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- else }}
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
+    {{- end }}
     {{- end }}
   {{- if .Values.daemonset.annotations}}
   annotations:
@@ -41,8 +47,14 @@ spec:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        {{- if .Values.daemonset.labels }}
+        {{- range $key, $value := .Values.daemonset.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- else }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
+        {{- end }}
         {{- end }}
     spec:
       affinity: {{ toYaml ( .Values.affinity | default .Values.daemonset.affinity ) | nindent 8 }}
