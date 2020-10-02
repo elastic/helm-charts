@@ -3,7 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
-
+**Warning**: This branch is used for development, please use [7.9.2][https://github.com/elastic/helm-charts/releases/tag/7.9.2] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -12,6 +12,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version from a branch](#install-development-version-from-a-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -50,7 +51,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.2 version.
+This chart is tested with the latest 7.9.3-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -58,9 +59,18 @@ This chart is tested with the latest 7.9.2 version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name elasticsearch --version 7.9.2 elastic/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 7.9.2 elastic/elasticsearch`
+  - with Helm 2: `helm install --name elasticsearch --version <version> elastic/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version <version> elastic/elasticsearch`
 
+### Install development version from a branch
+
+* Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Checkout the branch : `git checkout 7.9`
+
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch --version 7.9.3-SNAPSHOT ./helm-charts/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 7.9.3-SNAPSHOT ./helm-charts/elasticsearch`
 
 ## Upgrading
 
@@ -115,7 +125,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.9.2`                                |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.9.3-SNAPSHOT`                                |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
