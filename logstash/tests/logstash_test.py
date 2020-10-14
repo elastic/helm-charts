@@ -540,9 +540,9 @@ nodeAffinity:
         - myvalue
 """
     r = helm_template(config)
-    assert r["statefulset"][name]["spec"]["template"]["spec"][
-        "affinity"
-    ]["nodeAffinity"] == {
+    assert r["statefulset"][name]["spec"]["template"]["spec"]["affinity"][
+        "nodeAffinity"
+    ] == {
         "preferredDuringSchedulingIgnoredDuringExecution": [
             {
                 "weight": 100,
@@ -580,10 +580,9 @@ logstashConfig:
 
     s = r["statefulset"][name]["spec"]["template"]["spec"]
 
-    assert {
-        "configMap": {"name": name + "-config"},
-        "name": "logstashconfig",
-    } in s["volumes"]
+    assert {"configMap": {"name": name + "-config"}, "name": "logstashconfig",} in s[
+        "volumes"
+    ]
     assert {
         "mountPath": "/usr/share/logstash/config/logstash.yml",
         "name": "logstashconfig",
@@ -877,6 +876,7 @@ fullnameOverride: 'logstash-custom'
         == "logstash"
     )
 
+
 def test_adding_an_ingress():
     config = """
 ingress:
@@ -896,13 +896,7 @@ ingress:
         "host": "logstash.local",
         "http": {
             "paths": [
-                {
-                    "path": "/logs",
-                    "backend": {
-                        "serviceName": name,
-                        "servicePort": 8080
-                    }
-                }
+                {"path": "/logs", "backend": {"serviceName": name, "servicePort": 8080}}
             ]
-        }
+        },
     }

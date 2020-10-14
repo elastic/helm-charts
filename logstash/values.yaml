@@ -248,7 +248,7 @@ service: {}
 #      targetPort: 8080
 
 ingress:
-  enabled: true
+  enabled: false
 #  annotations: {}
 #  hosts:
 #    - host: logstash.local

@@ -1,6 +1,5 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "logstash.fullname" . -}}
-{{- $ingressPath := .Values.ingress.path -}}
 apiVersion: {{ template "logstash.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
