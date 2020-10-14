@@ -860,13 +860,6 @@ service:
         "protocol": "TCP",
         "targetPort": 5044,
     }
-    h = r["service"][name + "-headless"]
-    assert h["spec"]["ports"][0] == {
-        "name": "beats",
-        "port": 5044,
-        "protocol": "TCP",
-        "targetPort": 5044,
-    }
 
 
 def test_setting_fullnameOverride():
