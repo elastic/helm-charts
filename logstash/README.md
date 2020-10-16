@@ -96,6 +96,8 @@ in this [note][]).
 to make default probes work. If restricting HTTP API to 127.0.0.1 is required by
 using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 (see [values.yaml][] for the good syntax).
+* An ingress is provided that can be used to expose the HTTP port. This can be
+useful for the [http input plugin][], for instance.
 
 
 ## Configuration
@@ -115,9 +117,10 @@ using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.10.0-SNAPSHOT`                      |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `8.0.0-SNAPSHOT`                      |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
+| `ingress`                 | Configurable [ingress][] for external access to Logstash HTTP port.                                                                                                                                                                  | see [values.yaml][]                   |
 | `lifecycle`               | Allows you to add lifecycle configuration. See [values.yaml][] for an example of the formatting                                                                                                                                      | `{}`                                  |
 | `livenessProbe`           | Configuration fields for the liveness [probe][]                                                                                                                                                                                      | see [values.yaml][]                   |
 | `logstashConfig`          | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties` See [values.yaml][] for an example of the formatting                                                              | `{}`                                  |
@@ -204,8 +207,10 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples/oss
 [helm]: https://helm.sh
 [helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
+[http input plugin]: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
+[ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/7.x/docker.html
