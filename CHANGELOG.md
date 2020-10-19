@@ -1,5 +1,21 @@
 # Changelog
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+## 7.9.3
+
+* 7.9.3 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+|  | Nassim Kammah | 7.9.3 release |
+| [#818](https://github.com/elastic/helm-charts/pull/818) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch][kibana] disable nss dentry cache  |
+| [#826](https://github.com/elastic/helm-charts/pull/826) | [@nkammah](https://github.com/nkammah) | Specify chart version in install instructions  |
+| [#823](https://github.com/elastic/helm-charts/pull/823) | [@nkammah](https://github.com/nkammah) | 7.9.2 release  |
+| [#816](https://github.com/elastic/helm-charts/pull/816) | [@jmlrt](https://github.com/jmlrt) | [helm] bump helm version to 2.16.12  |
+| [#819](https://github.com/elastic/helm-charts/pull/819) | [@nkammah](https://github.com/nkammah) | fix bumper.py perms  |
+| [#811](https://github.com/elastic/helm-charts/pull/811) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix secrets names in examples  |
+| [#729](https://github.com/elastic/helm-charts/pull/729) | [@floretan](https://github.com/floretan) | Include pre-releases in the semver range.  |
+| [#810](https://github.com/elastic/helm-charts/pull/810) | [@luanguimaraesla](https://github.com/luanguimaraesla) | [elasticsearch] add loadBalancer externalTrafficPolicy option  |
+| [#778](https://github.com/elastic/helm-charts/pull/778) | [@erihanse](https://github.com/erihanse) | [metricbeat] Support secrets  |
+| [#806](https://github.com/elastic/helm-charts/pull/806) | [@ygel](https://github.com/ygel) | [release] bump 7.9 branch to 7.9.2-SNAPSHOT   |<!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
