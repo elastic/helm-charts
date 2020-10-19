@@ -5,8 +5,8 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: logstash
-version: 7.9.2
-appVersion: 7.9.2
+version: 7.9.3
+appVersion: 7.9.3
 sources:
   - https://github.com/elastic/logstash
 icon: https://helm.elastic.co/icons/logstash.png

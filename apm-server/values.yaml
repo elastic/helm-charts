@@ -62,7 +62,7 @@ extraVolumes: []
   #   emptyDir: {}
 
 image: "docker.elastic.co/apm/apm-server"
-imageTag: "7.9.2"
+imageTag: "7.9.3"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
