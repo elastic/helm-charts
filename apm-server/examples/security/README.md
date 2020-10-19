@@ -1,6 +1,6 @@
 # Security
 
-This example deploy APM Server 7.9.3-SNAPSHOT using authentication and TLS to connect to
+This example deploy APM Server 7.9.4-SNAPSHOT using authentication and TLS to connect to
 Elasticsearch (see [values][]).
 
 

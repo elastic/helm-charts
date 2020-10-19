@@ -41,7 +41,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.3-SNAPSHOT version.
+This chart is tested with the latest 7.9.4-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -59,8 +59,8 @@ This chart is tested with the latest 7.9.3-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.9`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server --version 7.9.3-SNAPSHOT ./helm-charts/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server --version 7.9.3-SNAPSHOT ./helm-charts/apm-server`
+  - with Helm 2: `helm install --name apm-server --version 7.9.4-SNAPSHOT ./helm-charts/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server --version 7.9.4-SNAPSHOT ./helm-charts/apm-server`
 
 ## Upgrading
 
@@ -97,7 +97,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.9.3-SNAPSHOT`                   |
+| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `7.9.4-SNAPSHOT`                   |
 | `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
