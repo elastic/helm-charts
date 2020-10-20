@@ -1257,8 +1257,11 @@ daemonset:
     enabled: false
 """
     r = helm_template(config)
+    cfg = r["configmap"]
 
     assert name not in r.get("daemonset", {})
+    assert name + "-daemonset-config" not in cfg
+    assert name + "-deployment-config" in cfg
 
 
 def test_disable_deployment():
@@ -1267,8 +1270,11 @@ deployment:
     enabled: false
 """
     r = helm_template(config)
+    cfg = r["configmap"]
 
     assert name + "-metrics" not in r.get("deployment", {})
+    assert name + "-daemonset-config" in cfg
+    assert name + "-deployment-config" not in cfg
 
 
 def test_do_not_install_kube_stat_metrics():
