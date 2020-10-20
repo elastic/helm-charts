@@ -16,7 +16,7 @@ data:
 {{- end -}}
 {{- end -}}
 
-{{- if .Values.daemonset.metricbeatConfig }}
+{{- if and .Values.daemonset.enabled .Values.daemonset.metricbeatConfig }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -34,7 +34,7 @@ data:
 {{- end -}}
 {{- end -}}
 
-{{- if .Values.deployment.metricbeatConfig }}
+{{- if and .Values.deployment.enabled .Values.deployment.metricbeatConfig }}
 ---
 apiVersion: v1
 kind: ConfigMap
