@@ -12,6 +12,8 @@ roles:
   master: "true"
   ingest: "true"
   data: "true"
+  ml: "true"
+  remote_cluster_client: "true"
 
 replicas: 3
 minimumMasterNodes: 2
