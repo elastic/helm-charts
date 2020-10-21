@@ -20,8 +20,6 @@ def test_defaults():
     assert c["name"] == project
     assert c["image"].startswith("docker.elastic.co/beats/" + project + ":")
 
-    assert c["deploymentType"] == "daemonset"
-
     assert c["env"][0]["name"] == "POD_NAMESPACE"
     assert c["env"][0]["valueFrom"]["fieldRef"]["fieldPath"] == "metadata.namespace"
 
@@ -402,33 +400,3 @@ fullnameOverride: 'filebeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
-
-
-def test_deployment_type_deployment():
-    config = """
-deploymentType: 'deployment'
-"""
-    r = helm_template(config)
-
-    assert "daemonset" not in r
-    assert r["deployment"]
-
-
-def test_deployment_type_daemonset():
-    config = """
-deploymentType: 'daemonset'
-"""
-    r = helm_template(config)
-
-    assert "deployment" not in r
-    assert r["daemonset"]
-
-
-def test_deployment_type_case_insensitive():
-    config = """
-deploymentType: 'DePloYmEnT'
-"""
-    r = helm_template(config)
-
-    assert "daemonset" not in r
-    assert r["deployment"]
