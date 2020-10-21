@@ -3,8 +3,8 @@
 This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
-**Warning**: This branch is used for development, please use [7.7.1][] release
-for released version.
+**Warning**: This branch is used for development, please use the latest [7.10](https://github.com/elastic/helm-charts/releases)
+release for released version.
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -49,8 +49,8 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name kibana elastic/kibana`
-  - with [Helm 3 (beta)][]: `helm install kibana elastic/kibana`
+  - with Helm 2: `helm install --name kibana --version <version> elastic/kibana`
+  - with [Helm 3 (beta)][]: `helm install kibana --version <version> elastic/kibana`
 
 
 ### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
