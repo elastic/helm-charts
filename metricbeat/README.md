@@ -8,8 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Beta features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use the latest [6.8](https://github.com/elastic/helm-charts/releases)
-release for released version.
+**Warning**: This branch is used for development, please use the latest [6.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -215,7 +214,7 @@ same node.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[6.x]: https://github.com/elastic/helm-charts/releases
 [#471]: https://github.com/elastic/helm-charts/pull/471
 [6.8.13-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.13-SNAPSHOT/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
