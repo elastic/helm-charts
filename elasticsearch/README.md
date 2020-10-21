@@ -56,6 +56,7 @@ default settings. All of these settings are configurable.
 
 See [supported configurations][] for more details.
 
+
 ## Installing
 
 This chart is tested with the latest 6.8.13-SNAPSHOT version.
@@ -66,17 +67,18 @@ This chart is tested with the latest 6.8.13-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name elasticsearch --version 6.8.12 elastic/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 6.8.12 elastic/elasticsearch`
+  - with Helm 2: `helm install --name elasticsearch --version <version> elastic/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version <version> elastic/elasticsearch`
 
 ### Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it:
-  - with Helm 2: `helm install --name elasticsearch ./helm-charts/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch ./helm-charts/elasticsearch`
+* Checkout the branch : git checkout 6.8
 
+* Install it:
+  - with Helm 2: `helm install --name elasticsearch --version 6.8.13-SNAPSHOT ./helm-charts/elasticsearch`
+  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 6.8.13-SNAPSHOT ./helm-charts/elasticsearch`
 
 ## Upgrading
 

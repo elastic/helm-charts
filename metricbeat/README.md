@@ -53,16 +53,18 @@ This chart is tested with the latest 6.8.13-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server --version 6.8.12 elastic/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server --version 6.8.12 elastic/apm-server`
+  - with Helm 2: `helm install --name metricbeat --version <version> elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version <version> elastic/metricbeat`
 
 ### Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
+* Checkout the branch : git checkout 6.8
+
 * Install it:
-  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server`
+  - with Helm 2: `helm install --name metricbeat --version 6.8.13-SNAPSHOT ./helm-charts/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version 6.8.13-SNAPSHOT ./helm-charts/metricbeat`
 
 
 ## Upgrading

@@ -53,16 +53,18 @@ This chart is tested with the latest 6.8.13-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name filebeat --version 6.8.12 elastic/filebeat`
-  - with [Helm 3 (beta)][]: `helm install filebeat --version 6.8.12 elastic/filebeat`
+  - with Helm 2: `helm install --name filebeat --version <version> elastic/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat --version <version> elastic/filebeat`
 
 ### Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
+* Checkout the branch : git checkout 6.8
+
 * Install it:
-  - with Helm 2: `helm install --name filebeat ./helm-charts/filebeat`
-  - with [Helm 3 (beta)][]: `helm install filebeat ./helm-charts/filebeat`
+  - with Helm 2: `helm install --name filebeat --version 6.8.13-SNAPSHOT ./helm-charts/filebeat`
+  - with [Helm 3 (beta)][]: `helm install filebeat --version 6.8.13-SNAPSHOT ./helm-charts/filebeat`
 
 
 ## Upgrading

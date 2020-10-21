@@ -40,7 +40,6 @@ for released version.
 
 See [supported configurations][] for more details.
 
-
 ## Installing
 
 This chart is tested with the latest 6.8.13-SNAPSHOT version.
@@ -51,16 +50,18 @@ This chart is tested with the latest 6.8.13-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name logstash --version 6.8.12 elastic/logstash`
-  - with [Helm 3 (beta)][]: `helm install logstash --version 6.8.12 elastic/logstash`
+  - with Helm 2: `helm install --name logstash --version <version> elastic/logstash`
+  - with [Helm 3 (beta)][]: `helm install logstash --version <version> elastic/logstash`
 
 ### Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
+* Checkout the branch : git checkout 6.8
+
 * Install it:
-  - with Helm 2: `helm install --name logstash ./helm-charts/logstash`
-  - with [Helm 3 (beta)][]: `helm install logstash ./helm-charts/logstash`
+  - with Helm 2: `helm install --name logstash --version 6.8.13-SNAPSHOT ./helm-charts/logstash`
+  - with [Helm 3 (beta)][]: `helm install logstash --version 6.8.13-SNAPSHOT ./helm-charts/logstash`
 
 
 ## Upgrading
