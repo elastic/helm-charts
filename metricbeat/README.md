@@ -3,9 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
-**Warning**: This branch is used for development, please use [7.7.1][] release
-for released version.
-
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -48,8 +46,8 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat elastic/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat elastic/metricbeat`
+  - with Helm 2: `helm install --name metricbeat --version <version> elastic/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version <version> elastic/metricbeat`
 
 
 ### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
@@ -210,7 +208,7 @@ same node.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[7.x]: https://github.com/elastic/helm-charts/releases
 [#471]: https://github.com/elastic/helm-charts/pull/471
 [7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md

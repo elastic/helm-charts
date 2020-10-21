@@ -8,9 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [7.7.1][] release
-for released version.
-
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -51,8 +49,8 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name logstash elastic/logstash`
-  - with [Helm 3 (beta)][]: `helm install logstash elastic/logstash`
+  - with Helm 2: `helm install --name logstash --version <version> elastic/logstash`
+  - with [Helm 3 (beta)][]: `helm install logstash --version <version> elastic/logstash`
 
 
 ### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
@@ -191,7 +189,7 @@ against best practices of containers and immutable infrastructure.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[7.x]: https://github.com/elastic/helm-charts/releases
 [7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
