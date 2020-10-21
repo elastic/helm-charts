@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy Logstash 6.8.13-SNAPSHOT using [Logstash OSS][] version.
+This example deploy Logstash 6.8.13 using [Logstash OSS][] version.
 
 
 ## Usage

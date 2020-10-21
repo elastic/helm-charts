@@ -52,7 +52,7 @@ dnsConfig: {}
 #   - name: ndots
 #     value: "2"
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "6.8.13-SNAPSHOT"
+imageTag: "6.8.13"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
