@@ -8,8 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [6.8.12][] release
-for released version.
+**Warning**: This branch is used for development, please use the latest [6.x][] release for released version.
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -18,7 +17,7 @@ for released version.
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-- [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
   - [Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
@@ -45,22 +44,24 @@ See [supported configurations][] for more details.
 
 This chart is tested with the latest 6.8.13-SNAPSHOT version.
 
-## Install released version using Helm repository
+### Install released version using Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server --version 6.8.12 elastic/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server --version 6.8.12 elastic/apm-server`
+  - with Helm 2: `helm install --name apm-server --version <version> elastic/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server --version <version> elastic/apm-server`
 
 ### Install development version using 6.8 branch and 6.8.13-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
+* Checkout the branch : git checkout 6.8
+
 * Install it:
-  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server`
+  - with Helm 2: `helm install --name apm-server --version 6.8.13-SNAPSHOT ./helm-charts/apm-server`
+  - with [Helm 3 (beta)][]: `helm install apm-server --version 6.8.13-SNAPSHOT ./helm-charts/apm-server`
 
 
 ## Upgrading
@@ -146,7 +147,7 @@ An example of APM Server deployment using OSS version can be found in
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[6.x]: https://github.com/elastic/helm-charts/releases
 [6.8.13-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.13-SNAPSHOT/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
