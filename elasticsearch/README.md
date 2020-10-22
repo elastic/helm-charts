@@ -3,11 +3,6 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
-**Warning**: This functionality is in beta.
-The design and code is less mature than official GA features and is being
-provided as-is with no warranties. Beta features are not subject to the support
-SLA of official GA features (see [supported configurations][] for more details).
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
