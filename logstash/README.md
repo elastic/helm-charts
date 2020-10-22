@@ -3,6 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Logstash Docker image][].
 
+**Warning**: This functionality is in beta and is subject to change.
 The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
