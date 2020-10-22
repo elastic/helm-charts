@@ -1,5 +1,22 @@
 # Changelog
 
+## 7.9.3
+
+* 7.9.3 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#859](https://github.com/elastic/helm-charts/pull/859) | [@nkammah](https://github.com/nkammah) | [all] Simplify doc in 7.9 branch  |
+| [#767](https://github.com/elastic/helm-charts/pull/767) | [@ebuildy](https://github.com/ebuildy) | [Metricbeat] Dont generate config if not enabled  |
+| [#793](https://github.com/elastic/helm-charts/pull/793) | [@jnbelo](https://github.com/jnbelo) | fixup! Added ingress support to the logstash chart  |
+| [#793](https://github.com/elastic/helm-charts/pull/793) | [@jnbelo](https://github.com/jnbelo) | Added ingress support to the logstash chart  |
+| [#839](https://github.com/elastic/helm-charts/pull/839) | [@jmlrt](https://github.com/jmlrt) | [logstash] use only httpPort in headless service  |
+| [#659](https://github.com/elastic/helm-charts/pull/659) | [@orong-pp](https://github.com/orong-pp) | [filebeat] introduce dnsConfig values for the containers  |
+| [#820](https://github.com/elastic/helm-charts/pull/820) | [@v1r7u](https://github.com/v1r7u) | [metricbeat] support deployment/daemonset specific metrics  |
+| [#831](https://github.com/elastic/helm-charts/pull/831) | [@nkammah](https://github.com/nkammah) | 7.9.3 snapshot  |
+| [#717](https://github.com/elastic/helm-charts/pull/717) | [@qqshfox](https://github.com/qqshfox) | support tpl in logstashConfig, logstashPipeline and kibanaConfig  |
+| [#818](https://github.com/elastic/helm-charts/pull/818) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch][kibana] disable nss dentry cache  |
+
 ## 6.8.13
 
 * 6.8.13 as default version.
@@ -28,7 +45,6 @@
 | [#797](https://github.com/elastic/helm-charts/pull/797) | [@jmlrt](https://github.com/jmlrt) | [helm] bump helm version to 2.16.10  |
 | [#798](https://github.com/elastic/helm-charts/pull/798) | [@jmlrt](https://github.com/jmlrt) | [meta] drop gke 1.14 tests  |
 | [#790](https://github.com/elastic/helm-charts/pull/790) | [@ygel](https://github.com/ygel) | Bump version to 6.8.13-SNAPSHOT   |
-
 
 ## 7.9.2 - 2020/09/24
 * 7.9.2 as the default stack version
