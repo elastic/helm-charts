@@ -1,6 +1,6 @@
 # Default
 
-This example deploy Logstash 6.8.13 using [default values][].
+This example deploy Logstash 6.8.14-SNAPSHOT using [default values][].
 
 
 ## Usage
