@@ -58,7 +58,7 @@ See [7.9.3 - 2020/10/22](#793---20201022) and [7.9.1 - 2020/09/03](#791---202009
 
 [#776][] fixed an issue with headless `Service` when using `extraPorts` value
 (see [Add headless Service for StatefulSet](#add-headless-service-for-statefulset) 
-for more details), unfortunately, it introduced a new bug when using a `NodePort`
+for more details). Unfortunately, it introduced a new bug when using a `NodePort`
 `Service` ([#807][]). This is fixed by [#839][] in 7.9.3 (and 6.8.13).
 
 ## 7.9.0 - 2020/08/18
