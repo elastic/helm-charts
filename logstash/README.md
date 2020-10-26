@@ -8,8 +8,7 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-**Warning**: This branch is used for development, please use [7.9.2][] release
-for released version.
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -92,7 +91,7 @@ in this [note][]).
 to make default probes work. If restricting HTTP API to 127.0.0.1 is required by
 using `http.host: 127.0.0.1`, default probes should be disabled or overrided
 (see [values.yaml][] for the good syntax).
-* An ingress is provided that can be used to expose the HTTP port. This can be 
+* An ingress is provided that can be used to expose the HTTP port. This can be
 useful for the [http input plugin][], for instance.
 
 
@@ -187,7 +186,7 @@ against best practices of containers and immutable infrastructure.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[7.x]: https://github.com/elastic/helm-charts/releases
 [7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
