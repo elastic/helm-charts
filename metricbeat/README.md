@@ -3,6 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -36,7 +37,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.9.3 version.
+This chart is tested with the latest 7.9.4-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -54,8 +55,8 @@ This chart is tested with the latest 7.9.3 version.
 * Checkout the branch : `git checkout 7.9`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat --version 7.9.3 ./helm-charts/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat --version 7.9.3 ./helm-charts/metricbeat`
+  - with Helm 2: `helm install --name metricbeat --version 7.9.4-SNAPSHOT ./helm-charts/metricbeat`
+  - with [Helm 3 (beta)][]: `helm install metricbeat --version 7.9.4-SNAPSHOT ./helm-charts/metricbeat`
 
 ## Upgrading
 
@@ -122,7 +123,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.9.3`                     |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.9.4-SNAPSHOT`                     |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
