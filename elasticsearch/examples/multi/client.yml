@@ -1,11 +1,14 @@
 ---
 
 clusterName: "multi"
-nodeGroup: "data"
+nodeGroup: "client"
 
 roles:
   master: "false"
-  ingest: "true"
-  data: "true"
+  ingest: "false"
+  data: "false"
   ml: "false"
   remote_cluster_client: "false"
+
+persistence:
+  enabled: false
