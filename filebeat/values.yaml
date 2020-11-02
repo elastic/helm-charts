@@ -19,7 +19,7 @@ daemonset:
     # - name: extras
     #   mountPath: /usr/share/extras
     #   readOnly: true 
-  hostNetworking: false
+
   # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for daemonset
   filebeatConfig:
@@ -128,6 +128,11 @@ extraInitContainers: []
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
 
+hostNetworking: false
+dnsConfig: {}
+# options:
+#   - name: ndots
+#     value: "2"
 image: "docker.elastic.co/beats/filebeat"
 imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"

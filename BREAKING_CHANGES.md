@@ -3,6 +3,11 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+  - [7.9.3 - 2020/10/22](#793---20201022)
+    - [Fix Logstash headless Service (end)](#fix-logstash-headless-service-end)
+  - [6.8.13 - 2020/10/22](#6813---20201022)
+  - [7.9.1 - 2020/09/03](#791---20200903)
+    - [Fix Logstash headless Service](#fix-logstash-headless-service)
   - [7.9.0 - 2020/08/18](#790---20200818)
     - [Add Helm 3 support in beta](#add-helm-3-support-in-beta)
   - [6.8.12 - 2020/08/18](#6812---20200818)
@@ -34,6 +39,27 @@
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
+## 7.9.3 - 2020/10/22
+
+### Fix Logstash headless Service (end)
+
+[#839][] fix the issue reported in [#807][] when using a `NodePort` `Service`
+(see [Fix Logstash headless Service](#fix-logstash-headless-service) for more
+details).
+
+## 6.8.13 - 2020/10/22
+
+See [7.9.3 - 2020/10/22](#793---20201022) and [7.9.1 - 2020/09/03](#791---20200903)
+
+
+## 7.9.1 - 2020/09/03
+
+### Fix Logstash headless Service
+
+[#776][] fixed an issue with headless `Service` when using `extraPorts` value
+(see [Add headless Service for StatefulSet](#add-headless-service-for-statefulset) 
+for more details). Unfortunately, it introduced a new bug when using a `NodePort`
+`Service` ([#807][]). This is fixed by [#839][] in 7.9.3 (and 6.8.13).
 
 ## 7.9.0 - 2020/08/18
 
@@ -63,7 +89,7 @@ Upgrading the Logstash chart from a previous version will require using
 `helm upgrade --force`.
 
 **Edit:** This change introduced a bug when using `extraPorts` value ([#765][]).
-This will be fixed by [#766][] with 7.9.1 (and 6.8.13) release.
+This will be fixed by [#776][] with 7.9.1 (and 6.8.13) release.
 
 Meanwhile, you should rollback to 7.8.0 (or 6.8.10) release of Logstash chart if
 you are using some custom `extraPorts` value.
@@ -273,7 +299,9 @@ volumeClaimTemplate:
 [#664]: https://github.com/elastic/helm-charts/pull/664
 [#695]: https://github.com/elastic/helm-charts/pull/695
 [#765]: https://github.com/elastic/helm-charts/issues/765
-[#766]: https://github.com/elastic/helm-charts/issues/766
+[#776]: https://github.com/elastic/helm-charts/issues/776
+[#807]: https://github.com/elastic/helm-charts/issues/807
+[#839]: https://github.com/elastic/helm-charts/issues/839
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch
