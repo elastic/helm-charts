@@ -621,6 +621,25 @@ logstashPipeline:
     )
 
 
+def test_adding_in_pattern():
+    config = """
+logstashPattern:
+  pattern.conf: |
+    DPKG_VERSION [-+~<>\.0-9a-zA-Z]+
+"""
+    r = helm_template(config)
+    c = r["configmap"][name + "-pattern"]["data"]
+
+    assert "pattern.conf" in c
+
+    assert "DPKG_VERSION [-+~<>\.0-9a-zA-Z]+" in c["pattern.conf"]
+
+    assert (
+        "patternchecksum"
+        in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
+
+
 def test_priority_class_name():
     config = """
 priorityClassName: ""
