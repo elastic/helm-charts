@@ -95,6 +95,7 @@ spec:
         args:
           - "-e"
           - "-E"
+          - "http.enabled=true"
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
