@@ -77,7 +77,7 @@ exact versions are defined under `KUBERNETES_VERSIONS` in
 ### Helm versions
 
 While we are checking backward compatibility, the charts are only tested with
-Helm version mentioned in [helm-tester Dockerfile][] (currently 2.16.12).
+Helm version mentioned in [helm-tester Dockerfile][] (currently 2.17.0).
 
 #### Helm 3 beta
 
