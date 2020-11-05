@@ -3,6 +3,7 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
+<!-- development warning placeholder -->
 **Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
