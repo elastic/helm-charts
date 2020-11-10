@@ -7,7 +7,6 @@ metadata:
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
 {{- range $path, $config := .Values.metricbeatConfig }}
@@ -25,7 +24,6 @@ metadata:
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
 {{- range $path, $config := .Values.daemonset.metricbeatConfig }}
@@ -43,7 +41,6 @@ metadata:
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
 {{- range $path, $config := .Values.deployment.metricbeatConfig }}

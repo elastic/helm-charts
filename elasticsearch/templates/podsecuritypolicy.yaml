@@ -5,7 +5,6 @@ kind: PodSecurityPolicy
 metadata:
   name: {{ default $fullName .Values.podSecurityPolicy.name | quote }}
   labels:
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     app: {{ $fullName | quote }}

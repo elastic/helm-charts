@@ -7,7 +7,6 @@ metadata:
   labels:
     app: {{ $fullName | quote}}
     chart: "{{ .Chart.Name }}"
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 {{- with .Values.ingress.annotations }}
   annotations:
@@ -28,6 +27,6 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: {{ .servicePort }}
-        {{- end }}    
+        {{- end }}
   {{- end }}
 {{- end }}
