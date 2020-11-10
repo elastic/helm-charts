@@ -6,7 +6,7 @@ RUN wget --no-verbose https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.
     tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     mv linux-amd64/helm /usr/local/bin/ && \
     mkdir --parents --mode=777 /.config/helm && \
-    HOME=/ helm repo add stable https://kubernetes-charts.storage.googleapis.com/ && \
+    HOME=/ helm repo add stable https://charts.helm.sh/stable && \
     rm -rf linux-amd64
 
 COPY requirements.txt /usr/src/app/
