@@ -3,8 +3,8 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.1][] release
-for supported version.
+<!-- development warning placeholder -->
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -100,6 +100,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `filebeatConfig`         | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`                                                                                              | see [values.yaml][]                |
 | `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride or .Chart.Name` "                                       | `""`                               |
 | `hostNetworking`         | Use host networking in the DaemonSet so that hostname is reported correctly                                                                                                     | `false`                            |
+| `dnsConfig`              | Configurable [dnsConfig][]                                                                                                                                                      | `{}`                               |
 | `hostPathRoot`           | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
@@ -147,7 +148,7 @@ The default Filebeat configuration is using Filebeat pod name for
 `agent.hostname` and `host.name` fields. The `hostname` of the Kubernetes nodes
 can be find in `kubernetes.node.name` field. If you would like to have
 `agent.hostname` and `host.name` fields set to the hostname of the nodes, you'll
-need to set `daemonset.hostNetworking` value to true.
+need to set `hostNetworking` value to true.
 
 Note that enabling [hostNetwork][] make Filebeat pod use the host network
 namespace which gives it access to the host loopback device, services listening
@@ -182,8 +183,8 @@ readinessProbe:
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
-[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/filebeat/README.md
+[7.x]: https://github.com/elastic/helm-charts/releases
+[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -201,6 +202,7 @@ about our development and testing process.
 [helm]: https://helm.sh
 [helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
+[dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

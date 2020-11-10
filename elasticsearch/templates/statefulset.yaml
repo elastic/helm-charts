@@ -154,7 +154,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      {{- if semverCompare ">1.13" .Capabilities.KubeVersion.GitVersion }}
+      {{- if semverCompare ">1.13-0" .Capabilities.KubeVersion.GitVersion }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
       {{- end }}
       initContainers:
@@ -232,6 +232,10 @@ spec:
                 # If the node is starting up wait for the cluster to be ready (request params: "{{ .Values.clusterHealthCheckParams }}" )
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
+
+                # Disable nss cache to avoid filling dentry cache when calling curl
+                # This is required with Elasticsearch Docker using nss < 3.52
+                export NSS_SDB_USE_CACHE=no
 
                 http () {
                   local path="${1}"

@@ -1,115 +1,119 @@
 # Changelog
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+## 7.9.3
+
+* 7.9.3 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#859](https://github.com/elastic/helm-charts/pull/859) | [@nkammah](https://github.com/nkammah) | [all] Simplify doc in 7.9 branch  |
+| [#767](https://github.com/elastic/helm-charts/pull/767) | [@ebuildy](https://github.com/ebuildy) | [Metricbeat] Dont generate config if not enabled  |
+| [#793](https://github.com/elastic/helm-charts/pull/793) | [@jnbelo](https://github.com/jnbelo) | fixup! Added ingress support to the logstash chart  |
+| [#793](https://github.com/elastic/helm-charts/pull/793) | [@jnbelo](https://github.com/jnbelo) | Added ingress support to the logstash chart  |
+| [#839](https://github.com/elastic/helm-charts/pull/839) | [@jmlrt](https://github.com/jmlrt) | [logstash] use only httpPort in headless service  |
+| [#659](https://github.com/elastic/helm-charts/pull/659) | [@orong-pp](https://github.com/orong-pp) | [filebeat] introduce dnsConfig values for the containers  |
+| [#820](https://github.com/elastic/helm-charts/pull/820) | [@v1r7u](https://github.com/v1r7u) | [metricbeat] support deployment/daemonset specific metrics  |
+| [#831](https://github.com/elastic/helm-charts/pull/831) | [@nkammah](https://github.com/nkammah) | 7.9.3 snapshot  |
+| [#717](https://github.com/elastic/helm-charts/pull/717) | [@qqshfox](https://github.com/qqshfox) | support tpl in logstashConfig, logstashPipeline and kibanaConfig  |
+| [#818](https://github.com/elastic/helm-charts/pull/818) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch][kibana] disable nss dentry cache  |
+
+## 6.8.13
+
+* 6.8.13 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#858](https://github.com/elastic/helm-charts/pull/858) | [@nkammah](https://github.com/nkammah) | [all] Simplify doc in 6.8 branch  |
+| [#767](https://github.com/elastic/helm-charts/pull/767) | [@ebuildy](https://github.com/ebuildy) | [Metricbeat] Dont generate config if not enabled  |
+| [#793](https://github.com/elastic/helm-charts/pull/793) | [@jnbelo](https://github.com/jnbelo) | Added ingress support to the logstash chart  |
+| [#839](https://github.com/elastic/helm-charts/pull/839) | [@jmlrt](https://github.com/jmlrt) | [logstash] use only httpPort in headless service  |
+| [#659](https://github.com/elastic/helm-charts/pull/659) | [@orong-pp](https://github.com/orong-pp) | [filebeat] introduce dnsConfig values for the containers  |
+| [#820](https://github.com/elastic/helm-charts/pull/820) | [@v1r7u](https://github.com/v1r7u) | [metricbeat] support deployment/daemonset specific metrics  |
+| [#717](https://github.com/elastic/helm-charts/pull/717) | [@qqshfox](https://github.com/qqshfox) | support tpl in logstashConfig, logstashPipeline and kibanaConfig  |
+| [#818](https://github.com/elastic/helm-charts/pull/818) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch][kibana] disable nss dentry cache  |
+| [#816](https://github.com/elastic/helm-charts/pull/816) | [@jmlrt](https://github.com/jmlrt) | [helm] bump helm version to 2.16.12  |
+| [#811](https://github.com/elastic/helm-charts/pull/811) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix secrets names in examples  |
+| [#729](https://github.com/elastic/helm-charts/pull/729) | [@floretan](https://github.com/floretan) | Include pre-releases in the semver range.  |
+| [#810](https://github.com/elastic/helm-charts/pull/810) | [@luanguimaraesla](https://github.com/luanguimaraesla) | [elasticsearch] add loadBalancer externalTrafficPolicy option  |
+| [#778](https://github.com/elastic/helm-charts/pull/778) | [@erihanse](https://github.com/erihanse) | [metricbeat] Support secrets  |
+| [#786](https://github.com/elastic/helm-charts/pull/786) | [@caiconkhicon](https://github.com/caiconkhicon) | Fix serviceAccount for APM server  |
+| [#770](https://github.com/elastic/helm-charts/pull/770) | [@vliubko](https://github.com/vliubko) | [metricbeat] Add missing labels for deployment  |
+| [#776](https://github.com/elastic/helm-charts/pull/776) | [@itssimon](https://github.com/itssimon) | [logstash] Fix headless service ports spec  |
+| [#763](https://github.com/elastic/helm-charts/pull/763) | [@ebuildy](https://github.com/ebuildy) | Remove duplicate "initialDelaySeconds" field  |
+| [#752](https://github.com/elastic/helm-charts/pull/752) | [@AhmedSamirAhmed](https://github.com/AhmedSamirAhmed) | Missing deletion of "elastic-certificate-crt"  |
+| [#744](https://github.com/elastic/helm-charts/pull/744) | [@SlavaSubotskiy](https://github.com/SlavaSubotskiy) | Fix typo in FAQ  |
+| [#797](https://github.com/elastic/helm-charts/pull/797) | [@jmlrt](https://github.com/jmlrt) | [helm] bump helm version to 2.16.10  |
+| [#798](https://github.com/elastic/helm-charts/pull/798) | [@jmlrt](https://github.com/jmlrt) | [meta] drop gke 1.14 tests  |
+| [#790](https://github.com/elastic/helm-charts/pull/790) | [@ygel](https://github.com/ygel) | Bump version to 6.8.13-SNAPSHOT   |
+
+## 7.9.2 - 2020/09/24
+* 7.9.2 as the default stack version
+* Bump Helm version to 2.16.12 ([@jmlrt](https://github.com/jmlrt))
+
+### Elasticsearch
+
+| PR                                                      | Author                                                 | Title                                                             |
+|---------------------------------------------------------|--------------------------------------------------------|-------------------------------------------------------------------|
+| [#729](https://github.com/elastic/helm-charts/pull/729) | [@floretan](https://github.com/floretan) | Include pre-releases in the semver range. |
+| [#810](https://github.com/elastic/helm-charts/pull/810) | [@luanguimaraesla](https://github.com/luanguimaraesla) | Add loadBalancer externalTrafficPolicy option |
+| [#778](https://github.com/elastic/helm-charts/pull/811) | [@jmlrt ](https://github.com/jmlrt) | Fix secrets names in examples |
+
+### Metricbeat
+
+| PR                                                      | Author                                | Title                             |
+|---------------------------------------------------------|---------------------------------------|-----------------------------------|
+| [#778](https://github.com/elastic/helm-charts/pull/778) | [erihanse](https://github.com/erihanse) | Support secrets |
 
 
-- [7.8.1 - 2020/07/28](#781---20200728)
-  - [APM Server](#apm-server)
-  - [Elasticsearch](#elasticsearch)
-  - [Filebeat](#filebeat)
-  - [Kibana](#kibana)
-  - [Logstash](#logstash)
-  - [Metricbeat](#metricbeat)
-- [6.8.11 - 2020/07/28](#6811---20200728)
-- [7.8.0 - 2020/06/18](#780---20200618)
-  - [APM Server](#apm-server-1)
-  - [Elasticsearch](#elasticsearch-1)
-  - [Logstash](#logstash-1)
-- [7.7.1 - 2020/06/03](#771---20200603)
-  - [Elasticsearch](#elasticsearch-2)
-  - [Kibana](#kibana-1)
-  - [Metricbeat](#metricbeat-1)
-- [6.8.10 - 2020/06/03](#6810---20200603)
-- [7.7.0 - 2020/05/13](#770---20200513)
-  - [APM Server](#apm-server-2)
-  - [Elasticsearch](#elasticsearch-3)
-  - [Filebeat](#filebeat-1)
-  - [Kibana](#kibana-2)
-  - [Logstash](#logstash-2)
-  - [Metricbeat](#metricbeat-2)
-- [6.8.9 - 2020/05/13](#689---20200513)
-- [7.6.2 - 2020/03/31](#762---20200331)
-  - [APM Server](#apm-server-3)
-  - [Elasticsearch](#elasticsearch-4)
-  - [Filebeat](#filebeat-2)
-  - [Kibana](#kibana-3)
-  - [Logstash](#logstash-3)
-- [7.6.1 - 2020/03/04](#761---20200304)
-  - [APM Server](#apm-server-4)
-  - [Elasticsearch](#elasticsearch-5)
-- [7.6.0 - 2020/02/11](#760---20200211)
-  - [APM Server](#apm-server-5)
-  - [Elasticsearch](#elasticsearch-6)
-  - [Filebeat](#filebeat-3)
-  - [Kibana](#kibana-4)
-  - [Logstash](#logstash-4)
-  - [Metricbeat](#metricbeat-3)
-- [7.5.2 - 2020/01/21](#752---20200121)
-  - [Elasticsearch](#elasticsearch-7)
-  - [Filebeat](#filebeat-4)
-  - [Kibana](#kibana-5)
-  - [Logstash](#logstash-5)
-  - [Metricbeat](#metricbeat-4)
-- [7.5.1 - 2019/12/18](#751---20191218)
-  - [Filebeat](#filebeat-5)
-  - [Kibana](#kibana-6)
-  - [Metricbeat](#metricbeat-5)
-- [7.5.0 - 2019/12/02](#750---20191202)
-  - [Elasticsearch](#elasticsearch-8)
-  - [Filebeat](#filebeat-6)
-  - [Kibana](#kibana-7)
-  - [Logstash](#logstash-6)
-  - [Metricbeat](#metricbeat-6)
-- [7.4.1 - 2019/10/23](#741---20191023)
-  - [Elasticsearch](#elasticsearch-9)
-  - [Kibana](#kibana-8)
-  - [Metricbeat](#metricbeat-7)
-- [7.4.0 - 2019/10/01](#740---20191001)
-  - [Elasticsearch](#elasticsearch-10)
-  - [Kibana](#kibana-9)
-  - [Filebeat](#filebeat-7)
-  - [Metricbeat](#metricbeat-8)
-- [7.3.2 - 2019/09/19](#732---20190919)
-  - [Elasticsearch](#elasticsearch-11)
-  - [Kibana](#kibana-10)
-  - [Filebeat](#filebeat-8)
-  - [Metricbeat](#metricbeat-9)
-- [7.3.0 - 2019/07/31](#730---20190731)
-  - [Elasticsearch](#elasticsearch-12)
-  - [Kibana](#kibana-11)
-- [7.2.1-0 - 2019/07/18](#721-0---20190718)
-  - [Elasticsearch](#elasticsearch-13)
-  - [Kibana](#kibana-12)
-  - [Filebeat](#filebeat-9)
-  - [Metricbeat](#metricbeat-10)
-- [7.2.0 - 2019/07/01](#720---20190701)
-  - [Elasticsearch](#elasticsearch-14)
-  - [Kibana](#kibana-13)
-  - [Filebeat](#filebeat-10)
-- [7.1.1 - 2019/06/07](#711---20190607)
-  - [Elasticsearch](#elasticsearch-15)
-  - [Kibana](#kibana-14)
-  - [Filebeat](#filebeat-11)
-- [7.1.0 - 2019/05/21](#710---20190521)
-  - [Elasticsearch](#elasticsearch-16)
-  - [Kibana](#kibana-15)
-  - [Filebeat](#filebeat-12)
-- [7.0.1-alpha1 - 2019/05/01](#701-alpha1---20190501)
-  - [Elasticsearch](#elasticsearch-17)
-  - [Kibana](#kibana-16)
-- [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
-  - [Elasticsearch](#elasticsearch-18)
+## 7.9.1 - 2020/09/03
+* 7.9.1 as the default stack version
+* Helm 2.16.10 support in [#797](https://github.com/elastic/helm-charts/pull/797) [@jmlrt](https://github.com/jmlrt)
+* Drop GKE 1.14 tests in [#798](https://github.com/elastic/helm-charts/pull/798) [@jmlrt](https://github.com/jmlrt)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-<!-- Use this to update TOC: -->
-<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+### APM Server
+
+| PR                                                      | Author                                           | Title                                        |
+|---------------------------------------------------------|--------------------------------------------------|----------------------------------------------|
+| [#763](https://github.com/elastic/helm-charts/pull/763) | [@ebuildy](https://github.com/ebuildy)           | Remove duplicate `initialDelaySeconds` field |
+| [#786](https://github.com/elastic/helm-charts/pull/786) | [@caiconkhicon](https://github.com/caiconkhicon) | Fix `serviceAccount`                         |
+
+### Elasticsearch
+
+| PR                                                      | Author                                                 | Title                                                             |
+|---------------------------------------------------------|--------------------------------------------------------|-------------------------------------------------------------------|
+| [#752](https://github.com/elastic/helm-charts/pull/752) | [@AhmedSamirAhmed](https://github.com/AhmedSamirAhmed) | Remove `elastic-certificate-crt` in security example clean target |
+
+### Logstash
+
+| PR                                                      | Author                                  | Title                           |
+|---------------------------------------------------------|-----------------------------------------|---------------------------------|
+| [#776](https://github.com/elastic/helm-charts/pull/776) | [itssimon](https://github.com/itssimon) | Fix headless service ports spec |
+
+### Metricbeat
+
+| PR                                                      | Author                                | Title                             |
+|---------------------------------------------------------|---------------------------------------|-----------------------------------|
+| [#770](https://github.com/elastic/helm-charts/pull/770) | [vliubko](https://github.com/vliubko) | Add missing labels for deployment |
+
+
+## 7.9.0 - 2020/08/18
+* 7.9.0 as the default stack version
+* Add Helm 3 support in beta ([@jmlrt](https://github.com/jmlrt))
+* Some improvements in CI tests jobs ([@jmlrt](https://github.com/jmlrt))
+
+
+
+## 6.8.12 - 2020/08/18
+
+* 6.8.12 as the default stack version
+* See [7.9.0 CHANGELOG](#790---20200818) for other changes
 
 
 ## 7.8.1 - 2020/07/28
 
 * 7.8.1 as the default stack version
 * Some documentation fixes and improvements ([@ArthurFritz](https://github.com/ArthurFritz), [@fatmcgav](https://github.com/fatmcgav) and [AhmedSamirAhmed](https://github.com/AhmedSamirAhmed))
-* Some improvements in CI tests jobs in ([@jmlrt](https://github.com/jmlrt)) and [@fatmcgav](https://github.com/fatmcgav))
+* Some improvements in CI tests jobs ([@jmlrt](https://github.com/jmlrt)) and [@fatmcgav](https://github.com/fatmcgav))
 
 ### APM Server
 
@@ -137,9 +141,9 @@
 
 ### Kibana
 
-| PR                                                      | Author                                             | Title                                      |
-|---------------------------------------------------------|----------------------------------------------------|--------------------------------------------|
-| [#726](https://github.com/elastic/helm-charts/pull/726) | [@debojitkakoti ](https://github.com/debojitkakoti ) | Add loadbalancerIP to Service spec             |
+| PR                                                      | Author                                               | Title                              |
+|---------------------------------------------------------|------------------------------------------------------|------------------------------------|
+| [#726](https://github.com/elastic/helm-charts/pull/726) | [@debojitkakoti ](https://github.com/debojitkakoti ) | Add loadbalancerIP to Service spec |
 
 
 ### Logstash

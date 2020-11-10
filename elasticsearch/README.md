@@ -3,8 +3,8 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
-**Warning**: This branch is used for development, please use [7.8.1][] release
-for supported version.
+<!-- development warning placeholder -->
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -157,6 +157,7 @@ support multiple versions with minimal changes.
 | `secretMounts`                     | Allows you easily mount a secret as a file inside the StatefulSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                                                                                                 | `[]`                                            |
 | `securityContext`                  | Allows you to set the [securityContext][] for the container                                                                                                                                                                                               | see [values.yaml][]                             |
 | `service.annotations`              | [LoadBalancer annotations][] that Kubernetes will use for the service. This will configure load balancer if `service.type` is `LoadBalancer`                                                                                                              | `{}`                                            |
+| `service.externalTrafficPolicy`              | Some cloud providers allow you to specify the [LoadBalancer externalTrafficPolicy][]. Kubernetes will use this to preserve the client source IP. This will configure load balancer if `service.type` is `LoadBalancer`                                                                                                              | `""`                                            |
 | `service.httpPortName`             | The name of the http port within the service                                                                                                                                                                                                              | `http`                                          |
 | `service.labelsHeadless`           | Labels to be added to headless service                                                                                                                                                                                                                    | `{}`                                            |
 | `service.labels`                   | Labels to be added to non-headless service                                                                                                                                                                                                                | `{}`                                            |
@@ -289,16 +290,16 @@ Create the secret, the key name needs to be the keystore key path. In this
 example we will create a secret from a file and from a literal string.
 
 ```
-kubectl create secret generic encryption_key --from-file=xpack.watcher.encryption_key=./watcher_encryption_key
-kubectl create secret generic slack_hook --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+kubectl create secret generic encryption-key --from-file=xpack.watcher.encryption_key=./watcher_encryption_key
+kubectl create secret generic slack-hook --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
 ```
 
 To add these secrets to the keystore:
 
 ```
 keystore:
-  - secretName: encryption_key
-  - secretName: slack_hook
+  - secretName: encryption-key
+  - secretName: slack-hook
 ```
 
 #### Multiple keys
@@ -307,12 +308,12 @@ All keys in the secret will be added to the keystore. To create the previous
 example in one secret you could also do:
 
 ```
-kubectl create secret generic keystore_secrets --from-file=xpack.watcher.encryption_key=./watcher_encryption_key --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+kubectl create secret generic keystore-secrets --from-file=xpack.watcher.encryption_key=./watcher_encryption_key --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
 ```
 
 ```
 keystore:
-  - secretName: keystore_secrets
+  - secretName: keystore-secrets
 ```
 
 #### Custom paths and keys
@@ -325,7 +326,7 @@ example we will only add the `slack_hook` key from a secret that also has other
 keys. Our secret looks like this:
 
 ```
-kubectl create secret generic slack_secrets --from-literal=slack_channel='#general' --from-literal=slack_hook='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
+kubectl create secret generic slack-secrets --from-literal=slack_channel='#general' --from-literal=slack_hook='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
 ```
 
 We only want to add the `slack_hook` key to the keystore at path
@@ -333,7 +334,7 @@ We only want to add the `slack_hook` key to the keystore at path
 
 ```
 keystore:
-  - secretName: slack_secrets
+  - secretName: slack-secrets
     items:
     - key: slack_hook
       path: xpack.notification.slack.account.monitoring.secure_url
@@ -384,9 +385,9 @@ lifecycle:
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[7.x]: https://github.com/elastic/helm-charts/releases
 [#63]: https://github.com/elastic/helm-charts/issues/63
-[7.8.1]: https://github.com/elastic/helm-charts/blob/7.8.1/elasticsearch/README.md
+[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -427,6 +428,7 @@ about our development and testing process.
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [loadBalancer annotations]: https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws
+[loadBalancer externalTrafficPolicy]: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
 [loadBalancer]: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [migration guide]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/migration/README.md

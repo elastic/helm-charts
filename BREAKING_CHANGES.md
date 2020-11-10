@@ -3,9 +3,17 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [7.8.1 - 2020/07/28](#781---20200728)
+  - [7.9.3 - 2020/10/22](#793---20201022)
+    - [Fix Logstash headless Service (end)](#fix-logstash-headless-service-end)
+  - [6.8.13 - 2020/10/22](#6813---20201022)
+  - [7.9.1 - 2020/09/03](#791---20200903)
+    - [Fix Logstash headless Service](#fix-logstash-headless-service)
+  - [7.9.0 - 2020/08/18](#790---20200818)
+    - [Add Helm 3 support in beta](#add-helm-3-support-in-beta)
+  - [6.8.12 - 2020/08/18](#6812---20200818)
+  - [7.8.1 - 2020/07/28](#781---20200728)
     - [Add headless Service for StatefulSet](#add-headless-service-for-statefulset)
-- [6.8.11 - 2020/07/28](#6811---20200728)
+  - [6.8.11 - 2020/07/28](#6811---20200728)
 - [7.8.0 - 2020/06/18](#780---20200618)
     - [Stable Elasticsearch deprecated](#stable-elasticsearch-deprecated)
     - [APM Server memory limit](#apm-server-memory-limit)
@@ -31,8 +39,42 @@
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
+## 7.9.3 - 2020/10/22
 
-# 7.8.1 - 2020/07/28
+### Fix Logstash headless Service (end)
+
+[#839][] fix the issue reported in [#807][] when using a `NodePort` `Service`
+(see [Fix Logstash headless Service](#fix-logstash-headless-service) for more
+details).
+
+## 6.8.13 - 2020/10/22
+
+See [7.9.3 - 2020/10/22](#793---20201022) and [7.9.1 - 2020/09/03](#791---20200903)
+
+
+## 7.9.1 - 2020/09/03
+
+### Fix Logstash headless Service
+
+[#776][] fixed an issue with headless `Service` when using `extraPorts` value
+(see [Add headless Service for StatefulSet](#add-headless-service-for-statefulset) 
+for more details). Unfortunately, it introduced a new bug when using a `NodePort`
+`Service` ([#807][]). This is fixed by [#839][] in 7.9.3 (and 6.8.13).
+
+## 7.9.0 - 2020/08/18
+
+### Add Helm 3 support in beta
+
+Starting with 7.9.0, all the main blockers for Helm 3 are fixed. While automated
+CI tests are not updated to use Helm 3 yet, deploying these charts Helm 3 with
+Helm 3 is now supported in beta.
+
+
+## 6.8.12 - 2020/08/18
+
+See [7.9.0 Breaking changes](#790---20200818)
+
+## 7.8.1 - 2020/07/28
 
 ### Add headless Service for StatefulSet
 
@@ -46,8 +88,14 @@ requirement and fails if `serviceName` is missing.
 Upgrading the Logstash chart from a previous version will require using
 `helm upgrade --force`.
 
+**Edit:** This change introduced a bug when using `extraPorts` value ([#765][]).
+This will be fixed by [#776][] with 7.9.1 (and 6.8.13) release.
 
-# 6.8.11 - 2020/07/28
+Meanwhile, you should rollback to 7.8.0 (or 6.8.10) release of Logstash chart if
+you are using some custom `extraPorts` value.
+
+
+## 6.8.11 - 2020/07/28
 
 See [7.8.1 Breaking changes](#781---20200728)
 
@@ -250,6 +298,10 @@ volumeClaimTemplate:
 [#623]: https://github.com/elastic/helm-charts/pull/623
 [#664]: https://github.com/elastic/helm-charts/pull/664
 [#695]: https://github.com/elastic/helm-charts/pull/695
+[#765]: https://github.com/elastic/helm-charts/issues/765
+[#776]: https://github.com/elastic/helm-charts/issues/776
+[#807]: https://github.com/elastic/helm-charts/issues/807
+[#839]: https://github.com/elastic/helm-charts/issues/839
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch

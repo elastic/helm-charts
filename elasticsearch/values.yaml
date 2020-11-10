@@ -12,6 +12,8 @@ roles:
   master: "true"
   ingest: "true"
   data: "true"
+  remote_cluster_client: "true"
+# ml: "true" # ml is not availble with elasticsearch-oss
 
 replicas: 3
 minimumMasterNodes: 2
@@ -182,6 +184,7 @@ service:
   transportPortName: transport
   loadBalancerIP: ""
   loadBalancerSourceRanges: []
+  externalTrafficPolicy: ""
 
 updateStrategy: RollingUpdate
 

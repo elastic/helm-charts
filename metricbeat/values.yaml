@@ -3,6 +3,8 @@
 daemonset:
   # Annotations to apply to the daemonset
   annotations: {}
+  # additionals labels
+  labels: {}
   affinity: {}
   # Include the daemonset
   enabled: true
@@ -97,6 +99,8 @@ daemonset:
 deployment:
   # Annotations to apply to the deployment
   annotations: {}
+  # additionals labels
+  labels: {}
   affinity: {}
   # Include the deployment
   enabled: true
@@ -197,9 +201,6 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 5
 
-# additionals labels
-labels: {}
-
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
@@ -255,6 +256,22 @@ kube_state_metrics:
   # host is used only when kube_state_metrics.enabled: false
   host: ""
 
+# Add sensitive data to k8s secrets
+secrets: []
+#  - name: "env"
+#    value:
+#      ELASTICSEARCH_PASSWORD: "LS1CRUdJTiBgUFJJVkFURSB"
+#      api_key: ui2CsdUadTiBasRJRkl9tvNnw
+#  - name: "tls"
+#    value:
+#      ca.crt: |
+#        LS0tLS1CRUdJT0K
+#        LS0tLS1CRUdJT0K
+#        LS0tLS1CRUdJT0K
+#        LS0tLS1CRUdJT0K
+#      cert.crt: "LS0tLS1CRUdJTiBlRJRklDQVRFLS0tLS0K"
+#      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
+
 # DEPRECATED
 affinity: {}
 envFrom: []
@@ -269,3 +286,4 @@ podSecurityContext: {}
 resources: {}
 secretMounts: []
 tolerations: []
+labels: {}
