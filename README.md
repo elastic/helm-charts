@@ -11,7 +11,6 @@
   - [Support Matrix](#support-matrix)
   - [Kubernetes Versions](#kubernetes-versions)
   - [Helm versions](#helm-versions)
-    - [Helm 3 beta](#helm-3-beta)
 - [ECK](#eck)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
