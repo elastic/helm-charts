@@ -6,9 +6,9 @@ PREFIX := helm-es-multi
 RELEASE := helm-es-multi-master
 
 install:
-	helm upgrade --wait --timeout=600 --install --values ./master.yml $(PREFIX)-master ../../
-	helm upgrade --wait --timeout=600 --install --values ./data.yml $(PREFIX)-data ../../
-	helm upgrade --wait --timeout=600 --install --values ./client.yml $(PREFIX)-client ../../
+	helm upgrade --wait --timeout=900 --install --values ./master.yml $(PREFIX)-master ../../
+	helm upgrade --wait --timeout=900 --install --values ./data.yml $(PREFIX)-data ../../
+	helm upgrade --wait --timeout=900 --install --values ./client.yml $(PREFIX)-client ../../
 
 test: install goss
 

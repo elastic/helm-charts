@@ -5,7 +5,7 @@ include ../../../helpers/examples.mk
 RELEASE := helm-apm-server-security
 
 install:
-	helm upgrade --wait --timeout=600 --install $(RELEASE) --values values.yaml ../../
+	helm upgrade --wait --timeout=900 --install $(RELEASE) --values values.yaml ../../
 
 test: install goss
 

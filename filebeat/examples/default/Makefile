@@ -5,7 +5,7 @@ include ../../../helpers/examples.mk
 RELEASE := helm-filebeat-default
 
 install:
-	helm upgrade --wait --timeout=600 --install $(RELEASE) ../../
+	helm upgrade --wait --timeout=900 --install $(RELEASE) ../../
 
 test: install goss
 
