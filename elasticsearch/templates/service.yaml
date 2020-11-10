@@ -8,6 +8,7 @@ metadata:
   name: {{ template "elasticsearch.uname" . }}
 {{- end }}
   labels:
+    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
     app: "{{ template "elasticsearch.uname" . }}"
@@ -52,6 +53,7 @@ metadata:
   name: {{ template "elasticsearch.uname" . }}-headless
 {{- end }}
   labels:
+    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
     app: "{{ template "elasticsearch.uname" . }}"

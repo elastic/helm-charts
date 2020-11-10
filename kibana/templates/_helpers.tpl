@@ -36,6 +36,7 @@ Common labels
 {{- define "kibana.labels" -}}
 app: {{ .Chart.Name }}
 release: {{ .Release.Name | quote }}
+heritage: {{ .Release.Service }}
 {{- if .Values.labels }}
 {{ toYaml .Values.labels }}
 {{- end }}

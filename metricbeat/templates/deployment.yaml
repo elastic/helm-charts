@@ -8,6 +8,7 @@ metadata:
   labels:
     app: '{{ template "metricbeat.fullname" . }}-metrics'
     chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+    heritage: '{{ .Release.Service }}'
     release: '{{ .Release.Name }}'
     {{- if .Values.deployment.labels }}
     {{- range $key, $value := .Values.deployment.labels }}
@@ -29,6 +30,7 @@ spec:
   selector:
     matchLabels:
       app: '{{ template "metricbeat.fullname" . }}-metrics'
+      heritage: '{{ .Release.Service }}'
       release: '{{ .Release.Name }}'
   template:
     metadata:
@@ -43,6 +45,7 @@ spec:
       labels:
         app: '{{ template "metricbeat.fullname" . }}-metrics'
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+        heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
         {{- if .Values.deployment.labels }}
         {{- range $key, $value := .Values.deployment.labels }}

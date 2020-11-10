@@ -7,6 +7,7 @@ metadata:
   labels:
     app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
 {{- range $path, $config := .Values.logstashConfig }}
