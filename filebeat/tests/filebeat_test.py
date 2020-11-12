@@ -400,3 +400,22 @@ fullnameOverride: 'filebeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
+
+
+def test_enable_monitoring():
+    config = """
+monitor:
+    enabled: true
+"""
+    r = helm_template(config)
+
+    assert name in r["servicemonitor"]
+    assert (
+        r["servicemonitor"][name]["spec"]["endpoints"][0]["interval"] == "60s"
+    )
+    assert (
+        r["servicemonitor"][name]["spec"]["endpoints"][0]["targetPort"] == 9479
+    )
+    assert (
+        r["servicemonitor"][name]["spec"]["endpoints"][0]["path"] == "/metrics"
+    )
