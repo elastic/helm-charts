@@ -4,7 +4,7 @@ include ../../../helpers/examples.mk
 RELEASE := helm-kibana-security
 
 install:
-	helm upgrade --wait --timeout=600s --install --values ./security.yml $(RELEASE) ../../
+	helm upgrade --wait --timeout=900s --install --values ./security.yml $(RELEASE) ../../
 
 test: secrets install goss
 

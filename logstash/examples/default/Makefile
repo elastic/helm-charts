@@ -5,10 +5,10 @@ include ../../../helpers/examples.mk
 RELEASE := helm-logstash-default
 
 install:
-	helm upgrade --wait --timeout=900s --install $(RELEASE) ../../
+	helm upgrade --wait --timeout=1200s --install $(RELEASE) ../../
 
 restart:
-	helm upgrade --set terminationGracePeriod=121 --wait --timeout=900s --install $(RELEASE) ../../
+	helm upgrade --set terminationGracePeriod=121 --wait --timeout=1200s --install $(RELEASE) ../../
 
 test: install goss
 

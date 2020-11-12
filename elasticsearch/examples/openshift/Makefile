@@ -7,7 +7,7 @@ template:
 	helm template --values ./values.yaml ../../
 
 install:
-	helm upgrade --wait --timeout=600s --install $(RELEASE) --values ./values.yaml ../../
+	helm upgrade --wait --timeout=900s --install $(RELEASE) --values ./values.yaml ../../
 
 test: install goss
 

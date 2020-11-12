@@ -5,7 +5,7 @@ RELEASE := helm-kibana-default
 
 install:
 	echo "Goss container: $(GOSS_CONTAINER)"
-	helm upgrade --wait --timeout=600s --install $(RELEASE) ../../
+	helm upgrade --wait --timeout=900s --install $(RELEASE) ../../
 
 test: install goss
 
