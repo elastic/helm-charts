@@ -140,6 +140,16 @@ priorityClassName: ""
 
 updateStrategy: RollingUpdate
 
+# This creates a ServiceMonitor for prometheus in order to scrape metrics.
+# Filebeat does not natively support OpenMetrics, so if you enable this,
+# you will also need to add an extraContainer entry which provides a filebeat
+# exporter.  ie. https://github.com/trustpilot/beat-exporter
+monitor:
+  enabled: false
+  path: /metrics
+  port: 9479
+  interval: 60s
+
 # Override various naming aspects of this chart
 # Only edit these if you know what you're doing
 nameOverride: ""

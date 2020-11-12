@@ -1,0 +1,24 @@
+{{- if .Values.monitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+spec:
+  endpoints:
+  - interval: {{ .Values.monitor.interval }}
+    path: {{ .Values.monitor.path }}
+    targetPort: {{ .Values.monitor.port }}
+  jobLabel: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: "{{ template "filebeat.fullname" . }}"
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+      heritage: {{ .Release.Service | quote }}
+      release: {{ .Release.Name | quote }}
+      {{- range $key, $value := .Values.labels }}
+      {{ $key }}: {{ $value | quote }}
+      {{- end }}
+
+{{- end }}
