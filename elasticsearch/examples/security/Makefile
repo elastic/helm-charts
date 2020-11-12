@@ -6,7 +6,7 @@ RELEASE := helm-es-security
 ELASTICSEARCH_IMAGE := docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION)
 
 install:
-	helm upgrade --wait --timeout=600 --install --values ./security.yml $(RELEASE) ../../
+	helm upgrade --wait --timeout=900 --install --values ./security.yml $(RELEASE) ../../
 
 purge:
 	kubectl delete secrets elastic-credentials elastic-certificates elastic-certificate-pem elastic-certificate-crt|| true
