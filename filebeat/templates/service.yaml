@@ -1,0 +1,32 @@
+{{- if .Values.monitor.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "filebeat.fullname" . }}
+  labels:
+    app: "{{ template "filebeat.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  clusterIP: None
+  selector:
+    app: "{{ template "filebeat.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: {{ .Values.monitor.port }}
+      targetPort: {{ .Values.monitor.port }}
+      protocol: TCP
+
+{{- end }}
