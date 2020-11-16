@@ -22,6 +22,7 @@ RUN yum -y install \
 RUN curl -O https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
     unzip vault_${VAULT_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \
     chmod +x /usr/local/bin/vault && \
+    rm -f vault_${VAULT_VERSION}_linux_amd64.zip && \
     vault version
 
 RUN curl -O https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
@@ -37,14 +38,14 @@ RUN curl -O https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
 RUN curl -O https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     mv linux-amd64/helm /usr/local/bin/ && \
-    rm -rf linux-amd64 && \
+    rm -rf helm-v${HELM_VERSION}-linux-amd64.tar.gz linux-amd64 && \
     helm version --client
 
 RUN curl -O https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
     tar xfv docker* && \
     mv docker/docker /usr/local/bin && \
-    rm -rf docker/ && \
-    docker
+    rm -rf docker-${DOCKER_VERSION}.tgz docker/ && \
+    docker -v
 
 RUN curl -O -L https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 && \
     mv jq-linux64 /usr/local/bin/jq && \
