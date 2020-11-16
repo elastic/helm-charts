@@ -152,7 +152,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      {{- if semverCompare ">1.13-0" .Capabilities.KubeVersion.GitVersion }}
+      {{- if semverCompare ">1.13-0" .Capabilities.KubeVersion.Version }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
       {{- end }}
       initContainers:

@@ -23,7 +23,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Return the appropriate apiVersion for ingress.
 */}}
 {{- define "kibana.ingress.apiVersion" -}}
-{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.Version -}}
 {{- print "extensions/v1beta1" -}}
 {{- else -}}
 {{- print "networking.k8s.io/v1beta1" -}}
