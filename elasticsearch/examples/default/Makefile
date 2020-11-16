@@ -8,7 +8,7 @@ install:
 	helm upgrade --wait --timeout=900s --install $(RELEASE) ../../
 
 restart:
-	helm upgrade --set terminationGracePeriod=121 --wait --timeout=600s --install $(RELEASE) ../../
+	helm upgrade --set terminationGracePeriod=121 --wait --timeout=900s --install $(RELEASE) ../../
 
 test: install goss
 
