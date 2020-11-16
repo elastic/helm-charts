@@ -1,0 +1,15 @@
+default: test
+
+include ../../../helpers/examples.mk
+
+CHART := elastic/kibana
+RELEASE := helm-kibana-upgrade
+FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
+
+install:
+	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
+
+test: install goss
+
+purge:
+	helm del $(RELEASE)
