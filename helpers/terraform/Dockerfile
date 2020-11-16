@@ -38,7 +38,9 @@ RUN curl -O https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     mv linux-amd64/helm /usr/local/bin/ && \
     rm -rf linux-amd64 && \
-    helm version --client
+    helm version --client && \
+    mkdir --parents --mode=777 /.config/helm && \
+    HOME=/ helm repo add stable https://charts.helm.sh/stable
 
 RUN curl -O https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
     tar xfv docker* && \
