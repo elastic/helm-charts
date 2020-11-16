@@ -11,12 +11,11 @@ ES_SUITE:
   - oss
   - security
   - upgrade
-  - 6.x
 KIBANA_SUITE:
   - default
   - oss
   - security
-  - 6.x
+  - upgrade
 FILEBEAT_SUITE:
   - default
   - oss
@@ -26,17 +25,18 @@ METRICBEAT_SUITE:
   - default
   - oss
   - security
-  - 6.x
+  - upgrade
 LOGSTASH_SUITE:
   - default
   - oss
   - elasticsearch
-  - 6.x
+  - security
+  - upgrade
 APM_SERVER_SUITE:
   - default
   - oss
   - security
-  - 6.x
+  - upgrade
 KUBERNETES_VERSION:
   - '1.14'
   - '1.15'
