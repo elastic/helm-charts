@@ -50,8 +50,9 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name logstash --version <version> elastic/logstash`
-  - with [Helm 3 (beta)][]: `helm install logstash --version <version> elastic/logstash`
+  - with Helm 3: `helm install logstash --version <version> elastic/logstash`
+  - with Helm 2 (deprecated): `helm install --name logstash --version <version> elastic/logstash`
+
 
 
 ### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
@@ -59,8 +60,8 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 2: `helm install --name logstash ./helm-charts/logstash --set imageTag=7.10.0-SNAPSHOT`
-  - with [Helm 3 (beta)][]: `helm install logstash ./helm-charts/logstash --set imageTag=7.10.0-SNAPSHOT`
+  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.10.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.10.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -116,7 +117,7 @@ useful for the [http input plugin][], for instance.
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.9.3-SNAPSHOT`                      |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.10.0-SNAPSHOT`                     |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `ingress`                 | Configurable [ingress][] for external access to Logstash HTTP port.                                                                                                                                                                  | see [values.yaml][]                   |
@@ -205,7 +206,6 @@ about our development and testing process.
 [examples]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples/oss
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [http input plugin]: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

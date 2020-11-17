@@ -47,8 +47,8 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat --version <version> elastic/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat --version <version> elastic/metricbeat`
+  - with Helm 3: `helm install metricbeat --version <version> elastic/metricbeat`
+  - with Helm 2 (deprecated): `helm install --name metricbeat --version <version> elastic/metricbeat`
 
 
 ### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
@@ -56,8 +56,8 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=7.10.0-SNAPSHOT`
-  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=7.10.0-SNAPSHOT`
+  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=7.10.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=7.10.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -125,7 +125,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.10.0-SNAPSHOT`                     |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.10.0-SNAPSHOT`                    |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
@@ -225,7 +225,6 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/security
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
