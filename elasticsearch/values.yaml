@@ -135,7 +135,12 @@ extraVolumeMounts: []
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraContainers: []
+extraContainers: {}
+  # doSomething:
+  #   name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
+# OR:
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
