@@ -61,8 +61,9 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name elasticsearch --version <version> elastic/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch --version <version> elastic/elasticsearch`
+  - with Helm 3: `helm install elasticsearch --version <version> elastic/elasticsearch`
+  - with Helm 2 (deprecated): `helm install --name elasticsearch --version <version> elastic/elasticsearch`
+
 
 ### Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions
 
@@ -71,8 +72,9 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 2: `helm install --name elasticsearch --version 6.8.14-SNAPSHOT ./helm-charts/elasticsearch`
-  - with [Helm 3 (beta)][]: `helm install elasticsearch --version 6.8.14-SNAPSHOT ./helm-charts/elasticsearch`
+  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=6.8.14-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=6.8.14-SNAPSHOT`
+
 
 ## Upgrading
 
@@ -159,7 +161,7 @@ support multiple versions with minimal changes.
 | `secretMounts`                     | Allows you easily mount a secret as a file inside the StatefulSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                                                                                                 | `[]`                                            |
 | `securityContext`                  | Allows you to set the [securityContext][] for the container                                                                                                                                                                                               | see [values.yaml][]                             |
 | `service.annotations`              | [LoadBalancer annotations][] that Kubernetes will use for the service. This will configure load balancer if `service.type` is `LoadBalancer`                                                                                                              | `{}`                                            |
-| `service.externalTrafficPolicy`              | Some cloud providers allow you to specify the [LoadBalancer externalTrafficPolicy][]. Kubernetes will use this to preserve the client source IP. This will configure load balancer if `service.type` is `LoadBalancer`                                                                                                              | `""`                                            |
+| `service.externalTrafficPolicy`    | Some cloud providers allow you to specify the [LoadBalancer externalTrafficPolicy][]. Kubernetes will use this to preserve the client source IP. This will configure load balancer if `service.type` is `LoadBalancer`                                    | `""`                                            |
 | `service.httpPortName`             | The name of the http port within the service                                                                                                                                                                                                              | `http`                                          |
 | `service.labelsHeadless`           | Labels to be added to headless service                                                                                                                                                                                                                    | `{}`                                            |
 | `service.labels`                   | Labels to be added to non-headless service                                                                                                                                                                                                                | `{}`                                            |
@@ -416,7 +418,6 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/README.md#how-to-install-plugins
 [how to use the keystore]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/README.md#how-to-use-the-keystore
