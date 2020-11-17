@@ -21,6 +21,7 @@ FILEBEAT_SUITE:
   - default
   - oss
   - security
+  - upgrade
 METRICBEAT_SUITE:
   - default
   - oss

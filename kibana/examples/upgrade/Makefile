@@ -2,7 +2,7 @@ default: test
 
 include ../../../helpers/examples.mk
 
-CHART := elastic/kibana
+CHART := kibana
 RELEASE := helm-kibana-upgrade
 FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
 

@@ -19,7 +19,7 @@ usage() {
 
 	OPTIONS:
     --chart <chart-name>
-      Name of the Helm chart to install (ie: elastic/elasticsearch)
+      Name of the Elastic Helm chart to install (ie: elasticsearch)
 	  --release <release-name>
 	    Name of the Helm release to install (ie: helm-upgrade-elasticsearch)
 	  --from <version>
@@ -62,11 +62,10 @@ do
 done
 
 helm repo add elastic https://helm.elastic.co
-helm repo update
 
 # Initial install
 printf "Installing %s %s\n" "$RELEASE" "$FROM"
-helm upgrade --wait --timeout=1200s --install --version "$FROM" --values values.yaml "$RELEASE" "$CHART"
+helm upgrade --wait --timeout=1200s --install --version "$FROM" --values values.yaml "$RELEASE" elastic/"$CHART"
 
 # Upgrade
 printf "Upgrading %s\n" "$RELEASE"

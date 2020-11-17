@@ -2,7 +2,7 @@ default: test
 
 include ../../../helpers/examples.mk
 
-CHART := elastic/metricbeat
+CHART := metricbeat
 RELEASE := helm-metricbeat-upgrade
 #FROM := 7.10.0	# upgrade from version < 7.10.0 is failing due to selector
 								# breaking change in https://github.com/elastic/helm-charts/pull/516

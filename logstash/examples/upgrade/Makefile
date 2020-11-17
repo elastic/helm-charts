@@ -2,7 +2,7 @@ default: test
 
 include ../../../helpers/examples.mk
 
-CHART := elastic/logstash
+CHART := logstash
 RELEASE := helm-logstash-upgrade
 FROM := 7.9.0	# upgrade from version < 7.9.0 is failing due to headless service breaking change
 
