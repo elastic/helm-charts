@@ -6,6 +6,8 @@ then upgrade it.
 
 ## Usage
 
+* Add the Elastic Helm charts repo: `helm repo add elastic https://helm.elastic.co`
+
 * Deploy and upgrade Logstash chart with the default values: `make install`
 
 

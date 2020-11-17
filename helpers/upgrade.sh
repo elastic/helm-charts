@@ -61,9 +61,8 @@ do
   esac
 done
 
-
-
 helm repo add elastic https://helm.elastic.co
+helm repo update
 
 # Initial install
 printf "Installing %s %s\n" "$RELEASE" "$FROM"
