@@ -329,6 +329,23 @@ extraContainers:
     } in extraContainer
 
 
+def test_adding_a_extra_container_as_yaml_map():
+    config = """
+extraContainers:
+  someContainer:
+    name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraContainer = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraContainer
+
+
 def test_adding_a_extra_init_container():
     config = """
 extraInitContainers: |
