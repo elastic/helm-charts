@@ -63,3 +63,25 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the provided array, map values, or templatable string as an array.
+*/}}
+{{- define "elasticsearch.statefulset.toArray" -}}
+{{- if .values }}
+# Currently some extra blocks accept strings
+# to continue with backwards compatibility this is being kept
+# whilst also allowing for yaml to be specified too.
+{{- if eq "string" (printf "%T" .values) }}
+{{ tpl .values .root }}
+{{- else }}
+{{- if kindIs "map" .values }}
+{{- range $container := .values }}
+- {{ toYaml $container | nindent 2 }}
+{{- end }}
+{{- else }}
+{{ toYaml .values }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}
