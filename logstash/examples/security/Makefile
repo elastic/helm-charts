@@ -10,5 +10,5 @@ install:
 test: install goss
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)
 	kubectl delete $$(kubectl get pvc -l release=$(RELEASE) -o name)
