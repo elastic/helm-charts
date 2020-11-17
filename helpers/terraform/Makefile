@@ -13,7 +13,7 @@ export TF_VAR_kubernetes_version=$(KUBERNETES_VERSION)
 
 .PHONY: help
 help: ## Display this help
-	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
 .PHONY: clean
 clean: ## Delete terraform working directory and local state files
@@ -65,19 +65,22 @@ creds: credentials.json ## Get gke credentials
 	kubectl create namespace $(NAMESPACE) || true
 	kubectl config set-context $$(kubectl config current-context) --namespace=$(NAMESPACE)
 
-.PHONY: k8s
-k8s: apply creds ## Configure gke cluster
+.PHONY: up
+up: apply creds ## Configure gke cluster
 	kubectl get cs
 
-.PHONY: up
-up: k8s ## Install helm on gke cluster
-	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
-	for i in 1 2 3 4 5; do helm init --wait --upgrade && break || sleep 5; done
+.PHONY: k8s-staging-registry
+k8s-staging-registry: creds ## Create the staging registry auth secret in k8s
+	@DOCKER_PASSWORD="$$(vault read -field=password secret/devops-ci/docker.elastic.co/devops-ci)" && \
+		kubectl create secret docker-registry registry-staging \
+		--docker-server="docker.elastic.co" \
+		--docker-username="devops-ci" \
+		--docker-password="$$DOCKER_PASSWORD"
 
 .PHONY: integration
 integration: creds ## Deploy helm chart and run integration tests
 	cd ../../$(CHART)/ && \
-	helm init --client-only && \
+	helm repo add stable https://charts.helm.sh/stable && \
 	helm dependency update && \
 	cd ./examples/$(SUITE) && \
 	make
@@ -85,3 +88,8 @@ integration: creds ## Deploy helm chart and run integration tests
 .PHONY: build
 build: ## Build helm-charts docker image
 	for i in 1 2 3 4 5; do docker build -t helm-charts . && break || sleep 5; done
+
+.PHONY: pull-private-images
+pull-private-images: ## Pull private images used in testing
+	cd ../../elasticsearch/examples/security/ && \
+		make pull-elasticsearch-image

@@ -6,13 +6,20 @@ metadata:
   annotations:
     "helm.sh/hook": test-success
 spec:
+  securityContext:
+{{ toYaml .Values.podSecurityContext | indent 4 }}
   containers:
   - name: "{{ .Release.Name }}-{{ randAlpha 5 | lower }}-test"
     image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+    imagePullPolicy: "{{ .Values.imagePullPolicy }}"
     command:
       - "sh"
       - "-c"
       - |
         #!/usr/bin/env bash -e
         curl -XGET --fail '{{ template "elasticsearch.uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
+  {{- if .Values.imagePullSecrets }}
+  imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 4 }}
+  {{- end }}
   restartPolicy: Never

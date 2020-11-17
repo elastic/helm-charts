@@ -51,6 +51,9 @@ def test_defaults():
     # Make sure that the default 'loadBalancerSourceRanges' list is empty
     assert "loadBalancerSourceRanges" not in r["service"][name]["spec"]
 
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in r["service"][name]["spec"]
+
 
 def test_overriding_the_elasticsearch_hosts():
     config = """
@@ -87,6 +90,19 @@ def test_overriding_the_port():
     assert c["ports"][0]["containerPort"] == 5602
 
     assert r["service"][name]["spec"]["ports"][0]["targetPort"] == 5602
+
+
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
 
 
 def test_adding_image_pull_secrets():
@@ -515,6 +531,31 @@ labels:
     )
 
 
+def test_service_to_pod_label_selectors():
+    config = ""
+
+    r = helm_template(config)
+
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
+    )
+
+
+def test_service_to_pod_label_selectors_with_custom_labels():
+    config = """
+labels:
+  app.kubernetes.io/name: kibana
+"""
+
+    r = helm_template(config)
+
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
+    )
+
+
 def test_adding_a_secret_mount_with_subpath():
     config = """
 secretMounts:
@@ -577,3 +618,14 @@ fullnameOverride: 'kibana-custom'
         ]
         == "kibana"
     )
+
+
+def test_adding_loadBalancerIP():
+    config = """
+    service:
+      loadBalancerIP: 12.5.11.79
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"

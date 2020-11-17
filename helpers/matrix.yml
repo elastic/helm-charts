@@ -4,6 +4,7 @@ CHART:
   - filebeat
   - metricbeat
   - logstash
+  - apm-server
 ES_SUITE:
   - default
   - config
@@ -20,7 +21,6 @@ FILEBEAT_SUITE:
   - default
   - oss
   - security
-  - 6.x
 METRICBEAT_SUITE:
   - default
   - oss
@@ -38,5 +38,6 @@ APM_SERVER_SUITE:
   - security
   - upgrade
 KUBERNETES_VERSION:
-  - '1.14'
-  - '1.15'
+  - "1.15"
+  - "1.16"
+  - "1.17"
