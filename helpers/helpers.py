@@ -9,7 +9,7 @@ def helm_template(config):
     with tempfile.NamedTemporaryFile() as temp:
         with open(temp.name, "w") as values:
             values.write(config)
-        helm_cmd = "helm template -f {0} --namespace default ./".format(temp.name)
+        helm_cmd = "helm template release-name -f {0} ./".format(temp.name)
         result = yaml.load_all(check_output(helm_cmd.split()))
 
         results = {}

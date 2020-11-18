@@ -7,10 +7,7 @@ RELEASE := helm-es-upgrade
 install:
 	./scripts/upgrade.sh --release $(RELEASE)
 
-init:
-	helm init --client-only
-
-test: init install goss
+test: install goss
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)

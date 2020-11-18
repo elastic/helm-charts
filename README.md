@@ -11,7 +11,6 @@
   - [Support Matrix](#support-matrix)
   - [Kubernetes Versions](#kubernetes-versions)
   - [Helm versions](#helm-versions)
-    - [Helm 3 beta](#helm-3-beta)
 - [ECK](#eck)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -76,13 +75,8 @@ exact versions are defined under `KUBERNETES_VERSIONS` in
 ### Helm versions
 
 While we are checking backward compatibility, the charts are only tested with
-Helm version mentioned in [helm-tester Dockerfile][] (currently 2.17.0).
+Helm version mentioned in [helm-tester Dockerfile][] (currently 3.4.1).
 
-#### Helm 3 beta
-
-While we don't have automated tests for [Helm 3][] yet, we fixed the main
-blockers to use it. We now have enough feedbacks from internal and external
-users to add support in beta.
 
 ## ECK
 
@@ -96,7 +90,6 @@ Kubernetes.
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
-[helm 3]: https://v3.helm.sh
 [helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.x/helpers/helm-tester/Dockerfile
 [helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.x/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
