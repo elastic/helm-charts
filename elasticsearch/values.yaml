@@ -120,7 +120,7 @@ podSecurityPolicy:
 persistence:
   enabled: true
   labels:
-    # Add default labels for the volumeClaimTemplate fo the StatefulSet
+    # Add default labels for the volumeClaimTemplate of the StatefulSet
     enabled: false
   annotations: {}
 
