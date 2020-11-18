@@ -35,14 +35,14 @@ The `master` version of these charts are intended to support the latest pre-rele
 versions of our products, and therefore may or may not work with current released
 versions.
 
-| Chart                                      | Docker documentation                                                        | Latest 7 Version           | Latest 6 Version            |
-|--------------------------------------------|-----------------------------------------------------------------------------|----------------------------|-----------------------------|
-| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/7.9/running-on-docker.html       | [`7.8.1`][apm-7]           | [`6.8.10`][apm-6]           |
-| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/7.9/docker.html     | [`7.8.1`][elasticsearch-7] | [`6.8.10`][elasticsearch-6] |
-| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/7.9/running-on-docker.html   | [`7.8.1`][filebeat-7]      | [`6.8.10`][filebeat-6]      |
-| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/7.9/docker.html                      | [`7.8.1`][kibana-7]        | [`6.8.10`][kibana-6]        |
-| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/7.9/docker.html                    | [`7.8.1`][logstash-7]      | [`6.8.10`][logstash-6]      |
-| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/7.9/running-on-docker.html | [`7.8.1`][metricbeat-7]    | [`6.8.10`][metricbeat-6]    |
+| Chart                                      | Docker documentation                                                            | Latest 7 Version           | Latest 6 Version            |
+|--------------------------------------------|---------------------------------------------------------------------------------|----------------------------|-----------------------------|
+| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       | [`7.9.3`][apm-7]           | [`6.8.13`][apm-6]           |
+| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html     | [`7.9.3`][elasticsearch-7] | [`6.8.13`][elasticsearch-6] |
+| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   | [`7.9.3`][filebeat-7]      | [`6.8.13`][filebeat-6]      |
+| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/current/docker.html                      | [`7.9.3`][kibana-7]        | [`6.8.13`][kibana-6]        |
+| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/current/docker.html                    | [`7.9.3`][logstash-7]      | [`6.8.13`][logstash-6]      |
+| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html | [`7.9.3`][metricbeat-7]    | [`6.8.13`][metricbeat-6]    |
 
 ## Supported Configurations
 
@@ -83,10 +83,13 @@ Helm version mentioned in [helm-tester Dockerfile][] (currently 3.4.1).
 In addition of these Helm charts, Elastic also provides
 [Elastic Cloud on Kubernetes][] which is based on [Operator pattern][] and is
 Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
-Kubernetes.
+Kubernetes. There is a dedicated Helm chart for ECK which can be found
+[in ECK repo][eck-chart] ([documentation][eck-chart-doc]).
 
 
 [currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/
+[eck-chart]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
+[eck-chart-doc]: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-install-helm.html
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
