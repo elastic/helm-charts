@@ -60,7 +60,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Return the appropriate apiVersion for statefulset.
 */}}
 {{- define "elasticsearch.statefulset.apiVersion" -}}
-{{- if semverCompare "<1.9-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare "<1.9-0" .Capabilities.KubeVersion.Version -}}
 {{- print "apps/v1beta2" -}}
 {{- else -}}
 {{- print "apps/v1" -}}
@@ -71,7 +71,7 @@ Return the appropriate apiVersion for statefulset.
 Return the appropriate apiVersion for ingress.
 */}}
 {{- define "elasticsearch.ingress.apiVersion" -}}
-{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.Version -}}
 {{- print "extensions/v1beta1" -}}
 {{- else -}}
 {{- print "networking.k8s.io/v1beta1" -}}

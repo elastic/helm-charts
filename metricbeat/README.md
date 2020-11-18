@@ -47,8 +47,8 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat --version <version> elastic/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat --version <version> elastic/metricbeat`
+  - with Helm 3: `helm install metricbeat --version <version> elastic/metricbeat`
+  - with Helm 2 (deprecated): `helm install --name metricbeat --version <version> elastic/metricbeat`
 
 ### Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions
 
@@ -57,8 +57,8 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat --version 6.8.14-SNAPSHOT ./helm-charts/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat --version 6.8.14-SNAPSHOT ./helm-charts/metricbeat`
+  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=6.8.14-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=6.8.14-SNAPSHOT`
 
 
 ## Upgrading
@@ -226,7 +226,6 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/metricbeat/examples/security
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images

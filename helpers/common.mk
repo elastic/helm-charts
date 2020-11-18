@@ -13,18 +13,10 @@ build: ## Build helm-tester docker image
 
 .PHONY: deps
 deps: ## Update helm charts dependencies
-	sed --in-place '/charts\//d' ./.helmignore
 	helm dependency update
-
-.PHONY: helm
-helm: ## Deploy helm on k8s cluster
-	kubectl get cs
-	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
-	helm init --wait --upgrade
 
 .PHONY: lint
 lint: ## Lint helm templates
-	grep 'charts/' ./.helmignore || echo 'charts/' >> ./.helmignore
 	helm lint --strict ./
 
 .PHONY: lint-python
@@ -44,4 +36,4 @@ test: build ## Run all tests in a docker container
 	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make test-all
 
 .PHONY: test-all ## Run all tests
-test-all: lint deps template pytest
+test-all: deps lint template pytest
