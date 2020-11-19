@@ -23,5 +23,5 @@ You can also run [goss integration tests][] using `make test`.
 
 [7.0.0-alpha1]: https://github.com/elastic/helm-charts/releases/tag/7.0.0-alpha1
 [7.4.0]: https://github.com/elastic/helm-charts/releases/tag/7.4.0
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/upgrade/test/goss.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.10/elasticsearch/examples/upgrade/test/goss.yaml
 [jq]: https://stedolan.github.io/jq/
