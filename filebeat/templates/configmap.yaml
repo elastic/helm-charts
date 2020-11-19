@@ -16,7 +16,7 @@ data:
 {{- end -}}
 {{- end -}}
 
-{{- if .Values.daemonset.filebeatConfig }}
+{{- if and .Values.daemonset.enabled .Values.daemonset.filebeatConfig }}
 ---
 apiVersion: v1
 kind: ConfigMap
