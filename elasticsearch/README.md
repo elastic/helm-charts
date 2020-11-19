@@ -13,7 +13,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.x branch and 7.10.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-7100-snapshot-versions)
+  - [Install development version using 7.x branch and 7.11.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-7110-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -52,7 +52,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.10.0-SNAPSHOT versions.
+This chart is tested with the latest 7.11.0-SNAPSHOT versions.
 
 ### Install released version using Helm repository
 
@@ -65,13 +65,13 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 
 
 
-### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
+### Install development version using 7.x branch and 7.11.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.10.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.10.0-SNAPSHOT`
+  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.11.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.11.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -127,7 +127,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.10.0-SNAPSHOT`                               |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.11.0-SNAPSHOT`                               |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
