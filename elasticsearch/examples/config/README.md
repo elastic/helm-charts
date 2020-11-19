@@ -23,5 +23,5 @@ custom [values][].
 You can also run [goss integration tests][] using `make test`
 
 
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/config/test/goss.yaml
-[values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/config/values.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.10/elasticsearch/examples/config/test/goss.yaml
+[values]: https://github.com/elastic/helm-charts/tree/7.10/elasticsearch/examples/config/values.yaml
