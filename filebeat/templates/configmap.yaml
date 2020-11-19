@@ -34,7 +34,7 @@ data:
 {{- end -}}
 {{- end -}}
 
-{{- if .Values.deployment.filebeatConfig }}
+{{- if and .Values.deployment.enabled .Values.deployment.filebeatConfig }}
 ---
 apiVersion: v1
 kind: ConfigMap
