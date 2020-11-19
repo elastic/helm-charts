@@ -9,7 +9,7 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+**Warning**: This branch is used for development, please use the latest [7.10][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -18,7 +18,7 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.x branch and 7.10.0-SNAPSHOT versions](#install-development-version-using-7x-branch-and-7100-snapshot-versions)
+  - [Install development version using 7.10 branch and 7.10.0-SNAPSHOT versions](#install-development-version-using-710-branch-and-7100-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -55,7 +55,7 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 
 
 
-### Install development version using 7.x branch and 7.10.0-SNAPSHOT versions
+### Install development version using 7.10 branch and 7.10.0-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -191,8 +191,7 @@ against best practices of containers and immutable infrastructure.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
-[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/logstash/README.md
+[7.10]: https://github.com/elastic/helm-charts/releases
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -200,11 +199,11 @@ about our development and testing process.
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[custom docker image]: https://www.elastic.co/guide/en/logstash/7.x/docker-config.html#_custom_images
+[custom docker image]: https://www.elastic.co/guide/en/logstash/7.10/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples/oss
+[examples]: https://github.com/elastic/helm-charts/tree/7.10/logstash/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.10/logstash/examples/oss
 [helm]: https://helm.sh
 [http input plugin]: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
@@ -212,20 +211,20 @@ about our development and testing process.
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[logstash docker image]: https://www.elastic.co/guide/en/logstash/7.x/docker.html
+[logstash docker image]: https://www.elastic.co/guide/en/logstash/7.10/docker.html
 [logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[note]: https://www.elastic.co/guide/en/logstash/7.x/docker-config.html#docker-env-config
+[note]: https://www.elastic.co/guide/en/logstash/7.10/docker-config.html#docker-env-config
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.x/README.md#supported-configurations
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.10/README.md#supported-configurations
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/logstash/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.10/logstash/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage
