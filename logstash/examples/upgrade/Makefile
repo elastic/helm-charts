@@ -2,9 +2,9 @@ default: test
 
 include ../../../helpers/examples.mk
 
-CHART := elasticsearch
-RELEASE := helm-es-upgrade
-FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
+CHART := logstash
+RELEASE := helm-logstash-upgrade
+FROM := 7.9.0	# upgrade from version < 7.9.0 is failing due to headless service breaking change
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)

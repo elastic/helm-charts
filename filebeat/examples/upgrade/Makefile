@@ -2,9 +2,9 @@ default: test
 
 include ../../../helpers/examples.mk
 
-CHART := elasticsearch
-RELEASE := helm-es-upgrade
-FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
+CHART := filebeat
+RELEASE := helm-filebeat-upgrade
+FROM := 7.9.0 # registry file version 1 not supported error with previous version
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
