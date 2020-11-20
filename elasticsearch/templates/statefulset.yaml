@@ -1,5 +1,5 @@
 ---
-apiVersion: {{ template "elasticsearch.statefulset.apiVersion" . }}
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "elasticsearch.uname" . }}
@@ -152,9 +152,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      {{- if semverCompare ">1.13-0" .Capabilities.KubeVersion.Version }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
-      {{- end }}
       initContainers:
       {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl

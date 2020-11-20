@@ -31,8 +31,8 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0
-* Kubernetes >=1.9
+* Kubernetes >= 1.14
+* [Helm][] >= 2.17.0
 
 See [supported configurations][] for more details.
 

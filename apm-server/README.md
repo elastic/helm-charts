@@ -34,8 +34,8 @@ SLA of official GA features (see [supported configurations][] for more details).
 
 ## Requirements
 
-* Kubernetes >= 1.9
-* [Helm][] >= 2.8.0
+* Kubernetes >= 1.14
+* [Helm][] >= 2.17.0
 
 See [supported configurations][] for more details.
 
