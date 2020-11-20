@@ -41,8 +41,8 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0
-* Kubernetes >=1.8
+* Kubernetes >= 1.14
+* [Helm][] >= 2.17.0
 * Minimum cluster requirements include the following to run this chart with
 default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
