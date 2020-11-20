@@ -20,23 +20,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Return the appropriate apiVersion for ingress.
-*/}}
-{{- define "apm.ingress.apiVersion" -}}
-{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.Version -}}
-{{- print "extensions/v1beta1" -}}
-{{- else -}}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- end -}}
-{{- end -}}
-{{- define "apm.autoscaling.apiVersion" -}}
-{{- if semverCompare "<1.12-0" .Capabilities.KubeVersion.Version -}}
-{{- print "autoscaling/v2beta1" -}}
-{{- else -}}
-{{- print "autoscaling/v2beta2" -}}
-{{- end -}}
-{{- end -}}
-{{/*
 Use the fullname if the serviceAccount value is not set
 */}}
 {{- define "apm.serviceAccount" -}}
