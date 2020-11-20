@@ -2,9 +2,9 @@ default: test
 
 include ../../../helpers/examples.mk
 
-CHART := elasticsearch
-RELEASE := helm-es-upgrade
-FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
+CHART := apm-server
+RELEASE := helm-apm-server-upgrade
+FROM := 7.6.0	# 7.6.0 is the first release for apm-server
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
