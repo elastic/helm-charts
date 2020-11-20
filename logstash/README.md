@@ -9,7 +9,6 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.10][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -18,7 +17,7 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 7.10 branch and 7.10.0-SNAPSHOT versions](#install-development-version-using-710-branch-and-7100-snapshot-versions)
+  - [Install development version using 7.10 branch and 7.10.0 versions](#install-development-version-using-710-branch-and-7100-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -42,7 +41,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.10.0-SNAPSHOT versions.
+This chart is tested with the latest 7.10.0 versions.
 
 ### Install released version using Helm repository
 
@@ -55,13 +54,13 @@ This chart is tested with the latest 7.10.0-SNAPSHOT versions.
 
 
 
-### Install development version using 7.10 branch and 7.10.0-SNAPSHOT versions
+### Install development version using 7.10 branch and 7.10.0 versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.10.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.10.0-SNAPSHOT`
+  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.10.0`
+  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.10.0`
 
 
 ## Upgrading
@@ -117,7 +116,7 @@ useful for the [http input plugin][], for instance.
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.10.0-SNAPSHOT`                     |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.10.0`                     |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `ingress`                 | Configurable [ingress][] for external access to Logstash HTTP port.                                                                                                                                                                  | see [values.yaml][]                   |
