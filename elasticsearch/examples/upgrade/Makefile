@@ -4,11 +4,10 @@ include ../../../helpers/examples.mk
 
 CHART := elasticsearch
 RELEASE := helm-es-upgrade
-FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
-TO := 7.10.0	# upgrade from 7.x to 8.0.0-SNAPSHOT currently doesn't work
+FROM := 6.8.9	# this is the first 6.x release
 
 install:
-	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM) --to $(TO)
+	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
 
 test: install goss
 
