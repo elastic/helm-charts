@@ -48,7 +48,7 @@
 
 ### Migration to Helm 3
 
-Starting from 7.10.0 release, Helm 3 is fully supported in Elastic Helm charts
+Starting from the 7.10.0 release, Helm 3 is fully supported in Elastic Helm charts
 and Helm 2 is deprecated.
 
 In most cases, [Helm 2to3][] can be used to migrate from previous charts
