@@ -3,6 +3,11 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+  - [7.10.0](#7100)
+    - [Migration to Helm 3](#migration-to-helm-3)
+      - [Metricbeat upgrade](#metricbeat-upgrade)
+      - [Elasticsearch upgrade with persistence.labels.enabled](#elasticsearch-upgrade-with-persistencelabelsenabled)
+      - [Rendered manifests contain a resource that already exists error](#rendered-manifests-contain-a-resource-that-already-exists-error)
   - [7.9.3 - 2020/10/22](#793---20201022)
     - [Fix Logstash headless Service (end)](#fix-logstash-headless-service-end)
   - [6.8.13 - 2020/10/22](#6813---20201022)
@@ -39,6 +44,88 @@
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
+## 7.10.0
+
+### Migration to Helm 3
+
+Starting from 7.10.0 release, Helm 3 is fully supported in Elastic Helm charts
+and Helm 2 is deprecated.
+
+In most cases, [Helm 2to3][] can be used to migrate from previous charts
+releases deployed with Helm 2:
+
+```shell
+# Install Helm 3
+
+# Install 2to3 plugin
+helm plugin install https://github.com/helm/helm-2to3.git
+
+# Migrate Helm 2 local config
+helm3 2to3 move config
+
+# Migrate Helm 2 releases
+helm3 2to3 convert <release-name>
+
+# Upgrade to 7.10.0
+helm upgrade <release-name> elastic/<chart-name> --version 7.10.0
+
+# Cleanup Helm 2 datas
+helm3 2to3 cleanup
+```
+
+Migration to Helm 3 with 7.10.0 charts release should work smoothly for the
+following charts.
+
+- apm-server >= 7.6.0
+- elasticsearch >= 7.4.0 (except when `persistence.labels.enabled` is true)
+- filebeat >= 7.9.0
+- kibana >= 7.4.0
+- logstash >= 7.9.0
+
+#### Metricbeat upgrade
+
+Metricbeat 7.10.0 introduce a breaking change in [#516][] to make it compatible
+with Helm 3.
+
+The removing of some `heritage` labels in Metricbeat deployment make upgrade
+fail with the following error:
+
+```
+UPGRADE FAILED
+Error: Deployment.apps "mb-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"mb-metricbeat-metrics", "release":"mb"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+Error: UPGRADE FAILED: Deployment.apps "mb-metricbeat-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app":"mb-metricbeat-metrics", "release":"mb"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+```
+
+Unfortunately using `helm upgrade --force` with Helm 3 is not enough. This chart
+will need to be uninstalled and re-installed.
+
+#### Elasticsearch upgrade with persistence.labels.enabled
+
+If you are using `persistence.labels.enabled=true` with Elasticsearch, upgrade
+will fail even with `--force`.
+
+You'll need to deploy a new release with the same `clusterName` using Helm 3,
+migrate your data, then remove the old release.
+
+#### Rendered manifests contain a resource that already exists error
+
+We experimented some `rendered manifests contain a resource that already exists`
+errors with some charts upgrade, mostly for charts deploying `ClusterRole` and
+`ClusterRoleBinding`resources.
+
+Helm 3 is automatically adding some new annotations (`meta.helm.sh/release-name`
+and `meta.helm.sh/release-namespace`) and labels (`app.kubernetes.io/managed-by`)
+to the charts resources during upgrade, however for some reason it seems to not
+add sometimes and fails with the following error:
+
+```
+Error: UPGRADE FAILED: rendered manifests contain a resource that already exists. Unable to continue with update: ClusterRole "apm-apm-server-cluster-role" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "apm"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "default"
+```
+
+The workaround is to manually add these annotations and labels to the existing failing resources
+using `kubectl edit` for example, then relaunch the upgrade command.
+
+
 ## 7.9.3 - 2020/10/22
 
 ### Fix Logstash headless Service (end)
@@ -57,7 +144,7 @@ See [7.9.3 - 2020/10/22](#793---20201022) and [7.9.1 - 2020/09/03](#791---202009
 ### Fix Logstash headless Service
 
 [#776][] fixed an issue with headless `Service` when using `extraPorts` value
-(see [Add headless Service for StatefulSet](#add-headless-service-for-statefulset) 
+(see [Add headless Service for StatefulSet](#add-headless-service-for-statefulset)
 for more details). Unfortunately, it introduced a new bug when using a `NodePort`
 `Service` ([#807][]). This is fixed by [#839][] in 7.9.3 (and 6.8.13).
 
@@ -290,6 +377,7 @@ volumeClaimTemplate:
 [#352]: https://github.com/elastic/helm-charts/pull/352
 [#437]: https://github.com/elastic/helm-charts/pull/437
 [#458]: https://github.com/elastic/helm-charts/pull/458
+[#516]: https://github.com/elastic/helm/pull/516
 [#540]: https://github.com/elastic/helm-charts/pull/540
 [#568]: https://github.com/elastic/helm-charts/pull/568
 [#572]: https://github.com/elastic/helm-charts/pull/572
@@ -307,6 +395,7 @@ volumeClaimTemplate:
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
+[helm 2to3]: https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/
 [migration guide]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/migration/README.md
 [new branching model]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md#branching
 [kube-state-metrics]: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
