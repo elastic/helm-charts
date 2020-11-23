@@ -116,7 +116,6 @@ errors with some charts upgrade, mostly for charts deploying `ClusterRole` and
 Helm 3 is automatically adding some new annotations (`meta.helm.sh/release-name`
 and `meta.helm.sh/release-namespace`) and labels (`app.kubernetes.io/managed-by`)
 to the charts resources during upgrade. However it sometimes fail to add the annotations with the below error:
-add sometimes and fails with the following error:
 
 ```
 Error: UPGRADE FAILED: rendered manifests contain a resource that already exists. Unable to continue with update: ClusterRole "apm-apm-server-cluster-role" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "apm"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "default"
