@@ -39,7 +39,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.11.0-SNAPSHOT versions.
+This chart is tested with the latest 7.11.0-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -50,12 +50,11 @@ This chart is tested with the latest 7.11.0-SNAPSHOT versions.
   - with Helm 3: `helm install filebeat --version <version> elastic/filebeat`
   - with Helm 2 (deprecated): `helm install --name filebeat --version <version> elastic/filebeat`
 
-
-
-### Install development version using 7.x branch and 7.11.0-SNAPSHOT versions
+### Install development version from a branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
+* Checkout the branch : `git checkout 7.x`
 * Install it:
   - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=7.11.0-SNAPSHOT`
   - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=7.11.0-SNAPSHOT`
@@ -187,7 +186,6 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
-[7.7.1]: https://github.com/elastic/helm-charts/blob/7.7.1/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
