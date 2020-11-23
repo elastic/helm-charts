@@ -42,7 +42,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.11.0-SNAPSHOT versions.
+This chart is tested with the latest 7.11.0-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -53,10 +53,11 @@ This chart is tested with the latest 7.11.0-SNAPSHOT versions.
   - with Helm 3: `helm install apm-server --version <version> elastic/apm-server`
   - with Helm 2 (deprecated): `helm install --name apm-server --version <version> elastic/apm-server`
 
-
-### Install development version using 7.x branch and 7.11.0-SNAPSHOT versions
+### Install development version from a branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
+
+* Checkout the branch : `git checkout 7.x`
 
 * Install it:
   - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.11.0-SNAPSHOT`
