@@ -115,7 +115,7 @@ errors with some charts upgrade, mostly for charts deploying `ClusterRole` and
 
 Helm 3 is automatically adding some new annotations (`meta.helm.sh/release-name`
 and `meta.helm.sh/release-namespace`) and labels (`app.kubernetes.io/managed-by`)
-to the charts resources during upgrade, however for some reason it seems to not
+to the charts resources during upgrade. However it sometimes fail to add the annotations with the below error:
 add sometimes and fails with the following error:
 
 ```
