@@ -10,6 +10,15 @@ metadata:
     chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
     heritage: '{{ .Release.Service }}'
     release: '{{ .Release.Name }}'
+    {{- if .Values.deployment.labels }}
+    {{- range $key, $value := .Values.deployment.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- else }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- end }}
   {{- if .Values.deployment.annotations}}
   annotations:
     {{- range $key, $value := .Values.deployment.annotations }}
@@ -21,7 +30,6 @@ spec:
   selector:
     matchLabels:
       app: '{{ template "metricbeat.fullname" . }}-metrics'
-      heritage: '{{ .Release.Service }}'
       release: '{{ .Release.Name }}'
   template:
     metadata:
@@ -36,8 +44,16 @@ spec:
       labels:
         app: '{{ template "metricbeat.fullname" . }}-metrics'
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
-        heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
+        {{- if .Values.deployment.labels }}
+        {{- range $key, $value := .Values.deployment.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- else }}
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- end }}
     spec:
       affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
       nodeSelector: {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}

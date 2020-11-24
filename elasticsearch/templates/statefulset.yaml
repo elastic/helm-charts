@@ -1,5 +1,5 @@
 ---
-apiVersion: {{ template "elasticsearch.statefulset.apiVersion" . }}
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "elasticsearch.uname" . }}
@@ -28,7 +28,6 @@ spec:
       name: {{ template "elasticsearch.uname" . }}
     {{- if .Values.persistence.labels.enabled }}
       labels:
-        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}"
         app: "{{ template "elasticsearch.uname" . }}"
@@ -47,7 +46,6 @@ spec:
     metadata:
       name: "{{ template "elasticsearch.uname" . }}"
       labels:
-        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}"
         app: "{{ template "elasticsearch.uname" . }}"
@@ -154,9 +152,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      {{- if semverCompare ">1.13" .Capabilities.KubeVersion.GitVersion }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
-      {{- end }}
       initContainers:
       {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl
@@ -232,6 +228,10 @@ spec:
                 # If the node is starting up wait for the cluster to be ready (request params: "{{ .Values.clusterHealthCheckParams }}" )
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
+
+                # Disable nss cache to avoid filling dentry cache when calling curl
+                # This is required with Elasticsearch Docker using nss < 3.52
+                export NSS_SDB_USE_CACHE=no
 
                 http () {
                   local path="${1}"
