@@ -89,6 +89,10 @@ rbac:
   create: false
   serviceAccountAnnotations: {}
   serviceAccountName: ""
+  annotations: {}
+    #annotation1: "value1"
+    #annotation2: "value2"
+    #annotation3: "value3"
 
 podSecurityPolicy:
   create: false
@@ -246,3 +250,13 @@ service: {}
 #      port: 8080
 #      protocol: TCP
 #      targetPort: 8080
+
+ingress:
+  enabled: false
+#  annotations: {}
+#  hosts:
+#    - host: logstash.local
+#      paths:
+#        - path: /logs
+#          servicePort: 8080
+#  tls: []

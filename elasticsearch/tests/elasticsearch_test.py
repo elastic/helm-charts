@@ -445,7 +445,10 @@ persistence:
         "volumeClaimTemplates"
     ][0]["metadata"]["labels"]
     statefulset_labels = r["statefulset"][uname]["metadata"]["labels"]
-    assert volume_claim_template_labels == statefulset_labels
+    expected_labels = statefulset_labels
+    # heritage label shouldn't be present in volumeClaimTemplates labels
+    expected_labels.pop("heritage")
+    assert volume_claim_template_labels == expected_labels
 
 
 def test_adding_a_secret_mount():
@@ -813,6 +816,23 @@ def test_adding_a_loadBalancerIP():
     r = helm_template(config)
 
     assert r["service"][uname]["spec"]["loadBalancerIP"] == "12.4.19.81"
+
+
+def test_adding_an_externalTrafficPolicy():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "externalTrafficPolicy" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      externalTrafficPolicy: Local
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["externalTrafficPolicy"] == "Local"
 
 
 def test_adding_a_label_on_non_headless_service():

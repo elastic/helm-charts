@@ -1,6 +1,6 @@
 dependencies:
 - name: kube-state-metrics
-  repository: https://kubernetes-charts.storage.googleapis.com
+  repository: https://charts.helm.sh/stable
   version: 2.4.1
 digest: sha256:948dca129bc7c16b138ed8bcbdf666c324d812e43af59d475b8bb74a53e99778
-generated: "2020-04-16T16:14:03.9537312+03:00"
+generated: "2020-10-30T18:58:57.381827+01:00"
