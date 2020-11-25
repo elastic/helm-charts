@@ -9,6 +9,7 @@ TO := 7.10.0	# required to use with Elasticsearch 7.10.0
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM) --to $(TO)
+	kubectl rollout status deployment $(RELEASE)-kibana
 
 test: install goss
 

@@ -21,10 +21,8 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-security-logstash-0"'
       - '"version" : "7.11.0"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-security-logstash-0"'
       - '"status" : "green"'
       - '"workers" : 1'
       - '"batch_size" : 125'
@@ -33,10 +31,10 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'logstash'
+      - "logstash"
     allow-insecure: true
-    username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
-    password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
 
 file:
   /usr/share/logstash/config/logstash.yml:
@@ -46,10 +44,10 @@ file:
     group: logstash
     filetype: file
     contains:
-      - 'http.host: 0.0.0.0'
-      - 'xpack.monitoring.enabled: true'
+      - "http.host: 0.0.0.0"
+      - "xpack.monitoring.enabled: true"
       - 'xpack.monitoring.elasticsearch.hosts: ["https://security-master:9200"]'
-      - 'xpack.monitoring.elasticsearch.ssl.certificate_authority: /usr/share/logstash/config/certs/elastic-certificate.crt'
+      - "xpack.monitoring.elasticsearch.ssl.certificate_authority: /usr/share/logstash/config/certs/elastic-certificate.crt"
   /usr/share/logstash/pipeline/uptime.conf:
     exists: true
     mode: "0644"
@@ -58,7 +56,7 @@ file:
     filetype: file
     contains:
       - 'input { exec { command => "uptime" interval => 30 } }'
-      - 'output { elasticsearch {'
+      - "output { elasticsearch {"
       - 'hosts => ["https://security-master:9200"]'
       - 'cacert => "/usr/share/logstash/config/certs/elastic-certificate.crt"'
       - 'index => "logstash"'

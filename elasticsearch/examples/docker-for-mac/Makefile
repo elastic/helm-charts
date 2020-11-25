@@ -1,9 +1,10 @@
 default: test
 
 RELEASE := helm-es-docker-for-mac
+TIMEOUT := 1200s
 
 install:
-	helm upgrade --wait --timeout=1200s --install --values values.yaml $(RELEASE) ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install
 	helm test $(RELEASE)

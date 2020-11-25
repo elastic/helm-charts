@@ -13,5 +13,4 @@ http:
     body:
       - '"number" : "7.11.0-SNAPSHOT"'
       - '"cluster_name" : "upgrade"'
-      - '"name" : "upgrade-master-0"'
       - "You Know, for Search"
