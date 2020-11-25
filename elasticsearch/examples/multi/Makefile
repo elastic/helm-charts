@@ -4,6 +4,7 @@ include ../../../helpers/examples.mk
 
 PREFIX := helm-es-multi
 RELEASE := helm-es-multi-master
+TIMEOUT := 1200s
 
 install:
 	helm upgrade --wait --timeout=$(TIMEOUT) --install --values master.yaml $(PREFIX)-master ../../

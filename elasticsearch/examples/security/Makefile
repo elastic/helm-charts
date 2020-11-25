@@ -4,6 +4,7 @@ include ../../../helpers/examples.mk
 
 RELEASE := helm-es-security
 ELASTICSEARCH_IMAGE := docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION)
+TIMEOUT := 1200s
 
 install:
 	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
