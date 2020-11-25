@@ -12,7 +12,7 @@
         type: slave
         name: label
         values:
-          - docker&&virtual
+        - docker&&virtual
     - axis:
         type: yaml
         name: KUBERNETES_VERSION
