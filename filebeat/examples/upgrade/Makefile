@@ -8,6 +8,7 @@ FROM := 7.9.0 # registry file version 1 not supported error with previous versio
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
+	kubectl rollout status daemonset $(RELEASE)-filebeat
 
 test: install goss
 

@@ -3,9 +3,10 @@ default: test
 include ../../../helpers/examples.mk
 
 RELEASE := helm-logstash-security
+TIMEOUT := 1200s
 
 install:
-	helm upgrade --wait --timeout=1200s --install $(RELEASE) --values values.yaml ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install goss
 
