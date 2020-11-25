@@ -9,6 +9,9 @@ RELEASE := helm-metricbeat-upgrade
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
+	kubectl rollout status daemonset $(RELEASE)-metricbeat
+	kubectl rollout status deployment $(RELEASE)-metricbeat-metrics
+	kubectl rollout status deployment $(RELEASE)-kube-state-metrics
 
 #TODO: uncomment after 7.10.0 release
 test: #install goss
