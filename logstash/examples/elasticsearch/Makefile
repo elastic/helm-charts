@@ -3,12 +3,10 @@ default: test
 include ../../../helpers/examples.mk
 
 RELEASE := helm-logstash-elasticsearch
+TIMEOUT := 1200s
 
 install:
-	helm upgrade --wait --timeout=1200s --install $(RELEASE) --values ./values.yaml ../../
-
-restart:
-	helm upgrade --set terminationGracePeriod=121 --wait --timeout=1200s --install $(RELEASE) ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install goss
 
