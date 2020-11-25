@@ -21,10 +21,8 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"host" : "helm-logstash-elasticsearch-logstash-0"'
       - '"version" : "8.0.0"'
       - '"http_address" : "0.0.0.0:9600"'
-      - '"name" : "helm-logstash-elasticsearch-logstash-0"'
       - '"status" : "green"'
       - '"workers" : 1'
       - '"batch_size" : 125'
@@ -33,7 +31,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'logstash'
+      - "logstash"
 
 file:
   /usr/share/logstash/config/logstash.yml:
@@ -43,8 +41,8 @@ file:
     group: logstash
     filetype: file
     contains:
-      - 'http.host: 0.0.0.0'
-      - 'xpack.monitoring.enabled: false'
+      - "http.host: 0.0.0.0"
+      - "xpack.monitoring.enabled: false"
   /usr/share/logstash/pipeline/uptime.conf:
     exists: true
     mode: "0644"
