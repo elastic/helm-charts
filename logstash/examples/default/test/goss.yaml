@@ -29,9 +29,9 @@ file:
     group: root
     filetype: file
     contains:
-      - 'input {'
-      - 'beats {'
-      - 'port => 5044'
-      - 'output {'
-      - 'stdout {'
-      - 'codec => rubydebug'
+      - "input {"
+      - "beats {"
+      - "port => 5044"
+      - "output {"
+      - "stdout {"
+      - "codec => rubydebug"

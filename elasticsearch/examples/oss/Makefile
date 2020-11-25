@@ -1,10 +1,12 @@
 default: test
+
 include ../../../helpers/examples.mk
 
 RELEASE := helm-es-oss
+TIMEOUT := 1200s
 
 install:
-	helm upgrade --wait --timeout=900s --install $(RELEASE) --values ./values.yaml ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install goss
 

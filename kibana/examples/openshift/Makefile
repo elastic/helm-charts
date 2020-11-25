@@ -4,10 +4,10 @@ include ../../../helpers/examples.mk
 RELEASE := kibana
 
 template:
-	helm template --values ./values.yml ../../
+	helm template --values values.yaml ../../
 
 install:
-	helm upgrade --wait --timeout=900s --install --values ./values.yml $(RELEASE) ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install goss
 
