@@ -56,7 +56,7 @@ cluster is healthy before continuing:
   ```
 
 * Deploy new data nodes which will join the existing cluster. Take a look at the
-configuration in [data.yml][]:
+configuration in [data.yaml][]:
 
   ```
   make data
@@ -102,7 +102,7 @@ nodes as to not lose quorum:
   ```
 
 * Now deploy a single new master so that we have 3 masters again. See
-[master.yml][] for the configuration:
+[master.yaml][] for the configuration:
 
   ```
   make master
@@ -114,7 +114,7 @@ nodes as to not lose quorum:
   kubectl scale statefulsets my-release-elasticsearch-master --replicas=1
   ```
 
-* Edit the masters in [masters.yml][] to 2 and redeploy:
+* Edit the masters in [masters.yaml][] to 2 and redeploy:
 
   ```
   make master
@@ -126,7 +126,7 @@ nodes as to not lose quorum:
   kubectl scale statefulsets my-release-elasticsearch-master --replicas=0
   ```
 
-* Edit the [masters.yml][] to have 3 replicas and remove the
+* Edit the [masters.yaml][] to have 3 replicas and remove the
 `discovery.zen.ping.unicast.hosts` entry from `extraEnvs` then redeploy the
 masters. This will make sure all 3 masters are running in the new cluster and
 are pointing at each other for discovery:
@@ -160,8 +160,8 @@ client nodes:
 working correctly you can cleanup leftover resources from your old cluster.
 
 [basic license]: https://www.elastic.co/subscriptions
-[data.yml]: https://github.com/elastic/helm-charts/blob/7.x/elasticsearch/examples/migration/data.yml
-[helm/charts]: https://github.com/helm/charts/tree/master/stable/elasticsearch
-[master.yml]: https://github.com/elastic/helm-charts/blob/7.x/elasticsearch/examples/migration/master.yml
+[data.yaml]: https://github.com/elastic/helm-charts/blob/7.x/elasticsearch/examples/migration/data.yaml
+[helm/charts]: https://github.com/helm/charts/tree/7.x/stable/elasticsearch
+[master.yaml]: https://github.com/elastic/helm-charts/blob/7.x/elasticsearch/examples/migration/master.yaml
 [restoring to a different cluster guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-snapshots.html#_restoring_to_a_different_cluster
 [rolling upgrades guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/rolling-upgrades.html
