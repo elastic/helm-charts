@@ -9,6 +9,9 @@ FROM := 6.8.14 # upgrade from version < 6.8.13 is failing due to selector
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
+	kubectl rollout status daemonset $(RELEASE)-metricbeat
+	kubectl rollout status deployment $(RELEASE)-metricbeat-metrics
+	kubectl rollout status deployment $(RELEASE)-kube-state-metrics
 
 test: install goss
 

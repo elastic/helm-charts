@@ -3,12 +3,10 @@ default: test
 include ../../../helpers/examples.mk
 
 RELEASE := helm-es-default
+TIMEOUT := 1200s
 
 install:
-	helm upgrade --wait --timeout=900s --install $(RELEASE) ../../
-
-restart:
-	helm upgrade --set terminationGracePeriod=121 --wait --timeout=900s --install $(RELEASE) ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install $(RELEASE) ../../
 
 test: install goss
 

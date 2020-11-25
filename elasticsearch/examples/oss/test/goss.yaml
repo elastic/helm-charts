@@ -13,5 +13,4 @@ http:
     body:
       - '"number" : "6.8.14"'
       - '"cluster_name" : "oss"'
-      - '"name" : "oss-master-0"'
       - 'You Know, for Search'
