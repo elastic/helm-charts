@@ -6,13 +6,13 @@ RELEASE := helm-es-security
 ELASTICSEARCH_IMAGE := docker.elastic.co/elasticsearch/elasticsearch:$(STACK_VERSION)
 
 install:
-	helm upgrade --wait --timeout=900s --install --values ./security.yml $(RELEASE) ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
+
+test: secrets install goss
 
 purge:
 	kubectl delete secrets elastic-credentials elastic-certificates elastic-certificate-pem elastic-certificate-crt|| true
 	helm del $(RELEASE)
-
-test: secrets install goss
 
 pull-elasticsearch-image:
 	docker pull $(ELASTICSEARCH_IMAGE)
@@ -33,5 +33,5 @@ secrets:
 	kubectl create secret generic elastic-certificates --from-file=elastic-certificates.p12 && \
 	kubectl create secret generic elastic-certificate-pem --from-file=elastic-certificate.pem && \
 	kubectl create secret generic elastic-certificate-crt --from-file=elastic-certificate.crt && \
-	kubectl create secret generic elastic-credentials  --from-literal=password=$$password --from-literal=username=elastic && \
+	kubectl create secret generic elastic-credentials --from-literal=password=$$password --from-literal=username=elastic && \
 	rm -f elastic-certificates.p12 elastic-certificate.pem elastic-certificate.crt elastic-stack-ca.p12
