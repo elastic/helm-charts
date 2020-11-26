@@ -153,6 +153,7 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
+      {{- if or (.Values.extraInitContainers) (.Values.sysctlInitContainer.enabled) (.Values.keystore)  }}
       initContainers:
       {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl
@@ -210,6 +211,7 @@ spec:
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- else }}
 {{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
       {{- end }}
       {{- end }}
       containers:

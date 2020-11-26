@@ -366,10 +366,7 @@ sysctlInitContainer:
   enabled: false
 """
     r = helm_template(config)
-    initContainers = r["statefulset"][uname]["spec"]["template"]["spec"][
-        "initContainers"
-    ]
-    assert initContainers is None
+    assert "initContainers" not in r["statefulset"][uname]["spec"]["template"]["spec"]
 
 
 def test_sysctl_init_container_enabled():
