@@ -2,6 +2,8 @@
 daemonset:
   # Annotations to apply to the daemonset
   annotations: {}
+  # additionals labels
+  labels: {}
   affinity: {}
   # Include the daemonset
   enabled: true
@@ -19,7 +21,7 @@ daemonset:
     # - name: extras
     #   mountPath: /usr/share/extras
     #   readOnly: true 
-
+  hostNetworking: false
   # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for daemonset
   filebeatConfig:
@@ -59,13 +61,16 @@ daemonset:
     limits:
       cpu: "1000m"
       memory: "200Mi"
+  tolerations: []
 
 deployment:
   # Annotations to apply to the deployment
   annotations: {}
+  # additionals labels
+  labels: {}
   affinity: {}
   # Include the deployment
-  enabled: true
+  enabled: false
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -84,17 +89,6 @@ deployment:
   # such as filebeat.yml for deployment
   filebeatConfig:
     filebeat.yml: |
-      filebeat.inputs:
-      - type: container
-        paths:
-          - /var/log/containers/*.log
-        processors:
-        - add_kubernetes_metadata:
-            host: ${NODE_NAME}
-            matchers:
-            - logs_path:
-                logs_path: "/var/log/containers/"
-
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
@@ -128,7 +122,6 @@ extraInitContainers: []
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
 
-hostNetworking: false
 dnsConfig: {}
 # options:
 #   - name: ndots
@@ -164,9 +157,6 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 5
 
-# additionals labels
-labels: {}
-
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
@@ -194,12 +184,18 @@ updateStrategy: RollingUpdate
 nameOverride: ""
 fullnameOverride: ""
 
-tolerations: []
-
-
+# DEPRECATED
 affinity: {}
-
-# Override various naming aspects of this chart
-# Only edit these if you know what you're doing
-nameOverride: ""
-fullnameOverride: ""
+envFrom: []
+extraEnvs: []
+extraVolumes: []
+extraVolumeMounts: []
+# Allows you to add any config files in /usr/share/filebeat
+# such as filebeat.yml for both daemonset and deployment
+filebeatConfig: {}
+nodeSelector: {}
+podSecurityContext: {}
+resources: {}
+secretMounts: []
+tolerations: []
+labels: {}

@@ -4,13 +4,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: '{{ template "filebeat.fullname" . }}'
+  name: {{ template "filebeat.fullname" . }}
   labels:
-    app: '{{ template "filebeat.fullname" . }}'
-    chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
-    heritage: '{{ .Release.Service }}'
-    release: '{{ .Release.Name }}'
-  {{- if .Values.deployment.annotations}}
+    app: "{{ template "filebeat.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    {{- range $key, $value := .Values.labels }} # Comment 3
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- if .Values.deployment.annotations }}
   annotations:
     {{- range $key, $value := .Values.deployment.annotations }}
     {{ $key }}: {{ $value | quote }}
@@ -20,9 +22,9 @@ spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: '{{ template "filebeat.fullname" . }}'
+      app: "{{ template "filebeat.fullname" . }}"
       heritage: '{{ .Release.Service }}'
-      release: '{{ .Release.Name }}'
+      release: {{ .Release.Name | quote }}
   template:
     metadata:
       annotations:

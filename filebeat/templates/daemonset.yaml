@@ -12,6 +12,12 @@ metadata:
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
+  {{- if .Values.deployment.annotations }}
+  annotations:  # comment 2
+    {{- range $key, $value := .Values.deployment.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
@@ -26,7 +32,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.filebeatConfig }}
+        {{- if or  .Values.filebeatConfig .Values.daemonset.filebeatConfig }}
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
       name: "{{ template "filebeat.fullname" . }}"
