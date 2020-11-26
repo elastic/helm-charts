@@ -195,8 +195,6 @@ Charts are released from version branchs (example `7.7` branch).
 
 [Elastic Helm repository][] is updated only during releases.
 
-The current release process is documented in [release.md][].
-
 
 ## Testing
 
@@ -267,6 +265,5 @@ make goss
 [serverspec]: https://serverspec.org
 [templating test example]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/tests/elasticsearch_test.py
 [templating tests section]: #templating-tests
-[release.md]: https://github.com/elastic/helm-charts/blob/master/helpers/release.md
 [releases section]: #releases
 [requirements.txt]: https://github.com/elastic/helm-charts/blob/master/requirements.txt

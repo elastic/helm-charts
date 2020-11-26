@@ -11,27 +11,34 @@ ES_SUITE:
   - multi
   - oss
   - security
+  - upgrade
 KIBANA_SUITE:
   - default
   - oss
   - security
+  - upgrade
 FILEBEAT_SUITE:
   - default
   - oss
   - security
+  - upgrade
 METRICBEAT_SUITE:
   - default
   - oss
   - security
+  #- upgrade TODO: uncomment after 7.10.0 release
 LOGSTASH_SUITE:
   - default
   - oss
   - elasticsearch
   - security
+  - upgrade
 APM_SERVER_SUITE:
   - default
   - oss
   - security
+  - upgrade
 KUBERNETES_VERSION:
-  - '1.15'
-  - '1.16'
+  - "1.15"
+  - "1.16"
+  - "1.17"
