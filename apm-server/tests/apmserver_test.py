@@ -342,6 +342,7 @@ fullnameOverride: "apm-server-custom"
         == project
     )
 
+
 def test_enabling_horizontal_pod_autoscaler():
     config = """
 autoscaling:
