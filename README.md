@@ -35,14 +35,15 @@ The `master` version of these charts are intended to support the latest pre-rele
 versions of our products, and therefore may or may not work with current released
 versions.
 
-| Chart                                      | Docker documentation                                                            | Latest 7 Version           | Latest 6 Version            |
-|--------------------------------------------|---------------------------------------------------------------------------------|----------------------------|-----------------------------|
-| [APM-Server](./apm-server/README.md)       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       | [`7.10.0`][apm-7]           | [`6.8.13`][apm-6]           |
-| [Elasticsearch](./elasticsearch/README.md) | https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html     | [`7.10.0`][elasticsearch-7] | [`6.8.13`][elasticsearch-6] |
-| [Filebeat](./filebeat/README.md)           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   | [`7.10.0`][filebeat-7]      | [`6.8.13`][filebeat-6]      |
-| [Kibana](./kibana/README.md)               | https://www.elastic.co/guide/en/kibana/current/docker.html                      | [`7.10.0`][kibana-7]        | [`6.8.13`][kibana-6]        |
-| [Logstash](./logstash/README.md)           | https://www.elastic.co/guide/en/logstash/current/docker.html                    | [`7.10.0`][logstash-7]      | [`6.8.13`][logstash-6]      |
-| [Metricbeat](./metricbeat/README.md)       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html | [`7.10.0`][metricbeat-7]    | [`6.8.13`][metricbeat-6]    |
+| Chart                                                      | Docker documentation                                                            | Latest 7 Version            | Latest 6 Version            |
+|------------------------------------------------------------|---------------------------------------------------------------------------------|-----------------------------|-----------------------------|
+| [APM-Server](./apm-server/README.md)                       | https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html       | [`7.10.0`][apm-7]           | [`6.8.13`][apm-6]           |
+| [Elasticsearch](./elasticsearch/README.md)                 | https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html     | [`7.10.0`][elasticsearch-7] | [`6.8.13`][elasticsearch-6] |
+| [Elasticsearch-Curator](./elasticsearch-curator/README.md) |                                                                                 | N/A                         | N/A                         |
+| [Filebeat](./filebeat/README.md)                           | https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html   | [`7.10.0`][filebeat-7]      | [`6.8.13`][filebeat-6]      |
+| [Kibana](./kibana/README.md)                               | https://www.elastic.co/guide/en/kibana/current/docker.html                      | [`7.10.0`][kibana-7]        | [`6.8.13`][kibana-6]        |
+| [Logstash](./logstash/README.md)                           | https://www.elastic.co/guide/en/logstash/current/docker.html                    | [`7.10.0`][logstash-7]      | [`6.8.13`][logstash-6]      |
+| [Metricbeat](./metricbeat/README.md)                       | https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html | [`7.10.0`][metricbeat-7]    | [`6.8.13`][metricbeat-6]    |
 
 ## Supported Configurations
 
