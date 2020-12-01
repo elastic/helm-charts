@@ -630,6 +630,7 @@ def test_adding_loadBalancerIP():
 
     assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"
 
+
 def test_service_port_name():
     r = helm_template("")
 
