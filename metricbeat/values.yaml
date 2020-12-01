@@ -72,7 +72,7 @@ daemonset:
         - drop_event.when.regexp:
             system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
       output.elasticsearch:
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        hosts: '${ELASTICSEARCH_HOSTS}:elasticsearch-master:9200'
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
@@ -134,7 +134,7 @@ deployment:
         period: 10s
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
       output.elasticsearch:
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        hosts: '${ELASTICSEARCH_HOSTS}:elasticsearch-master:9200'
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
