@@ -4,7 +4,7 @@ include ../../../helpers/examples.mk
 
 CHART := metricbeat
 RELEASE := helm-metricbeat-upgrade
-#FROM := 7.10.0	# upgrade from version < 7.10.0 is failing due to selector
+FROM := 7.10.0	# upgrade from version < 7.10.0 is failing due to selector
 								# breaking change in https://github.com/elastic/helm-charts/pull/516
 
 install:
@@ -13,8 +13,7 @@ install:
 	kubectl rollout status deployment $(RELEASE)-metricbeat-metrics
 	kubectl rollout status deployment $(RELEASE)-kube-state-metrics
 
-#TODO: uncomment after 7.10.0 release
-test: #install goss
+test: install goss
 
 purge:
 	helm del $(RELEASE)
