@@ -3,8 +3,8 @@
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
-**Warning**: This branch is used for development, please use [7.9.2][] release
-for supported version.
+<!-- development warning placeholder -->
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -32,8 +32,8 @@ for supported version.
 
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0
-* Kubernetes >=1.9
+* Kubernetes >= 1.14
+* [Helm][] >= 2.17.0
 
 See [supported configurations][] for more details.
 
@@ -46,8 +46,8 @@ See [supported configurations][] for more details.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat elastic/metricbeat`
-  - with [Helm 3 (beta)][]: `helm install metricbeat elastic/metricbeat`
+  - with Helm 3: `helm install metricbeat elastic/metricbeat`
+  - with Helm 2 (deprecated): `helm install --name metricbeat elastic/metricbeat`
 
 
 ### Install development version using master branch
@@ -55,8 +55,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 2: `helm install --name metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
-  - with [Helm 3 (beta)][]: `helm install metricbeat ./helm-charts/metricbeat  --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -208,7 +208,7 @@ same node.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-
+[7.x]: https://github.com/elastic/helm-charts/releases
 [#471]: https://github.com/elastic/helm-charts/pull/471
 [7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
@@ -224,7 +224,6 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/security
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images

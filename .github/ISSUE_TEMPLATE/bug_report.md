@@ -18,7 +18,7 @@ e.g. `helm get elasticsearch` (replace `elasticsearch` with the name of your hel
 
 *Be careful to obfuscate every secrets (credentials, token, public IP, ...) that could be visible in the output before copy-pasting.*
 
-*If you find some secrets in plain text in `helm get release` output you should use [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) to managed them is a secure way (see [Security Example](https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/security/security.yml#L23-L38)).*
+*If you find some secrets in plain text in `helm get release` output you should use [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) to managed them is a secure way (see [Security Example](https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/security/values.yaml#L23-L38)).*
 
 <details>
 <summary>Output of helm get release</summary>
