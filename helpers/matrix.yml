@@ -26,7 +26,7 @@ METRICBEAT_SUITE:
   - default
   - oss
   - security
-  #- upgrade TODO: uncomment after 7.10.0 release
+  - upgrade
 LOGSTASH_SUITE:
   - default
   - oss
