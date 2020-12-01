@@ -629,3 +629,16 @@ def test_adding_loadBalancerIP():
     r = helm_template(config)
 
     assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"
+
+
+def test_service_port_name():
+    r = helm_template("")
+
+    config = """
+    service:
+      httpPortName: istio
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["ports"][0]["name"] == "istio"
