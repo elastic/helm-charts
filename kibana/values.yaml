@@ -107,6 +107,7 @@ service:
     # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
   loadBalancerSourceRanges: []
     # 0.0.0.0/0
+  httpPortName: http
 
 ingress:
   enabled: false
