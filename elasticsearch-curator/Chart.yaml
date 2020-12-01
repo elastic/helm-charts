@@ -1,6 +1,6 @@
 apiVersion: v1
 appVersion: "5.7.6"
-description: DEPRECATED A Helm chart for Elasticsearch Curator
+description: A Helm chart for Elasticsearch Curator
 name: elasticsearch-curator
 version: 2.2.3
 home: https://github.com/elastic/curator
@@ -11,4 +11,3 @@ keywords:
 sources:
 - https://github.com/kubernetes/charts/elasticsearch-curator
 - https://github.com/pires/docker-elasticsearch-curator
-deprecated: true
