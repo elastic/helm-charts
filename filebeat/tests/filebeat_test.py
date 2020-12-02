@@ -29,8 +29,10 @@ def test_defaults():
 
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["daemonset"][name]["spec"]["template"]["spec"]
-    assert "tolerations" not in r["daemonset"][name]["spec"]["template"]["spec"]
-
+    assert (
+        r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"]
+        == []
+    )
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "RollingUpdate"
 
     assert (
