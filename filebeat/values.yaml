@@ -111,6 +111,9 @@ deployment:
       memory: "200Mi"
   tolerations: []
 
+# Replicas being used for the filebeat deployment
+replicas: 1
+
 extraContainers: ""
 # - name: dummy-init
 #   image: busybox
