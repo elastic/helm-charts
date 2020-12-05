@@ -8,9 +8,16 @@ metadata:
   labels:
     app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: '{{ .Release.Service }}'
     release: {{ .Release.Name }}
-    {{- range $key, $value := .Values.labels }} # Comment 3
+    {{- if .Values.deployment.labels }}
+    {{- range $key, $value := .Values.deployment.labels }}
     {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- else }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
     {{- end }}
   {{- if .Values.deployment.annotations }}
   annotations:
@@ -23,7 +30,6 @@ spec:
   selector:
     matchLabels:
       app: "{{ template "filebeat.fullname" . }}"
-      heritage: '{{ .Release.Service }}'
       release: {{ .Release.Name | quote }}
   template:
     metadata:

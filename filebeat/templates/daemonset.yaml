@@ -9,12 +9,18 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
+    {{- if .Values.daemonset.labels }}
+    {{- range $key, $value := .Values.daemonset.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- else }}
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-  {{- if .Values.deployment.annotations }}
-  annotations:  # comment 2
-    {{- range $key, $value := .Values.deployment.annotations }}
+    {{- end }}
+  {{- if .Values.daemonset.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.daemonset.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
   {{- end }}
@@ -41,8 +47,14 @@ spec:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        {{- if .Values.daemonset.labels }}
+        {{- range $key, $value := .Values.daemonset.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- else }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
+        {{- end }}
         {{- end }}
     spec:
       tolerations: {{ toYaml ( .Values.tolerations | default .Values.daemonset.tolerations ) | nindent 8 }}
@@ -53,7 +65,7 @@ spec:
       affinity: {{ toYaml ( .Values.affinity | default .Values.daemonset.affinity ) | nindent 8 }}
       serviceAccountName: {{ template "filebeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
-      {{- if .Values.hostNetworking }}
+      {{- if .Values.daemonset.hostNetworking }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
@@ -152,6 +164,13 @@ spec:
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.daemonset.filebeatConfig }}
+        - name: filebeat-config
+          mountPath: /usr/share/filebeat/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
         {{- end }}
         - name: data
           mountPath: /usr/share/filebeat/data
