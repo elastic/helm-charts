@@ -8,7 +8,9 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
+<!-- development warning placeholder -->
 **Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -32,8 +34,8 @@ SLA of official GA features (see [supported configurations][] for more details).
 
 ## Requirements
 
-* Kubernetes >= 1.9
-* [Helm][] >= 2.8.0
+* Kubernetes >= 1.14
+* [Helm][] >= 2.17.0
 
 See [supported configurations][] for more details.
 
@@ -46,8 +48,8 @@ See [supported configurations][] for more details.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server elastic/apm-server`
-  - with [Helm 3 (beta)][]: `helm install apm-server elastic/apm-server`
+  - with Helm 3: `helm install apm-server elastic/apm-server`
+  - with Helm 2 (deprecated): `helm install --name apm-server elastic/apm-server`
 
 
 ### Install development version using master branch
@@ -55,8 +57,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 2: `helm install --name apm-server ./helm-charts/apm-server  --set imageTag=8.0.0-SNAPSHOT`
-  - with [Helm 3 (beta)][]: `helm install apm-server ./helm-charts/apm-server  --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -80,42 +82,42 @@ as a reference. They are also used in the automated testing of this chart.
 
 ## Configuration
 
-| Parameter                | Description                                                                                                                                                | Default                            |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
-| `affinity`               | Configurable [affinity][]                                                                                                                                  | `{}`                               |
-| `apmConfig`              | Allows you to add any config files in `/usr/share/apm-server/config` such as `apm-server.yml`                                                              | see [values.yaml][]                |
-| `autoscaling`            | Enable the [horizontal pod autoscaler][]                                                                                                                   | `enabled: false`                   |
-| `envFrom`                | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                | `[]`                               |
-| `extraContainers`        | Templatable string of additional containers to be passed to the `tpl` function                                                                             | `""`                               |
-| `extraEnvs`              | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                          | `[]`                               |
-| `extraInitContainers`    | Templatable string of additional containers to be passed to the `tpl` function                                                                             | `""`                               |
-| `extraVolumeMounts`      | List of additional `volumeMounts`                                                                                                                          | `[]`                               |
-| `extraVolumes`           | List of additional `volumes`                                                                                                                               | `[]`                               |
-| `fullnameOverride`       | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
-| `imagePullPolicy`        | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
-| `imagePullSecrets`       | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`               | The APM Server Docker image tag                                                                                                                            | `8.0.0-SNAPSHOT`                            |
-| `image`                  | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
-| `ingress`                | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
-| `labels`                 | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
-| `lifecycle`              | Configurable [lifecycle hooks][]                                                                                                                           | `false`                            |
-| `livenessProbe`          | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                 | see [values.yaml][]                |
-| `managedServiceAccount`  | Whether the `serviceAccount` should be managed by this Helm chart. Set this to `false` in order to manage your own service account and related roles       | `true`                             |
-| `nameOverride`           | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                  | `""`                               |
-| `nodeSelector`           | Configurable [nodeSelector][]                                                                                                                              | `{}`                               |
-| `podAnnotations`         | Configurable [annotations][] applied to all APM Server pods                                                                                                | `{}`                               |
-| `podSecurityContext`     | Configurable [podSecurityContext][] for APM Server pod execution environment                                                                               | see [values.yaml][]                |
-| `priorityClassName`      | The name of the [PriorityClass][]. No default is supplied as the `PriorityClass` must be created first                                                     | `""`                               |
-| `readinessProbe`         | Parameters to pass to readiness [probe][] checks for values such as timeouts and thresholds                                                                | see [values.yaml][]                |
-| `replicas`               | Number of APM servers to run                                                                                                                               | `1`                                |
-| `resources`              | Allows you to set the [resources][] for the `Deployment`                                                                                                   | see [values.yaml][]                |
-| `secretMounts`           | Allows you easily mount a secret as a file inside the `Deployment`. Useful for mounting certificates and other secrets. See [values.yaml][] for an example | `[]`                               |
-| `serviceAccount`         | Custom [serviceAccount][] that APM Server will use during execution. By default will use the `serviceAccount` created by this chart                        | `""`                               |
-| `serviceAccountAnnotations` | Annotations to be added to the ServiceAccount that is created by this chart.                                                                            | `{}`
-| `service`                | Configurable [service][] to expose the APM Server service. See [values.yaml][] for an example                                                              | see [values.yaml][]                |
-| `terminationGracePeriod` | Termination period (in seconds) to wait before killing APM Server pod process on pod shutdown                                                              | `30`                               |
-| `tolerations`            | Configurable [tolerations][]                                                                                                                               | `[]`                               |
-| `updateStrategy`         | Allows you to change the default [updateStrategy][] for the deployment                                                                                     | see [values.yaml][]                |
+| Parameter                   | Description                                                                                                                                                | Default                            |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
+| `affinity`                  | Configurable [affinity][]                                                                                                                                  | `{}`                               |
+| `apmConfig`                 | Allows you to add any config files in `/usr/share/apm-server/config` such as `apm-server.yml`                                                              | see [values.yaml][]                |
+| `autoscaling`               | Enable the [horizontal pod autoscaler][]                                                                                                                   | see [values.yaml][]                |
+| `envFrom`                   | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                | `[]`                               |
+| `extraContainers`           | Templatable string of additional containers to be passed to the `tpl` function                                                                             | `""`                               |
+| `extraEnvs`                 | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                          | `[]`                               |
+| `extraInitContainers`       | Templatable string of additional containers to be passed to the `tpl` function                                                                             | `""`                               |
+| `extraVolumeMounts`         | List of additional `volumeMounts`                                                                                                                          | `[]`                               |
+| `extraVolumes`              | List of additional `volumes`                                                                                                                               | `[]`                               |
+| `fullnameOverride`          | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
+| `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
+| `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.0.0-SNAPSHOT`                   |
+| `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
+| `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
+| `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
+| `lifecycle`                 | Configurable [lifecycle hooks][]                                                                                                                           | `false`                            |
+| `livenessProbe`             | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                 | see [values.yaml][]                |
+| `managedServiceAccount`     | Whether the `serviceAccount` should be managed by this Helm chart. Set this to `false` in order to manage your own service account and related roles       | `true`                             |
+| `nameOverride`              | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                  | `""`                               |
+| `nodeSelector`              | Configurable [nodeSelector][]                                                                                                                              | `{}`                               |
+| `podAnnotations`            | Configurable [annotations][] applied to all APM Server pods                                                                                                | `{}`                               |
+| `podSecurityContext`        | Configurable [podSecurityContext][] for APM Server pod execution environment                                                                               | see [values.yaml][]                |
+| `priorityClassName`         | The name of the [PriorityClass][]. No default is supplied as the `PriorityClass` must be created first                                                     | `""`                               |
+| `readinessProbe`            | Parameters to pass to readiness [probe][] checks for values such as timeouts and thresholds                                                                | see [values.yaml][]                |
+| `replicas`                  | Number of APM servers to run                                                                                                                               | `1`                                |
+| `resources`                 | Allows you to set the [resources][] for the `Deployment`                                                                                                   | see [values.yaml][]                |
+| `secretMounts`              | Allows you easily mount a secret as a file inside the `Deployment`. Useful for mounting certificates and other secrets. See [values.yaml][] for an example | `[]`                               |
+| `serviceAccount`            | Custom [serviceAccount][] that APM Server will use during execution. By default will use the `serviceAccount` created by this chart                        | `""`                               |
+| `serviceAccountAnnotations` | Annotations to be added to the ServiceAccount that is created by this chart.                                                                               | `{}`                               |
+| `service`                   | Configurable [service][] to expose the APM Server service. See [values.yaml][] for an example                                                              | see [values.yaml][]                |
+| `terminationGracePeriod`    | Termination period (in seconds) to wait before killing APM Server pod process on pod shutdown                                                              | `30`                               |
+| `tolerations`               | Configurable [tolerations][]                                                                                                                               | `[]`                               |
+| `updateStrategy`            | Allows you to change the default [updateStrategy][] for the deployment                                                                                     | see [values.yaml][]                |
 
 
 ## FAQ
@@ -158,7 +160,6 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/security
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

@@ -371,10 +371,7 @@ sysctlInitContainer:
   enabled: false
 """
     r = helm_template(config)
-    initContainers = r["statefulset"][uname]["spec"]["template"]["spec"][
-        "initContainers"
-    ]
-    assert initContainers is None
+    assert "initContainers" not in r["statefulset"][uname]["spec"]["template"]["spec"]
 
 
 def test_sysctl_init_container_enabled():
@@ -445,7 +442,10 @@ persistence:
         "volumeClaimTemplates"
     ][0]["metadata"]["labels"]
     statefulset_labels = r["statefulset"][uname]["metadata"]["labels"]
-    assert volume_claim_template_labels == statefulset_labels
+    expected_labels = statefulset_labels
+    # heritage label shouldn't be present in volumeClaimTemplates labels
+    expected_labels.pop("heritage")
+    assert volume_claim_template_labels == expected_labels
 
 
 def test_adding_a_secret_mount():

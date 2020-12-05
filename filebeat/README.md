@@ -3,7 +3,9 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
+<!-- development warning placeholder -->
 **Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -29,8 +31,8 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Requirements
 
-* [Helm][] >=2.8.0 and <3.0.0
-* Kubernetes >=1.9
+* Kubernetes >= 1.14
+* [Helm][] >= 2.17.0
 
 See [supported configurations][] for more details.
 
@@ -43,8 +45,8 @@ See [supported configurations][] for more details.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 2: `helm install --name filebeat elastic/filebeat`
-  - with [Helm 3 (beta)][]: `helm install filebeat elastic/filebeat`
+  - with Helm 3: `helm install filebeat elastic/filebeat`
+  - with Helm 2 (deprecated): `helm install --name filebeat elastic/filebeat`
 
 
 ### Install development version using master branch
@@ -52,8 +54,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 2: `helm install --name filebeat ./helm-charts/filebeat  --set imageTag=8.0.0-SNAPSHOT`
-  - with [Helm 3 (beta)][]: `helm install filebeat ./helm-charts/filebeat  --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=8.0.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -227,7 +229,6 @@ about our development and testing process.
 [filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
 [filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/current/configuring-output.html
 [helm]: https://helm.sh
-[helm 3 (beta)]: https://github.com/elastic/helm-charts/tree/master/README.md#helm-3-beta
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
