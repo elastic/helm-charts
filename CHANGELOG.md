@@ -1,5 +1,29 @@
 # Changelog
 
+## 7.10.0
+
+* 7.10.0 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#927](https://github.com/elastic/helm-charts/pull/927) | [@jmlrt](https://github.com/jmlrt) | [meta] Remove version from dev install section title  |
+| [#922](https://github.com/elastic/helm-charts/pull/922) | [@jmlrt](https://github.com/jmlrt) | [meta] Remove support for k8s <1.14 & helm <2.17.0 (#916) [7.10]  |
+| [#919](https://github.com/elastic/helm-charts/pull/919) | [@jmlrt](https://github.com/jmlrt) | [meta] Upgrade test (#907) [7.10]  |
+| [#914](https://github.com/elastic/helm-charts/pull/914) | [@jmlrt](https://github.com/jmlrt) | [meta] Initiate 7.10 branch  |
+| [#897](https://github.com/elastic/helm-charts/pull/897) | [@cospeedster](https://github.com/cospeedster) | [elasticsearch] Fix spelling  |
+| [#911](https://github.com/elastic/helm-charts/pull/911) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Update test hook annotations  |
+| [#910](https://github.com/elastic/helm-charts/pull/910) | [@jmlrt](https://github.com/jmlrt) | [meta] Add link to eck chart doc  |
+| [#902](https://github.com/elastic/helm-charts/pull/902) | [@jmlrt](https://github.com/jmlrt) | [meta] Helm 3 (#516)  |
+| [#891](https://github.com/elastic/helm-charts/pull/891) | [@jmlrt](https://github.com/jmlrt) | [meta] Increase helm timeout  |
+| [#890](https://github.com/elastic/helm-charts/pull/890) | [@jmlrt](https://github.com/jmlrt) | [meta] Update rbac.authorization.k8s.io api  |
+| [#887](https://github.com/elastic/helm-charts/pull/887) | [@nkammah](https://github.com/nkammah) | [meta] Add warning comment placeholder (7.x branch)  |
+| [#882](https://github.com/elastic/helm-charts/pull/882) | [@jmlrt](https://github.com/jmlrt) | [metricbeat] Use relocated stable repo for kube-state-metrics  |
+| [#880](https://github.com/elastic/helm-charts/pull/880) | [@jmlrt](https://github.com/jmlrt) | [meta] Add support for helm 2.17.0 and k8s 1.17  |
+| [#854](https://github.com/elastic/helm-charts/pull/854) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Add coordinator node to multi test  |
+| [#860](https://github.com/elastic/helm-charts/pull/860) | [@nkammah](https://github.com/nkammah) | [meta] Simplify doc in 7.x branch  |
+
+
 ## 7.9.3
 
 * 7.9.3 as default version.

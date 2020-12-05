@@ -6,7 +6,6 @@ from helpers import helm_template
 
 project = "filebeat"
 name = "release-name-" + project
-name = "RELEASE-NAME-" + project
 
 
 def test_defaults():

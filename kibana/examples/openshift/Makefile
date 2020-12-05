@@ -4,12 +4,12 @@ include ../../../helpers/examples.mk
 RELEASE := kibana
 
 template:
-	helm template --values ./values.yml ../../
+	helm template --values values.yaml ../../
 
-install: 
-	helm upgrade --wait --timeout=600 --install --values ./values.yml $(RELEASE) ../../
+install:
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install goss
-	
+
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)
