@@ -6,6 +6,7 @@ from helpers import helm_template
 
 project = "filebeat"
 name = "release-name-" + project
+name = "RELEASE-NAME-" + project
 
 
 def test_defaults():
@@ -147,7 +148,8 @@ updateStrategy: OnDelete
 
 def test_host_networking():
     config = """
-hostNetworking: true
+daemonset:
+    hostNetworking: true
 """
     r = helm_template(config)
     assert r["daemonset"][name]["spec"]["template"]["spec"]["hostNetwork"] is True
