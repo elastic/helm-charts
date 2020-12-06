@@ -51,7 +51,7 @@ daemonset:
   #
   # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
   # - Whether to execute the Filebeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
-  podSecurityContext:
+  securityContext:
     runAsUser: 0
     privileged: false
   resources:
@@ -70,7 +70,7 @@ deployment:
   labels: {}
   affinity: {}
   # Include the deployment
-  enabled: false
+  enabled: true
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -99,8 +99,12 @@ deployment:
   #  - name: filebeat-certificates
   #    secretName: filebeat-certificates
   #    path: /usr/share/filebeat/certs
+  #
+  # - User that the container will execute as.
+  # Not necessary to run as root (0) as the Filebeat Deployment use cases do not need access to Kubernetes Node internals
+  # - Typically not necessarily unless running within environments such as OpenShift.
   securityContext:
-    runAsUser: 0
+    runAsUser: 1001
     privileged: false
   resources:
     requests:
