@@ -91,7 +91,7 @@ spec:
       {{- end }}
       - name: data
         hostPath:
-          path: {{ .Values.hostPathRoot }}/{{ template "filebeat.fullname" . }}-{{ .Release.Namespace }}-data
+          path: {{ .Values.hostPathRoot }}/{{ template "filebeat.fullname" . }}-data
           type: DirectoryOrCreate
       - name: varlibdockercontainers
         hostPath:
