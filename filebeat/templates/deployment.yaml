@@ -44,10 +44,15 @@ spec:
       labels:
         app: '{{ template "filebeat.fullname" . }}'
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
-        heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
+        {{- if .Values.deployment.labels }}
+        {{- range $key, $value := .Values.deployment.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- else }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
+        {{- end }}
         {{- end }}
     spec:
       affinity: {{ toYaml .Values.deployment.affinity | nindent 8 }}
