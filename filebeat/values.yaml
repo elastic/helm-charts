@@ -104,7 +104,7 @@ deployment:
   # Not necessary to run as root (0) as the Filebeat Deployment use cases do not need access to Kubernetes Node internals
   # - Typically not necessarily unless running within environments such as OpenShift.
   securityContext:
-    runAsUser: 1001
+    runAsUser: 0
     privileged: false
   resources:
     requests:

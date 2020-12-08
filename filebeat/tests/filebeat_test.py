@@ -61,7 +61,7 @@ def test_defaults():
         r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
             "securityContext"
         ]["runAsUser"]
-        == 1001
+        == 0
     )
     assert (
         r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
@@ -405,7 +405,7 @@ daemonset:
         r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
             "securityContext"
         ]["runAsUser"]
-        == 1001
+        == 0
     )
     assert (
         r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
@@ -417,7 +417,7 @@ daemonset:
     config = """
 deployment:
   securityContext:
-    runAsUser: 0
+    runAsUser: 1001
     privileged: false
 """
     r = helm_template(config)
@@ -425,7 +425,7 @@ deployment:
         r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
             "securityContext"
         ]["runAsUser"]
-        == 0
+        == 1001
     )
     assert (
         r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
