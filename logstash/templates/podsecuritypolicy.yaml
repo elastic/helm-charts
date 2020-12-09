@@ -4,11 +4,7 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ default $fullName .Values.podSecurityPolicy.name | quote }}
-  labels:
-    app: "{{ template "logstash.fullname" . }}"
-    chart: "{{ .Chart.Name }}"
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
+  labels: {{- include "logstash.labels" . | nindent 4 }}
 spec:
 {{ toYaml .Values.podSecurityPolicy.spec | indent 2 }}
 {{- end -}}

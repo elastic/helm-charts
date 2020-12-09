@@ -3,20 +3,11 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "logstash.fullname" . }}
-  labels:
-    app: "{{ template "logstash.fullname" . }}"
-    chart: "{{ .Chart.Name }}"
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    {{- range $key, $value := .Values.labels }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+  labels: {{- include "logstash.labels" . | nindent 4 }}
 spec:
   serviceName: {{ template "logstash.fullname" . }}-headless
   selector:
-    matchLabels:
-      app: "{{ template "logstash.fullname" . }}"
-      release: {{ .Release.Name | quote }}
+    matchLabels: {{- include "logstash.matchLabels" . | nindent 8 }}
   replicas: {{ .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
@@ -35,14 +26,7 @@ spec:
   template:
     metadata:
       name: "{{ template "logstash.fullname" . }}"
-      labels:
-        app: "{{ template "logstash.fullname" . }}"
-        chart: "{{ .Chart.Name }}"
-        heritage: {{ .Release.Service | quote }}
-        release: {{ .Release.Name | quote }}
-        {{- range $key, $value := .Values.labels }}
-        {{ $key }}: {{ $value | quote }}
-        {{- end }}
+      labels: {{- include "logstash.labels" . | nindent 8 }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
@@ -88,7 +72,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-              - key: app
+              - key: app.kubernetes.io/name
                 operator: In
                 values:
                 - "{{ template "logstash.fullname" .}}"
@@ -101,7 +85,7 @@ spec:
               topologyKey: {{ .Values.antiAffinityTopologyKey }}
               labelSelector:
                 matchExpressions:
-                - key: app
+                - key: app.kubernetes.io/name
                   operator: In
                   values:
                   - "{{ template "logstash.fullname" . }}"

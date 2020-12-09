@@ -22,7 +22,7 @@ def test_defaults():
         "podAntiAffinity"
     ]["requiredDuringSchedulingIgnoredDuringExecution"][0] == {
         "labelSelector": {
-            "matchExpressions": [{"key": "app", "operator": "In", "values": [name]}]
+            "matchExpressions": [{"key": "app.kubernetes.io/name", "operator": "In", "values": [name]}]
         },
         "topologyKey": "kubernetes.io/hostname",
     }
@@ -321,7 +321,7 @@ secrets:
     r = helm_template(config)
     secret_name = name + "-env"
     s = r["secret"][secret_name]
-    assert s["metadata"]["labels"]["app"] == name
+    assert s["metadata"]["labels"]["app.kubernetes.io/name"] == name
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 1
     assert s["data"] == {"ELASTICSEARCH_PASSWORD": content_b64}
@@ -362,7 +362,7 @@ secrets:
     r = helm_template(config)
     secret_name = name + "-tls"
     s = r["secret"][secret_name]
-    assert s["metadata"]["labels"]["app"] == name
+    assert s["metadata"]["labels"]["app.kubernetes.io/name"] == name
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 1
     assert s["data"] == {
@@ -397,7 +397,7 @@ secrets:
     r = helm_template(config)
     secret_name = name + "-env"
     s = r["secret"][secret_name]
-    assert s["metadata"]["labels"]["app"] == name
+    assert s["metadata"]["labels"]["app.kubernetes.io/name"] == name
     assert len(r["secret"]) == 1
     assert len(s["data"]) == 2
     assert s["data"] == {

@@ -4,11 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: "{{ template "logstash.fullname" . }}"
-  labels:
-    app: "{{ template "logstash.fullname" . }}"
-    chart: "{{ .Chart.Name }}"
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
+  labels: {{- include "logstash.labels" . | nindent 4 }}
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
 spec:
