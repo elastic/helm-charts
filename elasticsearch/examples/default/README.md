@@ -1,6 +1,6 @@
 # Default
 
-This example deploy a 3 nodes Elasticsearch 7.10.1 cluster using
+This example deploy a 3 nodes Elasticsearch 7.10.2-SNAPSHOT cluster using
 [default values][].
 
 
