@@ -1,4 +1,0 @@
-secrets:
-  - name: "env"
-    value:
-      ELASTICSEARCH_PASSWORD: LS1CRUdJTiBgUFJJVkFURSB
