@@ -1,5 +1,21 @@
 # Changelog
 
+## 7.10.1
+
+* 7.10.1 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#958](https://github.com/elastic/helm-charts/pull/958) | [@jmlrt](https://github.com/jmlrt) | [7.10] [kibana] add service.httpPortName config in chart (#843)  |
+| [#955](https://github.com/elastic/helm-charts/pull/955) | [@jmlrt](https://github.com/jmlrt) | [7.10] [apm-server] Add missing fields to HPA (#782)  |
+| [#950](https://github.com/elastic/helm-charts/pull/950) | [@jmlrt](https://github.com/jmlrt) | [7.10] [meta] enable metricbeat upgrade test (#940)  |
+| [#945](https://github.com/elastic/helm-charts/pull/945) | [@jmlrt](https://github.com/jmlrt) | [7.10] [logstash] add rbac custom annotations (#764)  |
+| [#942](https://github.com/elastic/helm-charts/pull/942) | [@jmlrt](https://github.com/jmlrt) | [7.10] ES Statefulset empty initContainers fix (#795)  |
+| [#932](https://github.com/elastic/helm-charts/pull/932) | [@elasticmachine](https://github.com/elasticmachine) | Bump 7.10 branch to 7.10.1-SNAPSHOT  |
+| [#937](https://github.com/elastic/helm-charts/pull/937) | [@jmlrt](https://github.com/jmlrt) | [7.10] [meta] stabilize CI tests (#935)  |
+
+
 ## 7.10.0
 
 * 7.10.0 as default version.
