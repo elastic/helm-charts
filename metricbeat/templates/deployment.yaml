@@ -63,6 +63,9 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      {{- if .Values.deployment.hostAliases }}
+      hostAliases: {{ toYaml .Values.deployment.hostAliases | nindent 8 }}
+      {{- end }}
       volumes:
       {{- range .Values.secretMounts | default .Values.deployment.secretMounts }}
       - name: {{ .name }}
