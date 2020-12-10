@@ -55,6 +55,11 @@ dnsConfig: {}
 # options:
 #   - name: ndots
 #     value: "2"
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
 image: "docker.elastic.co/beats/filebeat"
 imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"

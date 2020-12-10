@@ -91,6 +91,7 @@ as a reference. They are also used in the automated testing of this chart.
 | Parameter                   | Description                                                                                                                                                                     | Default                            |
 |-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | `affinity`                  | Configurable [affinity][]                                                                                                                                                       | `{}`                               |
+| `dnsConfig`                 | Configurable [dnsConfig][]                                                                                                                                                      | `{}`                               |
 | `envFrom`                   | Templatable string of envFrom to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                          | `[]`                               |
 | `extraContainers`           | List of additional init containers to be added at the DaemonSet                                                                                                                 | `""`                               |
 | `extraEnvs`                 | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                               | `[]`                               |
@@ -99,8 +100,8 @@ as a reference. They are also used in the automated testing of this chart.
 | `extraVolumes`              | List of additional volumes to be mounted on the DaemonSet                                                                                                                       | `[]`                               |
 | `filebeatConfig`            | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml`                                                                                              | see [values.yaml][]                |
 | `fullnameOverride`          | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride or .Chart.Name` "                                       | `""`                               |
+| `hostAliases`               | Configurable [hostAliases][]                                                                                                                                                    | `[]`                               |
 | `hostNetworking`            | Use host networking in the DaemonSet so that hostname is reported correctly                                                                                                     | `false`                            |
-| `dnsConfig`                 | Configurable [dnsConfig][]                                                                                                                                                      | `{}`                               |
 | `hostPathRoot`              | Fully-qualified [hostPath][] that will be used to persist Filebeat registry data                                                                                                | `/var/lib`                         |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                    | `[]`                               |
@@ -191,6 +192,7 @@ about our development and testing process.
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [default Elasticsearch Helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
+[dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples
@@ -200,8 +202,8 @@ about our development and testing process.
 [filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
 [filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/current/configuring-output.html
 [helm]: https://helm.sh
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
-[dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
