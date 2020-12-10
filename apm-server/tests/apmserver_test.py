@@ -26,6 +26,8 @@ def test_defaults():
     assert c["image"].startswith("docker.elastic.co/apm/apm-server:")
     assert c["ports"][0]["containerPort"] == 8200
 
+    assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
+
 
 def test_adding_a_extra_container():
     config = """
@@ -351,3 +353,18 @@ autoscaling:
     r = helm_template(config)
 
     assert "horizontalpodautoscaler" in r
+
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    spec = r["deployment"][name]["spec"]["template"]["spec"]
+    hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
