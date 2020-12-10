@@ -355,7 +355,6 @@ autoscaling:
     assert "horizontalpodautoscaler" in r
 
 
-
 def test_hostaliases():
     config = """
 hostAliases:
