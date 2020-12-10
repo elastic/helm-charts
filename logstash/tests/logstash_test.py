@@ -914,6 +914,5 @@ hostAliases:
   - "bar.local"
 """
     r = helm_template(config)
-    spec = r["statefulset"][name]["spec"]["template"]["spec"]
     hostAliases = r["statefulset"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

@@ -135,7 +135,7 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end}}
       {{- if .Values.hostAliases }}
-      hostAliases: {{ toYaml .Values.hostAliases | nindent 8 }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
       {{- end }}
       {{- if .Values.extraInitContainers }}
       initContainers:

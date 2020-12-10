@@ -70,7 +70,7 @@ spec:
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       {{- if .Values.daemonset.hostAliases }}
-      hostAliases: {{ toYaml .Values.daemonset.hostAliases | nindent 8 }}
+      hostAliases: {{ toYaml .Values.daemonset.hostAliases | nindent 6 }}
       {{- end }}
       volumes:
       {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}
