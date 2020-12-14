@@ -116,6 +116,7 @@ podSecurityPolicy:
       - secret
       - configMap
       - persistentVolumeClaim
+      - emptyDir      
 
 persistence:
   enabled: true
