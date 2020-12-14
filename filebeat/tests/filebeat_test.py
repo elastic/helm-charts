@@ -1128,8 +1128,8 @@ fullnameOverride: 'filebeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
-
-
+    
+    
 def test_adding_annotations():
     config = """
 daemonset:
@@ -1174,3 +1174,16 @@ deployment:
 
     assert name + "-daemonset-config" in cfg
     assert name + "-deployment-config" not in cfg
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["daemonset"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

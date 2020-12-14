@@ -221,6 +221,7 @@ about our development and testing process.
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [default Elasticsearch Helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
+[dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples
@@ -230,8 +231,8 @@ about our development and testing process.
 [filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
 [filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/current/configuring-output.html
 [helm]: https://helm.sh
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
-[dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
