@@ -114,6 +114,7 @@ useful for the [http input plugin][], for instance.
 | `extraVolumeMounts`       | Templatable string of additional `volumeMounts` to be passed to the `tpl` function                                                                                                                                                   | `""`                                  |
 | `extraVolumes`            | Templatable string of additional `volumes` to be passed to the `tpl` function                                                                                                                                                        | `""`                                  |
 | `fullnameOverride`        | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride or .Chart.Name` "                                                                                            | `""`                                  |
+| `hostAliases`             | Configurable [hostAliases][]                                                                                                                                                                                                         | `[]`                                  |
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
@@ -205,6 +206,7 @@ about our development and testing process.
 [examples]: https://github.com/elastic/helm-charts/tree/7.10/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/7.10/logstash/examples/oss
 [helm]: https://helm.sh
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [http input plugin]: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret

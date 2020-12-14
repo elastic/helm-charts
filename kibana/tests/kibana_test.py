@@ -54,6 +54,8 @@ def test_defaults():
     # Make sure that the default 'loadBalancerIP' string is empty
     assert "loadBalancerIP" not in r["service"][name]["spec"]
 
+    assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
+
 
 def test_overriding_the_elasticsearch_hosts():
     config = """
@@ -642,3 +644,16 @@ def test_service_port_name():
     r = helm_template(config)
 
     assert r["service"][name]["spec"]["ports"][0]["name"] == "istio"
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
