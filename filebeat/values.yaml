@@ -89,6 +89,10 @@ deployment:
   # such as filebeat.yml for deployment
   filebeatConfig:
     filebeat.yml: |
+      filebeat.inputs:
+      - type: http_endpoint
+        enabled: true
+
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
