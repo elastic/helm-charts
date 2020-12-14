@@ -97,6 +97,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `extraVolumeMounts`         | List of additional `volumeMounts`                                                                                                                          | `[]`                               |
 | `extraVolumes`              | List of additional `volumes`                                                                                                                               | `[]`                               |
 | `fullnameOverride`          | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
+| `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
 | `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `6.8.14-SNAPSHOT`                  |
@@ -164,6 +165,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/security
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/

@@ -100,6 +100,7 @@ def test_defaults():
     assert "imagePullSecrets" not in r["statefulset"][name]["spec"]["template"]["spec"]
     assert "tolerations" not in r["statefulset"][name]["spec"]["template"]["spec"]
     assert "nodeSelector" not in r["statefulset"][name]["spec"]["template"]["spec"]
+    assert "hostAliases" not in r["statefulset"][name]["spec"]["template"]["spec"]
 
 
 def test_increasing_the_replicas():
@@ -902,3 +903,16 @@ ingress:
             ]
         },
     }
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["statefulset"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

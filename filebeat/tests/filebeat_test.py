@@ -30,6 +30,7 @@ def test_defaults():
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["daemonset"][name]["spec"]["template"]["spec"]
     assert "tolerations" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
 
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "RollingUpdate"
 
@@ -400,3 +401,16 @@ fullnameOverride: 'filebeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["daemonset"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
