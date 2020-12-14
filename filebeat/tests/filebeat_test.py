@@ -1128,8 +1128,8 @@ fullnameOverride: 'filebeat-custom'
             "type": "DirectoryOrCreate",
         },
     } in volumes
-    
-    
+
+
 def test_adding_annotations():
     config = """
 daemonset:
