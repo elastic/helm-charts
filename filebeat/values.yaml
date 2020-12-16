@@ -94,6 +94,18 @@ readinessProbe:
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
+clusterRoleRules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - nodes
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+
 # additionals labels
 labels: {}
 
