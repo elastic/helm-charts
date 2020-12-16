@@ -1178,6 +1178,7 @@ deployment:
 
 def test_hostaliases():
     config = """
+daemonset:
 hostAliases:
 - ip: "127.0.0.1"
   hostnames:
@@ -1185,5 +1186,24 @@ hostAliases:
   - "bar.local"
 """
     r = helm_template(config)
+    assert (
+        "hostAliases"
+        not in r["deployment"][name]["spec"]["template"]["spec"]
+    )
     hostAliases = r["daemonset"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+    config = """
+deployment:
+  hostAliases:
+  - ip: "127.0.0.1"
+    hostnames:
+    - "foo.local"
+    - "bar.local"
+"""
+    r = helm_template(config)
+    assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    hostAliases = r["deployment"][name ]["spec"]["template"]["spec"][
+        "hostAliases"
+    ]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
