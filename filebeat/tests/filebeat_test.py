@@ -94,7 +94,7 @@ def test_defaults():
     assert {
         "name": "data",
         "hostPath": {
-            "path": "/var/lib/" + name + "-data",
+            "path": "/var/lib/" + name + "-default-data",
             "type": "DirectoryOrCreate",
         },
     } in daemonset["volumes"]
@@ -1124,7 +1124,7 @@ fullnameOverride: 'filebeat-custom'
     assert {
         "name": "data",
         "hostPath": {
-            "path": "/var/lib/" + custom_name + "-data",
+            "path": "/var/lib/" + custom_name + "-default-data",
             "type": "DirectoryOrCreate",
         },
     } in volumes
