@@ -10,6 +10,8 @@ name = "release-name-" + project
 
 def test_defaults():
     config = """
+deployment:
+  enabled: true
     """
 
     r = helm_template(config)
@@ -135,6 +137,8 @@ def test_defaults():
 
 def test_adding_a_extra_container():
     config = """
+deployment:
+  enabled: true
 extraContainers: |
   - name: do-something
     image: busybox
@@ -162,6 +166,8 @@ extraContainers: |
 
 def test_adding_init_containers_as_yaml():
     config = """
+deployment:
+  enabled: true
 extraInitContainers:
 - name: dummy-init
   image: busybox
@@ -178,6 +184,8 @@ extraInitContainers:
 
 def test_adding_a_extra_init_container():
     config = """
+deployment:
+  enabled: true
 extraInitContainers: |
   - name: do-something
     image: busybox
@@ -205,6 +213,8 @@ extraInitContainers: |
 
 def test_adding_envs():
     config = """
+deployment:
+  enabled: true
 daemonset:
   extraEnvs:
   - name: LOG_LEVEL
@@ -220,6 +230,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   extraEnvs:
   - name: LOG_LEVEL
     value: DEBUG
@@ -235,6 +246,8 @@ deployment:
 
 def test_adding_deprecated_envs():
     config = """
+deployment:
+  enabled: true
 extraEnvs:
 - name: LOG_LEVEL
   value: DEBUG
@@ -250,6 +263,8 @@ extraEnvs:
 
 def test_adding_image_pull_secrets():
     config = """
+deployment:
+  enabled: true
 imagePullSecrets:
   - name: test-registry
 """
@@ -262,6 +277,8 @@ imagePullSecrets:
 
 def test_adding_host_networking():
     config = """
+deployment:
+  enabled: true
 daemonset:
   hostNetworking: true
 """
@@ -277,6 +294,8 @@ daemonset:
 
 def test_adding_tolerations():
     config = """
+deployment:
+  enabled: true
 daemonset:
   tolerations:
   - key: "key1"
@@ -294,6 +313,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   tolerations:
   - key: "key1"
     operator: "Equal"
@@ -311,6 +331,8 @@ deployment:
 
 def test_adding_deprecated_tolerations():
     config = """
+deployment:
+  enabled: true
 tolerations:
 - key: "key1"
   operator: "Equal"
@@ -331,6 +353,8 @@ tolerations:
 
 def test_override_the_default_update_strategy():
     config = """
+deployment:
+  enabled: true
 updateStrategy: OnDelete
 """
 
@@ -340,6 +364,8 @@ updateStrategy: OnDelete
 
 def test_setting_a_custom_service_account():
     config = """
+deployment:
+  enabled: true
 serviceAccount: notdefault
 """
     r = helm_template(config)
@@ -351,6 +377,8 @@ serviceAccount: notdefault
 
 def test_self_managing_rbac_resources():
     config = """
+deployment:
+  enabled: true
 managedServiceAccount: false
 """
     r = helm_template(config)
@@ -361,6 +389,8 @@ managedServiceAccount: false
 
 def test_setting_pod_security_context():
     config = """
+deployment:
+  enabled: true
 daemonset:
   securityContext:
     runAsUser: 1001
@@ -394,6 +424,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   securityContext:
     runAsUser: 1001
     privileged: false
@@ -427,6 +458,8 @@ deployment:
 
 def test_setting_deprecated_pod_security_context():
     config = """
+deployment:
+  enabled: true
 podSecurityContext:
   runAsUser: 1001
   privileged: false
@@ -468,6 +501,7 @@ daemonset:
       hello = daemonset
 
 deployment:
+  enabled: true
   filebeatConfig:
     filebeat.yml: |
       key: deployment
@@ -515,6 +549,8 @@ deployment:
 
 def test_adding_in_deprecated_filebeat_config():
     config = """
+deployment:
+  enabled: true
 filebeatConfig:
   filebeat.yml: |
     key:
@@ -568,6 +604,8 @@ filebeatConfig:
 
 def test_adding_a_secret_mount():
     config = """
+deployment:
+  enabled: true
 daemonset:
   secretMounts:
     - name: elastic-certificates
@@ -599,6 +637,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   secretMounts:
     - name: elastic-certificates
       secretName: elastic-certificates-name
@@ -630,6 +669,8 @@ deployment:
 
 def test_adding_a_deprecated_secret_mount():
     config = """
+deployment:
+  enabled: true
 secretMounts:
   - name: elastic-certificates
     secretName: elastic-certificates-name
@@ -661,6 +702,8 @@ secretMounts:
 
 def test_adding_a_extra_volume_with_volume_mount():
     config = """
+deployment:
+  enabled: true
 daemonset:
   extraVolumes:
     - name: extras
@@ -690,6 +733,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   extraVolumes:
     - name: extras
       emptyDir: {}
@@ -719,6 +763,8 @@ deployment:
 
 def test_adding_a_deprecated_extra_volume_with_volume_mount():
     config = """
+deployment:
+  enabled: true
 extraVolumes:
   - name: extras
     emptyDir: {}
@@ -744,6 +790,8 @@ extraVolumeMounts:
 
 def test_adding_a_node_selector():
     config = """
+deployment:
+  enabled: true
 daemonset:
   nodeSelector:
     disktype: ssd
@@ -757,6 +805,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   nodeSelector:
     disktype: ssd
 """
@@ -770,6 +819,8 @@ deployment:
 
 def test_adding_deprecated_node_selector():
     config = """
+deployment:
+  enabled: true
 nodeSelector:
   disktype: ssd
 """
@@ -782,6 +833,8 @@ nodeSelector:
 
 def test_adding_an_affinity_rule():
     config = """
+deployment:
+  enabled: true
 affinity:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -804,6 +857,8 @@ affinity:
     assert r["deployment"][name]["spec"]["template"]["spec"]["affinity"] == {}
 
     config = """
+deployment:
+  enabled: true
 daemonset:
   affinity:
     podAntiAffinity:
@@ -827,6 +882,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -850,6 +906,8 @@ deployment:
 
 def test_priority_class_name():
     config = """
+deployment:
+  enabled: true
 priorityClassName: ""
 """
     r = helm_template(config)
@@ -859,6 +917,8 @@ priorityClassName: ""
     assert "priorityClassName" not in deployment_spec
 
     config = """
+deployment:
+  enabled: true
 priorityClassName: "highest"
 """
     r = helm_template(config)
@@ -874,6 +934,8 @@ priorityClassName: "highest"
 
 def test_adding_deprecated_labels():
     config = """
+deployment:
+  enabled: true
 labels:
   app-test: filebeat
 """
@@ -892,6 +954,8 @@ labels:
 
 def test_adding_daemonset_labels():
     config = """
+deployment:
+  enabled: true
 daemonset:
   labels:
     app-test: filebeat
@@ -906,6 +970,8 @@ daemonset:
 
 def test_adding_daemonset_labels_surpasses_root_labels():
     config = """
+deployment:
+  enabled: true
 labels:
   app-test: root-filebeat
 daemonset:
@@ -925,6 +991,7 @@ daemonset:
 def test_adding_deployment_labels():
     config = """
 deployment:
+  enabled: true
   labels:
     app-test: filebeat
 """
@@ -941,6 +1008,7 @@ def test_adding_deployment_labels_surpasses_root_labels():
 labels:
   app-test: root-filebeat
 deployment:
+  enabled: true
   labels:
     app-test: deployment-filebeat
 """
@@ -956,6 +1024,8 @@ deployment:
 
 def test_adding_serviceaccount_annotations():
     config = """
+deployment:
+  enabled: true
 serviceAccountAnnotations:
   eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 """
@@ -970,6 +1040,8 @@ serviceAccountAnnotations:
 
 def test_adding_env_from():
     config = """
+deployment:
+  enabled: true
 daemonset:
   envFrom:
   - configMapRef:
@@ -986,6 +1058,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   envFrom:
   - configMapRef:
       name: configmap-name
@@ -1002,6 +1075,8 @@ deployment:
 
 def test_adding_deprecated_env_from():
     config = """
+deployment:
+  enabled: true
 envFrom:
 - configMapRef:
     name: configmap-name
@@ -1017,6 +1092,8 @@ envFrom:
 
 def test_overriding_resources():
     config = """
+deployment:
+  enabled: true
 daemonset:
   resources:
     limits:
@@ -1042,6 +1119,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   resources:
     limits:
       cpu: "25m"
@@ -1067,6 +1145,8 @@ deployment:
 
 def test_adding_deprecated_resources():
     config = """
+deployment:
+  enabled: true
 resources:
   limits:
     cpu: "25m"
@@ -1092,6 +1172,8 @@ resources:
 
 def test_setting_fullnameOverride():
     config = """
+deployment:
+  enabled: true
 fullnameOverride: 'filebeat-custom'
 """
     r = helm_template(config)
@@ -1118,6 +1200,8 @@ fullnameOverride: 'filebeat-custom'
 
 def test_adding_annotations():
     config = """
+deployment:
+  enabled: true
 daemonset:
     annotations:
         foo: "bar"
@@ -1128,8 +1212,9 @@ daemonset:
     assert "annotations" not in r["deployment"][name]["metadata"]
     config = """
 deployment:
-    annotations:
-        grault: "waldo"
+  enabled: true
+  annotations:
+      grault: "waldo"
 """
     r = helm_template(config)
     assert "grault" in r["deployment"][name]["metadata"]["annotations"]
@@ -1139,6 +1224,8 @@ deployment:
 
 def test_disable_daemonset():
     config = """
+deployment:
+  enabled: true
 daemonset:
     enabled: false
 """
@@ -1153,7 +1240,7 @@ daemonset:
 def test_disable_deployment():
     config = """
 deployment:
-    enabled: false
+  enabled: false
 """
     r = helm_template(config)
     cfg = r["configmap"]
@@ -1164,6 +1251,8 @@ deployment:
 
 def test_hostaliases():
     config = """
+deployment:
+  enabled: true
 daemonset:
   hostAliases:
   - ip: "127.0.0.1"
@@ -1178,6 +1267,7 @@ daemonset:
 
     config = """
 deployment:
+  enabled: true
   hostAliases:
   - ip: "127.0.0.1"
     hostnames:
