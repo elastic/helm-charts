@@ -20,12 +20,7 @@ daemonset:
   extraVolumeMounts: []
     # - name: extras
     #   mountPath: /usr/share/extras
-    #   readOnly: true
-  hostAliases: []
-  #- ip: "127.0.0.1"
-  #  hostnames:
-  #  - "foo.local"
-  #  - "bar.local"
+    #   readOnly: true 
   hostNetworking: false
   # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for daemonset
@@ -75,7 +70,7 @@ deployment:
   labels: {}
   affinity: {}
   # Include the deployment
-  enabled: true
+  enabled: false
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -91,11 +86,6 @@ deployment:
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
-  hostAliases: []
-  #- ip: "127.0.0.1"
-  #  hostnames:
-  #  - "foo.local"
-  #  - "bar.local"
   # such as filebeat.yml for deployment
   filebeatConfig:
     filebeat.yml: |
@@ -103,7 +93,7 @@ deployment:
       - type: tcp
         max_message_size: 10MiB
         host: "localhost:9000"
-      
+
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
@@ -226,4 +216,3 @@ resources: {}
 secretMounts: []
 tolerations: []
 labels: {}
-hostAliases: []
