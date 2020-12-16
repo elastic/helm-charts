@@ -20,7 +20,12 @@ daemonset:
   extraVolumeMounts: []
     # - name: extras
     #   mountPath: /usr/share/extras
-    #   readOnly: true 
+    #   readOnly: true
+  hostAliases: []
+  #- ip: "127.0.0.1"
+  #  hostnames:
+  #  - "foo.local"
+  #  - "bar.local"
   hostNetworking: false
   # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for daemonset
@@ -86,6 +91,11 @@ deployment:
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
+  hostAliases: []
+  #- ip: "127.0.0.1"
+  #  hostnames:
+  #  - "foo.local"
+  #  - "bar.local"
   # such as filebeat.yml for deployment
   filebeatConfig:
     filebeat.yml: |
@@ -216,3 +226,4 @@ resources: {}
 secretMounts: []
 tolerations: []
 labels: {}
+hostAliases: []

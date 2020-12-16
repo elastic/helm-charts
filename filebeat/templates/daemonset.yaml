@@ -72,8 +72,8 @@ spec:
       {{- if .Values.dnsConfig }}
       dnsConfig: {{ toYaml .Values.dnsConfig | nindent 8 }}
       {{- end }}
-      {{- if .Values.hostAliases }}
-      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
+      {{- if .Values.hostAliases | default .Values.daemonset.hostAliases }}
+      hostAliases: {{ toYaml ( .Values.hostAliases | default .Values.daemonset.hostAliases ) | nindent 8 }}
       {{- end }}
       volumes:
       {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}

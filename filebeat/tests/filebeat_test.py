@@ -29,13 +29,12 @@ def test_defaults():
     assert "filebeat test output" in c["readinessProbe"]["exec"]["command"][-1]
 
     assert r["daemonset"][name]["spec"]["template"]["spec"]["tolerations"] == []
+    assert r["deployment"][name]["spec"]["template"]["spec"]["tolerations"] == []
 
     assert "hostNetwork" not in r["daemonset"][name]["spec"]["template"]["spec"]
     assert "dnsPolicy" not in r["daemonset"][name]["spec"]["template"]["spec"]
     assert "hostNetwork" not in r["deployment"][name]["spec"]["template"]["spec"]
     assert "dnsPolicy" not in r["deployment"][name]["spec"]["template"]["spec"]
-
-    assert r["deployment"][name]["spec"]["template"]["spec"]["tolerations"] == []
 
     assert (
         r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
@@ -576,29 +575,23 @@ daemonset:
       path: /usr/share/filebeat/config/certs
 """
     r = helm_template(config)
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
     } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
 
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
@@ -612,29 +605,23 @@ deployment:
       path: /usr/share/filebeat/config/certs
 """
     r = helm_template(config)
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
     } in r["deployment"][name]["spec"]["template"]["spec"]["volumes"]
 
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
@@ -649,15 +636,12 @@ secretMounts:
     path: /usr/share/filebeat/config/certs
 """
     r = helm_template(config)
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
@@ -696,12 +680,13 @@ daemonset:
     assert {"name": "extras", "emptyDir": {}} not in r["deployment"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert (
-        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
-        not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
 
     config = """
 deployment:
@@ -723,12 +708,13 @@ deployment:
     assert {"name": "extras", "emptyDir": {}} not in r["daemonset"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert (
-        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
-        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
 
 
 def test_adding_a_deprecated_extra_volume_with_volume_mount():
@@ -1178,12 +1164,27 @@ deployment:
 
 def test_hostaliases():
     config = """
-hostAliases:
-- ip: "127.0.0.1"
-  hostnames:
-  - "foo.local"
-  - "bar.local"
+daemonset:
+  hostAliases:
+  - ip: "127.0.0.1"
+    hostnames:
+    - "foo.local"
+    - "bar.local"
 """
     r = helm_template(config)
+    assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
     hostAliases = r["daemonset"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+    config = """
+deployment:
+  hostAliases:
+  - ip: "127.0.0.1"
+    hostnames:
+    - "foo.local"
+    - "bar.local"
+"""
+    r = helm_template(config)
+    assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
+    hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
