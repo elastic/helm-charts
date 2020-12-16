@@ -61,6 +61,12 @@ extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
 image: "docker.elastic.co/apm/apm-server"
 imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"

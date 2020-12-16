@@ -97,6 +97,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for DaemonSet                                                                                 | `[]`                                 |
 | `daemonset.extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
 | `daemonset.extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function or DaemonSet                                                                                   | `[]`                                 |
+| `daemonset.hostAliases`        | Configurable [hostAliases][] for Metricbeat DaemonSet                                                                                                                        | `[]`                                 |
 | `daemonset.hostNetworking`     | Enable Metricbeat DaemonSet to use `hostNetwork`                                                                                                                             | `false`                              |
 | `daemonset.metricbeatConfig`   | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for Metricbeat DaemonSet                                                              | see [values.yaml][]                  |
 | `daemonset.nodeSelector`       | Configurable [nodeSelector][] for Metricbeat DaemonSet                                                                                                                       | `{}`                                 |
@@ -112,6 +113,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to Metricbeat container for Deployment                                                                                | `[]`                                 |
 | `deployment.extraVolumeMounts` | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
 | `deployment.extraVolumes`      | Templatable string of additional `volumes` to be passed to the `tpl` function or Deployment                                                                                  | `[]`                                 |
+| `deployment.hostAliases`       | Configurable [hostAliases][] for Metricbeat Deployment                                                                                                                       | `[]`                                 |
 | `deployment.metricbeatConfig`  | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for Metricbeat Deployment                                                             | see [values.yaml][]                  |
 | `deployment.nodeSelector`      | Configurable [nodeSelector][] for Metricbeat Deployment                                                                                                                      | `{}`                                 |
 | `deployment.resources`         | Allows you to set the [resources][] for Metricbeat Deployment                                                                                                                | see [values.yaml][]                  |
@@ -224,6 +226,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/metricbeat/examples/security
 [helm]: https://helm.sh
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
