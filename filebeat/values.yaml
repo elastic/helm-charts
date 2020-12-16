@@ -90,9 +90,10 @@ deployment:
   filebeatConfig:
     filebeat.yml: |
       filebeat.inputs:
-      - type: http_endpoint
-        enabled: true
-
+      - type: tcp
+        max_message_size: 10MiB
+        host: "localhost:9000"
+      
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
