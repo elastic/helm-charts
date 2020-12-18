@@ -648,9 +648,19 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-  path: /
   hosts:
-    - elasticsearch.elastic.co
+    - host: elasticsearch.elastic.co
+      paths:
+        - path: /
+    - host: ''
+      paths:
+        - path: /
+        - path: /mypath
+          servicePort: 8888
+    - host: elasticsearch.hello.there
+      paths:
+        - path: /
+          servicePort: 9999
   tls:
   - secretName: elastic-co-wildcard
     hosts:
@@ -667,6 +677,18 @@ ingress:
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == uname
     assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["http"]["paths"][1]["path"] == "/mypath"
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][2]["host"] == "elasticsearch.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+
 
 
 def test_changing_the_protocol():

@@ -210,9 +210,19 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-  path: /
   hosts:
-    - kibana.elastic.co
+    - host: kibana.elastic.co
+      paths:
+        - path: /
+        - path: /testpath
+          servicePort: 8888
+    - host: ''
+      paths:
+        - path: /
+    - host: kibana.hello.there
+      paths:
+        - path: /mypath
+          servicePort: 9999
   tls:
   - secretName: elastic-co-wildcard
     hosts:
@@ -229,6 +239,17 @@ ingress:
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
     assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][1]["path"] == "/testpath"
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][2]["host"] == "kibana.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/mypath"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
 
 
 def test_adding_an_ingress_rule_wildcard():
@@ -237,9 +258,10 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-  path: /
   hosts:
-    - kibana.elastic.co
+    - host: kibana.elastic.co
+      paths:
+        - path: /
   tls:
   - secretName: elastic-co-wildcard
     hosts:

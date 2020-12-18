@@ -1,7 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "elasticsearch.uname" . -}}
-{{- $servicePort := .Values.httpPort -}}
-{{- $ingressPath := .Values.ingress.path -}}
+{{- $httpPort := .Values.httpPort -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -17,22 +16,18 @@ metadata:
 spec:
 {{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
-    - hosts:
-      {{- range .hosts }}
-        - {{ . }}
-      {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
+{{ toYaml .Values.ingress.tls | indent 4 }}
 {{- end }}
   rules:
   {{- range .Values.ingress.hosts }}
-    - host: {{ . }}
+    - host: {{ .host }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+        {{- range .paths }}
+          - path: {{ .path }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: {{ $servicePort }}
+              servicePort: {{ .servicePort | default $httpPort }}
+        {{- end }}
   {{- end }}
 {{- end }}
