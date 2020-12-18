@@ -1,31 +1,88 @@
 ---
-# Allows you to add any config files in /usr/share/filebeat
-# such as filebeat.yml
-filebeatConfig:
-  filebeat.yml: |
-    filebeat.inputs:
-    - type: container
-      paths:
-        - /var/log/containers/*.log
-      processors:
-      - add_kubernetes_metadata:
-          host: ${NODE_NAME}
-          matchers:
-          - logs_path:
-              logs_path: "/var/log/containers/"
+daemonset:
+  # Annotations to apply to the daemonset
+  annotations: {}
+  # additionals labels
+  labels: {}
+  affinity: {}
+  # Include the daemonset
+  enabled: true
+  # Extra environment variables for Filebeat container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
+  extraVolumes: []
+    # - name: extras
+    #   emptyDir: {}
+  extraVolumeMounts: []
+    # - name: extras
+    #   mountPath: /usr/share/extras
+    #   readOnly: true
+  hostNetworking: false
+  # Allows you to add any config files in /usr/share/filebeat
+  # such as filebeat.yml for daemonset
+  filebeatConfig:
+    filebeat.yml: |
+      filebeat.inputs:
+      - type: container
+        paths:
+          - /var/log/containers/*.log
+        processors:
+        - add_kubernetes_metadata:
+            host: ${NODE_NAME}
+            matchers:
+            - logs_path:
+                logs_path: "/var/log/containers/"
 
-    output.elasticsearch:
-      host: '${NODE_NAME}'
-      hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+      output.elasticsearch:
+        host: '${NODE_NAME}'
+        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+  nodeSelector: {}
+  # A list of secrets and their paths to mount inside the pod
+  # This is useful for mounting certificates for security other sensitive values
+  secretMounts: []
+  #  - name: filebeat-certificates
+  #    secretName: filebeat-certificates
+  #    path: /usr/share/filebeat/certs
+  # Various pod security context settings. Bear in mind that many of these have an impact on Filebeat functioning properly.
+  #
+  # - User that the container will execute as. Typically necessary to run as root (0) in order to properly collect host container logs.
+  # - Whether to execute the Filebeat containers as privileged containers. Typically not necessarily unless running within environments such as OpenShift.
+  securityContext:
+    runAsUser: 0
+    privileged: false
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "1000m"
+      memory: "200Mi"
+  tolerations: []
 
-# Extra environment variables to append to the DaemonSet pod spec.
-# This will be appended to the current 'env:' key. You can use any of the kubernetes env
-# syntax here
-extraEnvs: []
-#  - name: MY_ENVIRONMENT_VAR
-#    value: the_value_goes_here
-
-extraVolumeMounts: []
+deployment:
+  # Annotations to apply to the deployment
+  annotations: {}
+  # additionals labels
+  labels: {}
+  affinity: {}
+  # Include the deployment
+  enabled: false
+  # Extra environment variables for Filebeat container.
+  envFrom: []
+  # - configMapRef:
+  #     name: config-secret
+  extraEnvs: []
+  #  - name: MY_ENVIRONMENT_VAR
+  #    value: the_value_goes_here
+  # Allows you to add any config files in /usr/share/filebeat
+  extraVolumes: []
+  # - name: extras
+  #   emptyDir: {}
+  extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
@@ -89,8 +146,17 @@ readinessProbe:
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
 
-# additionals labels
-labels: {}
+clusterRoleRules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - nodes
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
