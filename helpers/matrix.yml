@@ -19,6 +19,7 @@ KIBANA_SUITE:
   - upgrade
 FILEBEAT_SUITE:
   - default
+  - deployment
   - oss
   - security
   - upgrade
