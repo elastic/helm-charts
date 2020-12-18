@@ -20,7 +20,7 @@ daemonset:
   extraVolumeMounts: []
     # - name: extras
     #   mountPath: /usr/share/extras
-    #   readOnly: true 
+    #   readOnly: true
   hostNetworking: false
   # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for daemonset
@@ -176,6 +176,18 @@ readinessProbe:
 
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
+
+clusterRoleRules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - nodes
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
