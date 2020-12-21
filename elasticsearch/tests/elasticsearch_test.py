@@ -690,7 +690,6 @@ ingress:
     assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
 
 
-
 def test_changing_the_protocol():
     config = """
 protocol: https
