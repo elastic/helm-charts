@@ -141,6 +141,7 @@ def test_defaults():
     assert "tolerations" not in r["statefulset"][uname]["spec"]["template"]["spec"]
     assert "nodeSelector" not in r["statefulset"][uname]["spec"]["template"]["spec"]
     assert "ingress" not in r
+    assert "hostAliases" not in r["statefulset"][uname]["spec"]["template"]["spec"]
 
 
 def test_increasing_the_replicas():
@@ -1361,3 +1362,16 @@ fullnameOverride: "customfullName"
         "name": "cluster.initial_master_nodes",
         "value": "customfullName-0," + "customfullName-1," + "customfullName-2,",
     } in env
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["statefulset"][uname]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

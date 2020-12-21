@@ -59,6 +59,9 @@ spec:
       {{- if .Values.dnsConfig }}
       dnsConfig: {{ toYaml .Values.dnsConfig | nindent 8 }}
       {{- end }}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
+      {{- end }}
       volumes:
       {{- range .Values.secretMounts }}
       - name: {{ .name }}
