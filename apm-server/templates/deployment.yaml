@@ -34,6 +34,9 @@ spec:
       priorityClassName: {{ .Values.priorityClassName }}
 {{- end }}
       serviceAccountName: {{ template "apm.serviceAccount" . }}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
+      {{- end }}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}

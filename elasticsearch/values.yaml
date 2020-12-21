@@ -50,6 +50,12 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 #    defaultMode: 0755
 
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
 image: "docker.elastic.co/elasticsearch/elasticsearch"
 imageTag: "6.8.14-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"

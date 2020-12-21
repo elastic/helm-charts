@@ -28,6 +28,12 @@ secretMounts: []
 #    path: /usr/share/kibana/data/kibana.keystore
 #    subPath: kibana.keystore # optional
 
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
 image: "docker.elastic.co/kibana/kibana"
 imageTag: "6.8.14-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
