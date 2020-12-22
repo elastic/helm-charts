@@ -708,7 +708,6 @@ ingress:
     r = helm_template(config)
     assert uname in r["ingress"]
     i = r["ingress"][uname]["spec"]
-    print(i["tls"])
     assert i["tls"][0]["hosts"][0] == "elasticsearch.elastic.co"
     assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
 

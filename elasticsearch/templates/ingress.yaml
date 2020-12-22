@@ -19,11 +19,11 @@ spec:
   tls:
   {{- if .ingressPath }}
   {{- range .Values.ingress.tls }}
-  - hosts:
-    {{- range .hosts }}
-      - {{ . }}
-    {{- end }}
-    secretName: {{ .secretName }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . }}
+      {{- end }}
+      secretName: {{ .secretName }}
     {{- end }}
   {{- else }}
 {{ toYaml .Values.ingress.tls | indent 4 }}
