@@ -648,6 +648,54 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: elasticsearch.elastic.co
+      paths:
+        - path: /
+    - host: ''
+      paths:
+        - path: /
+        - path: /mypath
+          servicePort: 8888
+    - host: elasticsearch.hello.there
+      paths:
+        - path: /
+          servicePort: 9999
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - elasticsearch.elastic.co
+"""
+
+    r = helm_template(config)
+    assert uname in r["ingress"]
+    i = r["ingress"][uname]["spec"]
+    assert i["tls"][0]["hosts"][0] == "elasticsearch.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "elasticsearch.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["http"]["paths"][1]["path"] == "/mypath"
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][2]["host"] == "elasticsearch.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+
+
+def test_adding_a_deprecated_ingress_rule():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
   path: /
   hosts:
     - elasticsearch.elastic.co

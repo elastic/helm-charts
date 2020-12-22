@@ -210,6 +210,54 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: kibana.elastic.co
+      paths:
+        - path: /
+        - path: /testpath
+          servicePort: 8888
+    - host: ''
+      paths:
+        - path: /
+    - host: kibana.hello.there
+      paths:
+        - path: /mypath
+          servicePort: 9999
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - kibana.elastic.co
+"""
+
+    r = helm_template(config)
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "kibana.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "kibana.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][1]["path"] == "/testpath"
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][2]["host"] == "kibana.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/mypath"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+
+
+def test_adding_a_deprecated_ingress_rule():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
   path: /
   hosts:
     - kibana.elastic.co
@@ -232,6 +280,34 @@ ingress:
 
 
 def test_adding_an_ingress_rule_wildcard():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: kibana.elastic.co
+      paths:
+        - path: /
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - "*.elastic.co"
+"""
+
+    r = helm_template(config)
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "*.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "kibana.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+
+
+def test_adding_a_deprecated_ingress_rule_wildcard():
     config = """
 ingress:
   enabled: true
