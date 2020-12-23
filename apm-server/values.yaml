@@ -82,7 +82,8 @@ podAnnotations: {}
 labels: {}
 
 podSecurityContext:
-  runAsUser: 0
+  runAsUser: 1000
+  runAsGroup: 0
   privileged: false
 
 livenessProbe:
