@@ -12,6 +12,8 @@ roles:
   master: "true"
   ingest: "true"
   data: "true"
+  remote_cluster_client: "true"
+# ml: "true" # ml is not availble with elasticsearch-oss
 
 replicas: 3
 minimumMasterNodes: 2
@@ -34,6 +36,13 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
+# Allows you to load environment variables from kubernetes secret or config map
+envFrom: []
+# - secretRef:
+#     name: env-secret
+# - configMapRef:
+#     name: config-map
+
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security and for mounting
 # the X-Pack license
@@ -41,9 +50,16 @@ secretMounts: []
 #  - name: elastic-certificates
 #    secretName: elastic-certificates
 #    path: /usr/share/elasticsearch/config/certs
+#    defaultMode: 0755
+
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.6.1"
+imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -88,6 +104,7 @@ volumeClaimTemplate:
 
 rbac:
   create: false
+  serviceAccountAnnotations: {}
   serviceAccountName: ""
 
 podSecurityPolicy:
@@ -107,29 +124,33 @@ podSecurityPolicy:
       - secret
       - configMap
       - persistentVolumeClaim
+      - emptyDir
 
 persistence:
   enabled: true
   multiDisk:
     enabled: false
     count: 1
+  labels:
+    # Add default labels for the volumeClaimTemplate of the StatefulSet
+    enabled: false
   annotations: {}
 
-extraVolumes: ""
+extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: ""
+extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraContainers: ""
+extraContainers: []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
 
-extraInitContainers: ""
+extraInitContainers: []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
@@ -154,6 +175,11 @@ nodeAffinity: {}
 # the same time when bootstrapping the cluster
 podManagementPolicy: "Parallel"
 
+# The environment variables injected by service links are not used, but can lead to slow Elasticsearch boot times when
+# there are many services in the current namespace.
+# If you experience slow pod startups you probably want to set this to `false`.
+enableServiceLinks: true
+
 protocol: http
 httpPort: 9200
 transportPort: 9300
@@ -166,7 +192,9 @@ service:
   annotations: {}
   httpPortName: http
   transportPortName: transport
+  loadBalancerIP: ""
   loadBalancerSourceRanges: []
+  externalTrafficPolicy: ""
 
 updateStrategy: RollingUpdate
 
@@ -178,10 +206,6 @@ maxUnavailable: 1
 podSecurityContext:
   fsGroup: 1000
   runAsUser: 1000
-
-# The following value is deprecated,
-# please use the above podSecurityContext.fsGroup instead
-fsGroup: ""
 
 securityContext:
   capabilities:
@@ -222,9 +246,10 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  path: /
   hosts:
-    - chart-example.local
+    - host: chart-example.local
+      paths:
+        - path: /
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -260,3 +285,7 @@ sysctlInitContainer:
   enabled: true
 
 keystore: []
+
+# Deprecated
+# please use the above podSecurityContext.fsGroup instead
+fsGroup: ""

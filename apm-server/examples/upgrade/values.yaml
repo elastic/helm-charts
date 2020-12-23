@@ -1,0 +1,12 @@
+---
+apmConfig:
+  apm-server.yml: |
+    apm-server:
+      host: "0.0.0.0:8200"
+
+    queue: {}
+    output.file:
+      enabled: false
+
+    output.elasticsearch:
+      hosts: ["http://upgrade-master:9200"]

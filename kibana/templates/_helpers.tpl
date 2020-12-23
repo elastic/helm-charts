@@ -20,12 +20,13 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Return the appropriate apiVersion for ingress.
+Common labels
 */}}
-{{- define "kibana.ingress.apiVersion" -}}
-{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "extensions/v1beta1" -}}
-{{- else -}}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- end -}}
+{{- define "kibana.labels" -}}
+app: {{ .Chart.Name }}
+release: {{ .Release.Name | quote }}
+heritage: {{ .Release.Service }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels }}
+{{- end }}
 {{- end -}}

@@ -45,7 +45,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{- define "elasticsearch.endpoints" -}}
 {{- $replicas := int (toString (.Values.replicas)) }}
-{{- $uname := printf "%s-%s" .Values.clusterName .Values.nodeGroup }}
+{{- $uname := (include "elasticsearch.uname" .) }}
   {{- range $i, $e := untilStep 0 $replicas 1 -}}
 {{ $uname }}-{{ $i }},
   {{- end -}}
@@ -59,29 +59,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- if and (contains "docker.elastic.co/elasticsearch/elasticsearch" .Values.image) (not (eq $version 0)) -}}
 {{ $version }}
   {{- else -}}
-7
+8
   {{- end -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Return the appropriate apiVersion for statefulset.
-*/}}
-{{- define "elasticsearch.statefulset.apiVersion" -}}
-{{- if semverCompare "<1.9-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "apps/v1beta2" -}}
-{{- else -}}
-{{- print "apps/v1" -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Return the appropriate apiVersion for ingress.
-*/}}
-{{- define "elasticsearch.ingress.apiVersion" -}}
-{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "extensions/v1beta1" -}}
-{{- else -}}
-{{- print "networking.k8s.io/v1beta1" -}}
 {{- end -}}
 {{- end -}}

@@ -51,6 +51,11 @@ def test_defaults():
     # Make sure that the default 'loadBalancerSourceRanges' list is empty
     assert "loadBalancerSourceRanges" not in r["service"][name]["spec"]
 
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in r["service"][name]["spec"]
+
+    assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
+
 
 def test_overriding_the_elasticsearch_hosts():
     config = """
@@ -87,6 +92,19 @@ def test_overriding_the_port():
     assert c["ports"][0]["containerPort"] == 5602
 
     assert r["service"][name]["spec"]["ports"][0]["targetPort"] == 5602
+
+
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
 
 
 def test_adding_image_pull_secrets():
@@ -192,6 +210,54 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: kibana.elastic.co
+      paths:
+        - path: /
+        - path: /testpath
+          servicePort: 8888
+    - host: ''
+      paths:
+        - path: /
+    - host: kibana.hello.there
+      paths:
+        - path: /mypath
+          servicePort: 9999
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - kibana.elastic.co
+"""
+
+    r = helm_template(config)
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "kibana.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "kibana.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][1]["path"] == "/testpath"
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][2]["host"] == "kibana.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/mypath"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+
+
+def test_adding_a_deprecated_ingress_rule():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
   path: /
   hosts:
     - kibana.elastic.co
@@ -214,6 +280,34 @@ ingress:
 
 
 def test_adding_an_ingress_rule_wildcard():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: kibana.elastic.co
+      paths:
+        - path: /
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - "*.elastic.co"
+"""
+
+    r = helm_template(config)
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "*.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "kibana.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+
+
+def test_adding_a_deprecated_ingress_rule_wildcard():
     config = """
 ingress:
   enabled: true
@@ -515,6 +609,31 @@ labels:
     )
 
 
+def test_service_to_pod_label_selectors():
+    config = ""
+
+    r = helm_template(config)
+
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
+    )
+
+
+def test_service_to_pod_label_selectors_with_custom_labels():
+    config = """
+labels:
+  app.kubernetes.io/name: kibana
+"""
+
+    r = helm_template(config)
+
+    assert all(
+        l in r["deployment"][name]["spec"]["template"]["metadata"]["labels"].items()
+        for l in r["service"][name]["spec"]["selector"].items()
+    )
+
+
 def test_adding_a_secret_mount_with_subpath():
     config = """
 secretMounts:
@@ -577,3 +696,40 @@ fullnameOverride: 'kibana-custom'
         ]
         == "kibana"
     )
+
+
+def test_adding_loadBalancerIP():
+    config = """
+    service:
+      loadBalancerIP: 12.5.11.79
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"
+
+
+def test_service_port_name():
+    r = helm_template("")
+
+    config = """
+    service:
+      httpPortName: istio
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["ports"][0]["name"] == "istio"
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

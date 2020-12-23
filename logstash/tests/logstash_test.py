@@ -1,10 +1,9 @@
+import base64
 import os
 import sys
 
 sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
 from helpers import helm_template
-import yaml
-
 
 name = "release-name-logstash"
 
@@ -78,8 +77,9 @@ def test_defaults():
     )
 
     # Service
-    assert "serviceName" not in r["statefulset"][name]["spec"]
-    assert "service" not in r
+    assert r["statefulset"][name]["spec"]["serviceName"] == name + "-headless"
+    assert name + "-headless" in r["service"]
+    assert r["service"][name + "-headless"]["spec"]["ports"][0]["port"] == 9600
 
     # Other
     assert r["statefulset"][name]["spec"]["template"]["spec"]["securityContext"] == {
@@ -100,6 +100,7 @@ def test_defaults():
     assert "imagePullSecrets" not in r["statefulset"][name]["spec"]["template"]["spec"]
     assert "tolerations" not in r["statefulset"][name]["spec"]["template"]["spec"]
     assert "nodeSelector" not in r["statefulset"][name]["spec"]["template"]["spec"]
+    assert "hostAliases" not in r["statefulset"][name]["spec"]["template"]["spec"]
 
 
 def test_increasing_the_replicas():
@@ -139,6 +140,19 @@ extraEnvs:
     r = helm_template(config)
     env = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0]["env"]
     assert {"name": "hello", "value": "world"} in env
+
+
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
 
 
 def test_adding_a_extra_volume_with_volume_mount():
@@ -221,7 +235,7 @@ persistence:
     assert c["volumeMounts"][0]["mountPath"] == "/usr/share/logstash/data"
     assert c["volumeMounts"][0]["name"] == name
 
-    v = r["statefulset"]["release-name-logstash"]["spec"]["volumeClaimTemplates"][0]
+    v = r["statefulset"][name]["spec"]["volumeClaimTemplates"][0]
     assert v["metadata"]["name"] == name
     assert v["spec"]["accessModes"] == ["ReadWriteOnce"]
     assert v["spec"]["resources"]["requests"]["storage"] == "1Gi"
@@ -293,6 +307,155 @@ secretMounts:
     }
 
 
+def test_adding_a_secret():
+    content = "LS1CRUdJTiBgUFJJVkFURSB"
+    config = """
+secrets:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: {elk_pass}
+""".format(
+        elk_pass=content
+    )
+    content_b64 = base64.b64encode(content.encode("ascii")).decode("ascii")
+
+    r = helm_template(config)
+    secret_name = name + "-env"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 1
+    assert s["data"] == {"ELASTICSEARCH_PASSWORD": content_b64}
+    assert (
+        "secretschecksum"
+        in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
+
+
+def test_adding_secret_from_file():
+    content = """
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApCt3ychnqZHsS
+DylPFZn55xDaDcWco1oNFdBGzFjw+
+zkuMFMOv7ab+yOFwHeEeAAEkEgy1u
+Da1vIscBs1K0kbEFRSqySLuNHWiJp
+wK2cI/gJc+S9Qd9Qsn0XGjmjQ6P2p
+ot2hvCOtnei998OmDSYORKBq2jiv/
+-----END RSA PRIVATE KEY-----
+"""
+    config = """
+secrets:
+  - name: "tls"
+    value:
+      cert.key.filepath: "secrets/private.key"
+"""
+    content_b64 = base64.b64encode(content.encode("ascii")).decode("ascii")
+    work_dir = os.path.join(os.path.abspath(os.getcwd()), "secrets")
+    filename = os.path.join(work_dir, "private.key")
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, "w") as f:
+        f.write(content)
+
+    with open(filename, "r") as f:
+        data = f.read()
+        assert data == content
+
+    r = helm_template(config)
+    secret_name = name + "-tls"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 1
+    assert s["data"] == {
+        "cert.key": content_b64,
+    }
+
+    os.remove(filename)
+    os.rmdir(work_dir)
+
+
+def test_adding_multiple_data_secret():
+    content = {
+        "elk_pass": "LS1CRUdJTiBgUFJJVkFURSB",
+        "api_key": "ui2CsdUadTiBasRJRkl9tvNnw",
+    }
+    config = """
+secrets:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: {elk_pass}
+      api_key: {api_key}
+""".format(
+        elk_pass=content["elk_pass"], api_key=content["api_key"]
+    )
+    content_b64 = {
+        "elk_pass": base64.b64encode(content["elk_pass"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "api_key": base64.b64encode(content["api_key"].encode("ascii")).decode("ascii"),
+    }
+
+    r = helm_template(config)
+    secret_name = name + "-env"
+    s = r["secret"][secret_name]
+    assert s["metadata"]["labels"]["app"] == name
+    assert len(r["secret"]) == 1
+    assert len(s["data"]) == 2
+    assert s["data"] == {
+        "ELASTICSEARCH_PASSWORD": content_b64["elk_pass"],
+        "api_key": content_b64["api_key"],
+    }
+
+
+def test_adding_multiple_secrets():
+    content = {
+        "elk_pass": "LS1CRUdJTiBgUFJJVkFURSB",
+        "cert_crt": "LS0tLS1CRUdJTiBlRJRALKJDDQVRFLS0tLS0K",
+        "cert_key": "LS0tLS1CRUdJTiBgUFJJVkFURSBLRVktLS0tLQo",
+    }
+    config = """
+secrets:
+  - name: "env"
+    value:
+      ELASTICSEARCH_PASSWORD: {elk_pass}
+  - name: "tls"
+    value:
+      cert.crt: {cert_crt}
+      cert.key: {cert_key}
+
+""".format(
+        elk_pass=content["elk_pass"],
+        cert_crt=content["cert_crt"],
+        cert_key=content["cert_key"],
+    )
+    content_b64 = {
+        "elk_pass": base64.b64encode(content["elk_pass"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "cert_crt": base64.b64encode(content["cert_crt"].encode("ascii")).decode(
+            "ascii"
+        ),
+        "cert_key": base64.b64encode(content["cert_key"].encode("ascii")).decode(
+            "ascii"
+        ),
+    }
+
+    r = helm_template(config)
+    secret_names = {"env": name + "-env", "tls": name + "-tls"}
+    s_env = r["secret"][secret_names["env"]]
+    s_tls = r["secret"][secret_names["tls"]]
+    assert len(r["secret"]) == 2
+    assert len(s_env["data"]) == 1
+    assert s_env["data"] == {
+        "ELASTICSEARCH_PASSWORD": content_b64["elk_pass"],
+    }
+    assert len(s_tls["data"]) == 2
+    assert s_tls["data"] == {
+        "cert.crt": content_b64["cert_crt"],
+        "cert.key": content_b64["cert_key"],
+    }
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
@@ -337,6 +500,22 @@ podAnnotations:
     )
 
 
+def test_adding_serviceaccount_annotations():
+    config = """
+rbac:
+  create: true
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][name]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
+    )
+
+
 def test_adding_a_node_selector():
     config = """
 nodeSelector:
@@ -362,9 +541,9 @@ nodeAffinity:
         - myvalue
 """
     r = helm_template(config)
-    assert r["statefulset"]["release-name-logstash"]["spec"]["template"]["spec"][
-        "affinity"
-    ]["nodeAffinity"] == {
+    assert r["statefulset"][name]["spec"]["template"]["spec"]["affinity"][
+        "nodeAffinity"
+    ] == {
         "preferredDuringSchedulingIgnoredDuringExecution": [
             {
                 "weight": 100,
@@ -402,10 +581,9 @@ logstashConfig:
 
     s = r["statefulset"][name]["spec"]["template"]["spec"]
 
-    assert {
-        "configMap": {"name": "release-name-logstash-config"},
-        "name": "logstashconfig",
-    } in s["volumes"]
+    assert {"configMap": {"name": name + "-config"}, "name": "logstashconfig",} in s[
+        "volumes"
+    ]
     assert {
         "mountPath": "/usr/share/logstash/config/logstash.yml",
         "name": "logstashconfig",
@@ -583,6 +761,8 @@ def test_pod_security_policy():
 rbac:
   create: true
   serviceAccountName: ""
+  annotations:
+    "eks.amazonaws.com/role-arn": "test-rbac-annotations"
 
 podSecurityPolicy:
   create: true
@@ -698,3 +878,41 @@ fullnameOverride: 'logstash-custom'
         ]
         == "logstash"
     )
+
+
+def test_adding_an_ingress():
+    config = """
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: logstash.local
+      paths:
+        - path: /logs
+          servicePort: 8080
+"""
+    r = helm_template(config)
+    s = r["ingress"][name]
+    assert s["metadata"]["name"] == name
+    assert len(s["spec"]["rules"]) == 1
+    assert s["spec"]["rules"][0] == {
+        "host": "logstash.local",
+        "http": {
+            "paths": [
+                {"path": "/logs", "backend": {"serviceName": name, "servicePort": 8080}}
+            ]
+        },
+    }
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["statefulset"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

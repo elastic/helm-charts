@@ -73,7 +73,6 @@ def test_defaults():
 
     assert "curl" in c["readinessProbe"]["exec"]["command"][-1]
     assert "http://127.0.0.1:9200" in c["readinessProbe"]["exec"]["command"][-1]
-    assert "/_cluster/health?timeout=0s" in c["readinessProbe"]["exec"]["command"][-1]
 
     # Resources
     assert c["resources"] == {
@@ -85,8 +84,10 @@ def test_defaults():
     assert c["volumeMounts"][0]["mountPath"] == "/usr/share/elasticsearch/data"
     assert c["volumeMounts"][0]["name"] == uname
 
+    # volumeClaimTemplates
     v = r["statefulset"][uname]["spec"]["volumeClaimTemplates"][0]
     assert v["metadata"]["name"] == uname
+    assert "labels" not in v["metadata"]
     assert v["spec"]["accessModes"] == ["ReadWriteOnce"]
     assert v["spec"]["resources"]["requests"]["storage"] == "30Gi"
 
@@ -140,6 +141,7 @@ def test_defaults():
     assert "tolerations" not in r["statefulset"][uname]["spec"]["template"]["spec"]
     assert "nodeSelector" not in r["statefulset"][uname]["spec"]["template"]["spec"]
     assert "ingress" not in r
+    assert "hostAliases" not in r["statefulset"][uname]["spec"]["template"]["spec"]
 
 
 def test_increasing_the_replicas():
@@ -170,53 +172,8 @@ imageTag: 6.2.4
     )
 
 
-def test_set_discovery_hosts_to_custom_master_service():
+def test_set_initial_master_nodes():
     config = """
-esMajorVersion: 6
-masterService: "elasticsearch-custommaster"
-"""
-    r = helm_template(config)
-    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
-    assert {
-        "name": "discovery.zen.ping.unicast.hosts",
-        "value": "elasticsearch-custommaster-headless",
-    } in env
-
-
-def test_set_master_service_to_default_nodegroup_name_if_not_set():
-    config = """
-esMajorVersion: 6
-nodeGroup: "data"
-"""
-    r = helm_template(config)
-    env = r["statefulset"]["elasticsearch-data"]["spec"]["template"]["spec"][
-        "containers"
-    ][0]["env"]
-    assert {
-        "name": "discovery.zen.ping.unicast.hosts",
-        "value": "elasticsearch-master-headless",
-    } in env
-
-
-def test_set_master_service_to_default_nodegroup_name_with_custom_cluster_name():
-    config = """
-esMajorVersion: 6
-clusterName: "custom"
-nodeGroup: "data"
-"""
-    r = helm_template(config)
-    env = r["statefulset"]["custom-data"]["spec"]["template"]["spec"]["containers"][0][
-        "env"
-    ]
-    assert {
-        "name": "discovery.zen.ping.unicast.hosts",
-        "value": "custom-master-headless",
-    } in env
-
-
-def test_set_initial_master_nodes_when_using_v_7():
-    config = """
-esMajorVersion: 7
 roles:
   master: "true"
 """
@@ -233,9 +190,8 @@ roles:
         assert e["name"] != "discovery.zen.minimum_master_nodes"
 
 
-def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
+def test_dont_set_initial_master_nodes_if_not_master():
     config = """
-esMajorVersion: 7
 roles:
   master: "false"
 """
@@ -245,9 +201,8 @@ roles:
         assert e["name"] != "cluster.initial_master_nodes"
 
 
-def test_set_discovery_seed_host_when_using_v_7():
+def test_set_discovery_seed_host():
     config = """
-esMajorVersion: 7
 roles:
   master: "true"
 """
@@ -284,12 +239,48 @@ extraEnvs:
     assert {"name": "hello", "value": "world"} in env
 
 
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
+
+
 def test_adding_a_extra_volume_with_volume_mount():
     config = """
 extraVolumes: |
   - name: extras
     emptyDir: {}
 extraVolumeMounts: |
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+"""
+    r = helm_template(config)
+    extraVolume = r["statefulset"][uname]["spec"]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "emptyDir": {}} in extraVolume
+    extraVolumeMounts = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "containers"
+    ][0]["volumeMounts"]
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } in extraVolumeMounts
+
+
+def test_adding_a_extra_volume_with_volume_mount_as_yaml():
+    config = """
+extraVolumes:
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts:
   - name: extras
     mountPath: /usr/share/extras
     readOnly: true
@@ -323,9 +314,43 @@ extraContainers: |
     } in extraContainer
 
 
+def test_adding_a_extra_container_as_yaml():
+    config = """
+extraContainers:
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraContainer = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraContainer
+
+
 def test_adding_a_extra_init_container():
     config = """
 extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraInitContainer = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraInitContainer
+
+
+def test_adding_a_extra_init_container_as_yaml():
+    config = """
+extraInitContainers:
   - name: do-something
     image: busybox
     command: ['do', 'something']
@@ -347,10 +372,7 @@ sysctlInitContainer:
   enabled: false
 """
     r = helm_template(config)
-    initContainers = r["statefulset"][uname]["spec"]["template"]["spec"][
-        "initContainers"
-    ]
-    assert initContainers is None
+    assert "initContainers" not in r["statefulset"][uname]["spec"]["template"]["spec"]
 
 
 def test_sysctl_init_container_enabled():
@@ -410,6 +432,23 @@ def test_adding_multiple_persistence_annotations():
     assert annotations["world"] == "hello"
 
 
+def test_enabling_persistence_label_in_volumeclaimtemplate():
+    config = """
+persistence:
+  labels:
+    enabled: true
+"""
+    r = helm_template(config)
+    volume_claim_template_labels = r["statefulset"][uname]["spec"][
+        "volumeClaimTemplates"
+    ][0]["metadata"]["labels"]
+    statefulset_labels = r["statefulset"][uname]["metadata"]["labels"]
+    expected_labels = statefulset_labels
+    # heritage label shouldn't be present in volumeClaimTemplates labels
+    expected_labels.pop("heritage")
+    assert volume_claim_template_labels == expected_labels
+
+
 def test_adding_a_secret_mount():
     config = """
 secretMounts:
@@ -435,6 +474,24 @@ secretMounts:
     secretName: elastic-certs
     path: /usr/share/elasticsearch/config/certs
     subPath: cert.crt
+"""
+    r = helm_template(config)
+    s = r["statefulset"][uname]["spec"]["template"]["spec"]
+    assert s["containers"][0]["volumeMounts"][-1] == {
+        "mountPath": "/usr/share/elasticsearch/config/certs",
+        "subPath": "cert.crt",
+        "name": "elastic-certificates",
+    }
+
+
+def test_adding_a_secret_mount_with_default_mode():
+    config = """
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certs
+    path: /usr/share/elasticsearch/config/certs
+    subPath: cert.crt
+    defaultMode: 0755
 """
     r = helm_template(config)
     s = r["statefulset"][uname]["spec"]["template"]["spec"]
@@ -486,6 +543,22 @@ podAnnotations:
             "iam.amazonaws.com/role"
         ]
         == "es-role"
+    )
+
+
+def test_adding_serviceaccount_annotations():
+    config = """
+rbac:
+  create: true
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][uname]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
     )
 
 
@@ -570,6 +643,54 @@ nodeAffinity:
 
 
 def test_adding_an_ingress_rule():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: elasticsearch.elastic.co
+      paths:
+        - path: /
+    - host: ''
+      paths:
+        - path: /
+        - path: /mypath
+          servicePort: 8888
+    - host: elasticsearch.hello.there
+      paths:
+        - path: /
+          servicePort: 9999
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - elasticsearch.elastic.co
+"""
+
+    r = helm_template(config)
+    assert uname in r["ingress"]
+    i = r["ingress"][uname]["spec"]
+    assert i["tls"][0]["hosts"][0] == "elasticsearch.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "elasticsearch.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["http"]["paths"][1]["path"] == "/mypath"
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][2]["host"] == "elasticsearch.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+
+
+def test_adding_a_deprecated_ingress_rule():
     config = """
 ingress:
   enabled: true
@@ -726,6 +847,40 @@ def test_adding_a_nodePort():
     assert r["service"][uname]["spec"]["ports"][0]["nodePort"] == 30001
 
 
+def test_adding_a_loadBalancerIP():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "loadBalancerIP" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      loadBalancerIP: 12.4.19.81
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["loadBalancerIP"] == "12.4.19.81"
+
+
+def test_adding_an_externalTrafficPolicy():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "externalTrafficPolicy" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      externalTrafficPolicy: Local
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["externalTrafficPolicy"] == "Local"
+
+
 def test_adding_a_label_on_non_headless_service():
     config = ""
 
@@ -822,41 +977,32 @@ def test_esMajorVersion_detect_default_version():
     config = ""
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
 
 
-def test_esMajorVersion_default_to_7_if_not_elastic_image():
+def test_esMajorVersion_default_to_8_if_not_elastic_image():
     config = """
     image: notElastic
     imageTag: 1.0.0
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
 
 
-def test_esMajorVersion_default_to_7_if_no_version_is_found():
+def test_esMajorVersion_default_to_8_if_no_version_is_found():
     config = """
     imageTag: not_a_number
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
-
-
-def test_esMajorVersion_set_to_6_based_on_image_tag():
-    config = """
-    imageTag: 6.8.1
-    """
-
-    r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
 
 
 def test_esMajorVersion_always_wins():
     config = """
     esMajorVersion: 7
-    imageTag: 6.0.0
+    imageTag: 8.0.0
     """
 
     r = helm_template(config)
@@ -866,11 +1012,11 @@ def test_esMajorVersion_always_wins():
 def test_esMajorVersion_parse_image_tag_for_oss_image():
     config = """
     image: docker.elastic.co/elasticsearch/elasticsearch-oss
-    imageTag: 6.3.2
+    imageTag: 8.0.0
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
 
 
 def test_set_pod_security_context():
@@ -1194,3 +1340,30 @@ fullnameOverride: "customfullName"
 
     assert "customfullName" in r["statefulset"]
     assert "customfullName" in r["service"]
+
+
+def test_initial_master_nodes_when_using_full_name_override():
+    config = """
+fullnameOverride: "customfullName"
+"""
+    r = helm_template(config)
+    env = r["statefulset"]["customfullName"]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["env"]
+    assert {
+        "name": "cluster.initial_master_nodes",
+        "value": "customfullName-0," + "customfullName-1," + "customfullName-2,",
+    } in env
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["statefulset"][uname]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

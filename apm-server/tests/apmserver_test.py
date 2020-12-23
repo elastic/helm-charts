@@ -26,6 +26,8 @@ def test_defaults():
     assert c["image"].startswith("docker.elastic.co/apm/apm-server:")
     assert c["ports"][0]["containerPort"] == 8200
 
+    assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
+
 
 def test_adding_a_extra_container():
     config = """
@@ -70,6 +72,19 @@ extraEnvs:
     r = helm_template(config)
     envs = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]["env"]
     assert {"name": "LOG_LEVEL", "value": "DEBUG"} in envs
+
+
+def test_adding_env_from():
+    config = """
+envFrom:
+- secretRef:
+    name: secret-name
+"""
+    r = helm_template(config)
+    secretRef = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "envFrom"
+    ][0]["secretRef"]
+    assert secretRef == {"name": "secret-name"}
 
 
 def test_adding_image_pull_secrets():
@@ -245,6 +260,20 @@ labels:
     )
 
 
+def test_adding_serviceaccount_annotations():
+    config = """
+serviceAccountAnnotations:
+  eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+"""
+    r = helm_template(config)
+    assert (
+        r["serviceaccount"][name]["metadata"]["annotations"][
+            "eks.amazonaws.com/role-arn"
+        ]
+        == "arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount"
+    )
+
+
 def test_adding_a_node_selector():
     config = """
 nodeSelector:
@@ -314,3 +343,26 @@ fullnameOverride: "apm-server-custom"
         ]
         == project
     )
+
+
+def test_enabling_horizontal_pod_autoscaler():
+    config = """
+autoscaling:
+  enabled: true
+"""
+    r = helm_template(config)
+
+    assert "horizontalpodautoscaler" in r
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
