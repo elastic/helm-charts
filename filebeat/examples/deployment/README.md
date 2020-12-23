@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Default](#default)
+  - [Usage](#usage)
+  - [Testing](#testing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Default
 
 This example deploy Filebeat 8.0.0-SNAPSHOT using [default values][] as a Kubernetes Deployment.
