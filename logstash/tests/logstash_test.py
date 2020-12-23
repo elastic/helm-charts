@@ -623,16 +623,18 @@ logstashPipeline:
 
 
 def test_adding_in_pipeline_from_existing_configmap():
-    config = '''
+    config = """
 existingPipelineConfigmap: uptime-pipeline
-'''
+"""
     r = helm_template(config)
 
-    s = r['statefulset'][name]['spec']['template']['spec']
+    s = r["statefulset"][name]["spec"]["template"]["spec"]
 
-    assert {'configMap': {'name': 'uptime-pipeline'}, 'name': 'logstashpipeline'} in s['volumes']
+    assert {"configMap": {"name": "uptime-pipeline"}, "name": "logstashpipeline"} in s[
+        "volumes"
+    ]
 
-    assert r['statefulset'][name]['spec']['template']['metadata']['annotations'] == None
+    assert r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"] == None
 
 
 def test_priority_class_name():
