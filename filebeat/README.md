@@ -221,8 +221,6 @@ readinessProbe:
 ```
 
 
-
-
 ## Contributing
 
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
