@@ -190,6 +190,14 @@ namespace which gives it access to the host loopback device, services listening
 on localhost, could be used to snoop on network activity of other pods on the
 same node.
 
+### How do I get multiple beats agents working with hostNetworking enabled?
+
+The default http port for multiple beats agents may be on the same port, for 
+example, Filebeats and Metricbeats both default to 5066. When `hostNetworking` 
+is enabled this will cause collisions when standing up the http server. The work 
+around for this is to set `http.port` in the config file for one of the beats agent
+to use a different port.
+
 ### How to change readinessProbe for outputs which don't support testing
 
 Some [Filebeat outputs][] like [Kafka output][] don't support testing using
