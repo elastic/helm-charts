@@ -39,7 +39,7 @@ variable "additional_zones" {
 
 variable "machine_type" {
   description = "Machine type for the kubernetes nodes"
-  default     = "n1-standard-8"
+  default     = "custom-10-30720"
 }
 
 variable "network" {

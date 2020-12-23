@@ -1,5 +1,5 @@
 ---
-apiVersion: {{ template "logstash.statefulset.apiVersion" . }}
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "logstash.fullname" . }}
@@ -12,9 +12,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  {{- if .Values.service }}
-  serviceName: {{ template "logstash.fullname" . }}
-  {{- end }}
+  serviceName: {{ template "logstash.fullname" . }}-headless
   selector:
     matchLabels:
       app: "{{ template "logstash.fullname" . }}"
@@ -49,13 +47,16 @@ spec:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
-        {{/* This forces a restart if the configmap has changed */}}
+        {{- /* This forces a restart if the configmap has changed */}}
         {{- if .Values.logstashConfig }}
         configchecksum: {{ include (print .Template.BasePath "/configmap-config.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
         {{- if and (.Values.logstashPipeline) (not .Values.existingPipelineConfigmap) }}
         pipelinechecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+        {{- if .Values.secrets }}
+        secretschecksum: {{ include (print .Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
       {{- if .Values.schedulerName }}
@@ -132,6 +133,9 @@ spec:
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end}}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
       {{- end }}
       {{- if .Values.extraInitContainers }}
       initContainers:
@@ -150,6 +154,9 @@ spec:
         ports:
         - name: http
           containerPort: {{ .Values.httpPort }}
+      {{- if .Values.extraPorts }}
+        {{- toYaml .Values.extraPorts | nindent 8 }}
+      {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
@@ -157,6 +164,10 @@ spec:
             value: "{{ .Values.logstashJavaOpts }}"
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
+{{- end }}
+{{- if .Values.envFrom }}
+        envFrom:
+{{ toYaml .Values.envFrom | indent 10 }}
 {{- end }}
         volumeMounts:
           {{- if .Values.persistence.enabled }}

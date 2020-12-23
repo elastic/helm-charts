@@ -1,0 +1,6 @@
+http:
+  http://localhost:8200?pretty:
+    status: 200
+    timeout: 2000
+    body:
+      - '8.0.0'
