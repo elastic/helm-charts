@@ -1347,3 +1347,97 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["statefulset"][uname]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_network_policy():
+    config = """
+networkPolicy:
+  http:
+    enabled: true
+    explicitNamespacesSelector:
+      # Accept from namespaces with all those different rules (from whitelisted Pods)
+      matchLabels:
+        role: frontend
+      matchExpressions:
+        - {key: role, operator: In, values: [frontend]}
+    additionalRules:
+      - podSelector:
+          matchLabels:
+            role: frontend
+      - podSelector:
+          matchExpressions:
+            - key: role
+              operator: In
+              values:
+                - frontend
+  transport:
+    enabled: true
+    allowExternal: true
+    explicitNamespacesSelector:
+      matchLabels:
+        role: frontend
+      matchExpressions:
+        - {key: role, operator: In, values: [frontend]}
+    additionalRules:
+      - podSelector:
+          matchLabels:
+            role: frontend
+      - podSelector:
+          matchExpressions:
+            - key: role
+              operator: In
+              values:
+                - frontend
+
+"""
+    r = helm_template(config)
+    ingress = r["networkpolicy"][uname]["spec"]["ingress"]
+    pod_selector = r["networkpolicy"][uname]["spec"]["podSelector"]
+    http = ingress[0]
+    transport = ingress[1]
+    assert http["from"] == [
+        {
+            "podSelector": {
+                "matchLabels": {"elasticsearch-master-http-client": "true"}
+            },
+            "namespaceSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ],
+                "matchLabels": {"role": "frontend"},
+            },
+        },
+        {"podSelector": {"matchLabels": {"role": "frontend"}}},
+        {
+            "podSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ]
+            }
+        },
+    ]
+    assert http["ports"][0]["port"] == 9200
+    assert transport["from"] == [
+        {
+            "podSelector": {
+                "matchLabels": {"elasticsearch-master-transport-client": "true"}
+            },
+            "namespaceSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ],
+                "matchLabels": {"role": "frontend"},
+            },
+        },
+        {"podSelector": {"matchLabels": {"role": "frontend"}}},
+        {
+            "podSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ]
+            }
+        },
+        {"podSelector": {"matchLabels": {"app": "elasticsearch-master"}}},
+    ]
+    assert transport["ports"][0]["port"] == 9300
+    assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
