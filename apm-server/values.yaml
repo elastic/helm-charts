@@ -82,9 +82,15 @@ podAnnotations: {}
 labels: {}
 
 podSecurityContext:
+  fsGroup: 1000
   runAsUser: 1000
   runAsGroup: 0
+
+securityContext:
   privileged: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 0
 
 livenessProbe:
   httpGet:
