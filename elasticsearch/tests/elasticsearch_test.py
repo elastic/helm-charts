@@ -690,6 +690,22 @@ ingress:
     assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
 
 
+def test_adding_ingress_without_hosts():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  path: /
+  hosts:
+"""
+
+    r = helm_template(config)
+    assert uname in r["ingress"]
+    i = r["ingress"][uname]["spec"]
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+
+
 def test_adding_a_deprecated_ingress_rule():
     config = """
 ingress:
