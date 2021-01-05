@@ -30,8 +30,9 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
-    {{- if $ingressPath }}
+  {{- if .Values.ingress.hosts }}
+    {{- range .Values.ingress.hosts }}
+      {{- if $ingressPath }}
     - host: {{ . }}
       http:
         paths:
@@ -39,9 +40,28 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: {{ $httpPort }}
-    {{- else }}
+      {{- else }}
     - host: {{ .host }}
       http:
+        paths:
+        {{- range .paths }}
+          - path: {{ .path }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ .servicePort | default $httpPort }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- else }}
+    {{- if $ingressPath }}
+    - http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $httpPort }}
+    {{- else }}
+    - http:
         paths:
         {{- range .paths }}
           - path: {{ .path }}
