@@ -91,6 +91,7 @@ as a reference. They are also used in the automated testing of this chart.
 
 | Parameter                      | Description                                                                                                                                                                  | Default                            |
 |--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
+| `clusterRoleRules`             | Configurable [cluster role rules][] that Filebeat uses to access Kubernetes resources                                                                                        | see [values.yaml][]                |
 | `daemonset.annotations`        | Configurable [annotations][] for filebeat daemonset                                                                                                                          | `{}`                               |
 | `daemonset.labels`             | Configurable [labels][] applied to all filebeat DaemonSet pods                                                                                                               | `{}`                               |
 | `daemonset.affinity`           | Configurable [affinity][] for filebeat daemonset                                                                                                                             | `{}`                               |
@@ -225,6 +226,7 @@ about our development and testing process.
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+[cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
 [dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
