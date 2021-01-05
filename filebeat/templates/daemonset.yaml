@@ -1,3 +1,4 @@
+{{- if .Values.daemonset.enabled }}
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -8,9 +9,21 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
+    {{- if .Values.daemonset.labels }}
+    {{- range $key, $value := .Values.daemonset.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- else }}
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
+    {{- end }}
+  {{- if .Values.daemonset.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.daemonset.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
@@ -25,7 +38,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.filebeatConfig }}
+        {{- if or  .Values.filebeatConfig .Values.daemonset.filebeatConfig }}
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
       name: "{{ template "filebeat.fullname" . }}"
@@ -34,36 +47,36 @@ spec:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        {{- if .Values.daemonset.labels }}
+        {{- range $key, $value := .Values.daemonset.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- else }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
+        {{- end }}
     spec:
-      {{- with .Values.tolerations }}
-      tolerations: {{ toYaml . | nindent 6 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector: {{ toYaml . | nindent 8 }}
-      {{- end }}
+      tolerations: {{ toYaml ( .Values.tolerations | default .Values.daemonset.tolerations ) | nindent 8 }}
+      nodeSelector: {{ toYaml ( .Values.nodeSelector | default .Values.daemonset.nodeSelector ) | nindent 8 }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName  }}
       {{- end }}
-      {{- with .Values.affinity }}
-      affinity: {{ toYaml . | nindent 8 -}}
-      {{- end }}
+      affinity: {{ toYaml ( .Values.affinity | default .Values.daemonset.affinity ) | nindent 8 }}
       serviceAccountName: {{ template "filebeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
-      {{- if .Values.hostNetworking }}
+      {{- if .Values.daemonset.hostNetworking }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
       {{- if .Values.dnsConfig }}
       dnsConfig: {{ toYaml .Values.dnsConfig | nindent 8 }}
       {{- end }}
-      {{- if .Values.hostAliases }}
-      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
+      {{- if .Values.hostAliases | default .Values.daemonset.hostAliases }}
+      hostAliases: {{ toYaml ( .Values.hostAliases | default .Values.daemonset.hostAliases ) | nindent 8 }}
       {{- end }}
       volumes:
-      {{- range .Values.secretMounts }}
+      {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}
       - name: {{ .name }}
         secret:
           secretName: {{ .secretName }}
@@ -73,6 +86,11 @@ spec:
         configMap:
           defaultMode: 0600
           name: {{ template "filebeat.fullname" . }}-config
+      {{- else if .Values.daemonset.filebeatConfig }}
+      - name: filebeat-config
+        configMap:
+          defaultMode: 0600
+          name: {{ template "filebeat.fullname" . }}-daemonset-config
       {{- end }}
       - name: data
         hostPath:
@@ -87,8 +105,8 @@ spec:
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
-      {{- if .Values.extraVolumes }}
-{{ toYaml .Values.extraVolumes | indent 6 }}
+      {{- if .Values.extraVolumes | default .Values.daemonset.extraVolumes }}
+{{ toYaml ( .Values.extraVolumes | default .Values.daemonset.extraVolumes )  | indent 6 }}
       {{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -121,7 +139,7 @@ spec:
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+{{ toYaml ( .Values.resources | default .Values.daemonset.resources )  | indent 10 }}
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -131,19 +149,13 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-{{- if .Values.extraEnvs }}
-{{ toYaml .Values.extraEnvs | indent 8 }}
+{{- if .Values.extraEnvs | default .Values.daemonset.extraEnvs }}
+{{ toYaml ( .Values.extraEnvs | default .Values.daemonset.extraEnvs ) | indent 8 }}
 {{- end }}
-{{- if .Values.envFrom }}
-        envFrom:
-{{ toYaml .Values.envFrom | indent 10 }}
-{{- end }}
-{{- if .Values.podSecurityContext }}
-        securityContext:
-{{ toYaml .Values.podSecurityContext | indent 10 }}
-{{- end }}
+        envFrom: {{ toYaml ( .Values.envFrom | default .Values.daemonset.envFrom ) | nindent 10 }}
+        securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.daemonset.securityContext ) | nindent 10 }}
         volumeMounts:
-        {{- range .Values.secretMounts }}
+        {{- range .Values.secretMounts | default .Values.daemonset.secretMounts }}
         - name: {{ .name }}
           mountPath: {{ .path }}
           {{- if .subPath }}
@@ -155,6 +167,13 @@ spec:
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
+        {{ else }}
+        {{- range $path, $config := .Values.daemonset.filebeatConfig }}
+        - name: filebeat-config
+          mountPath: /usr/share/filebeat/{{ $path }}
+          readOnly: true
+          subPath: {{ $path }}
+        {{- end }}
         {{- end }}
         - name: data
           mountPath: /usr/share/filebeat/data
@@ -169,9 +188,10 @@ spec:
         - name: varrundockersock
           mountPath: /var/run/docker.sock
           readOnly: true
-        {{- if .Values.extraVolumeMounts }}
-{{ toYaml .Values.extraVolumeMounts | indent 8 }}
+        {{- if .Values.extraVolumeMounts | default .Values.daemonset.extraVolumeMounts }}
+{{ toYaml (.Values.extraVolumeMounts | default .Values.daemonset.extraVolumeMounts ) | indent 8 }}
         {{- end }}
       {{- if .Values.extraContainers }}
 {{ tpl .Values.extraContainers . | indent 6 }}
       {{- end }}
+{{- end }}
