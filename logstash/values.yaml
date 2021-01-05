@@ -104,7 +104,7 @@ podSecurityPolicy:
   create: false
   name: ""
   spec:
-    privileged: true
+    privileged: false
     fsGroup:
       rule: RunAsAny
     runAsUser:
