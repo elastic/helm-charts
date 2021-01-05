@@ -789,7 +789,7 @@ podSecurityPolicy:
         r["statefulset"][name]["spec"]["template"]["spec"]["serviceAccountName"] == name
     )
     psp_spec = r["podsecuritypolicy"][name]["spec"]
-    assert psp_spec["privileged"] is True
+    assert psp_spec["privileged"] is False
 
 
 def test_external_pod_security_policy():
