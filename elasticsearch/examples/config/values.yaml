@@ -20,6 +20,7 @@ extraEnvs:
 # as a custom elasticsearch.yml
 esConfig:
   elasticsearch.yml: |
+    xpack.security.enabled: true
     path.data: /usr/share/elasticsearch/data
 
 keystore:
