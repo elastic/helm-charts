@@ -7,12 +7,12 @@ extraEnvs:
   - name: ELASTIC_PASSWORD
     valueFrom:
       secretKeyRef:
-        name: elastic-credentials
+        name: elastic-config-credentials
         key: password
   - name: ELASTIC_USERNAME
     valueFrom:
       secretKeyRef:
-        name: elastic-credentials
+        name: elastic-config-credentials
         key: username
 
 # This is just a dummy file to make sure that
