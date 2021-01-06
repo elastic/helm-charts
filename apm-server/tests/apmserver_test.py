@@ -146,16 +146,26 @@ managedServiceAccount: false
     assert "clusterrolebinding" not in r
 
 
-def test_setting_pod_security_context():
+def test_setting_container_security_context():
     config = """
-podSecurityContext:
+securityContext:
   runAsUser: 1001
-  privileged: false
+  privileged: true
 """
     r = helm_template(config)
     c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
     assert c["securityContext"]["runAsUser"] == 1001
-    assert c["securityContext"]["privileged"] is False
+    assert c["securityContext"]["privileged"] is True
+
+
+def test_setting_pod_security_context():
+    config = """
+podSecurityContext:
+  runAsUser: 1001
+"""
+    r = helm_template(config)
+    c = r["deployment"][name]["spec"]["template"]["spec"]
+    assert c["securityContext"]["runAsUser"] == 1001
 
 
 def test_adding_in_apm_config():
