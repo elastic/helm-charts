@@ -1,5 +1,21 @@
 # Changelog
 
+## 7.10.2
+
+* 7.10.2 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1017](https://github.com/elastic/helm-charts/pull/1017) | [@jmlrt](https://github.com/jmlrt) | NIT Update backport config and small doc fixes  |
+| [#1010](https://github.com/elastic/helm-charts/pull/1010) | [@jmlrt](https://github.com/jmlrt) | [filebeat][metricbeat] Update documentation on port collisions for multiple beats agents with hostNetworking enabled. (#997)  |
+| [#984](https://github.com/elastic/helm-charts/pull/984) | [@jmlrt](https://github.com/jmlrt) | [7.10] [all] add hostaliases (#970)  |
+| [#981](https://github.com/elastic/helm-charts/pull/981) | [@jmlrt](https://github.com/jmlrt) | [7.10] elasticsearch: add emptyDir to podSecurityPolicy as allowed volume-type (#975)  |
+| [#987](https://github.com/elastic/helm-charts/pull/987) | [@jmlrt](https://github.com/jmlrt) | [7.10] [meta] bump helm to 3.4.2 (#977)  |
+| [#968](https://github.com/elastic/helm-charts/pull/968) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.10.2-SNAPSHOT  |
+| [#973](https://github.com/elastic/helm-charts/pull/973) | [@jmlrt](https://github.com/jmlrt) | [7.10] [meta] add config for backport (#971)  |
+
+
 ## 7.10.1
 
 * 7.10.1 as default version.
