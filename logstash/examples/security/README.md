@@ -1,6 +1,6 @@
 # Security
 
-This example deploy Logstash 7.10.2 which connects to Elasticsearch using TLS
+This example deploy Logstash 7.10.3-SNAPSHOT which connects to Elasticsearch using TLS
 (see [values][]).
 
 

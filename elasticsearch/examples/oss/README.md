@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy a 3 nodes Elasticsearch 7.10.2 cluster using
+This example deploy a 3 nodes Elasticsearch 7.10.3-SNAPSHOT cluster using
 [Elasticsearch OSS][] version.
 
 ## Usage
