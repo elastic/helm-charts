@@ -22,6 +22,7 @@ This Helm chart is a lightweight way to configure and run our official
   - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
   - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
   - [Why is Filebeat host.name field set to Kubernetes pod name?](#why-is-filebeat-hostname-field-set-to-kubernetes-pod-name)
+  - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
   - [How to change readinessProbe for outputs which don't support testing](#how-to-change-readinessprobe-for-outputs-which-dont-support-testing)
 - [Contributing](#contributing)
 
@@ -86,6 +87,8 @@ activate it by setting `hostNetworking: true` in [values.yaml][].
 * This repo includes a number of [examples][] configurations which can be used
 as a reference. They are also used in the automated testing of this chart.
 
+
+## Configuration
 
 | Parameter                      | Description                                                                                                                                                                  | Default                            |
 |--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
@@ -192,9 +195,9 @@ same node.
 
 ### How do I get multiple beats agents working with hostNetworking enabled?
 
-The default http port for multiple beats agents may be on the same port, for 
-example, Filebeats and Metricbeats both default to 5066. When `hostNetworking` 
-is enabled this will cause collisions when standing up the http server. The work 
+The default http port for multiple beats agents may be on the same port, for
+example, Filebeats and Metricbeats both default to 5066. When `hostNetworking`
+is enabled this will cause collisions when standing up the http server. The work
 around for this is to set `http.port` in the config file for one of the beats agent
 to use a different port.
 
