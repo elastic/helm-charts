@@ -71,9 +71,9 @@ upgrading to a new chart version.
 ## Usage notes
 
 * The default Filebeat configuration file for this chart is configured to use an
-Filebeat endpoint. Without any additional changes, Filebeat will send
-documents to the service URL that the Filebeat Helm chart sets up by
-default. You may either set the `FILEBEAT_HOSTS` environment variable in
+Elasticsearch endpoint. Without any additional changes, Filebeat will send
+documents to the service URL that the Elasticsearch Helm chart sets up by
+default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
 `extraEnvs` to override this endpoint or modify the default `filebeatConfig` to
 change this behavior.
 * The default Filebeat configuration file is also configured to capture
