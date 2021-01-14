@@ -1,6 +1,6 @@
 # Default
 
-This example deploy Kibana 7.10.2-SNAPSHOT using [default values][].
+This example deploy Kibana 7.10.2 using [default values][].
 
 
 ## Usage
