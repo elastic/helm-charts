@@ -7,7 +7,6 @@
 
 | PR | Author | Title |
 | --- | --- | --- |
-|  | Julien Mailleret | [filebeat] fix documentation |
 | [#1017](https://github.com/elastic/helm-charts/pull/1017) | [@jmlrt](https://github.com/jmlrt) | NIT Update backport config and small doc fixes  |
 | [#1010](https://github.com/elastic/helm-charts/pull/1010) | [@jmlrt](https://github.com/jmlrt) | [filebeat][metricbeat] Update documentation on port collisions for multiple beats agents with hostNetworking enabled. (#997)  |
 | [#984](https://github.com/elastic/helm-charts/pull/984) | [@jmlrt](https://github.com/jmlrt) | [7.10] [all] add hostaliases (#970)  |
