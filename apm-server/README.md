@@ -154,7 +154,7 @@ about our development and testing process.
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.10/running-on-docker.html
+[apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.11/running-on-docker.html
 [apm server oss docker image]: https://www.docker.elastic.co/r/apm/apm-server-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.11/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config

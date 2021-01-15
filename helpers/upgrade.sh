@@ -25,7 +25,7 @@ usage() {
 	  --from <version>
 	    Version to use for first install (ie: 7.7.0)
     --to <docker-image-version>
-      Version of the Docker images to use for upgrade (ie: 7.10.0)
+      Version of the Docker images to use for upgrade (ie: 7.11.0)
 	EOF
   exit 1
 }
