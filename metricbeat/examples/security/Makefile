@@ -6,6 +6,8 @@ RELEASE := helm-metricbeat-security
 GOSS_SELECTOR = release=$(RELEASE),app=helm-metricbeat-security-metricbeat
 
 install:
+	helm repo add stable https://charts.helm.sh/stable
+	helm dependency update ../../
 	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test-metrics:
