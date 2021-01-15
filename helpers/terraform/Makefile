@@ -80,8 +80,6 @@ k8s-staging-registry: creds ## Create the staging registry auth secret in k8s
 .PHONY: integration
 integration: creds ## Deploy helm chart and run integration tests
 	cd ../../$(CHART)/ && \
-	helm repo add stable https://charts.helm.sh/stable && \
-	helm dependency update && \
 	cd ./examples/$(SUITE) && \
 	make
 
