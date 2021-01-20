@@ -18,7 +18,11 @@ spec:
   selector:
     matchLabels:
       app: "{{ template "elasticsearch.uname" . }}"
+  {{- if .Values.singleNode }}
+  replicas: 1
+  {{- else }}
   replicas: {{ .Values.replicas }}
+  {{- end }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
@@ -297,8 +301,13 @@ spec:
                 fieldPath: metadata.name
           {{- if eq .Values.roles.master "true" }}
           {{- if ge (int (include "elasticsearch.esMajorVersion" .)) 7 }}
+          {{- if .Values.singleNode }}
+          - name: discovery.type
+            value: "single-node"
+          {{- else }}
           - name: cluster.initial_master_nodes
             value: "{{ template "elasticsearch.endpoints" . }}"
+          {{- end }}
           {{- else }}
           - name: discovery.zen.minimum_master_nodes
             value: "{{ .Values.minimumMasterNodes }}"
@@ -311,8 +320,10 @@ spec:
           - name: discovery.seed_hosts
             value: "{{ template "elasticsearch.masterService" . }}-headless"
           {{- end }}
+          {{- if not .Values.singleNode }}
           - name: cluster.name
             value: "{{ .Values.clusterName }}"
+          {{- end }}
           - name: network.host
             value: "{{ .Values.networkHost }}"
           - name: ES_JAVA_OPTS

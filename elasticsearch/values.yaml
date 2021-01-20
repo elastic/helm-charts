@@ -282,6 +282,9 @@ sysctlInitContainer:
 
 keystore: []
 
+# Enable discovery.type of single-node and disable clustering
+singleNode: false
+
 # Deprecated
 # please use the above podSecurityContext.fsGroup instead
 fsGroup: ""

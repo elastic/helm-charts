@@ -1375,3 +1375,19 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["statefulset"][uname]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+def test_single_node():
+    ## Make sure we can use a name override
+    config = """
+singleNode: "true"
+"""
+    r = helm_template(config)
+
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+
+    assert {
+        "name": "discovery.type",
+        "value": "single-node",
+    } in env
+
+    assert r["statefulset"][uname]["spec"]["replicas"] == 1
