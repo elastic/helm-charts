@@ -21,13 +21,13 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "metricbeat-7.10.2"
+      - "metricbeat-7.10.3"
 
   ? "http://upgrade-master:9200/_search?q=metricset.name:state_container%20AND%20kubernetes.container.name:metricbeat"
   : status: 200
     timeout: 2000
     body:
-      - "metricbeat-7.10.2"
+      - "metricbeat-7.10.3"
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
