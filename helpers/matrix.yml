@@ -13,7 +13,6 @@ ES_SUITE:
   - upgrade
 KIBANA_SUITE:
   - default
-  - oss
   - security
   - upgrade
 FILEBEAT_SUITE:
