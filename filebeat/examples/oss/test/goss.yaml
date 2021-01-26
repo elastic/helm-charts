@@ -15,8 +15,8 @@ user:
     gid: 1000
 
 http:
-  http://oss-master:9200/_cat/indices:
+  http://elasticsearch-master:9200/_cat/indices:
     status: 200
     timeout: 2000
     body:
-      - 'filebeat-8.0.0'
+      - 'filebeat-oss-8.0.0'
