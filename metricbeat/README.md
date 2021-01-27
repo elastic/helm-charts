@@ -1,5 +1,7 @@
 # Metricbeat Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
@@ -206,9 +208,9 @@ same node.
 
 ### How do I get multiple beats agents working with hostNetworking enabled?
 
-The default http port for multiple beats agents may be on the same port, for 
-example, Filebeats and Metricbeats both default to 5066. When `hostNetworking` 
-is enabled this will cause collisions when standing up the http server. The work 
+The default http port for multiple beats agents may be on the same port, for
+example, Filebeats and Metricbeats both default to 5066. When `hostNetworking`
+is enabled this will cause collisions when standing up the http server. The work
 around for this is to set `http.port` in the config file for one of the beats agent
 to use a different port.
 
