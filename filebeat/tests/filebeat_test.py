@@ -51,6 +51,8 @@ def test_defaults():
 
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "RollingUpdate"
 
+    assert r["daemonset"][name]["spec"]["updateStrategy"]["rollingUpdate"]["maxUnavailable"] == 1
+
     assert (
         r["daemonset"][name]["spec"]["template"]["spec"]["serviceAccountName"] == name
     )
@@ -404,7 +406,16 @@ tolerations:
 
 def test_override_the_default_update_strategy():
     config = """
-updateStrategy: OnDelete
+    daemonset:
+      maxUnavailable: 2
+"""
+
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "RollingUpdate"
+    assert r["daemonset"][name]["spec"]["updateStrategy"]["rollingUpdate"]["maxUnavailable"] == 2
+
+    config = """
+    updateStrategy: OnDelete
 """
 
     r = helm_template(config)
