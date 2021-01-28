@@ -30,6 +30,10 @@ spec:
       app: "{{ template "filebeat.fullname" . }}"
       release: {{ .Release.Name | quote }}
   updateStrategy:
+    {{- if eq .Values.updateStrategy "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.daemonset.maxUnavailable }}
+    {{- end }}
     type: {{ .Values.updateStrategy }}
   template:
     metadata:
