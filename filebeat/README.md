@@ -106,6 +106,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.hostAliases`        | Configurable [hostAliases][] for filebeat DaemonSet                                                                                                                          | `[]`                               |
 | `daemonset.hostNetworking`     | Enable filebeat DaemonSet to use `hostNetwork`                                                                                                                               | `false`                            |
 | `daemonset.filebeatConfig`     | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml` for filebeat DaemonSet                                                                    | see [values.yaml][]                |
+| `daemonset.maxUnavailable`     | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                  | `1`                                |
 | `daemonset.nodeSelector`       | Configurable [nodeSelector][] for filebeat DaemonSet                                                                                                                         | `{}`                               |
 | `daemonset.secretMounts`       | Allows you easily mount a secret as a file inside the DaemonSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                      | `[]`                               |
 | `daemonset.podSecurityContext` | Configurable [podSecurityContext][] for filebeat DaemonSet pod execution environment                                                                                         | see [values.yaml][]                |
@@ -258,6 +259,7 @@ about our development and testing process.
 [kafka output]: https://www.elastic.co/guide/en/beats/filebeat/current/kafka-output.html
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+[maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [podSecurityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
