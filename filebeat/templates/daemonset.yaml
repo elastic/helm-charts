@@ -32,7 +32,7 @@ spec:
   updateStrategy:
     {{- if eq .Values.updateStrategy "RollingUpdate" }}
     rollingUpdate:
-      maxUnavailable: {{ .Values.maxUnavailable }}
+      maxUnavailable: {{ .Values.daemonset.maxUnavailable }}
     {{- end }}
     type: {{ .Values.updateStrategy }}
   template:
