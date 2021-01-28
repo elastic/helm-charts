@@ -1,5 +1,7 @@
 # Filebeat Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
