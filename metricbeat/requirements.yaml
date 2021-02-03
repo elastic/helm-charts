@@ -1,5 +1,5 @@
 dependencies:
   - name: 'kube-state-metrics'
-    version: '1.2.0'
-    repository: '@bitnami'
+    version: '2.4.1'
+    repository: '@stable'
     condition: kube_state_metrics.enabled

@@ -50,8 +50,7 @@ See [supported configurations][] for more details.
 * Install it:
   - with Helm 3: `helm install metricbeat elastic/metricbeat`
   - with Helm 2 (deprecated): `helm install --name metricbeat elastic/metricbeat`
-
-Note: If you choose to enable `kube-state-metrics` than you should also add the bitnami repostory to your helm3 installation as follows
+  - Add the Elastic Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add stable https://charts.helm.sh/stable`
 
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
