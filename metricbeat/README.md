@@ -49,6 +49,7 @@ This chart is tested with the latest 7.11.0-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
+  - Add the Elastic Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add stable https://charts.helm.sh/stable`
   - with Helm 3: `helm install metricbeat --version <version> elastic/metricbeat`
   - with Helm 2 (deprecated): `helm install --name metricbeat --version <version> elastic/metricbeat`
 
