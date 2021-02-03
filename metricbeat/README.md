@@ -52,11 +52,6 @@ See [supported configurations][] for more details.
   - with Helm 2 (deprecated): `helm install --name metricbeat elastic/metricbeat`
   - Add the Elastic Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add stable https://charts.helm.sh/stable`
 
-```
-helm repo add bitnami https://charts.bitnami.com/bitnami
-```
-For more on @bitnami/kube-state-metrics please goto the charts [readme](https://github.com/bitnami/charts/tree/master/bitnami/kube-state-metrics/)
-
 ### Install development version using master branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
