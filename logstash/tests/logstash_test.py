@@ -556,6 +556,26 @@ nodeAffinity:
         ]
     }
 
+def test_adding_an_podaffinity_rule():
+    config = """
+podAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+  - labelSelector:
+      matchExpressions:
+      - key: app
+        operator: In
+        values:
+        - elasticsearch
+    topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["affinity"][
+            "podAffinity"
+        ]["requiredDuringSchedulingIgnoredDuringExecution"][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
 
 def test_adding_in_logstash_config():
     config = """
