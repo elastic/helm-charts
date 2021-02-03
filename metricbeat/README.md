@@ -48,9 +48,9 @@ See [supported configurations][] for more details.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
+  - Add the Elastic Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add stable https://charts.helm.sh/stable`
   - with Helm 3: `helm install metricbeat elastic/metricbeat`
   - with Helm 2 (deprecated): `helm install --name metricbeat elastic/metricbeat`
-  - Add the Elastic Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add stable https://charts.helm.sh/stable`
 
 ### Install development version using master branch
 
