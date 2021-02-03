@@ -26,4 +26,4 @@ You can also run [goss integration tests][] using `make test`
 
 [goss integration tests]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/security/test/goss.yaml
 [official docs]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/configuring-tls.html#node-certificates
-[values]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/security/security.yaml
+[values]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/security/values.yaml
