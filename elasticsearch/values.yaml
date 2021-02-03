@@ -12,7 +12,7 @@ roles:
   master: "true"
   ingest: "true"
   data: "true"
-  remote_cluster_client: "true"
+# remote_cluster_client: "true" # remote_cluster_client is not availble with elasticsearch 5.6
 # ml: "true" # ml is not availble with elasticsearch-oss
 
 replicas: 3
