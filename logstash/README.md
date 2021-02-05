@@ -156,7 +156,7 @@ useful for the [http input plugin][], for instance.
 
 ### How to install OSS version of Logstash?
 
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
+Deploying OSS version of Logstash can be done by setting `image` value to
 [Logstash OSS Docker image][]
 
 An example of Logstash deployment using OSS version can be found in

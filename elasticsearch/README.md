@@ -26,7 +26,6 @@ This Helm chart is a lightweight way to configure and run our official
     - [Clustering and Node Discovery](#clustering-and-node-discovery)
   - [How to deploy clusters with security (authentication and TLS) enabled?](#how-to-deploy-clusters-with-security-authentication-and-tls-enabled)
   - [How to migrate from helm/charts stable chart?](#how-to-migrate-from-helmcharts-stable-chart)
-  - [How to install OSS version of Elasticsearch?](#how-to-install-oss-version-of-elasticsearch)
   - [How to install plugins?](#how-to-install-plugins)
   - [How to use the keystore?](#how-to-use-the-keystore)
     - [Basic example](#basic-example)
@@ -253,14 +252,6 @@ An example of Elasticsearch cluster using security can be found in
 If you currently have a cluster deployed with the [helm/charts stable][] chart
 you can follow the [migration guide][].
 
-### How to install OSS version of Elasticsearch?
-
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
-[Elasticsearch OSS Docker image][]
-
-An example of Elasticsearch cluster using OSS version can be found in
-[examples/oss][].
-
 ### How to install plugins?
 
 The recommended way to install plugins into our Docker images is to create a
@@ -408,12 +399,10 @@ about our development and testing process.
 [docker for mac]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/docker-for-mac
 [elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-[elasticsearch oss docker image]: https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/
 [examples/multi]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/multi
-[examples/oss]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
