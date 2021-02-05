@@ -51,8 +51,8 @@ daemonset:
         hosts: "elasticsearch-master:9200"
         index: "metricbeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
       setup.ilm.enabled: false
-      setup.template.name: "filebeat"
-      setup.template.pattern: "filebeat-oss-*"
+      setup.template.name: "metricbeat"
+      setup.template.pattern: "metricbeat-oss-*"
 
 deployment:
   metricbeatConfig:
@@ -72,5 +72,5 @@ deployment:
         hosts: "elasticsearch-master:9200"
         index: "metricbeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
       setup.ilm.enabled: false
-      setup.template.name: "filebeat"
-      setup.template.pattern: "filebeat-oss-*"
+      setup.template.name: "metricbeat"
+      setup.template.pattern: "metricbeat-oss-*"
