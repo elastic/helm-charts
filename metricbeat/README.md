@@ -178,7 +178,7 @@ An example can be found in [examples/security][].
 
 ### How to install OSS version of Metricbeat?
 
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
+Deploying OSS version of Metricbeat can be done by setting `image` value to
 [Metricbeat OSS Docker image][]
 
 An example of Metricbeat deployment using OSS version can be found in

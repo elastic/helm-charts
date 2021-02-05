@@ -10,12 +10,8 @@ apmConfig:
       enabled: false
 
     output.elasticsearch:
-      hosts: ["http://oss-master:9200"]
-      ## If you have security enabled- you'll need to add the credentials
-      ## as environment variables
-      # username: "${ELASTICSEARCH_USERNAME}"
-      # password: "${ELASTICSEARCH_PASSWORD}"
-      ## If SSL is enabled
-      # protocol: https
-      # ssl.certificate_authorities:
-      #  - /usr/share/apm-server/config/certs/elastic-ca.pem
+      hosts: ["http://elasticsearch-master:9200"]
+      index: "apm-oss-%{[observer.version]}-%{+yyyy.MM.dd}"
+
+    setup.template.name: "apm-server"
+    setup.template.pattern: "apm-oss-*"
