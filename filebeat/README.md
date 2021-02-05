@@ -177,7 +177,7 @@ An example can be found in [examples/security][].
 
 ### How to install OSS version of Filebeat?
 
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
+Deploying OSS version of Filebeat can be done by setting `image` value to
 [Filebeat OSS Docker image][]
 
 An example of Filebeat deployment using OSS version can be found in
