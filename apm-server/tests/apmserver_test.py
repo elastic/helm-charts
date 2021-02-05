@@ -26,6 +26,8 @@ def test_defaults():
     assert c["image"].startswith("docker.elastic.co/apm/apm-server:")
     assert c["ports"][0]["containerPort"] == 8200
 
+    assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
+
 
 def test_adding_a_extra_container():
     config = """
@@ -144,16 +146,26 @@ managedServiceAccount: false
     assert "clusterrolebinding" not in r
 
 
-def test_setting_pod_security_context():
+def test_setting_container_security_context():
     config = """
-podSecurityContext:
+securityContext:
   runAsUser: 1001
-  privileged: false
+  privileged: true
 """
     r = helm_template(config)
     c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
     assert c["securityContext"]["runAsUser"] == 1001
-    assert c["securityContext"]["privileged"] is False
+    assert c["securityContext"]["privileged"] is True
+
+
+def test_setting_pod_security_context():
+    config = """
+podSecurityContext:
+  runAsUser: 1001
+"""
+    r = helm_template(config)
+    c = r["deployment"][name]["spec"]["template"]["spec"]
+    assert c["securityContext"]["runAsUser"] == 1001
 
 
 def test_adding_in_apm_config():
@@ -341,3 +353,26 @@ fullnameOverride: "apm-server-custom"
         ]
         == project
     )
+
+
+def test_enabling_horizontal_pod_autoscaler():
+    config = """
+autoscaling:
+  enabled: true
+"""
+    r = helm_template(config)
+
+    assert "horizontalpodautoscaler" in r
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases

@@ -30,10 +30,17 @@ spec:
         configChecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
+{{- if .Values.podSecurityContext }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 10 }}
+{{- end }}
 {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
 {{- end }}
       serviceAccountName: {{ template "apm.serviceAccount" . }}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
+      {{- end }}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}
@@ -81,9 +88,9 @@ spec:
         envFrom:
 {{ toYaml .Values.envFrom | indent 10 }}
         {{- end }}
-{{- if .Values.podSecurityContext }}
+{{- if .Values.securityContext }}
         securityContext:
-{{ toYaml .Values.podSecurityContext | indent 10 }}
+{{ toYaml .Values.securityContext | indent 10 }}
 {{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}

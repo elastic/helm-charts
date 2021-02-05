@@ -1,5 +1,5 @@
 ---
-apiVersion: {{ template "logstash.statefulset.apiVersion" . }}
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "logstash.fullname" . }}
@@ -141,6 +141,9 @@ spec:
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end}}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
       {{- end }}
       {{- if .Values.extraInitContainers }}
       initContainers:

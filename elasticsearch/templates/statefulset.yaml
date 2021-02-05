@@ -1,5 +1,5 @@
 ---
-apiVersion: {{ template "elasticsearch.statefulset.apiVersion" . }}
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "elasticsearch.uname" . }}
@@ -28,7 +28,6 @@ spec:
       name: {{ template "elasticsearch.uname" . }}
     {{- if .Values.persistence.labels.enabled }}
       labels:
-        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}"
         app: "{{ template "elasticsearch.uname" . }}"
@@ -47,7 +46,6 @@ spec:
     metadata:
       name: "{{ template "elasticsearch.uname" . }}"
       labels:
-        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}"
         app: "{{ template "elasticsearch.uname" . }}"
@@ -154,9 +152,11 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      {{- if semverCompare ">1.13-0" .Capabilities.KubeVersion.GitVersion }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 8 }}
       {{- end }}
+      {{- if or (.Values.extraInitContainers) (.Values.sysctlInitContainer.enabled) (.Values.keystore)  }}
       initContainers:
       {{- if .Values.sysctlInitContainer.enabled }}
       - name: configure-sysctl
@@ -214,6 +214,7 @@ spec:
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- else }}
 {{ toYaml .Values.extraInitContainers | indent 6 }}
+      {{- end }}
       {{- end }}
       {{- end }}
       containers:

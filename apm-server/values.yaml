@@ -61,6 +61,12 @@ extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
 image: "docker.elastic.co/apm/apm-server"
 imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
@@ -76,8 +82,15 @@ podAnnotations: {}
 labels: {}
 
 podSecurityContext:
-  runAsUser: 0
+  fsGroup: 1000
+  runAsUser: 1000
+  runAsGroup: 0
+
+securityContext:
   privileged: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 0
 
 livenessProbe:
   httpGet:
@@ -140,6 +153,9 @@ fullnameOverride: ""
 
 autoscaling:
   enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  averageCpuUtilization: 50
 
 ingress:
   enabled: false

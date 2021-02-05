@@ -1,5 +1,5 @@
 {{- if .Values.managedServiceAccount }}
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ template "filebeat.serviceAccount" . }}-cluster-role
@@ -8,15 +8,5 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - namespaces
-  - nodes
-  - pods
-  verbs:
-  - get
-  - list
-  - watch
+rules: {{ toYaml .Values.clusterRoleRules | nindent 2 -}}
 {{- end -}}

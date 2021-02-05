@@ -65,8 +65,8 @@ creds: credentials.json ## Get gke credentials
 	kubectl create namespace $(NAMESPACE) || true
 	kubectl config set-context $$(kubectl config current-context) --namespace=$(NAMESPACE)
 
-.PHONY: k8s
-k8s: apply creds ## Configure gke cluster
+.PHONY: up
+up: apply creds ## Configure gke cluster
 	kubectl get cs
 
 .PHONY: k8s-staging-registry
@@ -77,16 +77,9 @@ k8s-staging-registry: creds ## Create the staging registry auth secret in k8s
 		--docker-username="devops-ci" \
 		--docker-password="$$DOCKER_PASSWORD"
 
-.PHONY: up
-up: k8s ## Install helm on gke cluster
-	kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default || true
-	for i in 1 2 3 4 5; do helm init --wait --upgrade && break || sleep 5; done
-
 .PHONY: integration
 integration: creds ## Deploy helm chart and run integration tests
 	cd ../../$(CHART)/ && \
-	helm init --client-only && \
-	helm dependency update && \
 	cd ./examples/$(SUITE) && \
 	make
 
@@ -98,4 +91,3 @@ build: ## Build helm-charts docker image
 pull-private-images: ## Pull private images used in testing
 	cd ../../elasticsearch/examples/security/ && \
 		make pull-elasticsearch-image
-

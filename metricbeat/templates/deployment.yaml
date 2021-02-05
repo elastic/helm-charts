@@ -30,7 +30,6 @@ spec:
   selector:
     matchLabels:
       app: '{{ template "metricbeat.fullname" . }}-metrics'
-      heritage: '{{ .Release.Service }}'
       release: '{{ .Release.Name }}'
   template:
     metadata:
@@ -45,7 +44,6 @@ spec:
       labels:
         app: '{{ template "metricbeat.fullname" . }}-metrics'
         chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
-        heritage: '{{ .Release.Service }}'
         release: '{{ .Release.Name }}'
         {{- if .Values.deployment.labels }}
         {{- range $key, $value := .Values.deployment.labels }}
@@ -65,6 +63,9 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "metricbeat.serviceAccount" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
+      {{- if .Values.deployment.hostAliases }}
+      hostAliases: {{ toYaml .Values.deployment.hostAliases | nindent 6 }}
+      {{- end }}
       volumes:
       {{- range .Values.secretMounts | default .Values.deployment.secretMounts }}
       - name: {{ .name }}

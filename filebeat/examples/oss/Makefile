@@ -5,9 +5,9 @@ include ../../../helpers/examples.mk
 RELEASE := helm-filebeat-oss
 
 install:
-	helm upgrade --wait --timeout=600 --install $(RELEASE) --values values.yaml ../../
+	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
 test: install goss
 
 purge:
-	helm del --purge $(RELEASE)
+	helm del $(RELEASE)
