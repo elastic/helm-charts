@@ -1,5 +1,7 @@
 # Kibana Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
@@ -8,7 +10,6 @@ This Helm chart is a lightweight way to configure and run our official
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [Requirements](#requirements)
 - [Installing](#installing)
@@ -184,7 +185,7 @@ lifecycle:
           # Import a dashboard
           KB_URL=http://localhost:5601
           while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' -L $KB_URL)" != "200" ]]; do sleep 1; done
-          curl -XPOST "$KB_URL/api/kibana/dashboards/import" -H "Content-Type: application/json" -H 'kbn-xsrf: true' -d'"objects":[{"type":"index-pattern","id":"my-pattern","attributes":{"title":"my-pattern-*"}},{"type":"dashboard","id":"my-dashboard","attributes":{"title":"Look at my dashboard"}}]}'
+          curl -XPOST "$KB_URL/api/kibana/dashboards/import" -H "Content-Type: application/json" -H 'kbn-xsrf: true' -d'{"objects":[{"type":"index-pattern","id":"my-pattern","attributes":{"title":"my-pattern-*"}},{"type":"dashboard","id":"my-dashboard","attributes":{"title":"Look at my dashboard"}}]}'
 ```
 
 

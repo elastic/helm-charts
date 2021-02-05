@@ -1,5 +1,7 @@
 # Logstash Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [Logstash Docker image][].
 
@@ -123,6 +125,8 @@ useful for the [http input plugin][], for instance.
 | `logstashConfig`          | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties` See [values.yaml][] for an example of the formatting                                                              | `{}`                                  |
 | `logstashJavaOpts`        | Java options for Logstash. This is where you should configure the JVM heap size                                                                                                                                                      | `-Xmx1g -Xms1g`                       |
 | `logstashPipeline`        | Allows you to add any pipeline files in `/usr/share/logstash/pipeline/`                                                                                                                                                              | `{}`                                  |
+| `logstashPatternDir`      | Allows you to define a custom directory to store patten files | `/usr/share/logstash/patterns/` |
+| `logstashPattern`        | Allows you to add any pattern files in `logstashPatternDir` | `{}` |
 | `maxUnavailable`          | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                          | `1`                                   |
 | `nameOverride`            | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                                                                            | `""`                                  |
 | `nodeAffinity`            | Value for the [node affinity settings][]                                                                                                                                                                                             | `{}`                                  |
