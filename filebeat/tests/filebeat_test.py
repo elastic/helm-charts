@@ -176,8 +176,9 @@ deployment:
     } in deployment["volumes"]
 
     assert {
-        "mountPath": "/usr/share/filebeat",
+        "mountPath": "/usr/share/filebeat/filebeat.yml",
         "name": project + "-config",
+        "subPath": "filebeat.yml",
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
 
