@@ -621,8 +621,9 @@ deployment:
 
     deployment = r["deployment"][name]["spec"]["template"]["spec"]
     assert {
-        "mountPath": "/usr/share/filebeat",
+        "mountPath": "/usr/share/filebeat/filebeat.yml",
         "name": project + "-config",
+        "subPath": "filebeat.yml",
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
 
