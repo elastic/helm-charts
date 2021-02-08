@@ -136,6 +136,12 @@ extraInitContainers: []
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
 
+# Path to kubernetes containers logs (/var/lib/docker/containers for linux nodes, /ProgramData/docker/containers for windows nodes)
+varLibContainerPath: /var/lib/docker/containers
+
+# Path to docker socker (/var/run/docker.sock for linux nodes, \\.\pipe\docker_engine for windows nodes)
+varRunDockerSock: /var/run/docker.sock
+
 dnsConfig: {}
 # options:
 #   - name: ndots

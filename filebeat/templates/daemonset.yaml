@@ -102,13 +102,13 @@ spec:
           type: DirectoryOrCreate
       - name: varlibdockercontainers
         hostPath:
-          path: /var/lib/docker/containers
+          path: {{ .Values varLibContainerPath }}
       - name: varlog
         hostPath:
           path: /var/log
       - name: varrundockersock
         hostPath:
-          path: /var/run/docker.sock
+          path: {{ .Values varRunDockerSock }}
       {{- if .Values.extraVolumes | default .Values.daemonset.extraVolumes }}
 {{ toYaml ( .Values.extraVolumes | default .Values.daemonset.extraVolumes )  | indent 6 }}
       {{- end }}
@@ -166,23 +166,20 @@ spec:
           subPath: {{ .subPath }}
           {{- end }}
         {{- end }}
-        {{- range $path, $config := .Values.filebeatConfig }}
+        {{- if .Values.filebeatConfig }}
         - name: filebeat-config
-          mountPath: /usr/share/filebeat/{{ $path }}
+          mountPath: /usr/share/filebeat
           readOnly: true
-          subPath: {{ $path }}
-        {{ else }}
-        {{- range $path, $config := .Values.daemonset.filebeatConfig }}
+        {{- else if .Values.daemonset.filebeatConfig }}
         - name: filebeat-config
-          mountPath: /usr/share/filebeat/{{ $path }}
+          mountPath: /usr/share/filebeat
           readOnly: true
-          subPath: {{ $path }}
         {{- end }}
         {{- end }}
         - name: data
           mountPath: /usr/share/filebeat/data
         - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
+          mountPath: {{ .Values varLibContainerPath }}
           readOnly: true
         - name: varlog
           mountPath: /var/log
@@ -190,7 +187,7 @@ spec:
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
         - name: varrundockersock
-          mountPath: /var/run/docker.sock
+          mountPath: {{ .Values varRunDockerSock }}
           readOnly: true
         {{- if .Values.extraVolumeMounts | default .Values.daemonset.extraVolumeMounts }}
 {{ toYaml (.Values.extraVolumeMounts | default .Values.daemonset.extraVolumeMounts ) | indent 8 }}
