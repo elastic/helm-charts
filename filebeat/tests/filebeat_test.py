@@ -100,6 +100,17 @@ def test_defaults():
         "limits": {"cpu": "1000m", "memory": "200Mi"},
     }
 
+    assert {
+        "mountPath": "/var/lib/docker/containers",
+        "name": "varlibdockercontainers",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
+
+    assert {
+        "mountPath": "/var/run/docker.sock",
+        "name": "varrundockersock",
+        "readOnly": True,
+    } in deployment["containers"][0]["volumeMounts"]
 
 def test_enable_deployment():
     config = """
@@ -166,9 +177,8 @@ deployment:
     } in deployment["volumes"]
 
     assert {
-        "mountPath": "/usr/share/filebeat/filebeat.yml",
+        "mountPath": "/usr/share/filebeat",
         "name": project + "-config",
-        "subPath": "filebeat.yml",
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
 
@@ -604,20 +614,17 @@ deployment:
 
     daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
     assert {
-        "mountPath": "/usr/share/filebeat/daemonset-config.yml",
+        "mountPath": "/usr/share/filebeat",
         "name": project + "-config",
-        "subPath": "daemonset-config.yml",
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
 
     deployment = r["deployment"][name]["spec"]["template"]["spec"]
     assert {
-        "mountPath": "/usr/share/filebeat/deployment-config.yml",
+        "mountPath": "/usr/share/filebeat",
         "name": project + "-config",
-        "subPath": "deployment-config.yml",
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
-
 
 def test_adding_in_deprecated_filebeat_config():
     config = """
@@ -644,9 +651,8 @@ filebeatConfig:
         "name": project + "-config",
     } in daemonset["volumes"]
     assert {
-        "mountPath": "/usr/share/filebeat/filebeat.yml",
+        "mountPath": "/usr/share/filebeat",
         "name": project + "-config",
-        "subPath": "filebeat.yml",
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
 
