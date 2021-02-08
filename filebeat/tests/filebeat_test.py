@@ -89,9 +89,8 @@ def test_defaults():
     } in daemonset["volumes"]
 
     assert {
-        "mountPath": "/usr/share/filebeat/filebeat.yml",
+        "mountPath": "/usr/share/filebeat",
         "name": project + "-config",
-        "subPath": "filebeat.yml",
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
 

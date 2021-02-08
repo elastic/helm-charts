@@ -13,7 +13,7 @@ mount:
     exists: true
     opts:
       - ro
-  /usr/share/filebeat/filebeat.yml:
+  /usr/share/filebeat:
     exists: true
     opts:
       - ro
