@@ -103,13 +103,13 @@ def test_defaults():
         "mountPath": "/var/lib/docker/containers",
         "name": "varlibdockercontainers",
         "readOnly": True,
-    } in deployment["containers"][0]["volumeMounts"]
+    } in daemonset["containers"][0]["volumeMounts"]
 
     assert {
         "mountPath": "/var/run/docker.sock",
         "name": "varrundockersock",
         "readOnly": True,
-    } in deployment["containers"][0]["volumeMounts"]
+    } in daemonset["containers"][0]["volumeMounts"]
 
 def test_enable_deployment():
     config = """
