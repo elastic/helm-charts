@@ -7,11 +7,14 @@ nodeGroup: "master"
 masterService: ""
 
 # Elasticsearch roles that will be applied to this nodeGroup
-# These will be set as environment variables. E.g. node.master=true
+# These will be set as roles environment variable. E.g. node.roles="master,data_hot"
 roles:
   master: "true"
   ingest: "true"
   data: "true"
+  data_hot: "true"
+  data_warm: "true"
+  data_cold: "true"
   remote_cluster_client: "true"
   ml: "true"
 
