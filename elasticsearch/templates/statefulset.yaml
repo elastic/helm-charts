@@ -318,10 +318,10 @@ spec:
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
           # setting node.roles if at least one role enabled
-          {{- $rolesStr := ""}}
+          {{- $rolesStr := "" }}
           {{- range $role, $enabled := .Values.roles }}
           {{- if eq $enabled "true" }}
-            {{- $rolesStr = cat $rolesStr $role}}
+            {{- $rolesStr = cat $rolesStr $role }}
           {{- end }}
           {{- end }}
           {{- $rolesStr = trim $rolesStr }}
