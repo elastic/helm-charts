@@ -317,9 +317,17 @@ spec:
             value: "{{ .Values.networkHost }}"
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
+          # setting node.roles if at least one role enabled
+          {{- $rolesStr := "" }}
           {{- range $role, $enabled := .Values.roles }}
-          - name: node.{{ $role }}
-            value: "{{ $enabled }}"
+          {{- if eq $enabled "true" }}
+            {{- $rolesStr = cat $rolesStr $role }}
+          {{- end }}
+          {{- end }}
+          {{- $rolesStr = trim $rolesStr }}
+          {{- if $rolesStr | empty | not }}
+          - name: node.roles
+            value: "{{ $rolesStr | replace " " "," }}"
           {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
