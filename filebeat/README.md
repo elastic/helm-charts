@@ -6,7 +6,6 @@ This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.11][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -43,7 +42,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.11.0-SNAPSHOT version.
+This chart is tested with the latest 7.11.0 version.
 
 ### Install released version using Helm repository
 
@@ -60,8 +59,8 @@ This chart is tested with the latest 7.11.0-SNAPSHOT version.
 
 * Checkout the branch : `git checkout 7.11`
 * Install it:
-  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=7.11.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=7.11.0-SNAPSHOT`
+  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=7.11.0`
+  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=7.11.0`
 
 
 ## Upgrading

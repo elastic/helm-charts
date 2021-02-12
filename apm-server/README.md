@@ -11,7 +11,6 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.11][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -44,7 +43,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.11.0-SNAPSHOT version.
+This chart is tested with the latest 7.11.0 version.
 
 ### Install released version using Helm repository
 
@@ -62,8 +61,8 @@ This chart is tested with the latest 7.11.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.11`
 
 * Install it:
-  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.11.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.11.0-SNAPSHOT`
+  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.11.0`
+  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.11.0`
 
 
 ## Upgrading
@@ -102,7 +101,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `7.11.0-SNAPSHOT`                  |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `7.11.0`                  |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |

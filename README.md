@@ -100,15 +100,15 @@ Kubernetes. There is a dedicated Helm chart for ECK which can be found
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 
-[apm-7]: https://github.com/elastic/helm-charts/tree/7.10.0/apm-server/README.md
+[apm-7]: https://github.com/elastic/helm-charts/tree/7.11.0/apm-server/README.md
 [apm-6]: https://github.com/elastic/helm-charts/tree/6.8.13/apm-server/README.md
-[elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.10.0/elasticsearch/README.md
+[elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.11.0/elasticsearch/README.md
 [elasticsearch-6]: https://github.com/elastic/helm-charts/tree/6.8.13/elasticsearch/README.md
-[filebeat-7]: https://github.com/elastic/helm-charts/tree/7.10.0/filebeat/README.md
+[filebeat-7]: https://github.com/elastic/helm-charts/tree/7.11.0/filebeat/README.md
 [filebeat-6]: https://github.com/elastic/helm-charts/tree/6.8.13/filebeat/README.md
-[kibana-7]: https://github.com/elastic/helm-charts/tree/7.10.0/kibana/README.md
+[kibana-7]: https://github.com/elastic/helm-charts/tree/7.11.0/kibana/README.md
 [kibana-6]: https://github.com/elastic/helm-charts/tree/6.8.13/kibana/README.md
-[logstash-7]: https://github.com/elastic/helm-charts/tree/7.10.0/logstash/README.md
+[logstash-7]: https://github.com/elastic/helm-charts/tree/7.11.0/logstash/README.md
 [logstash-6]: https://github.com/elastic/helm-charts/tree/6.8.13/logstash/README.md
-[metricbeat-7]: https://github.com/elastic/helm-charts/tree/7.10.0/metricbeat/README.md
+[metricbeat-7]: https://github.com/elastic/helm-charts/tree/7.11.0/metricbeat/README.md
 [metricbeat-6]: https://github.com/elastic/helm-charts/tree/6.8.13/metricbeat/README.md

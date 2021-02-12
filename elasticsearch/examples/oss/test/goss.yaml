@@ -11,6 +11,6 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.11.0-SNAPSHOT"'
+      - '"number" : "7.11.0"'
       - '"cluster_name" : "oss"'
       - 'You Know, for Search'
