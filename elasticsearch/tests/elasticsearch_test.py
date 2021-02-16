@@ -1065,16 +1065,6 @@ def test_esMajorVersion_always_wins():
     assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
 
 
-def test_esMajorVersion_parse_image_tag_for_oss_image():
-    config = """
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss
-    imageTag: 6.3.2
-    """
-
-    r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
-
-
 def test_set_pod_security_context():
     config = ""
     r = helm_template(config)
