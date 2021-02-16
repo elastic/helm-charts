@@ -13,7 +13,7 @@ roles:
   ingest: "true"
   data: "true"
   remote_cluster_client: "true"
-# ml: "true" # ml is not availble with elasticsearch-oss
+  ml: "true"
 
 replicas: 3
 minimumMasterNodes: 2

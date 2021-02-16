@@ -136,7 +136,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist filebeat registry data                                                                                             | `/var/lib`                         |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                     |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                               |
-| `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `8.0.0-SNAPSHOT`                   |
+| `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `7.11.0-SNAPSHOT`                   |
 | `image`                        | The filebeat Docker image                                                                                                                                                    | `docker.elastic.co/beats/filebeat` |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                |
 | `managedServiceAccount`        | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles                         | `true`                             |
@@ -179,7 +179,7 @@ An example can be found in [examples/security][].
 
 ### How to install OSS version of Filebeat?
 
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
+Deploying OSS version of Filebeat can be done by setting `image` value to
 [Filebeat OSS Docker image][]
 
 An example of Filebeat deployment using OSS version can be found in
