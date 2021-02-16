@@ -6,6 +6,7 @@ This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
 <!-- development warning placeholder -->
+**Warning**: This branch is used for development, please use the latest [6.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -14,7 +15,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.14 versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
+  - [Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -42,7 +43,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.14 version.
+This chart is tested with the latest 6.8.15-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -54,15 +55,15 @@ This chart is tested with the latest 6.8.14 version.
   - with Helm 2 (deprecated): `helm install --name filebeat --version <version> elastic/filebeat`
 
 
-### Install development version using 6.8 branch and 6.8.14 versions
+### Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=6.8.14`
-  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=6.8.14`
+  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=6.8.15-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=6.8.15-SNAPSHOT`
 
 
 ## Upgrading
@@ -236,7 +237,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [6.x]: https://github.com/elastic/helm-charts/releases
-[6.8.14]: https://github.com/elastic/helm-charts/blob/6.8.14/filebeat/README.md
+[6.8.15-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.15-SNAPSHOT/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
