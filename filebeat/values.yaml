@@ -142,7 +142,7 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "6.8.14-SNAPSHOT"
+imageTag: "6.8.14"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
