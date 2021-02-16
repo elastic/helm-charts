@@ -3,8 +3,10 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+  - [6.8.14](#6814)
   - [7.10.0](#7100)
     - [Migration to Helm 3](#migration-to-helm-3)
+    - [End of K8S < 1.14 compatibility](#end-of-k8s--114-compatibility)
       - [Metricbeat upgrade](#metricbeat-upgrade)
       - [Elasticsearch upgrade with persistence.labels.enabled](#elasticsearch-upgrade-with-persistencelabelsenabled)
       - [Rendered manifests contain a resource that already exists error](#rendered-manifests-contain-a-resource-that-already-exists-error)
@@ -44,6 +46,11 @@
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
 
+## 6.8.14
+
+See [7.10.0 Breaking changes](#7100)
+
+
 ## 7.10.0
 
 ### Migration to Helm 3
@@ -81,6 +88,13 @@ following charts.
 - filebeat >= 7.9.0
 - kibana >= 7.4.0
 - logstash >= 7.9.0
+
+### End of K8S < 1.14 compatibility
+
+[#916][] remove some helpers used for K8S version < 1.14.
+
+If you are using an older K8S version, you should upgrade it or stay with
+helm-charts < 7.10.
 
 #### Metricbeat upgrade
 
@@ -376,7 +390,7 @@ volumeClaimTemplate:
 [#352]: https://github.com/elastic/helm-charts/pull/352
 [#437]: https://github.com/elastic/helm-charts/pull/437
 [#458]: https://github.com/elastic/helm-charts/pull/458
-[#516]: https://github.com/elastic/helm/pull/516
+[#516]: https://github.com/elastic/helm-charts/pull/516
 [#540]: https://github.com/elastic/helm-charts/pull/540
 [#568]: https://github.com/elastic/helm-charts/pull/568
 [#572]: https://github.com/elastic/helm-charts/pull/572
@@ -389,6 +403,7 @@ volumeClaimTemplate:
 [#776]: https://github.com/elastic/helm-charts/issues/776
 [#807]: https://github.com/elastic/helm-charts/issues/807
 [#839]: https://github.com/elastic/helm-charts/issues/839
+[#916]: https://github.com/elastic/helm-charts/pull/916
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch
