@@ -181,7 +181,7 @@ extraInitContainers: ""
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "6.8.14-SNAPSHOT"
+imageTag: "6.8.14"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
