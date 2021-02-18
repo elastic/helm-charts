@@ -1,5 +1,44 @@
 # Changelog
 
+## 7.11.1
+
+* 7.11.1 as default version.
+
+
+| PR                                                        | Author                                                   | Title                                                                                                                        |
+|-----------------------------------------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| [#1053](https://github.com/elastic/helm-charts/pull/1053) | [@jmlrt](https://github.com/jmlrt)                       | [elasticsearch][kibana] remove oss examples (#1046)                                                                          |
+| [#1040](https://github.com/elastic/helm-charts/pull/1040) | [@daniel-hutao](https://github.com/daniel-hutao)         | [elasticsearch] Fix security.yaml is 404                                                                                     |
+| [#1039](https://github.com/elastic/helm-charts/pull/1039) | [@yousafsyed](https://github.com/yousafsyed)             | [metricbeat] Fixing the repository of kube-state-metrics for metricbeats                                                     |
+| [#809](https://github.com/elastic/helm-charts/pull/809)   | [@clemcvlcs](https://github.com/clemcvlcs)               | [filebeat] Variable maxUnavailable updateStrategy                                                                            |
+| [#1033](https://github.com/elastic/helm-charts/pull/1033) | [@jmlrt](https://github.com/jmlrt)                       | [meta] Add build status and artifact hub badges                                                                              |
+| [#1028](https://github.com/elastic/helm-charts/pull/1028) | [@artificial-aidan](https://github.com/artificial-aidan) | [kibana] Fix post-lifecycle hook example                                                                                     |
+| [#1025](https://github.com/elastic/helm-charts/pull/1025) | [@jmlrt](https://github.com/jmlrt)                       | [meta] Bump helm version to 3.5.0                                                                                            |
+| [#1018](https://github.com/elastic/helm-charts/pull/1018) | [@jmlrt](https://github.com/jmlrt)                       | [meta] Fix transient errors with stable repository                                                                           |
+| [#1022](https://github.com/elastic/helm-charts/pull/1022) | [@jmlrt](https://github.com/jmlrt)                       | [meta] Small fixes for 7.11 branch                                                                                           |
+| [#1017](https://github.com/elastic/helm-charts/pull/1017) | [@jmlrt](https://github.com/jmlrt)                       | [meta] NIT Update backport config and small doc fixes                                                                        |
+| [#1012](https://github.com/elastic/helm-charts/pull/1012) | [@jmlrt](https://github.com/jmlrt)                       | [elasticsearch] Fix secrets in config example                                                                                |
+| [#996](https://github.com/elastic/helm-charts/pull/996)   | [@jmlrt](https://github.com/jmlrt)                       | [apm-server] Run as non root user                                                                                            |
+| [#1000](https://github.com/elastic/helm-charts/pull/1000) | [@jmlrt](https://github.com/jmlrt)                       | [logstash] Disable privileged container in psp                                                                               |
+| [#498](https://github.com/elastic/helm-charts/pull/498)   | [@desaintmartin](https://github.com/desaintmartin)       | [elasticsearch] Add support for NetworkPolicy.                                                                               |
+| [#994](https://github.com/elastic/helm-charts/pull/994)   | [@kevinsmithwrs](https://github.com/kevinsmithwrs)       | [elasticsearch][kibana] Add flexible ingress                                                                                 |
+| [#1011](https://github.com/elastic/helm-charts/pull/1011) | [@jmlrt](https://github.com/jmlrt)                       | [filebeat][metricbeat] Update documentation on port collisions for multiple beats agents with hostNetworking enabled. (#997) |
+| [#1007](https://github.com/elastic/helm-charts/pull/1007) | [@jmlrt](https://github.com/jmlrt)                       | [filebeat] Configurable ClusterRole (#978)                                                                                   |
+| [#1005](https://github.com/elastic/helm-charts/pull/1005) | [@jmlrt](https://github.com/jmlrt)                       | [filebeat] Deployment support feature (#964)                                                                                 |
+| [#985](https://github.com/elastic/helm-charts/pull/985)   | [@jmlrt](https://github.com/jmlrt)                       | [all] Add hostaliases (#970)                                                                                                 |
+| [#982](https://github.com/elastic/helm-charts/pull/982)   | [@jmlrt](https://github.com/jmlrt)                       | [elasticsearch] Add emptyDir to podSecurityPolicy as allowed volume-type (#975)                                              |
+| [#974](https://github.com/elastic/helm-charts/pull/974)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Add config for backport (#971)                                                                                        |
+| [#959](https://github.com/elastic/helm-charts/pull/959)   | [@jmlrt](https://github.com/jmlrt)                       | [kibana] Add service.httpPortName config in chart (#843)                                                                     |
+| [#956](https://github.com/elastic/helm-charts/pull/956)   | [@jmlrt](https://github.com/jmlrt)                       | [apm-server] Add missing fields to HPA (#782)                                                                                |
+| [#951](https://github.com/elastic/helm-charts/pull/951)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Enable metricbeat upgrade test (#940)                                                                                 |
+| [#946](https://github.com/elastic/helm-charts/pull/946)   | [@jmlrt](https://github.com/jmlrt)                       | [logstash] Add rbac custom annotations (#764)                                                                                |
+| [#943](https://github.com/elastic/helm-charts/pull/943)   | [@jmlrt](https://github.com/jmlrt)                       | [elasticsearch] Statefulset empty initContainers fix (#795)                                                                  |
+| [#938](https://github.com/elastic/helm-charts/pull/938)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Stabilize CI tests (#935)                                                                                             |
+| [#928](https://github.com/elastic/helm-charts/pull/928)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Remove version from dev install section title                                                                         |
+| [#923](https://github.com/elastic/helm-charts/pull/923)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Remove support for k8s <1.14 & helm <2.17.0 (#916)                                                                    |
+| [#920](https://github.com/elastic/helm-charts/pull/920)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Upgrade test (#907)                                                                                                   |
+
+
 ## 6.8.14
 
 * 6.8.14 as default version.
@@ -39,7 +78,7 @@
 | [#904](https://github.com/elastic/helm-charts/pull/904)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Helm 3 (#516)                                                                                                         |
 | [#891](https://github.com/elastic/helm-charts/pull/891)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Increase helm timeout                                                                                                 |
 | [#890](https://github.com/elastic/helm-charts/pull/890)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Update rbac.authorization.k8s.io api                                                                                  |
-| [#888](https://github.com/elastic/helm-charts/pull/888)   | [@nkammah](https://github.com/nkammah)                   | [meta] Add warning comment placeholder (6.8 branch)                                                                                 |
+| [#888](https://github.com/elastic/helm-charts/pull/888)   | [@nkammah](https://github.com/nkammah)                   | [meta] Add warning comment placeholder (6.8 branch)                                                                          |
 | [#882](https://github.com/elastic/helm-charts/pull/882)   | [@jmlrt](https://github.com/jmlrt)                       | [metricbeat] Use relocated stable repo for kube-state-metrics                                                                |
 | [#880](https://github.com/elastic/helm-charts/pull/880)   | [@jmlrt](https://github.com/jmlrt)                       | [meta] Add support for helm 2.17.0 and k8s 1.17                                                                              |
 | [#878](https://github.com/elastic/helm-charts/pull/878)   | [@jmlrt](https://github.com/jmlrt)                       | [elasticsearch] Remove roles unavailable on 6.8                                                                              |
