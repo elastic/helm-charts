@@ -3,6 +3,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+  - [7.11.1](#7111)
+  - [License update for Elasticsearch & Kibana](#license-update-for-elasticsearch--kibana)
   - [6.8.14](#6814)
   - [7.10.0](#7100)
     - [Migration to Helm 3](#migration-to-helm-3)
@@ -45,6 +47,14 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+
+## 7.11.1
+
+## License update for Elasticsearch & Kibana
+
+Following recent license change, Elasticsearch and Kibana OSS versions are no more
+available starting 7.11.0. See [Elastic blog post][] for more details.
+
 
 ## 6.8.14
 
@@ -406,6 +416,7 @@ volumeClaimTemplate:
 [#916]: https://github.com/elastic/helm-charts/pull/916
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
+[elastic blog post]: https://www.elastic.co/blog/licensing-change
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
