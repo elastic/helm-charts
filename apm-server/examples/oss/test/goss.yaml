@@ -8,4 +8,4 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'apm-oss-7.11.0'
+      - 'apm-oss-7.11.1'
