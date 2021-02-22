@@ -26,6 +26,9 @@ def test_defaults():
     assert c["image"].startswith("docker.elastic.co/apm/apm-server:")
     assert c["ports"][0]["containerPort"] == 8200
 
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in r["service"][name]["spec"]
+
     assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
 
 
@@ -376,3 +379,13 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+def test_adding_loadBalancerIP():
+    config = """
+    service:
+      loadBalancerIP: 12.5.11.79
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"
