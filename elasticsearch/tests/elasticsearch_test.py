@@ -46,9 +46,7 @@ def test_defaults():
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
         {"name": "ES_JAVA_OPTS", "value": "-Xmx1g -Xms1g"},
-        {"name": "node.master", "value": "true"},
-        {"name": "node.data", "value": "true"},
-        {"name": "node.ingest", "value": "true"},
+        {"name": "node.roles", "value": "data,data_cold,data_hot,data_warm,ingest,master,ml,remote_cluster_client"},
     ]
 
     c = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]
@@ -220,12 +218,19 @@ roles:
 def test_enabling_machine_learning_role():
     config = """
 roles:
+  master: "false"
+  ingest: "false"
+  data: "false"
+  data_hot: "false"
+  data_warm: "false"
+  data_cold: "false"
+  remote_cluster_client: "false"
   ml: "true"
 """
     r = helm_template(config)
     env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
 
-    assert {"name": "node.ml", "value": "true"} in env
+    assert {"name": "node.roles", "value": "ml"} in env
 
 
 def test_adding_extra_env_vars():
