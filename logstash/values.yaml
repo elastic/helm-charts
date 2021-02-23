@@ -59,8 +59,14 @@ secrets: []
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []
 
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
 image: "docker.elastic.co/logstash/logstash"
-imageTag: "6.8.14-SNAPSHOT"
+imageTag: "6.8.15-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -98,7 +104,7 @@ podSecurityPolicy:
   create: false
   name: ""
   spec:
-    privileged: true
+    privileged: false
     fsGroup:
       rule: RunAsAny
     runAsUser:

@@ -1,5 +1,7 @@
 # Metricbeat Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
@@ -13,7 +15,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
+  - [Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -39,7 +41,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.14-SNAPSHOT version.
+This chart is tested with the latest 6.8.15-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -47,18 +49,19 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
+  - Add the Elastic Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add stable https://charts.helm.sh/stable`
   - with Helm 3: `helm install metricbeat --version <version> elastic/metricbeat`
   - with Helm 2 (deprecated): `helm install --name metricbeat --version <version> elastic/metricbeat`
 
-### Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions
+### Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=6.8.14-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=6.8.14-SNAPSHOT`
+  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=6.8.15-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=6.8.15-SNAPSHOT`
 
 
 ## Upgrading
@@ -99,6 +102,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for DaemonSet                                                                                 | `[]`                                 |
 | `daemonset.extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
 | `daemonset.extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function or DaemonSet                                                                                   | `[]`                                 |
+| `daemonset.hostAliases`        | Configurable [hostAliases][] for Metricbeat DaemonSet                                                                                                                        | `[]`                                 |
 | `daemonset.hostNetworking`     | Enable Metricbeat DaemonSet to use `hostNetwork`                                                                                                                             | `false`                              |
 | `daemonset.metricbeatConfig`   | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for Metricbeat DaemonSet                                                              | see [values.yaml][]                  |
 | `daemonset.nodeSelector`       | Configurable [nodeSelector][] for Metricbeat DaemonSet                                                                                                                       | `{}`                                 |
@@ -114,6 +118,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to Metricbeat container for Deployment                                                                                | `[]`                                 |
 | `deployment.extraVolumeMounts` | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
 | `deployment.extraVolumes`      | Templatable string of additional `volumes` to be passed to the `tpl` function or Deployment                                                                                  | `[]`                                 |
+| `deployment.hostAliases`       | Configurable [hostAliases][] for Metricbeat Deployment                                                                                                                       | `[]`                                 |
 | `deployment.metricbeatConfig`  | Allows you to add any config files in `/usr/share/metricbeat` such as `metricbeat.yml` for Metricbeat Deployment                                                             | see [values.yaml][]                  |
 | `deployment.nodeSelector`      | Configurable [nodeSelector][] for Metricbeat Deployment                                                                                                                      | `{}`                                 |
 | `deployment.resources`         | Allows you to set the [resources][] for Metricbeat Deployment                                                                                                                | see [values.yaml][]                  |
@@ -126,7 +131,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `6.8.14-SNAPSHOT`                    |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `6.8.15-SNAPSHOT`                    |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) as a dependency                                                           | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
@@ -204,6 +209,14 @@ namespace which gives it access to the host loopback device, services listening
 on localhost, could be used to snoop on network activity of other pods on the
 same node.
 
+### How do I get multiple beats agents working with hostNetworking enabled?
+
+The default http port for multiple beats agents may be on the same port, for
+example, Filebeats and Metricbeats both default to 5066. When `hostNetworking`
+is enabled this will cause collisions when standing up the http server. The work
+around for this is to set `http.port` in the config file for one of the beats agent
+to use a different port.
+
 
 ## Contributing
 
@@ -212,7 +225,7 @@ about our development and testing process.
 
 [6.x]: https://github.com/elastic/helm-charts/releases
 [#471]: https://github.com/elastic/helm-charts/pull/471
-[6.8.14-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.14-SNAPSHOT/metricbeat/README.md
+[6.8.15-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.15-SNAPSHOT/metricbeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -226,6 +239,7 @@ about our development and testing process.
 [examples/oss]: https://github.com/elastic/helm-charts/tree/6.8/metricbeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/metricbeat/examples/security
 [helm]: https://helm.sh
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images

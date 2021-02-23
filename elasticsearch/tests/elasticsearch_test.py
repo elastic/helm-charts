@@ -137,6 +137,7 @@ def test_defaults():
     assert "tolerations" not in r["statefulset"][uname]["spec"]["template"]["spec"]
     assert "nodeSelector" not in r["statefulset"][uname]["spec"]["template"]["spec"]
     assert "ingress" not in r
+    assert "hostAliases" not in r["statefulset"][uname]["spec"]["template"]["spec"]
 
 
 def test_increasing_the_replicas():
@@ -637,6 +638,54 @@ nodeAffinity:
 
 
 def test_adding_an_ingress_rule():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: elasticsearch.elastic.co
+      paths:
+        - path: /
+    - host: ''
+      paths:
+        - path: /
+        - path: /mypath
+          servicePort: 8888
+    - host: elasticsearch.hello.there
+      paths:
+        - path: /
+          servicePort: 9999
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - elasticsearch.elastic.co
+"""
+
+    r = helm_template(config)
+    assert uname in r["ingress"]
+    i = r["ingress"][uname]["spec"]
+    assert i["tls"][0]["hosts"][0] == "elasticsearch.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "elasticsearch.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["http"]["paths"][1]["path"] == "/mypath"
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["serviceName"] == uname
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][2]["host"] == "elasticsearch.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == uname
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+
+
+def test_adding_a_deprecated_ingress_rule():
     config = """
 ingress:
   enabled: true
@@ -1285,3 +1334,110 @@ fullnameOverride: "customfullName"
 
     assert "customfullName" in r["statefulset"]
     assert "customfullName" in r["service"]
+
+
+def test_hostaliases():
+    config = """
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "foo.local"
+  - "bar.local"
+"""
+    r = helm_template(config)
+    hostAliases = r["statefulset"][uname]["spec"]["template"]["spec"]["hostAliases"]
+    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_network_policy():
+    config = """
+networkPolicy:
+  http:
+    enabled: true
+    explicitNamespacesSelector:
+      # Accept from namespaces with all those different rules (from whitelisted Pods)
+      matchLabels:
+        role: frontend
+      matchExpressions:
+        - {key: role, operator: In, values: [frontend]}
+    additionalRules:
+      - podSelector:
+          matchLabels:
+            role: frontend
+      - podSelector:
+          matchExpressions:
+            - key: role
+              operator: In
+              values:
+                - frontend
+  transport:
+    enabled: true
+    allowExternal: true
+    explicitNamespacesSelector:
+      matchLabels:
+        role: frontend
+      matchExpressions:
+        - {key: role, operator: In, values: [frontend]}
+    additionalRules:
+      - podSelector:
+          matchLabels:
+            role: frontend
+      - podSelector:
+          matchExpressions:
+            - key: role
+              operator: In
+              values:
+                - frontend
+
+"""
+    r = helm_template(config)
+    ingress = r["networkpolicy"][uname]["spec"]["ingress"]
+    pod_selector = r["networkpolicy"][uname]["spec"]["podSelector"]
+    http = ingress[0]
+    transport = ingress[1]
+    assert http["from"] == [
+        {
+            "podSelector": {
+                "matchLabels": {"elasticsearch-master-http-client": "true"}
+            },
+            "namespaceSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ],
+                "matchLabels": {"role": "frontend"},
+            },
+        },
+        {"podSelector": {"matchLabels": {"role": "frontend"}}},
+        {
+            "podSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ]
+            }
+        },
+    ]
+    assert http["ports"][0]["port"] == 9200
+    assert transport["from"] == [
+        {
+            "podSelector": {
+                "matchLabels": {"elasticsearch-master-transport-client": "true"}
+            },
+            "namespaceSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ],
+                "matchLabels": {"role": "frontend"},
+            },
+        },
+        {"podSelector": {"matchLabels": {"role": "frontend"}}},
+        {
+            "podSelector": {
+                "matchExpressions": [
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                ]
+            }
+        },
+        {"podSelector": {"matchLabels": {"app": "elasticsearch-master"}}},
+    ]
+    assert transport["ports"][0]["port"] == 9300
+    assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}

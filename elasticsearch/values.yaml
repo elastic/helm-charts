@@ -50,8 +50,14 @@ secretMounts: []
 #    path: /usr/share/elasticsearch/config/certs
 #    defaultMode: 0755
 
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "6.8.14-SNAPSHOT"
+imageTag: "6.8.15-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -116,6 +122,7 @@ podSecurityPolicy:
       - secret
       - configMap
       - persistentVolumeClaim
+      - emptyDir
 
 persistence:
   enabled: true
@@ -234,9 +241,10 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  path: /
   hosts:
-    - chart-example.local
+    - host: chart-example.local
+      paths:
+        - path: /
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -272,6 +280,61 @@ sysctlInitContainer:
   enabled: true
 
 keystore: []
+
+networkPolicy:
+  ## Enable creation of NetworkPolicy resources. Only Ingress traffic is filtered for now.
+  ## In order for a Pod to access Elasticsearch, it needs to have the following label:
+  ## {{ template "uname" . }}-client: "true"
+  ## Example for default configuration to access HTTP port:
+  ## elasticsearch-master-http-client: "true"
+  ## Example for default configuration to access transport port:
+  ## elasticsearch-master-transport-client: "true"
+
+  http:
+    enabled: false
+    ## if explicitNamespacesSelector is not set or set to {}, only client Pods being in the networkPolicy's namespace
+    ## and matching all criteria can reach the DB.
+    ## But sometimes, we want the Pods to be accessible to clients from other namespaces, in this case, we can use this
+    ## parameter to select these namespaces
+    ##
+    # explicitNamespacesSelector:
+    #   # Accept from namespaces with all those different rules (only from whitelisted Pods)
+    #   matchLabels:
+    #     role: frontend
+    #   matchExpressions:
+    #     - {key: role, operator: In, values: [frontend]}
+
+    ## Additional NetworkPolicy Ingress "from" rules to set. Note that all rules are OR-ed.
+    ##
+    # additionalRules:
+    #   - podSelector:
+    #       matchLabels:
+    #         role: frontend
+    #   - podSelector:
+    #       matchExpressions:
+    #         - key: role
+    #           operator: In
+    #           values:
+    #             - frontend
+
+  transport:
+    ## Note that all Elasticsearch Pods can talks to themselves using transport port even if enabled.
+    enabled: false
+    # explicitNamespacesSelector:
+    #   matchLabels:
+    #     role: frontend
+    #   matchExpressions:
+    #     - {key: role, operator: In, values: [frontend]}
+    # additionalRules:
+    #   - podSelector:
+    #       matchLabels:
+    #         role: frontend
+    #   - podSelector:
+    #       matchExpressions:
+    #         - key: role
+    #           operator: In
+    #           values:
+    #             - frontend
 
 # Deprecated
 # please use the above podSecurityContext.fsGroup instead

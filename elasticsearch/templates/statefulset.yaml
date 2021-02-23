@@ -153,6 +153,9 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
       enableServiceLinks: {{ .Values.enableServiceLinks }}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 8 }}
+      {{- end }}
       {{- if or (.Values.extraInitContainers) (.Values.sysctlInitContainer.enabled) (.Values.keystore)  }}
       initContainers:
       {{- if .Values.sysctlInitContainer.enabled }}

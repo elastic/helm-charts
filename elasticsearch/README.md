@@ -1,5 +1,7 @@
 # Elasticsearch Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
@@ -13,7 +15,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
+  - [Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -53,7 +55,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.14-SNAPSHOT version.
+This chart is tested with the latest 6.8.15-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -65,15 +67,15 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
   - with Helm 2 (deprecated): `helm install --name elasticsearch --version <version> elastic/elasticsearch`
 
 
-### Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions
+### Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=6.8.14-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=6.8.14-SNAPSHOT`
+  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=6.8.15-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=6.8.15-SNAPSHOT`
 
 
 ## Upgrading
@@ -126,10 +128,11 @@ support multiple versions with minimal changes.
 | `extraVolumeMounts`                | Templatable string of additional `volumeMounts` to be passed to the `tpl` function                                                                                                                                                                        | `""`                                            |
 | `extraVolumes`                     | Templatable string of additional `volumes` to be passed to the `tpl` function                                                                                                                                                                             | `""`                                            |
 | `fullnameOverride`                 | Overrides the `clusterName` and `nodeGroup` when used in the naming of resources. This should only be used when using a single `nodeGroup`, otherwise you will have name conflicts                                                                        | `""`                                            |
+| `hostAliases`                      | Configurable [hostAliases][]                                                                                                                                                                                                                              | `[]`                                            |
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `6.8.14-SNAPSHOT`                               |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `6.8.15-SNAPSHOT`                               |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
@@ -142,6 +145,7 @@ support multiple versions with minimal changes.
 | `minimumMasterNodes`               | The value for [discovery.zen.minimum_master_nodes][]. Should be set to `(master_eligible_nodes / 2) + 1`. Ignored in Elasticsearch versions >= 7                                                                                                          | `2`                                             |
 | `nameOverride`                     | Overrides the `clusterName` when used in the naming of resources                                                                                                                                                                                          | `""`                                            |
 | `networkHost`                      | Value for the [network.host Elasticsearch setting][]                                                                                                                                                                                                      | `0.0.0.0`                                       |
+| `networkPolicy`                    | The [NetworkPolicy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) to set. See [`values.yaml`](./values.yaml) for an example                                                                                                  | `{http.enabled: false,transport.enabled: false}`|
 | `nodeAffinity`                     | Value for the [node affinity settings][]                                                                                                                                                                                                                  | `{}`                                            |
 | `nodeGroup`                        | This is the name that will be used for each group of nodes in the cluster. The name will be `clusterName-nodeGroup-X` , `nameOverride-nodeGroup-X` if a `nameOverride` is specified, and `fullnameOverride-X` if a `fullnameOverride` is specified        | `master`                                        |
 | `nodeSelector`                     | Configurable [nodeSelector][] so that you can target specific nodes for your Elasticsearch cluster                                                                                                                                                        | `{}`                                            |
@@ -392,7 +396,7 @@ about our development and testing process.
 
 [6.x]: https://github.com/elastic/helm-charts/releases
 [#63]: https://github.com/elastic/helm-charts/issues/63
-[6.8.14-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.14-SNAPSHOT/elasticsearch/README.md
+[6.8.15-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.15-SNAPSHOT/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -427,6 +431,7 @@ about our development and testing process.
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [java options]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/jvm-options.html
 [jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/heap-size.html
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [kind]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/examples/kubernetes-kind
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/

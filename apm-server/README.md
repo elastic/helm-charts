@@ -1,5 +1,7 @@
 # APM Server Helm Chart
 
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+
 This Helm chart is a lightweight way to configure and run our official
 [APM Server Docker image][].
 
@@ -18,7 +20,7 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
+  - [Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -42,7 +44,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.14-SNAPSHOT version.
+This chart is tested with the latest 6.8.15-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -53,15 +55,15 @@ This chart is tested with the latest 6.8.14-SNAPSHOT version.
   - with Helm 3: `helm install apm-server --version <version> elastic/apm-server`
   - with Helm 2 (deprecated): `helm install --name apm-server --version <version> elastic/apm-server`
 
-### Install development version using 6.8 branch and 6.8.14-SNAPSHOT versions
+### Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=6.8.14-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=6.8.14-SNAPSHOT`
+  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=6.8.15-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=6.8.15-SNAPSHOT`
 
 
 ## Upgrading
@@ -89,7 +91,7 @@ as a reference. They are also used in the automated testing of this chart.
 |-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | `affinity`                  | Configurable [affinity][]                                                                                                                                  | `{}`                               |
 | `apmConfig`                 | Allows you to add any config files in `/usr/share/apm-server/config` such as `apm-server.yml`                                                              | see [values.yaml][]                |
-| `autoscaling`               | Enable the [horizontal pod autoscaler][]                                                                                                                   | `enabled: false`                   |
+| `autoscaling`               | Enable the [horizontal pod autoscaler][]                                                                                                                   | see [values.yaml][]                |
 | `envFrom`                   | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                | `[]`                               |
 | `extraContainers`           | Templatable string of additional containers to be passed to the `tpl` function                                                                             | `""`                               |
 | `extraEnvs`                 | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                          | `[]`                               |
@@ -97,9 +99,10 @@ as a reference. They are also used in the automated testing of this chart.
 | `extraVolumeMounts`         | List of additional `volumeMounts`                                                                                                                          | `[]`                               |
 | `extraVolumes`              | List of additional `volumes`                                                                                                                               | `[]`                               |
 | `fullnameOverride`          | Overrides the full name of the resources. If not set the name will default to `.Release.Name` - `.Values.nameOverride` or `.Chart.Name`                    | `""`                               |
+| `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `6.8.14-SNAPSHOT`                  |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `6.8.15-SNAPSHOT`                  |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -148,7 +151,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [6.x]: https://github.com/elastic/helm-charts/releases
-[6.8.14-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.14-SNAPSHOT/apm-server/README.md
+[6.8.15-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.15-SNAPSHOT/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
@@ -164,6 +167,7 @@ about our development and testing process.
 [examples/security]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/examples/security
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
