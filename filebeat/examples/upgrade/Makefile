@@ -4,7 +4,7 @@ include ../../../helpers/examples.mk
 
 CHART := filebeat
 RELEASE := helm-filebeat-upgrade
-#FROM := 6.8.14	# Filebeat 6.8.13 fails with "Registry file path must be a file"
+FROM := 6.8.14	# Filebeat 6.8.13 fails with "Registry file path must be a file"
                 # error with Elasticsearch 6.8.14-SNAPSHOT
 
 install:
