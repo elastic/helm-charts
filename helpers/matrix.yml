@@ -22,12 +22,12 @@ FILEBEAT_SUITE:
   - deployment
   - oss
   - security
-  #- upgrade TODO: uncomment after 6.8.14 release
+  - upgrade
 METRICBEAT_SUITE:
   - default
   - oss
   - security
-  #- upgrade TODO: uncomment after 6.8.14 release
+  - upgrade
 LOGSTASH_SUITE:
   - default
   - oss
