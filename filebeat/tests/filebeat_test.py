@@ -111,6 +111,7 @@ def test_defaults():
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
 
+
 def test_enable_deployment():
     config = """
 deployment:
@@ -626,6 +627,7 @@ deployment:
         "subPath": "filebeat.yml",
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
+
 
 def test_adding_in_deprecated_filebeat_config():
     config = """
