@@ -556,7 +556,7 @@ nodeAffinity:
         ]
     }
 
-def test_adding_an_podaffinity_rule():
+def test_adding_a_pod_affinity_rule():
     config = """
 podAffinity:
   requiredDuringSchedulingIgnoredDuringExecution:
