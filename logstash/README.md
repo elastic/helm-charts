@@ -216,7 +216,8 @@ about our development and testing process.
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
 [logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-[node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
+[node affinity settings]: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
+[pod affinity settings]: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#docker-env-config
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
