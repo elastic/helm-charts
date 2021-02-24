@@ -175,7 +175,6 @@ spec:
           mountPath: /usr/share/filebeat
           readOnly: true
         {{- end }}
-        {{- end }}
         - name: data
           mountPath: /usr/share/filebeat/data
         - name: varlibdockercontainers
