@@ -380,6 +380,7 @@ hostAliases:
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
 
+
 def test_adding_loadBalancerIP():
     config = """
     service:
