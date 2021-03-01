@@ -29,7 +29,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "filebeat-6.8.15"
+      - "filebeat-6.8.99"
 
 file:
   /usr/share/filebeat/filebeat.yml:
