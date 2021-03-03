@@ -4,7 +4,7 @@
 
 
   - [7.11.1](#7111)
-  - [License update for Elasticsearch & Kibana](#license-update-for-elasticsearch--kibana)
+    - [License update for Elasticsearch & Kibana](#license-update-for-elasticsearch--kibana)
   - [6.8.14](#6814)
   - [7.10.0](#7100)
     - [Migration to Helm 3](#migration-to-helm-3)
@@ -50,7 +50,7 @@
 
 ## 7.11.1
 
-## License update for Elasticsearch & Kibana
+### License update for Elasticsearch & Kibana
 
 Following recent license change, Elasticsearch and Kibana OSS versions are no more
 available starting 7.11.0. See [Elastic blog post][] for more details.
