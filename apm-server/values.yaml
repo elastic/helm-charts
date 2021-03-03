@@ -172,6 +172,7 @@ ingress:
 
 service:
   type: ClusterIP
+  loadBalancerIP: ""
   port: 8200
   nodePort: ""
   annotations: {}
