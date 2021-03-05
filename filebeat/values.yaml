@@ -7,6 +7,11 @@ daemonset:
   affinity: {}
   # Include the daemonset
   enabled: true
+  # pass arguments to the container
+  args:
+  - "-e"
+  - "-E"
+  - "http.enabled=true"
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -73,6 +78,11 @@ deployment:
   affinity: {}
   # Include the deployment
   enabled: false
+  # pass arguments to the container
+  args:
+  - "-e"
+  - "-E"
+  - "http.enabled=true"
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -141,6 +151,15 @@ varLibContainerPath: /var/lib/docker/containers
 
 # Path to docker socker (/var/run/docker.sock for linux nodes, \\.\pipe\docker_engine for windows nodes)
 varRunDockerSock: /var/run/docker.sock
+
+# mountConfigWithSubpath enabled mounting every config file with a subPath in order not to overwrite other files in /usr/share/filebeat; windows containers cannot use subPath mounting though so has to mount the full configmap into anotherwise empty directory
+mountConfigWithSubpath: true
+
+# sets the path where to mount configs to
+configMountPath: /usr/share/filebeat
+
+# sets path where to mount data to
+dataMountPath: /usr/share/filebeat/data
 
 dnsConfig: {}
 # options:

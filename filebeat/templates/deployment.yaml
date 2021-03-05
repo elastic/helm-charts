@@ -108,10 +108,10 @@ spec:
       - name: "filebeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        {{- with .Values.deployment.args }}
         args:
-          - "-e"
-          - "-E"
-          - "http.enabled=true"
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
@@ -135,18 +135,32 @@ spec:
           subPath: {{ .subPath }}
           {{- end }}
         {{- end }}
-        {{- range $path, $config := .Values.filebeatConfig }}
+        {{- if .Values.filebeatConfig }}
+          {{- if .Values.mountConfigWithSubpath }}
+            {{- range $path, $config := .Values.filebeatConfig }}
         - name: filebeat-config
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
-        {{ else }}
-        {{- range $path, $config := .Values.deployment.filebeatConfig }}
+            {{- end }}
+          {{- else }}
+        - name: filebeat-config
+          mountPath: {{ .Values.configMountPath }}
+          readOnly: true
+          {{- end }}
+        {{- else if .Values.deployment.filebeatConfig }}
+          {{- if .Values.mountConfigWithSubpath }}
+            {{- range $path, $config := .Values.deployment.filebeatConfig }}
         - name: filebeat-config
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
-        {{- end }}
+            {{- end }}
+          {{- else }}
+        - name: filebeat-config
+          mountPath: {{ .Values.configMountPath }}
+          readOnly: true
+          {{- end }}
         {{- end }}
         {{- if .Values.extraVolumeMounts | default .Values.deployment.extraVolumeMounts }}
 {{ toYaml ( .Values.extraVolumeMounts | default .Values.deployment.extraVolumeMounts ) | indent 8 }}

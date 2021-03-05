@@ -89,7 +89,7 @@ def test_defaults():
     } in daemonset["volumes"]
 
     assert {
-        "mountPath": "/usr/share/filebeat",
+        "mountPath": "/usr/share/filebeat/filebeat.yml",
         "name": project + "-config",
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
@@ -615,16 +615,16 @@ deployment:
 
     daemonset = r["daemonset"][name]["spec"]["template"]["spec"]
     assert {
-        "mountPath": "/usr/share/filebeat",
+        "mountPath": "/usr/share/filebeat/daemonset-config.yml",
         "name": project + "-config",
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
 
     deployment = r["deployment"][name]["spec"]["template"]["spec"]
     assert {
-        "mountPath": "/usr/share/filebeat/filebeat.yml",
+        "mountPath": "/usr/share/filebeat/deployment-config.yml",
         "name": project + "-config",
-        "subPath": "filebeat.yml",
+        "subPath": "deployment-config.yml",
         "readOnly": True,
     } in deployment["containers"][0]["volumeMounts"]
 
@@ -654,7 +654,7 @@ filebeatConfig:
         "name": project + "-config",
     } in daemonset["volumes"]
     assert {
-        "mountPath": "/usr/share/filebeat",
+        "mountPath": "/usr/share/filebeat/filebeat.yml",
         "name": project + "-config",
         "readOnly": True,
     } in daemonset["containers"][0]["volumeMounts"]
