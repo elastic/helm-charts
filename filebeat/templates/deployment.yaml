@@ -135,32 +135,26 @@ spec:
           subPath: {{ .subPath }}
           {{- end }}
         {{- end }}
-        {{- if .Values.filebeatConfig }}
-          {{- if .Values.mountConfigWithSubpath }}
+        {{- if .Values.mountConfigWithSubpath }}
+          {{- if .Values.filebeatConfig }}
             {{- range $path, $config := .Values.filebeatConfig }}
         - name: filebeat-config
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
             {{- end }}
-          {{- else }}
-        - name: filebeat-config
-          mountPath: {{ .Values.configMountPath }}
-          readOnly: true
-          {{- end }}
-        {{- else if .Values.deployment.filebeatConfig }}
-          {{- if .Values.mountConfigWithSubpath }}
+          {{- else if .Values.daemonset.filebeatConfig }}
             {{- range $path, $config := .Values.deployment.filebeatConfig }}
         - name: filebeat-config
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
             {{- end }}
-          {{- else }}
+          {{- end }}
+        {{- else if or .Values.filebeatConfig .Values.deployment.filebeatConfig }}
         - name: filebeat-config
           mountPath: {{ .Values.configMountPath }}
           readOnly: true
-          {{- end }}
         {{- end }}
         {{- if .Values.extraVolumeMounts | default .Values.deployment.extraVolumeMounts }}
 {{ toYaml ( .Values.extraVolumeMounts | default .Values.deployment.extraVolumeMounts ) | indent 8 }}
