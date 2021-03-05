@@ -105,7 +105,7 @@ spec:
           path: {{ .Values.varLibContainerPath }}
       - name: varlog
         hostPath:
-          path: {{ .Values.varLogPath }}
+          path: /var/log
       - name: varrundockersock
         hostPath:
           path: {{ .Values.varRunDockerSock }}
@@ -188,12 +188,12 @@ spec:
           readOnly: true
         {{- end }}
         - name: data
-          mountPath: {{ .Values.dataMountPath }}
+          mountPath: /usr/share/filebeat/data
         - name: varlibdockercontainers
           mountPath: {{ .Values.varLibContainerPath }}
           readOnly: true
         - name: varlog
-          mountPath: {{ .Values.varLogPath }}
+          mountPath: /var/log
           readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
