@@ -139,6 +139,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `mountConfigWithSubpath`       | If true mount config files from configmap with subpath; disable for Windows, which does not allow subPath mounts                                                             | `true`                             |
 | `configMountPath`              | Path to where config files are mounted when mountConfigWithSubpath is disabled                                                                                               | `/usr/share/filebeat`              |
 | `dataMountPath`                | Path to where data is mounted                                                                                                                                                | `/usr/share/filebeat/data`         |
+| `varLogPath`                   | Path to logs                                                                                                                                                                 | `/var/log`                         |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                     |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                               |
 | `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `8.0.0-SNAPSHOT`                   |
@@ -249,6 +250,7 @@ about our development and testing process.
 [cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
 [default Elasticsearch Helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
 [dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+[arguments]: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples

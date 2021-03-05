@@ -161,6 +161,9 @@ configMountPath: /usr/share/filebeat
 # sets path where to mount data to
 dataMountPath: /usr/share/filebeat/data
 
+# sets path for /var/log
+varLogPath: /var/log
+
 dnsConfig: {}
 # options:
 #   - name: ndots
