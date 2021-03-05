@@ -7,11 +7,8 @@ daemonset:
   affinity: {}
   # Include the daemonset
   enabled: true
-  # pass arguments to the container
-  args:
-  - "-e"
-  - "-E"
-  - "http.enabled=true"
+  # pass extra arguments to the container
+  extraArgs: []
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -78,11 +75,8 @@ deployment:
   affinity: {}
   # Include the deployment
   enabled: false
-  # pass arguments to the container
-  args:
-  - "-e"
-  - "-E"
-  - "http.enabled=true"
+  # pass extra arguments to the container
+  extraArgs: []
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:

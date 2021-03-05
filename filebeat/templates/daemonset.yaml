@@ -134,8 +134,11 @@ spec:
       - name: "filebeat"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-        {{- with .Values.daemonset.args }}
         args:
+        - "-e"
+        - "-E"
+        - "http.enabled=true"
+        {{- with .Values.daemonset.extraArgs }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         livenessProbe:
