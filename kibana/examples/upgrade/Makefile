@@ -7,7 +7,7 @@ RELEASE := helm-kibana-upgrade
 FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
 
 install:
-	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM) --to $(TO)
+	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
 	kubectl rollout status deployment $(RELEASE)-kibana
 
 test: install goss
