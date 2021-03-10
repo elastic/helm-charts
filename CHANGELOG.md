@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.11.2
+
+* 7.11.2 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1081](https://github.com/elastic/helm-charts/pull/1081) | [@jmlrt](https://github.com/jmlrt) | [7.11] [meta] bump helm support to 3.5.2 (#1065)  |
+| [#1078](https://github.com/elastic/helm-charts/pull/1078) | [@jmlrt](https://github.com/jmlrt) | [7.11] [logstash] Add support to use pattern files (#883)  |
+| [#1072](https://github.com/elastic/helm-charts/pull/1072) | [@elasticmachine](https://github.com/elasticmachine) | Bump 7.11 branch to 7.11.2-SNAPSHOT  |
+
+
 ## 7.11.1
 
 * 7.11.1 as default version.
