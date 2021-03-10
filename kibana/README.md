@@ -6,7 +6,6 @@ This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -40,7 +39,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.11.2-SNAPSHOT version.
+This chart is tested with the latest 7.11.2 version.
 
 ### Install released version using Helm repository
 
@@ -58,8 +57,8 @@ This chart is tested with the latest 7.11.2-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.11`
 
 * Install it:
-  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=7.11.2-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=7.11.2-SNAPSHOT`
+  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=7.11.2`
+  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=7.11.2`
 
 
 ## Upgrading
@@ -93,7 +92,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `httpPort`            | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                    | `5601`                             |
 | `imagePullPolicy`     | The Kubernetes [imagePullPolicy][]value                                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`    | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                   | `[]`                               |
-| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `7.11.2-SNAPSHOT`                  |
+| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `7.11.2`                  |
 | `image`               | The Kibana Docker image                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`  |
 | `ingress`             | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                |
 | `kibanaConfig`        | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                               |
