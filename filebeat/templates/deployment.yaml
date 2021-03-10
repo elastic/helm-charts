@@ -112,6 +112,10 @@ spec:
           - "-e"
           - "-E"
           - "http.enabled=true"
+        ports:
+{{- if .Values.deployment.ports }}
+{{ toYaml .Values.deployment.ports | indent 10 }}
+{{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:

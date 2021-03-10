@@ -100,6 +100,8 @@ deployment:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
   nodeSelector: {}
+  # Ports configuration for the filebeat container
+  ports: []
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
   secretMounts: []
@@ -214,6 +216,13 @@ updateStrategy: RollingUpdate
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
+
+service:
+  enabled: false
+  labels: {}
+  annotations: {}
+  type: ClusterIP
+  ports: []
 
 # DEPRECATED
 affinity: {}

@@ -123,6 +123,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.hostAliases`        | Configurable [hostAliases][] for filebeat Deployment                                                                                                                         | `[]`                               |
 | `deployment.filebeatConfig`    | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml` for filebeat Deployment                                                                   | see [values.yaml][]                |
 | `deployment.nodeSelector`      | Configurable [nodeSelector][] for filebeat Deployment                                                                                                                        | `{}`                               |
+| `deployment.ports`             | Ports configuration for the deployment                                                                                                                                       | `[]`                               |
 | `deployment.secretMounts`      | Allows you easily mount a secret as a file inside the Deployment Useful for mounting certificates and other secrets. See [values.yaml][] for an example                      | `[]`                               |
 | `deployment.resources`         | Allows you to set the [resources][] for filebeat Deployment                                                                                                                  | see [values.yaml][]                |
 | `deployment.securityContext`   | Configurable [securityContext][] for filebeat Deployment pod execution environment                                                                                           | see [values.yaml][]                |
@@ -146,6 +147,11 @@ as a reference. They are also used in the automated testing of this chart.
 | `serviceAccountAnnotations`    | Annotations to be added to the ServiceAccount that is created by this chart.                                                                                                 | `{}`                               |
 | `terminationGracePeriod`       | Termination period (in seconds) to wait before killing filebeat pod process on pod shutdown                                                                                  | `30`                               |
 | `updateStrategy`               | The [updateStrategy][] for the DaemonSet By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
+| `service.enabled`              | If true, enable service                                                 | `false`                            |
+| `service.labels`               | Configurable [labels][] applied to the service                          | `{}`                               |
+| `service.annotations`          | Configurable [annotations][] applied to the service                     | `{}`                               |
+| `service.type`                 | The service type configuration for the service                          | `ClusterIP`                        |
+| `service.ports`                | Ports configuration for the service                                     | `[]`                               |
 
 ### Deprecated
 
