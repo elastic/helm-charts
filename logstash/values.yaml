@@ -247,6 +247,7 @@ lifecycle: {}
 service: {}
 #  annotations: {}
 #  type: ClusterIP
+#  loadBalancerIP: ""
 #  ports:
 #    - name: beats
 #      port: 5044
