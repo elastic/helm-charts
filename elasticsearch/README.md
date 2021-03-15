@@ -68,7 +68,7 @@ This chart is tested with the latest 7.12.0-SNAPSHOT version.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Checkout the branch : `git checkout 7.x`
+* Checkout the branch : `git checkout 7.12`
 
 * Install it:
   - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.12.0-SNAPSHOT`
@@ -390,34 +390,34 @@ about our development and testing process.
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-[cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/important-settings.html#cluster-name
-[clustering and node discovery]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#clustering-and-node-discovery
-[config example]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/config/values.yaml
+[cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/important-settings.html#cluster-name
+[clustering and node discovery]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/README.md#clustering-and-node-discovery
+[config example]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/config/values.yaml
 [curator]: https://www.elastic.co/guide/en/elasticsearch/client/curator/7.9/snapshot.html
-[custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docker.html#_c_customized_image
+[custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/docker.html#_c_customized_image
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/discovery-settings.html#minimum_master_nodes
-[docker for mac]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/docker-for-mac
-[elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-health.html#request-params
-[elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docker.html
+[discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/discovery-settings.html#minimum_master_nodes
+[docker for mac]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/docker-for-mac
+[elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/cluster-health.html#request-params
+[elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/docker.html
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/
-[examples/multi]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi
-[examples/security]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/
+[examples/multi]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/multi
+[examples/security]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
-[how to install plugins guide]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#how-to-install-plugins
-[how to use the keystore]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#how-to-use-the-keystore
-[http.port]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-http.html#_settings
+[how to install plugins guide]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/README.md#how-to-install-plugins
+[how to use the keystore]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/README.md#how-to-use-the-keystore
+[http.port]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/modules-http.html#_settings
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[java options]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/jvm-options.html
-[jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/heap-size.html
+[java options]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/jvm-options.html
+[jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/heap-size.html
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
-[kind]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/kubernetes-kind
+[kind]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/kubernetes-kind
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
@@ -425,32 +425,32 @@ about our development and testing process.
 [loadBalancer externalTrafficPolicy]: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
 [loadBalancer]: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-[migration guide]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/migration/README.md
-[minikube]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/minikube
-[microk8s]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/microk8s
-[multi]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi/
-[network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/network.host.html
+[migration guide]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/migration/README.md
+[minikube]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/minikube
+[microk8s]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/microk8s
+[multi]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/multi/
+[network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/network.host.html
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
-[node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/configuring-tls.html#node-certificates
+[node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/configuring-tls.html#node-certificates
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
-[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-node.html
+[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[openshift]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/openshift
+[openshift]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[roles]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-node.html
+[roles]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/modules-node.html
 [secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-[snapshot lifecycle management]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/snapshot-lifecycle-management.html
-[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.x/repository.html
-[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-snapshots.html
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.x/README.md#supported-configurations
-[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/vm-max-map-count.html#vm-max-map-count
+[snapshot lifecycle management]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/snapshot-lifecycle-management.html
+[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.12/repository.html
+[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/modules-snapshots.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.12/README.md#supported-configurations
+[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/vm-max-map-count.html#vm-max-map-count
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[transport port configuration]: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-transport.html#_transport_settings
+[transport port configuration]: https://www.elastic.co/guide/en/elasticsearch/reference/7.12/modules-transport.html#_transport_settings
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage

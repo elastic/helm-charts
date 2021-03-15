@@ -23,7 +23,7 @@ releases:
 You can also run [goss integration tests][] using `make test`
 
 
-[client values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi/client.yaml
-[data values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi/data.yaml
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi/test/goss.yaml
-[master values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/multi/master.yaml
+[client values]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/multi/client.yaml
+[data values]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/multi/data.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/multi/test/goss.yaml
+[master values]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/multi/master.yaml

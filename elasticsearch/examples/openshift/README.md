@@ -19,6 +19,6 @@ using [custom values][].
 You can also run [goss integration tests][] using `make test`
 
 
-[custom values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/openshift/values.yaml
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/openshift/test/goss.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/openshift/values.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/examples/openshift/test/goss.yaml
 [openshift]: https://www.openshift.com/
