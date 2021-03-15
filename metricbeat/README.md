@@ -6,7 +6,7 @@ This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+**Warning**: This branch is used for development, please use the latest [7.12][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -57,7 +57,7 @@ This chart is tested with the latest 7.12.0-SNAPSHOT version.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Checkout the branch : `git checkout 7.x`
+* Checkout the branch : `git checkout 7.12`
 
 * Install it:
   - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=7.12.0-SNAPSHOT`
@@ -223,30 +223,30 @@ to use a different port.
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
+[7.12]: https://github.com/elastic/helm-charts/releases
 [#471]: https://github.com/elastic/helm-charts/pull/471
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#default
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/README.md#default
 [cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/oss
-[examples/security]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/7.12/metricbeat/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/7.12/metricbeat/examples/oss
+[examples/security]: https://github.com/elastic/helm-charts/tree/7.12/metricbeat/examples/security
 [helm]: https://helm.sh
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
-[kube-state-metrics]: https://github.com/helm/charts/tree/7.x/stable/kube-state-metrics
+[kube-state-metrics]: https://github.com/helm/charts/tree/7.12/stable/kube-state-metrics
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/7.x/running-on-docker.html
+[metricbeat docker image]: https://www.elastic.co/guide/en/beats/metricbeat/7.12/running-on-docker.html
 [metricbeat oss docker image]: https://www.docker.elastic.co/r/beats/metricbeat-oss
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
@@ -254,7 +254,7 @@ about our development and testing process.
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.x/README.md#supported-configurations
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.12/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.12/metricbeat/values.yaml
