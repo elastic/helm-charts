@@ -1,3 +1,4 @@
+{{- $esMajorVersion := (int (include "elasticsearch.esMajorVersion" .)) -}}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -296,7 +297,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.name
           {{- if eq .Values.roles.master "true" }}
-          {{- if ge (int (include "elasticsearch.esMajorVersion" .)) 7 }}
+          {{- if ge $esMajorVersion 7 }}
           - name: cluster.initial_master_nodes
             value: "{{ template "elasticsearch.endpoints" . }}"
           {{- else }}
@@ -304,7 +305,7 @@ spec:
             value: "{{ .Values.minimumMasterNodes }}"
           {{- end }}
           {{- end }}
-          {{- if lt (int (include "elasticsearch.esMajorVersion" .)) 7 }}
+          {{- if lt $esMajorVersion 7 }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ template "elasticsearch.masterService" . }}-headless"
           {{- else }}
@@ -318,8 +319,10 @@ spec:
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
           {{- range $role, $enabled := .Values.roles }}
+          {{- if (not (and (eq $role "remote_cluster_client") (lt $esMajorVersion 7))) }}
           - name: node.{{ $role }}
             value: "{{ $enabled }}"
+          {{- end }}
           {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}

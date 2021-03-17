@@ -1009,6 +1009,38 @@ def test_esMajorVersion_always_wins():
     assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
 
 
+def test_esMajorVersion_alters_env():
+    """Ensure that the environment is adjusted depending on the major version of ElasticSearch."""
+    config_6 = """
+    esMajorVersion: 6
+    imageTag: 6.8.0
+    """
+    config_7 = """
+    esMajorVersion: 7
+    imageTag: 8.0.0
+    """
+
+    def env_from_statefulset(statefulset):
+        env = statefulset["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+        return {e['name']: e.get('value') for e in env}
+
+    r_6 = helm_template(config_6)
+    r_7 = helm_template(config_7)
+    env_6 = env_from_statefulset(r_6)
+    env_7 = env_from_statefulset(r_7)
+
+    assert "node.remote_cluster_client" not in env_6
+    assert env_7["node.remote_cluster_client"] == "true"
+
+    assert "cluster.initial_master_nodes" not in env_6
+    assert "cluster.initial_master_nodes" in env_7
+
+    assert "discovery.zen.ping.unicast.hosts" in env_6
+    assert "discovery.zen.ping.unicast.hosts" not in env_7
+
+    assert "discovery.seed_hosts" not in env_6
+    assert "discovery.seed_hosts" in env_7
+
 def test_set_pod_security_context():
     config = ""
     r = helm_template(config)
