@@ -1367,37 +1367,37 @@ networkPolicy:
     explicitNamespacesSelector:
       # Accept from namespaces with all those different rules (from whitelisted Pods)
       matchLabels:
-        role: frontend
+        role: frontend-http
       matchExpressions:
-        - {key: role, operator: In, values: [frontend]}
+        - {key: role, operator: In, values: [frontend-http]}
     additionalRules:
       - podSelector:
           matchLabels:
-            role: frontend
+            role: frontend-http
       - podSelector:
           matchExpressions:
             - key: role
               operator: In
               values:
-                - frontend
+                - frontend-http
   transport:
     enabled: true
     allowExternal: true
     explicitNamespacesSelector:
       matchLabels:
-        role: frontend
+        role: frontend-transport
       matchExpressions:
-        - {key: role, operator: In, values: [frontend]}
+        - {key: role, operator: In, values: [frontend-transport]}
     additionalRules:
       - podSelector:
           matchLabels:
-            role: frontend
+            role: frontend-transport
       - podSelector:
           matchExpressions:
             - key: role
               operator: In
               values:
-                - frontend
+                - frontend-transport
 
 """
     r = helm_template(config)
@@ -1412,16 +1412,16 @@ networkPolicy:
             },
             "namespaceSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                    {"key": "role", "operator": "In", "values": ["frontend-http"]}
                 ],
-                "matchLabels": {"role": "frontend"},
+                "matchLabels": {"role": "frontend-http"},
             },
         },
-        {"podSelector": {"matchLabels": {"role": "frontend"}}},
+        {"podSelector": {"matchLabels": {"role": "frontend-http"}}},
         {
             "podSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                    {"key": "role", "operator": "In", "values": ["frontend-http"]}
                 ]
             }
         },
@@ -1434,16 +1434,16 @@ networkPolicy:
             },
             "namespaceSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                    {"key": "role", "operator": "In", "values": ["frontend-transport"]}
                 ],
-                "matchLabels": {"role": "frontend"},
+                "matchLabels": {"role": "frontend-transport"},
             },
         },
-        {"podSelector": {"matchLabels": {"role": "frontend"}}},
+        {"podSelector": {"matchLabels": {"role": "frontend-transport"}}},
         {
             "podSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend"]}
+                    {"key": "role", "operator": "In", "values": ["frontend-transport"]}
                 ]
             }
         },
