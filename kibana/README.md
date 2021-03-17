@@ -22,7 +22,6 @@ This Helm chart is a lightweight way to configure and run our official
 - [FAQ](#faq)
   - [How to deploy this chart on a specific K8S distribution?](#how-to-deploy-this-chart-on-a-specific-k8s-distribution)
   - [How to use Kibana with security (authentication and TLS) enabled?](#how-to-use-kibana-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of Kibana?](#how-to-install-oss-version-of-kibana)
   - [How to install plugins?](#how-to-install-plugins)
   - [How to import objects post-deployment?](#how-to-import-objects-post-deployment)
 - [Contributing](#contributing)
@@ -141,14 +140,6 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of Kibana?
-
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
-[kibana OSS Docker image][]
-
-An example of Kibana deployment using OSS version can be found in
-[examples/oss][].
-
 ### How to install plugins?
 
 The recommended way to install plugins into our Docker images is to create a
@@ -214,7 +205,6 @@ about our development and testing process.
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/master/kibana/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
@@ -223,7 +213,6 @@ about our development and testing process.
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [kibana docker image]: https://www.elastic.co/guide/en/kibana/current/docker.html
-[kibana oss docker image]: https://www.docker.elastic.co/r/kibana/kibana-oss
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/

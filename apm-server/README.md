@@ -135,7 +135,7 @@ An example can be found in [examples/security][].
 
 ### How to install OSS version of APM Server?
 
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
+Deploying OSS version of APM Server can be done by setting `image` value to
 [APM Server OSS Docker image][]
 
 An example of APM Server deployment using OSS version can be found in

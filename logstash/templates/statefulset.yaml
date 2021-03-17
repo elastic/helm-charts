@@ -55,6 +55,9 @@ spec:
         {{- if .Values.logstashPipeline }}
         pipelinechecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
+        {{- if .Values.logstashPattern }}
+        patternchecksum: {{ include (print .Template.BasePath "/configmap-pattern.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
         {{- if .Values.secrets }}
         secretschecksum: {{ include (print .Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
@@ -127,6 +130,11 @@ spec:
           configMap:
             name: {{ template "logstash.fullname" . }}-pipeline
         {{- end }}
+        {{- if .Values.logstashPattern }}
+        - name: logstashpattern
+          configMap:
+            name: {{ template "logstash.fullname" . }}-pattern
+        {{- end }}
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 8 }}
       {{- end }}
@@ -190,6 +198,14 @@ spec:
           - name: logstashpipeline
             mountPath: /usr/share/logstash/pipeline/{{ $path }}
             subPath: {{ $path }}
+          {{- end -}}
+          {{- if .Values.logstashPattern }}
+          {{- $logstashPatternDir := .Values.logstashPatternDir -}}
+          {{- range $path, $config := .Values.logstashPattern }}
+          - name: logstashpattern
+            mountPath: {{ $logstashPatternDir }}{{ $path }}
+            subPath: {{ $path }} 
+          {{- end -}}
           {{- end -}}
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 10 }}
