@@ -44,7 +44,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.12.0-SNAPSHOT version.
+This chart is tested with the latest 7.13.0-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -62,8 +62,8 @@ This chart is tested with the latest 7.12.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.x`
 
 * Install it:
-  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.12.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.12.0-SNAPSHOT`
+  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.13.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.13.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -120,7 +120,7 @@ useful for the [http input plugin][], for instance.
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.12.0-SNAPSHOT`                     |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.13.0-SNAPSHOT`                     |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `ingress`                 | Configurable [ingress][] for external access to Logstash HTTP port.                                                                                                                                                                  | see [values.yaml][]                   |
