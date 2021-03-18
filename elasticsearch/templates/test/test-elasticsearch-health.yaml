@@ -1,4 +1,5 @@
 ---
+{{- if .Values.tests.enabled -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -24,3 +25,4 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 4 }}
   {{- end }}
   restartPolicy: Never
+{{- end -}}
