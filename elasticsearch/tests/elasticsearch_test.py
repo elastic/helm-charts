@@ -45,7 +45,6 @@ def test_defaults():
         {"name": "discovery.seed_hosts", "value": uname + "-headless"},
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
-        {"name": "ES_JAVA_OPTS", "value": "-Xmx1g -Xms1g"},
         {"name": "node.master", "value": "true"},
         {"name": "node.data", "value": "true"},
         {"name": "node.ingest", "value": "true"},
