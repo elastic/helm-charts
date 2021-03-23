@@ -46,10 +46,3 @@
       - project: elastic+helm-charts+%BRANCH%+cluster-cleanup
         current-parameters: false
         trigger-with-no-params: true
-    - slack:
-        notify-back-to-normal: True
-        notify-every-failure: True
-        room: infra-release-notify
-        team-domain: elastic
-        auth-token-id: release-slack-integration-token
-        auth-token-credential-id: release-slack-integration-token
