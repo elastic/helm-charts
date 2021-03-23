@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.8.15
+
+* 6.8.15 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1092](https://github.com/elastic/helm-charts/pull/1092) | [@jmlrt](https://github.com/jmlrt) | [6.8] [apm-server] Add  option loadBalancerIP to service (#1075)  |
+| [#1080](https://github.com/elastic/helm-charts/pull/1080) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] bump helm support to 3.5.2 (#1065)  |
+| [#952](https://github.com/elastic/helm-charts/pull/952) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] enable filebeat and metricbeat upgrade test  |
+| [#1077](https://github.com/elastic/helm-charts/pull/1077) | [@jmlrt](https://github.com/jmlrt) | [6.8] [logstash] Add support to use pattern files (#883)  |
+| [#1068](https://github.com/elastic/helm-charts/pull/1068) | [@elasticmachine](https://github.com/elasticmachine) | Bump 6.8 branch to 6.8.15-SNAPSHOT  |
+
+
 ## 7.11.2
 
 * 7.11.2 as default version.
