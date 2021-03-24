@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.12.0
+
+* 7.12.0 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1093](https://github.com/elastic/helm-charts/pull/1093) | [@jmlrt](https://github.com/jmlrt) | [7.x] [apm-server] Add  option loadBalancerIP to service (#1075)  |
+
+
 ## 6.8.15
 
 * 6.8.15 as default version.
