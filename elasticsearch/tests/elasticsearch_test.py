@@ -4,6 +4,7 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
 from helpers import helm_template
 import yaml
+import base64
 
 clusterName = "elasticsearch"
 nodeGroup = "master"
@@ -1420,3 +1421,99 @@ networkPolicy:
     ]
     assert transport["ports"][0]["port"] == 9300
     assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
+
+
+def test_auth_enabled_default_username():
+    config = """
+auth:
+  enabled: true
+"""
+
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+    assert {
+            "name": "ELASTIC_USERNAME",
+            "value": "elastic",
+        } in env
+
+
+def test_auth_enabled_supplied_username():
+    config = """
+auth:
+  enabled: true
+  username: someUsername
+"""
+
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+    assert {
+               "name": "ELASTIC_USERNAME",
+               "value": "someUsername",
+           } in env
+
+
+def test_auth_enabled_generated_secret_random_password():
+    config = """
+auth:
+  enabled: true
+"""
+
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+    secret_password = r["secret"][uname]["data"]["elastic-password"]
+    assert {
+               "name": "ELASTIC_PASSWORD",
+               "valueFrom": {
+                   "secretKeyRef": {
+                       "name": uname,
+                       "key": "elastic-password"
+                   }
+               }
+           } in env
+
+    assert len(base64.b64decode(secret_password).decode("utf-8")) == 10
+
+
+def test_auth_enabled_generated_secret_supplied_password():
+    config = """
+auth:
+  enabled: true
+  password: somePassword
+"""
+
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+    secret_password = r["secret"][uname]["data"]["elastic-password"]
+    assert {
+               "name": "ELASTIC_PASSWORD",
+               "valueFrom": {
+                   "secretKeyRef": {
+                       "name": uname,
+                       "key": "elastic-password"
+                   }
+               }
+           } in env
+
+    assert base64.b64decode(secret_password).decode("utf-8") == "somePassword"
+
+
+def test_auth_enabled_existing_secret():
+    config = """
+auth:
+  enabled: true
+  existingSecret:
+    name: someSecret
+    key: someKey
+"""
+
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+    assert {
+               "name": "ELASTIC_PASSWORD",
+               "valueFrom": {
+                   "secretKeyRef": {
+                       "name": "someSecret",
+                       "key": "someKey"
+                   }
+               }
+           } in env

@@ -35,6 +35,15 @@ esConfig: {}
 #  log4j2.properties: |
 #    key = value
 
+# Configure auth and credentials
+auth:
+  enabled: false
+  username: elastic
+  password: ""
+  existingSecret: {}
+#    name: secretName
+#    key: secretKeyForPassword
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here

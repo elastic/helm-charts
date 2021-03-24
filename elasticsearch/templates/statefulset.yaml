@@ -316,6 +316,15 @@ spec:
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
           {{- end }}
+          {{- if .Values.auth.enabled }}
+          - name: ELASTIC_USERNAME
+            value: {{ required "Username cannot be empty!" .Values.auth.username }}
+          - name: ELASTIC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ ternary (include "elasticsearch.uname" .) .Values.auth.existingSecret.name (empty .Values.auth.existingSecret) }}
+                key: {{ ternary "elastic-password" .Values.auth.existingSecret.key (empty .Values.auth.existingSecret) }}
+          {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}

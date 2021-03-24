@@ -110,6 +110,12 @@ support multiple versions with minimal changes.
 |------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
 | `antiAffinityTopologyKey`          | The [anti-affinity][] topology key. By default this will prevent multiple Elasticsearch nodes from running on the same Kubernetes node                                                                                                                                                                            | `kubernetes.io/hostname`                         |
 | `antiAffinity`                     | Setting this to hard enforces the [anti-affinity][] rules. If it is set to soft it will be done "best effort". Other values will be ignored                                                                                                                                                                       | `hard`                                           |
+| `auth.enabled`                     | Enable authentication                                                                                                                                                                                                                                                                                             | `false`                                          |
+| `auth.password`                    | Configure the authentication password                                                                                                                                                                                                                                                                             | `""`                                             |
+| `auth.username`                    | Configure the authentication username                                                                                                                                                                                                                                                                             | `elastic`                                        |
+| `auth.existingSecret`              | Configure the authentication password using an existing secret                                                                                                                                                                                                                                                    | `{}`                                             |
+| `auth.existingSecret.name`         | Set the name of the secret providing the authentication password                                                                                                                                                                                                                                                  | `""`                                             |
+| `auth.existingSecret.key`          | Set the key of the secret providing the authentication password                                                                                                                                                                                                                                                   | `""`                                             |
 | `clusterHealthCheckParams`         | The [Elasticsearch cluster health status params][] that will be used by readiness [probe][] command                                                                                                                                                                                                               | `wait_for_status=green&timeout=1s`               |
 | `clusterName`                      | This will be used as the Elasticsearch [cluster.name][] and should be unique per cluster in the namespace                                                                                                                                                                                                         | `elasticsearch`                                  |
 | `enableServiceLinks`               | Set to false to disabling service links, which can cause slow pod startup times when there are many services in the current namespace.                                                                                                                                                                            | `true`                                           |
@@ -260,12 +266,19 @@ sufficient.
 
 ### How to deploy clusters with security (authentication and TLS) enabled?
 
-This Helm chart can use existing [Kubernetes secrets][] to setup
-credentials or certificates for examples. These secrets should be created
-outside of this chart and accessed using [environment variables][] and volumes.
-
 An example of Elasticsearch cluster using security can be found in
 [examples/security][].
+
+#### Authentication
+
+Enable authentication for the cluster using the `auth.enabled` value.
+See the [Configuration](#configuration) section for more details on how to configure authentication.
+
+#### TLS
+
+This Helm chart can use existing [Kubernetes secrets][] to setup
+certificates for examples. These secrets should be created
+outside of this chart and accessed using volumes.
 
 ### How to migrate from helm/charts stable chart?
 
