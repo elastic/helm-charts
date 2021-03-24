@@ -15,7 +15,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.12.0-SNAPSHOT"'
+      - '"number" : "7.12.0"'
       - '"cluster_name" : "elasticsearch"'
       - "You Know, for Search"
 
