@@ -7,22 +7,7 @@
 
 | PR | Author | Title |
 | --- | --- | --- |
-|  | Conky5 | Remove slack notification |
-| [#1102](https://github.com/elastic/helm-charts/pull/1102) | [@jmlrt](https://github.com/jmlrt) | [meta] Initiate 7.12 branch  |
-| [#1094](https://github.com/elastic/helm-charts/pull/1094) | [@jmlrt](https://github.com/jmlrt) | [meta] bump 7.x branch to 7.12.0-SNAPSHOT  |
 | [#1093](https://github.com/elastic/helm-charts/pull/1093) | [@jmlrt](https://github.com/jmlrt) | [7.x] [apm-server] Add  option loadBalancerIP to service (#1075)  |
-| [#1082](https://github.com/elastic/helm-charts/pull/1082) | [@jmlrt](https://github.com/jmlrt) | [7.x] [meta] bump helm support to 3.5.2 (#1065)  |
-| [#1079](https://github.com/elastic/helm-charts/pull/1079) | [@jmlrt](https://github.com/jmlrt) | [7.x] [logstash] Add support to use pattern files (#883)  |
-| [#1052](https://github.com/elastic/helm-charts/pull/1052) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch][kibana] remove oss examples (#1046)  |
-| [#1040](https://github.com/elastic/helm-charts/pull/1040) | [@daniel-hutao](https://github.com/daniel-hutao) | fix: security.yaml is 404  |
-| [#1039](https://github.com/elastic/helm-charts/pull/1039) | [@yousafsyed](https://github.com/yousafsyed) | [metricbeat] Fixing the respository of kube-state-metrics for metricbeats  |
-| [#809](https://github.com/elastic/helm-charts/pull/809) | [@clemcvlcs](https://github.com/clemcvlcs) | [filebeat] variable maxUnavailable updateStrategy  |
-| [#1033](https://github.com/elastic/helm-charts/pull/1033) | [@jmlrt](https://github.com/jmlrt) | [meta] add build status and artifact hub badges  |
-| [#1028](https://github.com/elastic/helm-charts/pull/1028) | [@artificial-aidan](https://github.com/artificial-aidan) | Fix post-lifecycle hook example  |
-| [#1025](https://github.com/elastic/helm-charts/pull/1025) | [@jmlrt](https://github.com/jmlrt) | [meta] bump helm version to 3.5.0  |
-| [#1018](https://github.com/elastic/helm-charts/pull/1018) | [@jmlrt](https://github.com/jmlrt) | [meta] fix transient errors with stable repository  |
-|  | Julien Mailleret | [filebeat] fix documentation |
-| [#1017](https://github.com/elastic/helm-charts/pull/1017) | [@jmlrt](https://github.com/jmlrt) | NIT Update backport config and small doc fixes  |
 
 
 ## 6.8.15
