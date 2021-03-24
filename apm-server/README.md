@@ -11,7 +11,6 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [6.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -20,7 +19,7 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
+  - [Install development version using 6.8 branch and 6.8.15 versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -44,7 +43,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.15-SNAPSHOT version.
+This chart is tested with the latest 6.8.15 version.
 
 ### Install released version using Helm repository
 
@@ -55,15 +54,15 @@ This chart is tested with the latest 6.8.15-SNAPSHOT version.
   - with Helm 3: `helm install apm-server --version <version> elastic/apm-server`
   - with Helm 2 (deprecated): `helm install --name apm-server --version <version> elastic/apm-server`
 
-### Install development version using 6.8 branch and 6.8.15-SNAPSHOT versions
+### Install development version using 6.8 branch and 6.8.15 versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=6.8.15-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=6.8.15-SNAPSHOT`
+  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=6.8.15`
+  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=6.8.15`
 
 
 ## Upgrading
@@ -102,7 +101,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `6.8.15-SNAPSHOT`                  |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `6.8.15`                  |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -151,7 +150,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [6.x]: https://github.com/elastic/helm-charts/releases
-[6.8.15-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.15-SNAPSHOT/apm-server/README.md
+[6.8.15]: https://github.com/elastic/helm-charts/blob/6.8.15/apm-server/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
