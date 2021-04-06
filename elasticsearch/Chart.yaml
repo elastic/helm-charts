@@ -5,7 +5,7 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: elasticsearch
-version: 6.8.15
+version: 6.8.16
 appVersion: 6.8.15
 sources:
   - https://github.com/elastic/elasticsearch

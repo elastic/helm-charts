@@ -875,6 +875,22 @@ def test_adding_an_externalTrafficPolicy():
 
     assert r["service"][uname]["spec"]["externalTrafficPolicy"] == "Local"
 
+def test_adding_an_sessionAffinity():
+    config = ""
+
+    r = helm_template(config)
+
+    assert "sessionAffinity" not in r["service"][uname]["spec"]
+
+    config = """
+    service:
+      sessionAffinity: ClientIP
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["sessionAffinity"] == "ClientIP"
+
 
 def test_adding_a_label_on_non_headless_service():
     config = ""
