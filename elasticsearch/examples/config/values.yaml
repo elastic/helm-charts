@@ -30,3 +30,6 @@ keystore:
     items:
     - key: slack_url
       path: xpack.notification.slack.account.otheraccount.secure_url
+
+plugins:
+ - repository-gcs
