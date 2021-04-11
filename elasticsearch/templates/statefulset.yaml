@@ -138,6 +138,10 @@ spec:
           secret: {{ toYaml . | nindent 12 }}
         {{- end }}
 {{ end }}
+{{- if .Values.plugins }}
+        - name: plugins
+          emptyDir: {}
+{{ end }}
       {{- if .Values.extraVolumes }}
       # Currently some extra blocks accept strings
       # to continue with backwards compatibility this is being kept
@@ -169,6 +173,27 @@ spec:
         resources:
 {{ toYaml .Values.initResources | indent 10 }}
       {{- end }}
+{{ if .Values.plugins }}
+      - name: plugins
+        command:
+        - sh
+        - -c
+        - |
+          #!/usr/bin/env bash
+          set -eou pipefail
+
+          echo "installing plugins: {{ range .Values.plugins }}{{ . }} {{ end }}"
+          elasticsearch-plugin install --batch {{ range .Values.plugins }}{{ . }} {{ end }}
+          echo "Done.  Installed plugins"
+          elasticsearch-plugin list
+          cp -ar /usr/share/elasticsearch/plugins /tmp
+        resources: {{ toYaml .Values.initResources | nindent 10 }}
+        volumeMount:
+        - name: plugins
+          mountPath: /tmp/plugins
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+{{- end }}
 {{ if .Values.keystore }}
       - name: keystore
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -339,6 +364,10 @@ spec:
           - name: keystore
             mountPath: /usr/share/elasticsearch/config/elasticsearch.keystore
             subPath: elasticsearch.keystore
+{{ end }}
+{{- if .Values.plugins }}
+          - name: plugins
+            mountPath: /usr/share/elasticsearch/plugins
 {{ end }}
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
