@@ -277,6 +277,14 @@ another host at random times.
 2. Mutating the state of a running Docker image (by installing plugins) goes
 against best practices of containers and immutable infrastructure.
 
+However, if you cannot use a custom image, you can add plugins to your values file like this
+
+```
+plugins:
+  - repository-gcs
+  - mapper-murmur3
+```
+
 ### How to use the keystore?
 
 #### Basic example
