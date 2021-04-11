@@ -515,6 +515,62 @@ imagePullSecrets:
     )
 
 
+def test_adding_plugin():
+    config = """
+plugins:
+  - my-cool-plugin
+"""
+
+    r = helm_template(config)
+    initContainers = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    assert initContainers[1]["name"] == "plugins"
+
+
+def test_plugin_init_container():
+    config = """
+plugins:
+  - my-cool-plugin
+  - another-cool-plugin
+"""
+
+    r = helm_template(config)
+    initContainers = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    plugin_container = initContainers[1]
+    install_command = (
+        "elasticsearch-plugin install --batch my-cool-plugin another-cool-plugin"
+    )
+
+    assert plugin_container["name"] == "plugins"
+    assert install_command in plugin_container["command"][-1]
+    assert plugin_container["volumeMount"] == [{
+        "name": "plugins",
+        "mountPath": "/tmp/plugins",
+    }]
+
+
+def test_plugins_volume_created_and_mounted():
+    config = """
+plugins:
+  - my-cool-plugin
+"""
+    r = helm_template(config)
+    volumes = r["statefulset"][uname]["spec"]["template"]["spec"]["volumes"]
+    elastic_container = r["statefulset"][uname]["spec"]["template"]["spec"][
+        "containers"
+    ][0]
+    volumeMounts = elastic_container["volumeMounts"]
+
+    assert {"name": "plugins", "emptyDir": {}} in volumes
+    assert {
+        "name": "plugins",
+        "mountPath": "/usr/share/elasticsearch/plugins",
+    } in volumeMounts
+
+
 def test_adding_tolerations():
     config = """
 tolerations:
@@ -1449,4 +1505,8 @@ networkPolicy:
         {"podSelector": {"matchLabels": {"app": "elasticsearch-master"}}},
     ]
     assert transport["ports"][0]["port"] == 9300
-    assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
+    assert pod_selector == {
+        "matchLabels": {
+            "app": "elasticsearch-master",
+        }
+    }
