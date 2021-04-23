@@ -4,7 +4,7 @@ black==19.10b0
 importlib-metadata==0.23
 more-itertools==7.2.0
 pluggy==0.13.0
-py==1.8.0
+py==1.10.0
 pytest==4.1.0
 PyYAML==5.4
 six==1.12.0
