@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy Filebeat 7.12.1 using [Filebeat OSS][] version.
+This example deploy Filebeat 7.12.2-SNAPSHOT using [Filebeat OSS][] version.
 
 
 ## Usage
