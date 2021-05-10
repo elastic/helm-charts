@@ -5,6 +5,8 @@ daemonset:
   # additionals labels
   labels: {}
   affinity: {}
+  # Whether to share the process namespace with other injected sidecar containers or not
+  shareProcessNamespace: false
   # Include the daemonset
   enabled: true
   # Extra environment variables for Filebeat container.

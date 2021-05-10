@@ -1370,3 +1370,12 @@ deployment:
     assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_sharing_process_namespace():
+    config = """
+daemonset:
+  shareProcessNamespace: true
+"""
+    r = helm_template(config)
+    assert r["daemonset"][name]["spec"]["template"]["spec"]["shareProcessNamespace"] is True
