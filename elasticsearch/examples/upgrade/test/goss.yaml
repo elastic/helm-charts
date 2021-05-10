@@ -11,6 +11,6 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "7.12.1"'
+      - '"number" : "7.12.2-SNAPSHOT"'
       - '"cluster_name" : "upgrade"'
       - "You Know, for Search"

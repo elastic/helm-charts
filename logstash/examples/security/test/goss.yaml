@@ -21,7 +21,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"version" : "7.12.1"'
+      - '"version" : "7.12.2"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"status" : "green"'
       - '"workers" : 1'
