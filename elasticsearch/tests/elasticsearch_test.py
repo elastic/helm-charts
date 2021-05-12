@@ -640,26 +640,6 @@ initResources:
     }
 
 
-def test_adding_resources_to_sidecar_container():
-    config = """
-masterTerminationFix: true
-sidecarResources:
-  limits:
-    cpu: "100m"
-    memory: "128Mi"
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
-"""
-    r = helm_template(config)
-    i = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][1]
-
-    assert i["resources"] == {
-        "requests": {"cpu": "100m", "memory": "128Mi"},
-        "limits": {"cpu": "100m", "memory": "128Mi"},
-    }
-
-
 def test_adding_a_node_affinity():
     config = """
 nodeAffinity:
@@ -983,23 +963,6 @@ service:
     ranges = r["service"][uname]["spec"]["loadBalancerSourceRanges"]
     assert ranges[0] == "192.168.0.0/24"
     assert ranges[1] == "192.168.1.0/24"
-
-
-def test_master_termination_fixed_enabled():
-    config = ""
-
-    r = helm_template(config)
-
-    assert len(r["statefulset"][uname]["spec"]["template"]["spec"]["containers"]) == 1
-
-    config = """
-    masterTerminationFix: true
-    """
-
-    r = helm_template(config)
-
-    c = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][1]
-    assert c["name"] == "elasticsearch-master-graceful-termination-handler"
 
 
 def test_lifecycle_hooks():
