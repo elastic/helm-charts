@@ -45,7 +45,10 @@ def test_defaults():
         {"name": "discovery.seed_hosts", "value": uname + "-headless"},
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
-        {"name": "node.roles", "value": "master,ingest,data,remote_cluster_client,ml,"},
+        {
+            "name": "node.roles",
+            "value": "master,data,data_content,data_hot,data_warm,data_cold,data_frozen,ingest,ml,remote_cluster_client,transform,",
+        },
     ]
 
     c = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]
