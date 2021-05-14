@@ -213,8 +213,27 @@ while they share the same `clusterName` value.
 
 For each Helm release, the nodes types can then be defined using `roles` value.
 
-An example of Elasticsearch cluster using 2 different Helm releases for master
-and data nodes can be found in [examples/multi][].
+An example of Elasticsearch cluster using 2 different Helm releases for master,
+data and coordinating nodes can be found in [examples/multi][].
+
+#### Coordinating nodes
+
+Every node is implicitly a coordinating node. This means that a node that has an
+explicit empty list of roles will only act as a coordinating node.
+
+When deploying coordinating-only node with Elasticsearch chart, it is required
+to define the empty list of roles in both `roles` value and `node.roles`
+settings:
+
+```yaml
+roles: []
+
+esConfig:
+  elasticsearch.yml: |
+    node.roles: []
+```
+
+More details in [#1186 (comment)][]
 
 #### Clustering and Node Discovery
 
@@ -381,6 +400,7 @@ about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
 [#63]: https://github.com/elastic/helm-charts/issues/63
+[#1186 (comment)]: https://github.com/elastic/helm-charts/pull/1186#discussion_r631166442
 [7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
