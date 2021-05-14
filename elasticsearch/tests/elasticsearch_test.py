@@ -47,7 +47,7 @@ def test_defaults():
         {"name": "cluster.name", "value": clusterName},
         {
             "name": "node.roles",
-            "value": "master,data,data_content,data_hot,data_warm,data_cold,data_frozen,ingest,ml,remote_cluster_client,transform,",
+            "value": "master,data,data_content,data_hot,data_warm,data_cold,ingest,ml,remote_cluster_client,transform,",
         },
     ]
 
