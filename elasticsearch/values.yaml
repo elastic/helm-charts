@@ -16,7 +16,6 @@ roles:
   - data_hot
   - data_warm
   - data_cold
-  - data_frozen
   - ingest
   - ml
   - remote_cluster_client
