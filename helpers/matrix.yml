@@ -40,6 +40,5 @@ APM_SERVER_SUITE:
   - security
   - upgrade
 KUBERNETES_VERSION:
-  - "1.16"
   - "1.17"
   - "1.18"
