@@ -2,7 +2,7 @@ port:
   tcp:5066:
     listening: true
     ip:
-    - '127.0.0.1'
+      - "127.0.0.1"
 
 mount:
   /usr/share/metricbeat/data:
@@ -25,24 +25,24 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-7.13.0'
-  'http://elasticsearch-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat':
-    status: 200
+      - "metricbeat-7.14.0"
+  ? "http://elasticsearch-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat"
+  : status: 200
     timeout: 2000
     body:
-      - 'metricbeat-7.13.0'
+      - "metricbeat-7.14.0"
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
     exists: true
     contains:
-      - 'add_kubernetes_metadata'
-      - 'output.elasticsearch'
-      - 'elasticsearch-master:9200'
+      - "add_kubernetes_metadata"
+      - "output.elasticsearch"
+      - "elasticsearch-master:9200"
 
 command:
   cd /usr/share/metricbeat && metricbeat test output:
     exit-status: 0
     stdout:
-      - 'elasticsearch: http://elasticsearch-master:9200'
-      - 'version: 7.13.0'
+      - "elasticsearch: http://elasticsearch-master:9200"
+      - "version: 7.14.0"

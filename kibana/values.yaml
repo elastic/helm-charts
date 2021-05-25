@@ -35,13 +35,14 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "7.13.0-SNAPSHOT"
+imageTag: "7.14.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
 labels: {}
 
-podAnnotations: {}
+podAnnotations:
+  {}
   # iam.amazonaws.com/role: es-cluster
 
 resources:
@@ -73,7 +74,7 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   # readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -105,19 +106,22 @@ service:
   port: 5601
   nodePort: ""
   labels: {}
-  annotations: {}
+  annotations:
+    {}
     # cloud.google.com/load-balancer-type: "Internal"
     # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
     # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
     # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
-  loadBalancerSourceRanges: []
+  loadBalancerSourceRanges:
+    []
     # 0.0.0.0/0
   httpPortName: http
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -144,7 +148,8 @@ affinity: {}
 nameOverride: ""
 fullnameOverride: ""
 
-lifecycle: {}
+lifecycle:
+  {}
   # preStop:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
