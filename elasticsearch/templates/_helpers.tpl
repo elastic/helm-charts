@@ -51,6 +51,12 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- end -}}
 {{- end -}}
 
+{{- define "elasticsearch.roles" -}}
+{{- range $.Values.roles -}}
+{{ . }},
+{{- end -}}
+{{- end -}}
+
 {{- define "elasticsearch.esMajorVersion" -}}
 {{- if .Values.esMajorVersion -}}
 {{ .Values.esMajorVersion }}
