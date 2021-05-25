@@ -1,5 +1,24 @@
 # Changelog
 
+## 6.8.16
+
+* 6.8.16 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1192](https://github.com/elastic/helm-charts/pull/1192) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.16 tests (#1184)  |
+| [#1176](https://github.com/elastic/helm-charts/pull/1176) | [@nittyy](https://github.com/nittyy) | [6.8][logstash] Add option loadBalancerIP to service (#1099)  |
+| [#1172](https://github.com/elastic/helm-charts/pull/1172) | [@jmlrt](https://github.com/jmlrt) | [6.8] Bump py from 1.8.0 to 1.10.0 (#1155)  |
+| [#1169](https://github.com/elastic/helm-charts/pull/1169) | [@jmlrt](https://github.com/jmlrt) | [6.8] Bump py from 1.8.0 to 1.10.0 in /helpers/helm-tester (#1154)  |
+| [#1160](https://github.com/elastic/helm-charts/pull/1160) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add helm 3.5.3 support (#1128)  |
+| [#1166](https://github.com/elastic/helm-charts/pull/1166) | [@jmlrt](https://github.com/jmlrt) | [6.8] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
+| [#1163](https://github.com/elastic/helm-charts/pull/1163) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] update backport config for 7.12 branch (#1112)  |
+| [#1157](https://github.com/elastic/helm-charts/pull/1157) | [@jmlrt](https://github.com/jmlrt) | [6.8] [elasticsearch] heap size is no longer defaulted to 1g (#1135)  |
+| [#1145](https://github.com/elastic/helm-charts/pull/1145) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] update PyYAML dependencies (#1140)  |
+| [#1142](https://github.com/elastic/helm-charts/pull/1142) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add tests for k8s 1.18 and remove 1.15 (#1141)  |
+
+
 ## 7.12.1
 
 * 7.12.1 as default version.
