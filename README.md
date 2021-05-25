@@ -1,6 +1,6 @@
 # Elastic Stack Kubernetes Helm Charts
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.x.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+7.13.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+7.13/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -90,14 +90,14 @@ Kubernetes. There is a dedicated Helm chart for ECK which can be found
 [in ECK repo][eck-chart] ([documentation][eck-chart-doc]).
 
 
-[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.x/
+[currently tested]: https://devops-ci.elastic.co/job/elastic+helm-charts+7.13/
 [eck-chart]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
 [eck-chart-doc]: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-install-helm.html
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [elastic helm repo]: https://helm.elastic.co
 [github releases]: https://github.com/elastic/helm-charts/releases
-[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.x/helpers/helm-tester/Dockerfile
-[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.x/helpers/matrix.yml
+[helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/7.13/helpers/helm-tester/Dockerfile
+[helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/7.13/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 
