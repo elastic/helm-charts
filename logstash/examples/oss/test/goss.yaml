@@ -9,7 +9,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"version" : "7.13.0"'
+      - '"version" : "7.14.0"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"status" : "green"'
       - '"workers" : 1'
@@ -32,9 +32,9 @@ file:
     group: root
     filetype: file
     contains:
-      - 'input {'
-      - 'beats {'
-      - 'port => 5044'
-      - 'output {'
-      - 'stdout {'
-      - 'codec => rubydebug'
+      - "input {"
+      - "beats {"
+      - "port => 5044"
+      - "output {"
+      - "stdout {"
+      - "codec => rubydebug"

@@ -2,7 +2,7 @@ port:
   tcp:5066:
     listening: true
     ip:
-    - '127.0.0.1'
+      - "127.0.0.1"
 
 mount:
   /usr/share/filebeat/data:
@@ -19,4 +19,4 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "filebeat-oss-7.13.0"
+      - "filebeat-oss-7.14.0"
