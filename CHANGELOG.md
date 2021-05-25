@@ -1,5 +1,28 @@
 # Changelog
 
+## 7.13.0
+
+* 7.13.0 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1205](https://github.com/elastic/helm-charts/pull/1205) | [@jmlrt](https://github.com/jmlrt) | [meta] update backport config for 7.13 branch (#1198)  |
+| [#1197](https://github.com/elastic/helm-charts/pull/1197) | [@jmlrt](https://github.com/jmlrt) |  [meta] Initiate 7.13 branch  |
+| [#1194](https://github.com/elastic/helm-charts/pull/1194) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.16 tests (#1184)  |
+| [#1175](https://github.com/elastic/helm-charts/pull/1175) | [@nittyy](https://github.com/nittyy) | [7.x][logstash] Add option loadBalancerIP to service (#1099)  |
+| [#1174](https://github.com/elastic/helm-charts/pull/1174) | [@jmlrt](https://github.com/jmlrt) | [7.x] Bump py from 1.8.0 to 1.10.0 (#1155)  |
+| [#1171](https://github.com/elastic/helm-charts/pull/1171) | [@jmlrt](https://github.com/jmlrt) | [7.x] Bump py from 1.8.0 to 1.10.0 in /helpers/helm-tester (#1154)  |
+| [#1162](https://github.com/elastic/helm-charts/pull/1162) | [@jmlrt](https://github.com/jmlrt) | [7.x] [meta] add helm 3.5.3 support (#1128)  |
+| [#1168](https://github.com/elastic/helm-charts/pull/1168) | [@jmlrt](https://github.com/jmlrt) | [7.x] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
+| [#1165](https://github.com/elastic/helm-charts/pull/1165) | [@jmlrt](https://github.com/jmlrt) | [7.x] [meta] update backport config for 7.12 branch (#1112)  |
+| [#1159](https://github.com/elastic/helm-charts/pull/1159) | [@jmlrt](https://github.com/jmlrt) | [7.x] [elasticsearch] heap size is no longer defaulted to 1g (#1135)  |
+| [#1147](https://github.com/elastic/helm-charts/pull/1147) | [@jmlrt](https://github.com/jmlrt) | [7.x] [meta] update PyYAML dependencies (#1140)  |
+| [#1144](https://github.com/elastic/helm-charts/pull/1144) | [@jmlrt](https://github.com/jmlrt) | [7.x] [meta] add tests for k8s 1.18 and remove 1.15 (#1141)  |
+|  | Conky5 | Remove slack notification |
+| [#1114](https://github.com/elastic/helm-charts/pull/1114) | [@jmlrt](https://github.com/jmlrt) | [meta] bump 7.x branch to 7.13.0-SNAPSHOT  |
+
+
 ## 7.12.1
 
 * 7.12.1 as default version.
