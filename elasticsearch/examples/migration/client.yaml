@@ -1,5 +1,4 @@
 ---
-
 replicas: 2
 
 clusterName: "elasticsearch"
@@ -7,13 +6,10 @@ nodeGroup: "client"
 
 esMajorVersion: 6
 
-roles:
-  master: "false"
-  ingest: "false"
-  data: "false"
+roles: []
 
 volumeClaimTemplate:
-  accessModes: [ "ReadWriteOnce" ]
+  accessModes: ["ReadWriteOnce"]
   storageClassName: "standard"
   resources:
     requests:
