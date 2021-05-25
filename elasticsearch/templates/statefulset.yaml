@@ -295,15 +295,12 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          {{- if eq .Values.roles.master "true" }}
-          {{- if ge (int (include "elasticsearch.esMajorVersion" .)) 7 }}
+          {{- if has "master" .Values.roles }}
           - name: cluster.initial_master_nodes
             value: "{{ template "elasticsearch.endpoints" . }}"
-          {{- else }}
-          - name: discovery.zen.minimum_master_nodes
-            value: "{{ .Values.minimumMasterNodes }}"
           {{- end }}
-          {{- end }}
+          - name: node.roles
+            value: "{{ template "elasticsearch.roles" . }}"
           {{- if lt (int (include "elasticsearch.esMajorVersion" .)) 7 }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ template "elasticsearch.masterService" . }}-headless"
@@ -318,10 +315,6 @@ spec:
           {{- if .Values.esJavaOpts  }}
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
-          {{- end }}
-          {{- range $role, $enabled := .Values.roles }}
-          - name: node.{{ $role }}
-            value: "{{ $enabled }}"
           {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
