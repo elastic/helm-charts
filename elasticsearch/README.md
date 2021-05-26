@@ -6,7 +6,6 @@ This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.13][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -53,7 +52,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.13.0-SNAPSHOT version.
+This chart is tested with the latest 7.13.0 version.
 
 ### Install released version using Helm repository
 
@@ -71,8 +70,8 @@ This chart is tested with the latest 7.13.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.13`
 
 * Install it:
-  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.13.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.13.0-SNAPSHOT`
+  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.13.0`
+  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.13.0`
 
 
 ## Upgrading
@@ -129,7 +128,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                                                                            | `9200`                                           |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                                                                          | `IfNotPresent`                                   |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                                                                                      | `[]`                                             |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                                                                                | `7.13.0-SNAPSHOT`                                |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                                                                                | `7.13.0`                                |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                                                                                    | `docker.elastic.co/elasticsearch/elasticsearch`  |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                                                                                  | see [values.yaml][]                              |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                                                                                    | `{}`                                             |
