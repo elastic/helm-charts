@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.13.0
+
+* 7.13.0 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1205](https://github.com/elastic/helm-charts/pull/1205) | [@jmlrt](https://github.com/jmlrt) | [meta] update backport config for 7.13 branch (#1198)  |
+| [#1197](https://github.com/elastic/helm-charts/pull/1197) | [@jmlrt](https://github.com/jmlrt) | [meta] Initiate 7.13 branch  |
+| [#1194](https://github.com/elastic/helm-charts/pull/1194) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.16 tests (#1184)  |
+| [#1175](https://github.com/elastic/helm-charts/pull/1175) | [@nittyy](https://github.com/nittyy) | [7.x][logstash] Add option loadBalancerIP to service (#1099)  |
+
+
 ## 6.8.16
 
 * 6.8.16 as default version.
