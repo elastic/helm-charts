@@ -19,4 +19,4 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "filebeat-oss-7.13.0"
+      - "filebeat-oss-7.13.1"
