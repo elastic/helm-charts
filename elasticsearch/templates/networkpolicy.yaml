@@ -28,7 +28,7 @@ spec:
           namespaceSelector:
 {{ toYaml . | indent 12 }}
 {{- end }}
-{{- with .Values.networkPolicy.transport.additionalRules }}
+{{- with .Values.networkPolicy.http.additionalRules }}
             # Or from custom additional rules
 {{ toYaml . | indent 8 }}
 {{- end }}
