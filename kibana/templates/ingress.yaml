@@ -2,7 +2,7 @@
 {{- $fullName := include "kibana.fullname" . -}}
 {{- $httpPort := .Values.httpPort -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
