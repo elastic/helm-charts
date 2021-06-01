@@ -148,6 +148,8 @@ as a reference. They are also used in the automated testing of this chart.
 | `serviceAccountAnnotations`    | Annotations to be added to the ServiceAccount that is created by this chart.                                                                                                 | `{}`                               |
 | `terminationGracePeriod`       | Termination period (in seconds) to wait before killing filebeat pod process on pod shutdown                                                                                  | `30`                               |
 | `updateStrategy`               | The [updateStrategy][] for the DaemonSet By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
+| `service`                 | Configurable [service][] to expose the Filebeat service. 
+| `extraPorts`              | An array of extra ports to open on the pod
 
 ### Deprecated
 

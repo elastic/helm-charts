@@ -1370,3 +1370,58 @@ deployment:
     assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_adding_a_extra_port_daemonset():
+    config = """
+extraPorts:
+  - name: foo
+    containerPort: 30000
+"""
+    r = helm_template(config)
+    extraPorts = r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "ports"
+    ]
+    assert {"name": "foo", "containerPort": 30000,} in extraPorts
+
+def test_adding_a_extra_port_deployment():
+    config = """
+daemonset:
+  enabled: false
+deployment:
+  enabled: true
+extraPorts:
+  - name: foo
+    containerPort: 30000
+"""
+    r = helm_template(config)
+    extraPorts = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "ports"
+    ]
+    assert {"name": "foo", "containerPort": 30000,} in extraPorts
+
+def test_adding_a_service():
+    config = """
+service:
+  annotations: {}
+  type: ClusterIP
+  ports:
+    - name: syslog
+      port: 5141
+      protocol: TCP
+      targetPort: 5141
+"""
+    r = helm_template(config)
+    s = r["service"][name]
+    assert s["metadata"]["name"] == name
+    assert s["metadata"]["annotations"] == {}
+    assert s["spec"]["type"] == "ClusterIP"
+    assert len(s["spec"]["ports"]) == 1
+    assert s["spec"]["ports"][0] == {
+        "name": "syslog",
+        "port": 5141,
+        "protocol": "TCP",
+        "targetPort": 5141,
+    }
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in s["spec"]

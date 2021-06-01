@@ -218,6 +218,23 @@ updateStrategy: RollingUpdate
 nameOverride: ""
 fullnameOverride: ""
 
+
+# Custom ports to add to filebeat
+extraPorts:
+  []
+  # - name: syslog
+  #   containerPort: 5141
+
+service: {}
+#  annotations: {}
+#  type: ClusterIP
+#  loadBalancerIP: ""
+#  ports:
+#    - name: syslog
+#      port: 5141
+#      protocol: TCP
+#      targetPort: 5141
+
 # DEPRECATED
 affinity: {}
 envFrom: []

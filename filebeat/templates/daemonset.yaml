@@ -138,6 +138,10 @@ spec:
         - "-e"
         - "-E"
         - "http.enabled=true"
+      {{- if .Values.extraPorts }}
+        ports:
+        {{- toYaml .Values.extraPorts | nindent 8 }}
+      {{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
