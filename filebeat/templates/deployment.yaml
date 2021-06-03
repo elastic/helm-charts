@@ -27,6 +27,8 @@ metadata:
   {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
+  strategy:
+{{ toYaml .Values.deployment.updateStrategy | indent 4 }}
   selector:
     matchLabels:
       app: "{{ template "filebeat.fullname" . }}"

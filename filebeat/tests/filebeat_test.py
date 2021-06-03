@@ -140,6 +140,8 @@ deployment:
         == False
     )
 
+    assert r["deployment"][name]["spec"]["strategy"]["type"] == "Recreate"
+
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["deployment"][name]["spec"]["template"]["spec"]
 
@@ -431,6 +433,24 @@ def test_override_the_default_update_strategy():
     r = helm_template(config)
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "OnDelete"
 
+def test_override_the_default_update_strategy_deployment():
+    config = """
+    deployment:
+      enabled: true
+      updateStrategy:
+        type: "RollingUpdate"
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
+"""
+
+    r = helm_template(config)
+    assert r["deployment"][name]["spec"]["strategy"]["type"] == "RollingUpdate"
+    assert (
+        r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxUnavailable"]
+        == 1
+    )
+    assert r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxSurge"] == 1
 
 def test_setting_a_custom_service_account():
     config = """
