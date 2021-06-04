@@ -67,6 +67,13 @@ spec:
       hostAliases: {{ toYaml .Values.deployment.hostAliases | nindent 8 }}
       {{- end }}
       volumes:
+      - name: filebeat-data
+      {{- if .Values.deployment.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "filebeat.fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
       {{- range .Values.secretMounts | default .Values.deployment.secretMounts }}
       - name: {{ .name }}
         secret:
@@ -128,6 +135,8 @@ spec:
         envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 10 }}
         securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}
         volumeMounts:
+        - name: filebeat-data
+          mountPath: /usr/share/filebeat/data
         {{- range .Values.secretMounts | default .Values.deployment.secretMounts }}
         - name: {{ .name }}
           mountPath: {{ .path }}

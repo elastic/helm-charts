@@ -123,6 +123,14 @@ deployment:
       cpu: "1000m"
       memory: "200Mi"
   tolerations: []
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 1Gi
+  persistence:
+    enabled: false
+    annotations: {}
 
 # Replicas being used for the filebeat deployment
 replicas: 1

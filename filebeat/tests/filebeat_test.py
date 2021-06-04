@@ -177,6 +177,15 @@ deployment:
         "limits": {"cpu": "1000m", "memory": "200Mi"},
     }
 
+    # Persistence
+    assert "pvc-deployment" not in r
+    assert {
+        "name": project + "-data", 
+        "mountPath": "/usr/share/filebeat/data"
+    } in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+
 
 def test_adding_a_extra_container():
     config = """
@@ -775,16 +784,15 @@ secretMounts:
         "secret": {"secretName": "elastic-certificates-name"},
     } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
 
-    assert r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-        "volumeMounts"
-    ][0] == {
+    assert {
         "mountPath": "/usr/share/filebeat/config/certs",
         "name": "elastic-certificates",
-    }
-    assert r["deployment"][name]["spec"]["template"]["spec"]["volumes"][0] == {
+    } in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"]
+    assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
-    }
+    } in r["deployment"][name]["spec"]["template"]["spec"]["volumes"]
 
 
 def test_adding_a_extra_volume_with_volume_mount():
@@ -1370,3 +1378,60 @@ deployment:
     assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_adding_persistence_deployment():
+    config = """
+deployment:
+  enabled: true
+  persistence:
+    enabled: true
+"""
+    r = helm_template(config)
+    c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert {
+        "name": "filebeat-data",
+        "persistentVolumeClaim": {
+            "claimName": name
+        }
+    } in  r["deployment"][name]["spec"]["template"]["spec"]["volumes"]
+    assert c["volumeMounts"][0]["mountPath"] == "/usr/share/filebeat/data"
+    assert c["volumeMounts"][0]["name"] == project + "-data"
+
+    assert r["persistentvolumeclaim"][name]["metadata"]["name"] == name
+    assert r["persistentvolumeclaim"][name]["spec"]["accessModes"] == ["ReadWriteOnce"]
+    assert r["persistentvolumeclaim"][name]["spec"]["resources"]["requests"]["storage"] == "1Gi"
+
+def test_adding_storageclass_annotation_to_volumeclaimtemplate_deployment():
+    config = """
+deployment:
+  enabled: true
+  persistence:
+    enabled: true
+    annotations:
+      volume.beta.kubernetes.io/storage-class: id
+"""
+    r = helm_template(config)
+    annotations = r["persistentvolumeclaim"][name]["metadata"][
+        "annotations"
+    ]
+    assert annotations["volume.beta.kubernetes.io/storage-class"] == "id"
+
+
+def test_adding_multiple_persistence_annotations_deployment():
+    config = """
+deployment:
+  enabled: true
+  persistence:
+    enabled: true
+    annotations:
+      hello: world
+      world: hello
+"""
+    r = helm_template(config)
+    annotations = r["persistentvolumeclaim"][name]["metadata"][
+        "annotations"
+    ]
+
+    assert annotations["hello"] == "world"
+    assert annotations["world"] == "hello"
