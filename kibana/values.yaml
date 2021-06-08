@@ -87,6 +87,17 @@ priorityClassName: ""
 
 httpPort: 5601
 
+extraVolumes:
+  []
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts:
+  []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+
 extraContainers: ""
 # - name: dummy-init
 #   image: busybox

@@ -107,6 +107,29 @@ envFrom:
     assert secretRef == {"name": "secret-name"}
 
 
+def test_adding_an_extra_volume_with_volume_mount():
+    config = """
+extraVolumes:
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts:
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+"""
+    r = helm_template(config)
+    extraVolume = r["deployment"][name]["spec"]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "emptyDir": {}} in extraVolume
+    extraVolumeMounts = r["deployment"][name]["spec"]["template"]["spec"][
+        "containers"
+    ][0]["volumeMounts"]
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } in extraVolumeMounts
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
