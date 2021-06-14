@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy APM Server 7.13.2-SNAPSHOT using [APM Server OSS][] version.
+This example deploy APM Server 7.13.2 using [APM Server OSS][] version.
 
 
 ## Usage
