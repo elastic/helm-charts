@@ -25,9 +25,12 @@ spec:
         paths:
         {{- range .paths }}
           - path: {{ .path }}
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: {{ .servicePort }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ .servicePort }}
         {{- end }}
   {{- end }}
 {{- end }}
