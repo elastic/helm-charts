@@ -246,6 +246,7 @@ ingress:
 
 nameOverride: ""
 fullnameOverride: ""
+healthNameOverride: ""
 
 lifecycle: {}
   # preStop:
