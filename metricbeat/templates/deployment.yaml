@@ -86,6 +86,10 @@ spec:
       {{- if .Values.extraVolumes | default .Values.deployment.extraVolumes }}
 {{ toYaml ( .Values.extraVolumes | default .Values.deployment.extraVolumes ) | indent 6 }}
       {{- end }}
+{{- if .Values.podSecurityContext }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+{{- end }}
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
@@ -126,7 +130,7 @@ spec:
 {{ toYaml ( .Values.extraEnvs | default .Values.deployment.extraEnvs ) | indent 8 }}
 {{- end }}
         envFrom: {{ toYaml ( .Values.envFrom | default .Values.deployment.envFrom ) | nindent 10 }}
-        securityContext: {{ toYaml ( .Values.podSecurityContext | default .Values.deployment.securityContext ) | nindent 10 }}
+        securityContext: {{ toYaml .Values.deployment.securityContext | nindent 10 }}
         volumeMounts:
         {{- range .Values.secretMounts | default .Values.deployment.secretMounts }}
         - name: {{ .name }}
