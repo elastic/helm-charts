@@ -557,6 +557,28 @@ nodeAffinity:
     }
 
 
+def test_adding_a_pod_affinity_rule():
+    config = """
+podAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+  - labelSelector:
+      matchExpressions:
+      - key: app
+        operator: In
+        values:
+        - elasticsearch
+    topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["affinity"]["podAffinity"][
+            "requiredDuringSchedulingIgnoredDuringExecution"
+        ][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
+
+
 def test_adding_in_logstash_config():
     config = """
 logstashConfig:
@@ -881,6 +903,8 @@ service:
         "protocol": "TCP",
         "targetPort": 5044,
     }
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in s["spec"]
 
 
 def test_setting_fullnameOverride():
@@ -935,3 +959,14 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["statefulset"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_adding_loadBalancerIP():
+    config = """
+    service:
+      loadBalancerIP: 12.5.11.79
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["loadBalancerIP"] == "12.5.11.79"

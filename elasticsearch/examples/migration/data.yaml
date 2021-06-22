@@ -1,5 +1,4 @@
 ---
-
 replicas: 2
 
 esMajorVersion: 6
@@ -12,6 +11,4 @@ clusterName: "elasticsearch"
 nodeGroup: "data"
 
 roles:
-  master: "false"
-  ingest: "false"
-  data: "true"
+  - data
