@@ -81,6 +81,28 @@ podAnnotations: {}
 # additionals labels
 labels: {}
 
+rbac:
+  create: false
+  serviceAccountAnnotations: {}
+  serviceAccountName: ""
+  
+podSecurityPolicy:
+  create: false
+  name: ""
+  spec:
+    privileged: false
+    fsGroup:
+      rule: RunAsAny
+    runAsUser:
+      rule: RunAsAny
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - secret
+      - configMap
+
 podSecurityContext:
   fsGroup: 1000
   runAsUser: 1000
