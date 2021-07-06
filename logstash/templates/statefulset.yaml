@@ -80,7 +80,7 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
       {{- end }}
-      {{- if or (eq .Values.antiAffinity "hard") (eq .Values.antiAffinity "soft") .Values.nodeAffinity }}
+      {{- if or (eq .Values.antiAffinity "hard") (eq .Values.antiAffinity "soft") .Values.nodeAffinity .Values.podAffinity }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
@@ -111,6 +111,10 @@ spec:
       {{- end }}
       {{- with .Values.nodeAffinity }}
         nodeAffinity:
+{{ toYaml . | indent 10 }}
+      {{- end }}
+      {{- with .Values.podAffinity }}
+        podAffinity:
 {{ toYaml . | indent 10 }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
@@ -204,7 +208,7 @@ spec:
           {{- range $path, $config := .Values.logstashPattern }}
           - name: logstashpattern
             mountPath: {{ $logstashPatternDir }}{{ $path }}
-            subPath: {{ $path }} 
+            subPath: {{ $path }}
           {{- end -}}
           {{- end -}}
         {{- if .Values.extraVolumeMounts }}
