@@ -134,6 +134,7 @@ useful for the [http input plugin][], for instance.
 | `maxUnavailable`          | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                          | `1`                                   |
 | `nameOverride`            | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                                                                            | `""`                                  |
 | `nodeAffinity`            | Value for the [node affinity settings][]                                                                                                                                                                                             | `{}`                                  |
+| `podAffinity`             | Value for the [pod affinity settings][]                                                                                                                                                                                             | `{}`                                  |
 | `nodeSelector`            | Configurable [nodeSelector][] so that you can target specific nodes for your Logstash cluster                                                                                                                                        | `{}`                                  |
 | `persistence`             | Enables a persistent volume for Logstash data                                                                                                                                                                                        | see [values.yaml][]                   |
 | `podAnnotations`          | Configurable [annotations][] applied to all Logstash pods                                                                                                                                                                            | `{}`                                  |
@@ -220,7 +221,8 @@ about our development and testing process.
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/7.x/docker.html
 [logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-[node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
+[node affinity settings]: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
+[pod affinity settings]: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/7.x/docker-config.html#docker-env-config
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
