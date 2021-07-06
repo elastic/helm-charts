@@ -1,4 +1,5 @@
 ---
+{{- if .Values.service.enabled -}}
 kind: Service
 apiVersion: v1
 metadata:
@@ -42,6 +43,7 @@ spec:
 {{- end }}
 {{- if .Values.service.externalTrafficPolicy }}
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+{{- end }}
 {{- end }}
 ---
 kind: Service
