@@ -45,9 +45,10 @@ def test_defaults():
         {"name": "discovery.seed_hosts", "value": uname + "-headless"},
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
-        {"name": "node.master", "value": "true"},
-        {"name": "node.data", "value": "true"},
-        {"name": "node.ingest", "value": "true"},
+        {
+            "name": "node.roles",
+            "value": "master,data,data_content,data_hot,data_warm,data_cold,ingest,ml,remote_cluster_client,transform,",
+        },
     ]
 
     c = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]
@@ -174,7 +175,7 @@ imageTag: 6.2.4
 def test_set_initial_master_nodes():
     config = """
 roles:
-  master: "true"
+  - master
 """
     r = helm_template(config)
     env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
@@ -192,7 +193,7 @@ roles:
 def test_dont_set_initial_master_nodes_if_not_master():
     config = """
 roles:
-  master: "false"
+  - data
 """
     r = helm_template(config)
     env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
@@ -203,7 +204,7 @@ roles:
 def test_set_discovery_seed_host():
     config = """
 roles:
-  master: "true"
+  - master
 """
     r = helm_template(config)
     env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
@@ -214,17 +215,6 @@ roles:
 
     for e in env:
         assert e["name"] != "discovery.zen.ping.unicast.hosts"
-
-
-def test_enabling_machine_learning_role():
-    config = """
-roles:
-  ml: "true"
-"""
-    r = helm_template(config)
-    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
-
-    assert {"name": "node.ml", "value": "true"} in env
 
 
 def test_adding_extra_env_vars():
@@ -592,26 +582,6 @@ initResources:
     }
 
 
-def test_adding_resources_to_sidecar_container():
-    config = """
-masterTerminationFix: true
-sidecarResources:
-  limits:
-    cpu: "100m"
-    memory: "128Mi"
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
-"""
-    r = helm_template(config)
-    i = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][1]
-
-    assert i["resources"] == {
-        "requests": {"cpu": "100m", "memory": "128Mi"},
-        "limits": {"cpu": "100m", "memory": "128Mi"},
-    }
-
-
 def test_adding_a_node_affinity():
     config = """
 nodeAffinity:
@@ -829,6 +799,23 @@ schedulerName: "stork"
     )
 
 
+def test_disabling_non_headless_service():
+    config = ""
+
+    r = helm_template(config)
+
+    assert uname in r["service"]
+
+    config = """
+service:
+  enabled: false
+"""
+
+    r = helm_template(config)
+
+    assert uname not in r["service"]
+
+
 def test_adding_a_nodePort():
     config = ""
 
@@ -935,23 +922,6 @@ service:
     ranges = r["service"][uname]["spec"]["loadBalancerSourceRanges"]
     assert ranges[0] == "192.168.0.0/24"
     assert ranges[1] == "192.168.1.0/24"
-
-
-def test_master_termination_fixed_enabled():
-    config = ""
-
-    r = helm_template(config)
-
-    assert len(r["statefulset"][uname]["spec"]["template"]["spec"]["containers"]) == 1
-
-    config = """
-    masterTerminationFix: true
-    """
-
-    r = helm_template(config)
-
-    c = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][1]
-    assert c["name"] == "elasticsearch-master-graceful-termination-handler"
 
 
 def test_lifecycle_hooks():

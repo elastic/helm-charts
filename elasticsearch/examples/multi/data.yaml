@@ -1,11 +1,12 @@
 ---
-
 clusterName: "multi"
 nodeGroup: "data"
 
 roles:
-  master: "false"
-  ingest: "true"
-  data: "true"
-  ml: "false"
-  remote_cluster_client: "false"
+  - data
+  - data_content
+  - data_hot
+  - data_warm
+  - data_cold
+  - data_frozen
+  - ingest
