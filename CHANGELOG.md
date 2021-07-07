@@ -1,5 +1,30 @@
 # Changelog
 
+## 7.13.2
+
+* 7.13.2 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1220](https://github.com/elastic/helm-charts/pull/1220) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove unused sidecarResources value (#1185)  |
+| [#1217](https://github.com/elastic/helm-charts/pull/1217) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix statefulset to rollout in upgrade test (#1189)  |
+| [#1214](https://github.com/elastic/helm-charts/pull/1214) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove masterTerminationFix (#1183)  |
+| [#1238](https://github.com/elastic/helm-charts/pull/1238) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.2-SNAPSHOT  |
+
+
+## 7.13.1
+
+* 7.13.1 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1211](https://github.com/elastic/helm-charts/pull/1211) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] only configure ES_JAVA_OPTS when value is set (#1089)  |
+| [#1208](https://github.com/elastic/helm-charts/pull/1208) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix network policies http additional rules (#1111)  |
+| [#1228](https://github.com/elastic/helm-charts/pull/1228) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.1-SNAPSHOT  |
+
+
 ## 7.13.0
 
 * 7.13.0 as default version.
