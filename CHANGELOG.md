@@ -1,5 +1,21 @@
 # Changelog
 
+## 6.8.17
+
+* 6.8.17 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1278](https://github.com/elastic/helm-charts/pull/1278) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
+| [#1275](https://github.com/elastic/helm-charts/pull/1275) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
+| [#1272](https://github.com/elastic/helm-charts/pull/1272) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatability (#1058)  |
+| [#1216](https://github.com/elastic/helm-charts/pull/1216) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix statefulset to rollout in upgrade test (#1189)  |
+| [#1227](https://github.com/elastic/helm-charts/pull/1227) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 6.8.17-SNAPSHOT  |
+| [#1210](https://github.com/elastic/helm-charts/pull/1210) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] only configure ES_JAVA_OPTS when value is set (#1089)  |
+| [#1207](https://github.com/elastic/helm-charts/pull/1207) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix network policies http additional rules (#1111)  |
+
+
 ## 7.13.2
 
 * 7.13.2 as default version.
