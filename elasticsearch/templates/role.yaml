@@ -4,11 +4,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ $fullName | quote }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: {{ $fullName | quote }}
+  labels: {{ include "elasticsearch.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - extensions

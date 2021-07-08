@@ -27,7 +27,7 @@ def test_defaults():
         "podAntiAffinity"
     ]["requiredDuringSchedulingIgnoredDuringExecution"][0] == {
         "labelSelector": {
-            "matchExpressions": [{"key": "app", "operator": "In", "values": [uname]}]
+            "matchExpressions": [{"key": "app.kubernetes.io/name:", "operator": "In", "values": [uname]}]
         },
         "topologyKey": "kubernetes.io/hostname",
     }
@@ -1055,16 +1055,16 @@ def test_set_container_security_context():
 def test_adding_pod_labels():
     config = """
 labels:
-  app.kubernetes.io/name: elasticsearch
+  custom-label: elasticsearch
 """
     r = helm_template(config)
     assert (
-        r["statefulset"][uname]["metadata"]["labels"]["app.kubernetes.io/name"]
+        r["statefulset"][uname]["metadata"]["labels"]["custom-label"]
         == "elasticsearch"
     )
     assert (
         r["statefulset"][uname]["spec"]["template"]["metadata"]["labels"][
-            "app.kubernetes.io/name"
+            "custom-label"
         ]
         == "elasticsearch"
     )
@@ -1416,7 +1416,7 @@ networkPolicy:
                 ]
             }
         },
-        {"podSelector": {"matchLabels": {"app": "elasticsearch-master"}}},
+        {"podSelector": {"matchLabels": {"app.kubernetes.io/name:": "elasticsearch-master"}}},
     ]
     assert transport["ports"][0]["port"] == 9300
-    assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
+    assert pod_selector == {"matchLabels": {"app.kubernetes.io/name:": "elasticsearch-master",}}

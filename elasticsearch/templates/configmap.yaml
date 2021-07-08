@@ -3,11 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "elasticsearch.uname" . }}-config
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
+  labels: {{ include "elasticsearch.labels" . | nindent 4 }}
 data:
 {{- range $path, $config := .Values.esConfig }}
   {{ $path }}: |

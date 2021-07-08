@@ -69,3 +69,23 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Common labels
+*/}}
+{{- define "elasticsearch.labels" -}}
+helm.sh/chart: "{{ .Chart.Name }}"
+app.kubernetes.io/name: "{{ template "elasticsearch.uname" . }}"
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "elasticsearch.selectorLabels" -}}
+app.kubernetes.io/name: "{{ template "elasticsearch.uname" . }}"
+{{- end }}

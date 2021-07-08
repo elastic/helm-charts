@@ -3,21 +3,13 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "elasticsearch.uname" . }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
-    {{- range $key, $value := .Values.labels }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+  labels: {{ include "elasticsearch.labels" . | nindent 4 }}
   annotations:
     esMajorVersion: "{{ include "elasticsearch.esMajorVersion" . }}"
 spec:
   serviceName: {{ template "elasticsearch.uname" . }}-headless
   selector:
-    matchLabels:
-      app: "{{ template "elasticsearch.uname" . }}"
+    matchLabels: {{ include "elasticsearch.selectorLabels" . | nindent 6 }}
   replicas: {{ .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
@@ -27,13 +19,7 @@ spec:
   - metadata:
       name: {{ template "elasticsearch.uname" . }}
     {{- if .Values.persistence.labels.enabled }}
-      labels:
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}"
-        app: "{{ template "elasticsearch.uname" . }}"
-        {{- range $key, $value := .Values.labels }}
-        {{ $key }}: {{ $value | quote }}
-        {{- end }}
+      labels: {{ include "elasticsearch.labels" . | nindent 4 }}
     {{- end }}
     {{- with .Values.persistence.annotations  }}
       annotations:
@@ -45,13 +31,7 @@ spec:
   template:
     metadata:
       name: "{{ template "elasticsearch.uname" . }}"
-      labels:
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}"
-        app: "{{ template "elasticsearch.uname" . }}"
-        {{- range $key, $value := .Values.labels }}
-        {{ $key }}: {{ $value | quote }}
-        {{- end }}
+      labels: {{ include "elasticsearch.labels" . | nindent 8 }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
@@ -93,7 +73,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-              - key: app
+              - key: "app.kubernetes.io/name"
                 operator: In
                 values:
                 - "{{ template "elasticsearch.uname" .}}"
@@ -106,7 +86,7 @@ spec:
               topologyKey: {{ .Values.antiAffinityTopologyKey }}
               labelSelector:
                 matchExpressions:
-                - key: app
+                - key: "app.kubernetes.io/name"
                   operator: In
                   values:
                   - "{{ template "elasticsearch.uname" . }}"

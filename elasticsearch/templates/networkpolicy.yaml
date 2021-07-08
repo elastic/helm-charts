@@ -3,15 +3,10 @@ kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
   name: {{ template "elasticsearch.uname" . }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
+  labels: {{ include "elasticsearch.labels" . | nindent 4 }}
 spec:
   podSelector:
-    matchLabels:
-      app: "{{ template "elasticsearch.uname" . }}"
+    matchLabels: {{ include "elasticsearch.selectorLabels" . | nindent 6 }}
   ingress:  # Allow inbound connections
 
 {{- if .Values.networkPolicy.http.enabled }}
@@ -54,8 +49,7 @@ spec:
 {{- end }}
         # Or from other ElasticSearch Pods
         - podSelector:
-            matchLabels:
-              app: "{{ template "elasticsearch.uname" . }}"
+            matchLabels: {{ include "elasticsearch.selectorLabels" . | nindent 14 }}
 {{- end }}
 
 {{- end }}
