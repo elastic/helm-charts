@@ -80,7 +80,7 @@ exact versions are defined under `KUBERNETES_VERSIONS` in
 ### Helm versions
 
 While we are checking backward compatibility, the charts are only tested with
-Helm version mentioned in [helm-tester Dockerfile][] (currently 3.5.3).
+Helm version mentioned in [helm-tester Dockerfile][] (currently 3.6.2).
 
 
 ## ECK
