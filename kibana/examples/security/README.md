@@ -1,6 +1,6 @@
 # Security
 
-This example deploy Kibana 6.8.17-SNAPSHOT using authentication and TLS to connect to
+This example deploy Kibana 6.8.17 using authentication and TLS to connect to
 Elasticsearch (see [values][]).
 
 
