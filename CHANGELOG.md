@@ -1,5 +1,20 @@
 # Changelog
 
+## 7.13.3
+
+* 7.13.3 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1288](https://github.com/elastic/helm-charts/pull/1288) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.17 tests (#1286)  |
+| [#1279](https://github.com/elastic/helm-charts/pull/1279) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
+| [#1276](https://github.com/elastic/helm-charts/pull/1276) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
+| [#1273](https://github.com/elastic/helm-charts/pull/1273) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatability (#1058)  |
+| [#1270](https://github.com/elastic/helm-charts/pull/1270) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.19 (#1231)  |
+| [#1252](https://github.com/elastic/helm-charts/pull/1252) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.3-SNAPSHOT  |
+
+
 ## 6.8.17
 
 * 6.8.17 as default version.
