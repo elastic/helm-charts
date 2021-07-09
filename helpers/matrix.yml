@@ -40,3 +40,4 @@ APM_SERVER_SUITE:
 KUBERNETES_VERSION:
   - "1.18"
   - "1.19"
+  - "1.20"
