@@ -433,6 +433,7 @@ def test_override_the_default_update_strategy():
     r = helm_template(config)
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "OnDelete"
 
+
 def test_override_the_default_update_strategy_deployment():
     config = """
     deployment:
@@ -451,6 +452,7 @@ def test_override_the_default_update_strategy_deployment():
         == 1
     )
     assert r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxSurge"] == 1
+
 
 def test_setting_a_custom_service_account():
     config = """
@@ -705,29 +707,23 @@ daemonset:
       path: /usr/share/filebeat/config/certs
 """
     r = helm_template(config)
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
     } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
 
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
@@ -742,29 +738,23 @@ deployment:
       path: /usr/share/filebeat/config/certs
 """
     r = helm_template(config)
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
     } in r["deployment"][name]["spec"]["template"]["spec"]["volumes"]
 
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
@@ -781,15 +771,12 @@ secretMounts:
     path: /usr/share/filebeat/config/certs
 """
     r = helm_template(config)
-    assert (
-        {
-            "mountPath": "/usr/share/filebeat/config/certs",
-            "name": "elastic-certificates",
-        }
-        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "mountPath": "/usr/share/filebeat/config/certs",
+        "name": "elastic-certificates",
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
     assert {
         "name": "elastic-certificates",
         "secret": {"secretName": "elastic-certificates-name"},
@@ -830,12 +817,13 @@ daemonset:
     assert {"name": "extras", "emptyDir": {}} not in r["deployment"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert (
-        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
-        not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
 
     config = """
 deployment:
@@ -858,12 +846,13 @@ deployment:
     assert {"name": "extras", "emptyDir": {}} not in r["daemonset"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert (
-        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
-        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
 
 
 def test_adding_a_deprecated_extra_volume_with_volume_mount():
