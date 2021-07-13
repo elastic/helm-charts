@@ -20,7 +20,7 @@ spec:
     metadata:
       labels:
         release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}"
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         app: apm-server
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
