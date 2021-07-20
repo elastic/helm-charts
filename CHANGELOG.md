@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.13.4
+
+* 7.13.4 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1293](https://github.com/elastic/helm-charts/pull/1293) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.4-SNAPSHOT  |
+
+
 ## 7.13.3
 
 * 7.13.3 as default version.
