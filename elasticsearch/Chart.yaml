@@ -5,8 +5,8 @@ maintainers:
 - email: helm-charts@elastic.co
   name: Elastic
 name: elasticsearch
-version: 7.13.4
-appVersion: 7.13.4
+version: 7.13.5-SNAPSHOT
+appVersion: 7.13.5-SNAPSHOT
 sources:
   - https://github.com/elastic/elasticsearch
 icon: https://helm.elastic.co/icons/elasticsearch.png

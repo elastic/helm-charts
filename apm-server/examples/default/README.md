@@ -1,6 +1,6 @@
 # Default
 
-This example deploy APM Server 7.13.4 using [default values][].
+This example deploy APM Server 7.13.5-SNAPSHOT using [default values][].
 
 
 ## Usage
