@@ -25,7 +25,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-7.13.4'
+      - 'metricbeat-7.13.5'
     allow-insecure: true
     username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
     password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
@@ -33,7 +33,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-7.13.4'
+      - 'metricbeat-7.13.5'
     allow-insecure: true
     username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
     password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
@@ -50,4 +50,4 @@ command:
     exit-status: 0
     stdout:
       - 'elasticsearch: https://security-master:9200'
-      - 'version: 7.13.4'
+      - 'version: 7.13.5'
