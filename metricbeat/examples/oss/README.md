@@ -1,6 +1,6 @@
 # OSS
 
-This example deploy Metricbeat 6.8.17-SNAPSHOT using [Metricbeat OSS][] version.
+This example deploy Metricbeat 6.8.18-SNAPSHOT using [Metricbeat OSS][] version.
 
 
 ## Usage

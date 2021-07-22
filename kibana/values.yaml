@@ -35,7 +35,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "6.8.17-SNAPSHOT"
+imageTag: "6.8.18-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
@@ -86,6 +86,17 @@ priorityClassName: ""
 
 httpPort: 5601
 
+extraVolumes:
+  []
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts:
+  []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+  #
 extraContainers: ""
 # - name: dummy-init
 #   image: busybox

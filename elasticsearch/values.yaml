@@ -57,7 +57,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "6.8.17-SNAPSHOT"
+imageTag: "6.8.18-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -252,6 +252,7 @@ ingress:
 
 nameOverride: ""
 fullnameOverride: ""
+healthNameOverride: ""
 
 # https://github.com/elastic/helm-charts/issues/63
 masterTerminationFix: false

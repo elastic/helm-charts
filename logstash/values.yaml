@@ -72,7 +72,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/logstash/logstash"
-imageTag: "6.8.17-SNAPSHOT"
+imageTag: "6.8.18-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -160,8 +160,12 @@ antiAffinityTopologyKey: "kubernetes.io/hostname"
 antiAffinity: "hard"
 
 # This is the node affinity settings as defined in
-# https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
+# https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
 nodeAffinity: {}
+
+# This is inter-pod affinity settings as defined in
+# https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+podAffinity: {}
 
 # The default is to deploy all pods serially. By setting this to parallel all pods are started at
 # the same time when bootstrapping the cluster

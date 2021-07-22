@@ -13,7 +13,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using 6.8 branch and 6.8.17-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
+  - [Install development version using 6.8 branch and 6.8.18-SNAPSHOT versions](#install-development-version-using-68-branch-and-6813-snapshot-versions)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -40,7 +40,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 6.8.17-SNAPSHOT version.
+This chart is tested with the latest 6.8.18-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -51,15 +51,15 @@ This chart is tested with the latest 6.8.17-SNAPSHOT version.
   - with Helm 3: `helm install kibana --version <version> elastic/kibana`
   - with Helm 2 (deprecated): `helm install --name kibana --version <version> elastic/kibana`
 
-### Install development version using 6.8 branch and 6.8.17-SNAPSHOT versions
+### Install development version using 6.8 branch and 6.8.18-SNAPSHOT versions
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Checkout the branch : git checkout 6.8
 
 * Install it:
-  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=6.8.17-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=6.8.17-SNAPSHOT`
+  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=6.8.18-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=6.8.18-SNAPSHOT`
 
 
 ## Upgrading
@@ -87,13 +87,15 @@ as a reference. They are also used in the automated testing of this chart.
 | `extraContainers`     | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                 | `""`                               |
 | `extraEnvs`           | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                                              | see [values.yaml][]                |
 | `extraInitContainers` | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                 | `""`                               |
+| `extraVolumeMounts`   | Configuration for additionnal `volumeMounts`                                                                                                                                                   | see [values.yaml][]                |
+| `extraVolumes`        | Configuration for additionnal `volumes`                                                                                                                                                       | see [values.yaml][]                |
 | `fullnameOverride`    | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride orChart.Name` "                                                        | `""`                               |
 | `healthCheckPath`     | The path used for the readinessProbe to check that Kibana is ready. If you are setting `server.basePath` you will also need to update this to `/${basePath}/app/kibana`                        | `/app/kibana`                      |
 | `hostAliases`         | Configurable [hostAliases][]                                                                                                                                                                   | `[]`                               |
 | `httpPort`            | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                    | `5601`                             |
 | `imagePullPolicy`     | The Kubernetes [imagePullPolicy][]value                                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`    | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                   | `[]`                               |
-| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `6.8.17-SNAPSHOT`                  |
+| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `6.8.18-SNAPSHOT`                  |
 | `image`               | The Kibana Docker image                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`  |
 | `ingress`             | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                |
 | `kibanaConfig`        | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                               |
@@ -205,7 +207,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [6.x]: https://github.com/elastic/helm-charts/releases
-[6.8.17-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.17-SNAPSHOT/kibana/README.md
+[6.8.18-SNAPSHOT]: https://github.com/elastic/helm-charts/blob/6.8.18-SNAPSHOT/kibana/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md

@@ -1,6 +1,6 @@
 # OpenShift
 
-This example deploy a 3 nodes Elasticsearch 6.8.17-SNAPSHOT cluster on [OpenShift][]
+This example deploy a 3 nodes Elasticsearch 6.8.18-SNAPSHOT cluster on [OpenShift][]
 using [custom values][].
 
 ## Usage
