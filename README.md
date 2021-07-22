@@ -13,22 +13,22 @@
   - [Helm versions](#helm-versions)
 - [ECK](#eck)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- END doctoc generated TOC please keep comment here to allow auto-update -->
 
 
 ## Charts
 
 These Helm charts are designed to be a lightweight way to configure our official
-Docker images. Links to the relevant Docker image documentation has also been
+Docker images. Links to the relevant Docker image documentation have also been
 added below.
 
 We recommend that the Helm chart version is aligned to the version of the product
 you want to deploy. This will ensure that you using a chart version that has been
 tested against the corresponding production version.
 This will also ensure that the documentation and examples for the chart will work
-with the version of the product you are installing.
+with the version of the product, you are installing.
 
-For example if you want to deploy an Elasticsearch `7.7.1` cluster, use the
+For example, if you want to deploy an Elasticsearch `7.7.1` cluster, use the
 corresponding `7.7.1` [tag][elasticsearch-771].
 
 The `master` version of these charts are intended to support the latest pre-release
@@ -67,6 +67,9 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 | 7.8  | GA            | GA     | Beta     | GA       | GA         | Beta       |
 | 7.9  | GA            | GA     | Beta     | GA       | GA         | Beta       |
 | 7.10 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.11 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.12 | GA            | GA     | Beta     | GA       | GA         | Beta       |
+| 7.13 | GA            | GA     | Beta     | GA       | GA         | Beta       |
 
 ### Kubernetes Versions
 
@@ -82,9 +85,9 @@ Helm version mentioned in [helm-tester Dockerfile][] (currently 3.5.3).
 
 ## ECK
 
-In addition of these Helm charts, Elastic also provides
+In addition to these Helm charts, Elastic also provides
 [Elastic Cloud on Kubernetes][] which is based on [Operator pattern][] and is
-Elastic recommended way to deploy Elasticsearch, Kibana and APM Server on
+Elastic recommended way to deploy Elasticsearch, Kibana, and APM Server on
 Kubernetes. There is a dedicated Helm chart for ECK which can be found
 [in ECK repo][eck-chart] ([documentation][eck-chart-doc]).
 
