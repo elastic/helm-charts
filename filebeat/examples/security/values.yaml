@@ -7,7 +7,19 @@ filebeatConfig:
       processors:
       - add_kubernetes_metadata:
           in_cluster: true
-
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          include_pod_uid: true
+          templates:
+            - condition.regexp:
+                kubernetes.container.name: '.+'
+              config:
+                - type: docker
+                  containers:
+                    path: "/var/log/pods/*${data.kubernetes.pod.uid}/"
+                    ids:
+                      - "${data.kubernetes.container.name}"
     output.elasticsearch:
       username: '${ELASTICSEARCH_USERNAME}'
       password: '${ELASTICSEARCH_PASSWORD}'
@@ -22,12 +34,12 @@ secretMounts:
     path: /usr/share/filebeat/config/certs
 
 extraEnvs:
-  - name: 'ELASTICSEARCH_USERNAME'
+  - name: "ELASTICSEARCH_USERNAME"
     valueFrom:
       secretKeyRef:
         name: elastic-credentials
         key: username
-  - name: 'ELASTICSEARCH_PASSWORD'
+  - name: "ELASTICSEARCH_PASSWORD"
     valueFrom:
       secretKeyRef:
         name: elastic-credentials
