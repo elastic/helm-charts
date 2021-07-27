@@ -41,3 +41,4 @@ APM_SERVER_SUITE:
   - upgrade
 KUBERNETES_VERSION:
   - "1.18"
+  - "1.19"

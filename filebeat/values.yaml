@@ -14,10 +14,12 @@ daemonset:
   extraEnvs: []
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
-  extraVolumes: []
+  extraVolumes:
+    []
     # - name: extras
     #   emptyDir: {}
-  extraVolumeMounts: []
+  extraVolumeMounts:
+    []
     # - name: extras
     #   mountPath: /usr/share/extras
     #   readOnly: true
@@ -33,6 +35,19 @@ daemonset:
         processors:
         - add_kubernetes_metadata:
             in_cluster: true
+      filebeat.autodiscover:
+        providers:
+          - type: kubernetes
+            include_pod_uid: true
+            templates:
+              - condition.regexp:
+                  kubernetes.container.name: '.+'
+                config:
+                  - type: docker
+                    containers:
+                      path: "/var/log/pods/*${data.kubernetes.pod.uid}/"
+                      ids:
+                        - "${data.kubernetes.container.name}"
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
@@ -176,26 +191,27 @@ readinessProbe:
 managedServiceAccount: true
 
 clusterRoleRules:
-- apiGroups:
-  - ""
-  resources:
-  - namespaces
-  - nodes
-  - pods
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - nodes
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
 
-podAnnotations: {}
+podAnnotations:
+  {}
   # iam.amazonaws.com/role: es-cluster
 
 # Custom service account override that the pod will use
 serviceAccount: ""
 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
-serviceAccountAnnotations: {}
-
+serviceAccountAnnotations:
+  {}
   # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 
 # How long to wait for Filebeat pods to stop gracefully
