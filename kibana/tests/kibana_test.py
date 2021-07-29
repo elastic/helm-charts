@@ -34,6 +34,8 @@ def test_defaults():
 
     assert c["env"][1]["name"] == "SERVER_HOST"
     assert c["env"][1]["value"] == "0.0.0.0"
+    
+    assert 'http "/app/kibana"' in c["livenessProbe"]["exec"]["command"][-1]
 
     assert 'http "/app/kibana"' in c["readinessProbe"]["exec"]["command"][-1]
 
@@ -459,6 +461,7 @@ protocol: https
 """
     r = helm_template(config)
     c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
+    assert "https://" in c["livenessProbe"]["exec"]["command"][-1]
     assert "https://" in c["readinessProbe"]["exec"]["command"][-1]
 
 
@@ -468,7 +471,7 @@ healthCheckPath: "/kibana/app/kibana"
 """
     r = helm_template(config)
     c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
-
+    assert 'http "/kibana/app/kibana"' in c["livenessProbe"]["exec"]["command"][-1]
     assert 'http "/kibana/app/kibana"' in c["readinessProbe"]["exec"]["command"][-1]
 
 

@@ -140,6 +140,12 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+
 readinessProbe:
   failureThreshold: 3
   initialDelaySeconds: 10
