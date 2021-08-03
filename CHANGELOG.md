@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.8.18
+
+* 6.8.18 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1269](https://github.com/elastic/helm-charts/pull/1269) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add tests for k8s 1.19 (#1231)  |
+| [#1306](https://github.com/elastic/helm-charts/pull/1306) | [@jmlrt](https://github.com/jmlrt) | [meta] update support matrix (#1305)  |
+| [#1292](https://github.com/elastic/helm-charts/pull/1292) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 6.8.18-SNAPSHOT  |
+
+
 ## 7.13.4
 
 * 7.13.4 as default version.
