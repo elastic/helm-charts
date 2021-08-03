@@ -270,10 +270,15 @@ service: {}
 
 ingress:
   enabled: false
-#  annotations: {}
-#  hosts:
-#    - host: logstash.local
-#      paths:
-#        - path: /logs
-#          servicePort: 8080
-#  tls: []
+  className: ""
+  annotations: {}
+  hosts:
+    - host: logstash.local
+      paths:
+        - path: /logs
+          servicePort: 8080
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
