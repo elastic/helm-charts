@@ -1,6 +1,6 @@
 # Config
 
-This example deploy a single node Elasticsearch 6.8.18-SNAPSHOT with authentication and
+This example deploy a single node Elasticsearch 6.8.18 with authentication and
 custom [values][].
 
 
