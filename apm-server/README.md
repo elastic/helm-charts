@@ -44,7 +44,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.14.0-SNAPSHOT version.
+This chart is tested with the latest 7.15.0-SNAPSHOT version.
 
 ### Install released version using Helm repository
 
@@ -62,8 +62,8 @@ This chart is tested with the latest 7.14.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.x`
 
 * Install it:
-  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.14.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.14.0-SNAPSHOT`
+  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=7.15.0-SNAPSHOT`
+  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=7.15.0-SNAPSHOT`
 
 
 ## Upgrading
@@ -102,7 +102,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `7.14.0-SNAPSHOT`                  |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `7.15.0-SNAPSHOT`                  |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -156,7 +156,7 @@ about our development and testing process.
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.14/running-on-docker.html
+[apm server docker image]: https://www.elastic.co/guide/en/apm/server/7.15/running-on-docker.html
 [apm server oss docker image]: https://www.docker.elastic.co/r/apm/apm-server-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
