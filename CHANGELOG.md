@@ -5,24 +5,6 @@
 * 7.14.0 as default version.
 
 
-| PR | Author | Title |
-| --- | --- | --- |
-| [#1315](https://github.com/elastic/helm-charts/pull/1315) | [@jmlrt](https://github.com/jmlrt) | [meta] Initiate 7.14 branch  |
-| [#1308](https://github.com/elastic/helm-charts/pull/1308) | [@jmlrt](https://github.com/jmlrt) | [meta] update support matrix (#1305)  |
-| [#1289](https://github.com/elastic/helm-charts/pull/1289) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.17 tests (#1286)  |
-| [#1280](https://github.com/elastic/helm-charts/pull/1280) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
-| [#1277](https://github.com/elastic/helm-charts/pull/1277) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
-| [#1274](https://github.com/elastic/helm-charts/pull/1274) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatability (#1058)  |
-| [#1271](https://github.com/elastic/helm-charts/pull/1271) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.19 (#1231)  |
-| [#1221](https://github.com/elastic/helm-charts/pull/1221) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove unused sidecarResources value (#1185)  |
-| [#1218](https://github.com/elastic/helm-charts/pull/1218) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix statefulset to rollout in upgrade test (#1189)  |
-| [#1215](https://github.com/elastic/helm-charts/pull/1215) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove masterTerminationFix (#1183)  |
-| [#1212](https://github.com/elastic/helm-charts/pull/1212) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] only configure ES_JAVA_OPTS when value is set (#1089)  |
-| [#1209](https://github.com/elastic/helm-charts/pull/1209) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix network policies http additional rules (#1111)  |
-| [#1206](https://github.com/elastic/helm-charts/pull/1206) | [@jmlrt](https://github.com/jmlrt) | [meta] update backport config for 7.13 branch (#1198)  |
-| [#1201](https://github.com/elastic/helm-charts/pull/1201) | [@jmlrt](https://github.com/jmlrt) |  [meta] bump 7.x branch to 7.14.0-SNAPSHOT  |
-
-
 ## 6.8.18
 
 * 6.8.18 as default version.
