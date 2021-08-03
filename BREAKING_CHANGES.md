@@ -86,7 +86,7 @@ helm3 2to3 convert <release-name>
 # Upgrade to 7.10.0
 helm upgrade <release-name> elastic/<chart-name> --version 7.10.0
 
-# Cleanup Helm 2 datas
+# Cleanup Helm 2 data
 helm3 2to3 cleanup
 ```
 
