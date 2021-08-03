@@ -57,7 +57,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "6.8.18"
+imageTag: "6.8.19-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
