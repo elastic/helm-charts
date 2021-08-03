@@ -21,5 +21,5 @@ This example deploy a 3 nodes Elasticsearch 7.14.0-SNAPSHOT cluster using
 You can also run [goss integration tests][] using `make test`
 
 
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/default/test/goss.yaml
-[default values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/values.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.14/elasticsearch/examples/default/test/goss.yaml
+[default values]: https://github.com/elastic/helm-charts/tree/7.14/elasticsearch/values.yaml
