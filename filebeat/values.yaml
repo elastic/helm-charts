@@ -14,6 +14,10 @@ daemonset:
   extraEnvs: []
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
+  # 
+  # Automatically mount the Docker daemon socket and container paths from the host
+  # Setting this to false is useful when the cluster container runtime is not Docker
+  includeDockerMounts: true
   extraVolumes:
     []
     # - name: extras
@@ -82,7 +86,6 @@ deployment:
   extraEnvs: []
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
-  # Allows you to add any config files in /usr/share/filebeat
   extraVolumes: []
   # - name: extras
   #   emptyDir: {}
@@ -90,6 +93,7 @@ deployment:
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
+  # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for deployment
   filebeatConfig:
     filebeat.yml: |
