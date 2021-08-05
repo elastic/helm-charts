@@ -732,6 +732,51 @@ secretMounts:
     }
 
 
+def test_include_docker_volume_mounts():
+    config = """
+deployment:
+  enabled: true
+daemonset:
+  includeDockerMounts: true
+"""
+    r = helm_template(config)
+    assert {
+        "name": "varrundockersock",
+        "hostPath": {"path": "/var/run/docker.sock"},
+    } in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+    assert (
+        {
+            "name": "varrundockersock",
+            "mountPath": "/var/run/docker.sock",
+            "readOnly": True,
+        }
+        in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+
+    config = """
+daemonset:
+  includeDockerMounts: false
+"""
+
+    r = helm_template(config)
+    assert {
+        "name": "varrundockersock",
+        "hostPath": {"path": "/var/run/docker.sock"},
+    } not in r["daemonset"][name]["spec"]["template"]["spec"]["volumes"]
+    assert (
+        {
+            "name": "varrundockersock",
+            "mountPath": "/var/run/docker.sock",
+            "readOnly": True,
+        }
+        not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
+            "volumeMounts"
+        ]
+    )
+
+
 def test_adding_a_extra_volume_with_volume_mount():
     config = """
 daemonset:

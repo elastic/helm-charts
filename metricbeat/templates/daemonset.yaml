@@ -93,9 +93,11 @@ spec:
         hostPath:
           path: {{ .Values.hostPathRoot }}/{{ template "metricbeat.fullname" . }}-{{ .Release.Namespace }}-data
           type: DirectoryOrCreate
+      {{- if .Values.daemonset.includeDockerMounts }}
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
+      {{- end }}
       - name: proc
         hostPath:
           path: /proc
@@ -164,11 +166,13 @@ spec:
         {{- end }}
         - name: data
           mountPath: /usr/share/metricbeat/data
+        {{- if .Values.daemonset.includeDockerMounts }}
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/metricbeat/7.x/configuration-autodiscover.html
         - name: varrundockersock
           mountPath: /var/run/docker.sock
           readOnly: true
+        {{- end }}
         - name: proc
           mountPath: /hostfs/proc
           readOnly: true
