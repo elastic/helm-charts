@@ -130,6 +130,9 @@ spec:
             name: {{ template "logstash.fullname" . }}-config
         {{- end }}
         {{- if .Values.logstashPipeline }}
+        - name: logstashpipeline-parent
+          configMap:
+            name: {{ template "logstash.fullname" . }}-pipeline-parent
         - name: logstashpipeline
           configMap:
             name: {{ template "logstash.fullname" . }}-pipeline
@@ -182,6 +185,9 @@ spec:
 {{ toYaml .Values.envFrom | indent 10 }}
 {{- end }}
         volumeMounts:
+          - name: logstashpipeline-parent
+            mountPath: /usr/share/logstash/config/pipelines.yml
+            subPath: pipelines.yml
           {{- if .Values.persistence.enabled }}
           - name: "{{ template "logstash.fullname" . }}"
             mountPath: /usr/share/logstash/data

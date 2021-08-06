@@ -1,0 +1,18 @@
+{{- if .Values.logstashPipeline }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "logstash.fullname" . }}-pipeline-parent
+  labels:
+    app: "{{ template "logstash.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+data:
+  pipelines.yml: |
+{{- range $pipeline, $config := .Values.logstashPipeline }}
+    - pipeline.id: {{ regexReplaceAll "\\.conf" $pipeline "" }}
+      path.config: "/usr/share/logstash/pipeline/{{ $pipeline }}"
+{{- end -}}
+{{- end -}}
