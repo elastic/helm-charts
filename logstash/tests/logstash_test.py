@@ -632,8 +632,10 @@ logstashPipeline:
 """
     r = helm_template(config)
     c = r["configmap"][name + "-pipeline"]["data"]
+    p = r["configmap"][name + "-pipeline-parent"]["data"]
 
     assert "uptime.conf" in c
+    assert "uptime" in p
 
     assert "input { stdin { } } }" in c["uptime.conf"]
     assert "output { stdout { { } } }" in c["uptime.conf"]

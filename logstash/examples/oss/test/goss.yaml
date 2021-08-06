@@ -38,3 +38,12 @@ file:
       - 'output {'
       - 'stdout {'
       - 'codec => rubydebug'
+  /usr/share/logstash/config/pipelines.yml:
+    exists: true
+    mode: "0644"
+    owner: logstash
+    group: root
+    filetype: file
+    contains:
+      - '- pipeline.id: logstash'
+      - '  path.config: "/usr/share/logstash/pipeline/logstash.conf"'

@@ -60,3 +60,12 @@ file:
       - 'hosts => ["https://security-master:9200"]'
       - 'cacert => "/usr/share/logstash/config/certs/elastic-certificate.crt"'
       - 'index => "logstash"'
+  /usr/share/logstash/config/pipelines.yml:
+    exists: true
+    mode: "0644"
+    owner: logstash
+    group: root
+    filetype: file
+    contains:
+      - '- pipeline.id: uptime'
+      - '  path.config: "/usr/share/logstash/pipeline/uptime.conf"'
