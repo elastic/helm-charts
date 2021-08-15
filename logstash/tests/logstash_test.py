@@ -907,6 +907,27 @@ service:
     assert "loadBalancerIP" not in s["spec"]
 
 
+def test_adding_an_externalTrafficPolicy():
+    config = """
+    service:
+      ports: []
+    """
+
+    r = helm_template(config)
+
+    assert "externalTrafficPolicy" not in r["service"][name]["spec"]
+
+    config = """
+    service:
+      ports: []
+      externalTrafficPolicy: Local
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][name]["spec"]["externalTrafficPolicy"] == "Local"
+
+
 def test_setting_fullnameOverride():
     config = """
 fullnameOverride: 'logstash-custom'

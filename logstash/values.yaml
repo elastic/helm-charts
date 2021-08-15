@@ -258,6 +258,7 @@ service: {}
 #  annotations: {}
 #  type: ClusterIP
 #  loadBalancerIP: ""
+#  externalTrafficPolicy: ""
 #  ports:
 #    - name: beats
 #      port: 5044
