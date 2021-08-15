@@ -180,16 +180,19 @@ readinessProbe:
 managedServiceAccount: true
 
 clusterRoleRules:
-- apiGroups:
-  - ""
+- apiGroups: [""]
   resources:
-  - namespaces
   - nodes
+  - namespaces
   - pods
-  verbs:
-  - get
-  - list
-  - watch
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+  - statefulsets
+  - deployments
+  - replicasets
+  - daemonsets
+  verbs: ["get", "list", "watch"]
 
 podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
