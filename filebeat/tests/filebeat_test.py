@@ -1,8 +1,8 @@
+from helpers import helm_template
 import os
 import sys
 
 sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
-from helpers import helm_template
 
 project = "filebeat"
 name = "release-name-" + project
@@ -139,6 +139,8 @@ deployment:
         ]["privileged"]
         == False
     )
+
+    assert r["deployment"][name]["spec"]["strategy"]["type"] == "Recreate"
 
     # Empty customizable defaults
     assert "imagePullSecrets" not in r["deployment"][name]["spec"]["template"]["spec"]
@@ -432,6 +434,26 @@ def test_override_the_default_update_strategy():
     assert r["daemonset"][name]["spec"]["updateStrategy"]["type"] == "OnDelete"
 
 
+def test_override_the_default_update_strategy_deployment():
+    config = """
+    deployment:
+      enabled: true
+      updateStrategy:
+        type: "RollingUpdate"
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
+"""
+
+    r = helm_template(config)
+    assert r["deployment"][name]["spec"]["strategy"]["type"] == "RollingUpdate"
+    assert (
+        r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxUnavailable"]
+        == 1
+    )
+    assert r["deployment"][name]["spec"]["strategy"]["rollingUpdate"]["maxSurge"] == 1
+
+
 def test_setting_a_custom_service_account():
     config = """
 deployment:
@@ -585,13 +607,17 @@ deployment:
 
     assert "filebeat.yml" in cfg[name + "-daemonset-config"]["data"]
     assert "daemonset-config.yml" in cfg[name + "-daemonset-config"]["data"]
-    assert "deployment-config.yml" not in cfg[name + "-daemonset-config"]["data"]
+    assert "deployment-config.yml" not in cfg[name +
+                                              "-daemonset-config"]["data"]
     assert "filebeat.yml" in cfg[name + "-deployment-config"]["data"]
     assert "deployment-config.yml" in cfg[name + "-deployment-config"]["data"]
-    assert "daemonset-config.yml" not in cfg[name + "-deployment-config"]["data"]
+    assert "daemonset-config.yml" not in cfg[name +
+                                             "-deployment-config"]["data"]
 
-    assert "key: daemonset" in cfg[name + "-daemonset-config"]["data"]["filebeat.yml"]
-    assert "key: deployment" in cfg[name + "-deployment-config"]["data"]["filebeat.yml"]
+    assert "key: daemonset" in cfg[name +
+                                   "-daemonset-config"]["data"]["filebeat.yml"]
+    assert "key: deployment" in cfg[name +
+                                    "-deployment-config"]["data"]["filebeat.yml"]
 
     assert (
         "hello = daemonset"
@@ -804,14 +830,14 @@ daemonset:
     assert {"name": "extras", "emptyDir": {}} in r["daemonset"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True, } in r[
         "daemonset"
     ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
     assert {"name": "extras", "emptyDir": {}} not in r["deployment"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
     assert (
-        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
+        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True, }
         not in r["deployment"][name]["spec"]["template"]["spec"]["containers"][0][
             "volumeMounts"
         ]
@@ -832,14 +858,14 @@ deployment:
     assert {"name": "extras", "emptyDir": {}} in r["deployment"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True, } in r[
         "deployment"
     ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
     assert {"name": "extras", "emptyDir": {}} not in r["daemonset"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
     assert (
-        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,}
+        {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True, }
         not in r["daemonset"][name]["spec"]["template"]["spec"]["containers"][0][
             "volumeMounts"
         ]
@@ -862,13 +888,13 @@ extraVolumeMounts:
     assert {"name": "extras", "emptyDir": {}} in r["daemonset"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True, } in r[
         "daemonset"
     ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
     assert {"name": "extras", "emptyDir": {}} in r["deployment"][name]["spec"][
         "template"
     ]["spec"]["volumes"]
-    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True,} in r[
+    assert {"name": "extras", "mountPath": "/usr/share/extras", "readOnly": True, } in r[
         "deployment"
     ][name]["spec"]["template"]["spec"]["containers"][0]["volumeMounts"]
 
@@ -1355,7 +1381,8 @@ daemonset:
     r = helm_template(config)
     assert "hostAliases" not in r["deployment"][name]["spec"]["template"]["spec"]
     hostAliases = r["daemonset"][name]["spec"]["template"]["spec"]["hostAliases"]
-    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+    assert {"ip": "127.0.0.1", "hostnames": [
+        "foo.local", "bar.local"]} in hostAliases
 
     config = """
 deployment:
@@ -1369,4 +1396,5 @@ deployment:
     r = helm_template(config)
     assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
-    assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+    assert {"ip": "127.0.0.1", "hostnames": [
+        "foo.local", "bar.local"]} in hostAliases

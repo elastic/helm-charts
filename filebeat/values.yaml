@@ -121,6 +121,8 @@ deployment:
       cpu: "1000m"
       memory: "200Mi"
   tolerations: []
+  updateStrategy:
+    type: "Recreate"
 
 # Replicas being used for the filebeat deployment
 replicas: 1
