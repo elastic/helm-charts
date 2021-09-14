@@ -9,10 +9,7 @@ metadata:
   name: {{ template "elasticsearch.uname" . }}
 {{- end }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
+    {{- include "elasticsearch.labels" . | nindent 4 }}
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4}}
 {{- end }}
@@ -55,10 +52,7 @@ metadata:
   name: {{ template "elasticsearch.uname" . }}-headless
 {{- end }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
+    {{- include "elasticsearch.labels" . | nindent 4 }}
 {{- if .Values.service.labelsHeadless }}
 {{ toYaml .Values.service.labelsHeadless | indent 4 }}
 {{- end }}

@@ -5,10 +5,7 @@ kind: RoleBinding
 metadata:
   name: {{ $fullName | quote }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    app: {{ $fullName | quote }}
+    {{- include "elasticsearch.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     {{- if eq .Values.rbac.serviceAccountName "" }}

@@ -4,13 +4,7 @@ kind: StatefulSet
 metadata:
   name: {{ template "elasticsearch.uname" . }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
-    {{- range $key, $value := .Values.labels }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+    {{- include "elasticsearch.labels" . | nindent 4 }}
   annotations:
     esMajorVersion: "{{ include "elasticsearch.esMajorVersion" . }}"
 spec:
@@ -26,15 +20,13 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: {{ template "elasticsearch.uname" . }}
-    {{- if .Values.persistence.labels.enabled }}
       labels:
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}"
-        app: "{{ template "elasticsearch.uname" . }}"
+        {{- include "elasticsearch.labels" . | nindent 8 }}
+        {{- if .Values.persistence.labels.enabled }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
-    {{- end }}
+        {{- end }}
     {{- with .Values.persistence.annotations  }}
       annotations:
 {{ toYaml . | indent 8 }}
@@ -46,12 +38,7 @@ spec:
     metadata:
       name: "{{ template "elasticsearch.uname" . }}"
       labels:
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}"
-        app: "{{ template "elasticsearch.uname" . }}"
-        {{- range $key, $value := .Values.labels }}
-        {{ $key }}: {{ $value | quote }}
-        {{- end }}
+        {{- include "elasticsearch.labels" . | nindent 8 }}
       annotations:
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}

@@ -8,6 +8,8 @@ metadata:
 {{- else }}
   name: "{{ .Release.Name }}-{{ randAlpha 5 | lower }}-test"
 {{- end }}
+  labels:
+    {{- include "elasticsearch.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": hook-succeeded

@@ -4,6 +4,8 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: "{{ template "elasticsearch.uname" . }}-pdb"
+  labels:
+    {{- include "elasticsearch.labels" . | nindent 4 }}
 spec:
   maxUnavailable: {{ .Values.maxUnavailable }}
   selector:
