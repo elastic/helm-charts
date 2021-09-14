@@ -72,7 +72,8 @@ podAnnotations: {}
   # iam.amazonaws.com/role: es-cluster
 
 # additionals labels
-labels: {}
+labels: #{}
+  app: elasticsearch
 
 esJavaOpts: "" # example: "-Xmx1g -Xms1g"
 

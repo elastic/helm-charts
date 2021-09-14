@@ -18,9 +18,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}"
-    app: "{{ template "elasticsearch.uname" . }}"
+    {{- include "elasticsearch.selectorLabels" . | nindent 4 }}
   ports:
   - name: {{ .Values.service.httpPortName | default "http" }}
     protocol: TCP
@@ -63,7 +61,7 @@ spec:
   # Create endpoints also if the related pod isn't ready
   publishNotReadyAddresses: true
   selector:
-    app: "{{ template "elasticsearch.uname" . }}"
+    {{- include "elasticsearch.selectorLabels" . | nindent 4 }}
   ports:
   - name: {{ .Values.service.httpPortName | default "http" }}
     port: {{ .Values.httpPort }}

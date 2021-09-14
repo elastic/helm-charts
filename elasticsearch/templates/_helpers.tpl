@@ -89,8 +89,8 @@ helm.sh/chart: {{ template "elasticsearch.chart" . }}
 {{- end }}
 {{- end -}}
 
-{{/* matchLabels */}}
-{{- define "elasticsearch.matchLabels" -}}
+{{/* selectorLabels */}}
+{{- define "elasticsearch.selectorLabels" -}}
 app.kubernetes.io/name: {{ template "elasticsearch.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

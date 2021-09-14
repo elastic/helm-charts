@@ -11,7 +11,7 @@ spec:
   serviceName: {{ template "elasticsearch.uname" . }}-headless
   selector:
     matchLabels:
-      app: "{{ template "elasticsearch.uname" . }}"
+      {{- include "elasticsearch.selectorLabels" . | nindent 6 }}
   replicas: {{ .Values.replicas }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   updateStrategy:
