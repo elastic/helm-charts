@@ -19,5 +19,5 @@ for production.
   ```
 
 
-[custom values]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/docker-for-mac/values.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/7.15/elasticsearch/examples/docker-for-mac/values.yaml
 [docker for mac]: https://docs.docker.com/docker-for-mac/kubernetes/
