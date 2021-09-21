@@ -13,5 +13,5 @@ This example deploy Logstash 7.15.0-SNAPSHOT using [default values][].
 You can also run [goss integration tests][] using `make test`
 
 
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/logstash/examples/default/test/goss.yaml
-[default values]: https://github.com/elastic/helm-charts/tree/7.x/logstash/values.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.15/logstash/examples/default/test/goss.yaml
+[default values]: https://github.com/elastic/helm-charts/tree/7.15/logstash/values.yaml
