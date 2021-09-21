@@ -1,6 +1,6 @@
 # OpenShift
 
-This example deploy Kibana 6.8.18 on [OpenShift][] using [custom values][].
+This example deploy Kibana 6.8.19-SNAPSHOT on [OpenShift][] using [custom values][].
 
 ## Usage
 
