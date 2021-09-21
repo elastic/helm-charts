@@ -856,6 +856,23 @@ schedulerName: "stork"
     )
 
 
+def test_disabling_non_headless_service():
+    config = ""
+
+    r = helm_template(config)
+
+    assert uname in r["service"]
+
+    config = """
+service:
+  enabled: false
+"""
+
+    r = helm_template(config)
+
+    assert uname not in r["service"]
+
+
 def test_adding_a_nodePort():
     config = ""
 
