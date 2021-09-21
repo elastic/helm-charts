@@ -37,7 +37,7 @@
 | [#1288](https://github.com/elastic/helm-charts/pull/1288) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.17 tests (#1286)  |
 | [#1279](https://github.com/elastic/helm-charts/pull/1279) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
 | [#1276](https://github.com/elastic/helm-charts/pull/1276) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
-| [#1273](https://github.com/elastic/helm-charts/pull/1273) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatability (#1058)  |
+| [#1273](https://github.com/elastic/helm-charts/pull/1273) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatibility (#1058)  |
 | [#1270](https://github.com/elastic/helm-charts/pull/1270) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.19 (#1231)  |
 | [#1252](https://github.com/elastic/helm-charts/pull/1252) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.3-SNAPSHOT  |
 
@@ -51,7 +51,7 @@
 | --- | --- | --- |
 | [#1278](https://github.com/elastic/helm-charts/pull/1278) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
 | [#1275](https://github.com/elastic/helm-charts/pull/1275) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
-| [#1272](https://github.com/elastic/helm-charts/pull/1272) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatability (#1058)  |
+| [#1272](https://github.com/elastic/helm-charts/pull/1272) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatibility (#1058)  |
 | [#1216](https://github.com/elastic/helm-charts/pull/1216) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix statefulset to rollout in upgrade test (#1189)  |
 | [#1227](https://github.com/elastic/helm-charts/pull/1227) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 6.8.17-SNAPSHOT  |
 | [#1210](https://github.com/elastic/helm-charts/pull/1210) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] only configure ES_JAVA_OPTS when value is set (#1089)  |
@@ -827,7 +827,7 @@
 | PR                                                      | Author                                           | Title                                                                     |
 |---------------------------------------------------------|--------------------------------------------------|---------------------------------------------------------------------------|
 | [#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                  |
-| [#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node informations  |
+| [#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node information  |
 | [#322](https://github.com/elastic/helm-charts/pull/322) | [@pbecotte](https://github.com/pbecotte)         | Use a list for extra volume mounts to match the comments and other values |
 
 ### Kibana
