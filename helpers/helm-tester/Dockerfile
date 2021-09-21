@@ -1,6 +1,6 @@
 FROM python:3.7
 
-ENV HELM_VERSION=3.5.3
+ENV HELM_VERSION=3.6.2
 
 RUN wget --no-verbose https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
