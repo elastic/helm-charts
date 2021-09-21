@@ -207,7 +207,7 @@ terminationGracePeriod: 120
 
 # Probes
 # Default probes are using `httpGet` which requires that `http.host: 0.0.0.0` is part of
-# `logstash.yml`. If needed probes can be disabled or overrided using the following syntaxes:
+# `logstash.yml`. If needed probes can be disabled or overridden using the following syntaxes:
 #
 # disable livenessProbe
 # livenessProbe: null
