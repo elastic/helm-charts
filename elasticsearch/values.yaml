@@ -180,6 +180,7 @@ httpPort: 9200
 transportPort: 9300
 
 service:
+  enabled: true
   labels: {}
   labelsHeadless: {}
   type: ClusterIP
