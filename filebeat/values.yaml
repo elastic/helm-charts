@@ -122,6 +122,9 @@ deployment:
       memory: "200Mi"
   tolerations: []
 
+  # Only used when updateStrategy is set to "RollingUpdate"
+  maxUnavailable: 1
+
 # Replicas being used for the filebeat deployment
 replicas: 1
 

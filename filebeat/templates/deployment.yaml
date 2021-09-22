@@ -31,6 +31,12 @@ spec:
     matchLabels:
       app: "{{ template "filebeat.fullname" . }}"
       release: {{ .Release.Name | quote }}
+  strategy:
+    {{- if eq .Values.updateStrategy "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.deployment.maxUnavailable }}
+    {{- end }}
+    type: {{ .Values.updateStrategy }}
   template:
     metadata:
       annotations:
