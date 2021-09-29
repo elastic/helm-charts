@@ -9,7 +9,7 @@
 | --- | --- | --- |
 | [#1294](https://github.com/elastic/helm-charts/pull/1294) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.20  |
 | [#1232](https://github.com/elastic/helm-charts/pull/1232) | [@jmlrt](https://github.com/jmlrt) | [meta] add helm 3.6.2 support |
-`| [#1116](https://github.com/elastic/helm-charts/pull/1116) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable tests  |`
+| [#1116](https://github.com/elastic/helm-charts/pull/1116) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable tests  |
 | [#1115](https://github.com/elastic/helm-charts/pull/1115) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable service |
 | [#1105](https://github.com/elastic/helm-charts/pull/1105) | [@moritazy](https://github.com/moritazy) | [elasticsearch] Add namespace to helm test command in NOTES.txt |
 | [#1361](https://github.com/elastic/helm-charts/pull/1361) | [@jmlrt](https://github.com/jmlrt) | [meta] remove contributing file from 7.15 branch  |
