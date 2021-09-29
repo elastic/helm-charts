@@ -7,14 +7,14 @@
 
 | PR | Author | Title |
 | --- | --- | --- |
-| [#1369](https://github.com/elastic/helm-charts/pull/1369) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.20 (#1294)  |
-| [#1368](https://github.com/elastic/helm-charts/pull/1368) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] add value to disable tests (#1116)  |
-| [#1367](https://github.com/elastic/helm-charts/pull/1367) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] add value to disable tests (#1116)  |
-| [#1366](https://github.com/elastic/helm-charts/pull/1366) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] add value to disable service (#1115)  |
-| [#1372](https://github.com/elastic/helm-charts/pull/1372) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Add namespace to helm test command in NOTES.txt (#1105)  |
+| [#1294](https://github.com/elastic/helm-charts/pull/1294) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.20  |
+| [#1232](https://github.com/elastic/helm-charts/pull/1232) | [@jmlrt](https://github.com/jmlrt) | [meta] add helm 3.6.2 support |
+`| [#1116](https://github.com/elastic/helm-charts/pull/1116) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable tests  |`
+| [#1115](https://github.com/elastic/helm-charts/pull/1115) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable service |
+| [#1105](https://github.com/elastic/helm-charts/pull/1105) | [@moritazy](https://github.com/moritazy) | [elasticsearch] Add namespace to helm test command in NOTES.txt |
 | [#1361](https://github.com/elastic/helm-charts/pull/1361) | [@jmlrt](https://github.com/jmlrt) | [meta] remove contributing file from 7.15 branch  |
 | [#1357](https://github.com/elastic/helm-charts/pull/1357) | [@ygel](https://github.com/ygel) | [meta] Initiate 7.15 branch  |
-| [#1352](https://github.com/elastic/helm-charts/pull/1352) | [@jmlrt](https://github.com/jmlrt) | [meta] remove support matrix + nit doc changes (#1337)  |
+| [#1337](https://github.com/elastic/helm-charts/pull/1337) | [@jmlrt](https://github.com/jmlrt) | [meta] remove support matrix + nit doc changes |
 | [#1316](https://github.com/elastic/helm-charts/pull/1316) | [@jmlrt](https://github.com/jmlrt) |  [meta] bump 7.x branch to 7.15.0-SNAPSHOT  |
 
 
