@@ -1457,3 +1457,29 @@ networkPolicy:
     ]
     assert transport["ports"][0]["port"] == 9300
     assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
+
+
+def test_default_automount_sa_token():
+    config = """
+"""
+    r = helm_template(config)
+    assert (
+        r["statefulset"][uname]["spec"]["template"]["spec"][
+            "automountServiceAccountToken"
+        ]
+        == True
+    )
+
+
+def test_disable_automount_sa_token():
+    config = """
+rbac:
+  automountToken: false
+"""
+    r = helm_template(config)
+    assert (
+        r["statefulset"][uname]["spec"]["template"]["spec"][
+            "automountServiceAccountToken"
+        ]
+        == False
+    )
