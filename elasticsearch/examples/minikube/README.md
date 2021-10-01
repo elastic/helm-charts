@@ -1,6 +1,6 @@
 # Minikube
 
-This example deploy a 3 nodes Elasticsearch 7.15.0-SNAPSHOT cluster on [Minikube][]
+This example deploy a 3 nodes Elasticsearch 7.16.0-SNAPSHOT cluster on [Minikube][]
 using [custom values][].
 
 If helm or kubectl timeouts occur, you may consider creating a minikube VM with
