@@ -318,7 +318,7 @@ networkPolicy:
     #             - frontend
 
   transport:
-    ## Note that all Elasticsearch Pods can talks to themselves using transport port even if enabled.
+    ## Note that all Elasticsearch Pods can talk to themselves using transport port even if enabled.
     enabled: false
     # explicitNamespacesSelector:
     #   matchLabels:
