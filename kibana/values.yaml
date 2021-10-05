@@ -3,6 +3,8 @@ elasticsearchHosts: "http://elasticsearch-master:9200"
 
 replicas: 1
 
+annotations: {}
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here

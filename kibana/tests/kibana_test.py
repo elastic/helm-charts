@@ -94,6 +94,20 @@ def test_overriding_the_port():
     assert r["service"][name]["spec"]["ports"][0]["targetPort"] == 5602
 
 
+def test_adding_annotations():
+    config = """
+annotations:
+  iam.amazonaws.com/role: es-role
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["metadata"]["annotations"][
+            "iam.amazonaws.com/role"
+        ]
+        == "es-role"
+    )
+
+
 def test_adding_env_from():
     config = """
 envFrom:
