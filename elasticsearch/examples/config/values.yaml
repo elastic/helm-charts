@@ -1,5 +1,4 @@
 ---
-
 clusterName: "config"
 replicas: 1
 
@@ -28,5 +27,8 @@ keystore:
   - secretName: elastic-config-slack
   - secretName: elastic-config-custom-path
     items:
-    - key: slack_url
-      path: xpack.notification.slack.account.otheraccount.secure_url
+      - key: slack_url
+        path: xpack.notification.slack.account.otheraccount.secure_url
+
+secret:
+  enabled: false

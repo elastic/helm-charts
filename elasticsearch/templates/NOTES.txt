@@ -1,6 +1,9 @@
 1. Watch all cluster members come up.
   $ kubectl get pods --namespace={{ .Release.Namespace }} -l app={{ template "elasticsearch.uname" . }} -w
-{{- if .Values.tests.enabled -}}
-2. Test cluster health using Helm test.
+2. Retrieve credentials.
+  $ kubectl get secrets --namespace={{ .Release.Namespace }} {{ template "elasticsearch.uname" . }}-credentials -ojsonpath='{.data.username}' | base64 -d
+  $ kubectl get secrets --namespace={{ .Release.Namespace }} {{ template "elasticsearch.uname" . }}-credentials -ojsonpath='{.data.password}' | base64 -d
+{{- if .Values.tests.enabled }}
+3. Test cluster health using Helm test.
   $ helm --namespace={{ .Release.Namespace }} test {{ .Release.Name }}
 {{- end -}}

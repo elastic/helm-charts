@@ -49,6 +49,12 @@ envFrom: []
 # - configMapRef:
 #     name: config-map
 
+# Disable it to use your own elastic-credential Secret.
+secret:
+  enabled: true
+  username: "elastic"
+  password: "" # generated randomly id not defined
+
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security and for mounting
 # the X-Pack license
@@ -69,7 +75,7 @@ imageTag: "8.0.0-SNAPSHOT"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
-  # iam.amazonaws.com/role: es-cluster
+# iam.amazonaws.com/role: es-cluster
 
 # additionals labels
 labels: {}
@@ -85,17 +91,17 @@ resources:
     memory: "2Gi"
 
 initResources: {}
-  # limits:
-  #   cpu: "25m"
-  #   # memory: "128Mi"
-  # requests:
-  #   cpu: "25m"
-  #   memory: "128Mi"
+# limits:
+#   cpu: "25m"
+#   # memory: "128Mi"
+# requests:
+#   cpu: "25m"
+#   memory: "128Mi"
 
 networkHost: "0.0.0.0"
 
 volumeClaimTemplate:
-  accessModes: [ "ReadWriteOnce" ]
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 30Gi
@@ -133,23 +139,23 @@ persistence:
   annotations: {}
 
 extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
+# - name: extras
+#   emptyDir: {}
 
 extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
+# - name: extras
+#   mountPath: /usr/share/extras
+#   readOnly: true
 
 extraContainers: []
-  # - name: do-something
-  #   image: busybox
-  #   command: ['do', 'something']
+# - name: do-something
+#   image: busybox
+#   command: ['do', 'something']
 
 extraInitContainers: []
-  # - name: do-something
-  #   image: busybox
-  #   command: ['do', 'something']
+# - name: do-something
+#   image: busybox
+#   command: ['do', 'something']
 
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
@@ -207,7 +213,7 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   # readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -241,8 +247,8 @@ tolerations: []
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
@@ -257,24 +263,24 @@ fullnameOverride: ""
 healthNameOverride: ""
 
 lifecycle: {}
-  # preStop:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-  # postStart:
-  #   exec:
-  #     command:
-  #       - bash
-  #       - -c
-  #       - |
-  #         #!/bin/bash
-  #         # Add a template to adjust number of shards/replicas
-  #         TEMPLATE_NAME=my_template
-  #         INDEX_PATTERN="logstash-*"
-  #         SHARD_COUNT=8
-  #         REPLICA_COUNT=1
-  #         ES_URL=http://localhost:9200
-  #         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
-  #         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
+# preStop:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+# postStart:
+#   exec:
+#     command:
+#       - bash
+#       - -c
+#       - |
+#         #!/bin/bash
+#         # Add a template to adjust number of shards/replicas
+#         TEMPLATE_NAME=my_template
+#         INDEX_PATTERN="logstash-*"
+#         SHARD_COUNT=8
+#         REPLICA_COUNT=1
+#         ES_URL=http://localhost:9200
+#         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+#         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 
 sysctlInitContainer:
   enabled: true
