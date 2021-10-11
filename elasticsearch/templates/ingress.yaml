@@ -45,7 +45,7 @@ spec:
           service:
             name: {{ $fullName }}
             port:
-              number:: {{ $httpPort }}
+              number: {{ $httpPort }}
   {{- else }}
   - host: {{ .host }}
     http:
