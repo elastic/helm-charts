@@ -158,7 +158,9 @@ autoscaling:
   averageCpuUtilization: 50
 
 ingress:
-  enabled: false
+  enabled: true
+  className: ""
+  pathtype: ImplementationSpecific
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"

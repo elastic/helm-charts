@@ -1,10 +1,10 @@
 ---
-clusterName: "elasticsearch"
-nodeGroup: "master"
+clusterName: "my-es"
+nodeGroup: "helm"
 
 # The service that non master groups will try to connect to when joining the cluster
 # This should be set to clusterName + "-" + nodeGroup for your master group
-masterService: ""
+masterService: "my-es-helm"
 
 # Elasticsearch roles that will be applied to this nodeGroup
 # These will be set as environment variables. E.g. node.roles=master
@@ -28,12 +28,14 @@ esMajorVersion: ""
 
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
-esConfig: {}
-#  elasticsearch.yml: |
+esConfig: 
+  elasticsearch.yml: |
+    xpack.security.enabled: false
 #    key:
 #      nestedkey: value
 #  log4j2.properties: |
 #    key = value
+
 
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
@@ -239,10 +241,12 @@ tolerations: []
 # Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:
-  enabled: false
-  annotations: {}
+  enabled: true
+  className: ""
+  #annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  pathtype: ImplementationSpecific
   hosts:
     - host: chart-example.local
       paths:

@@ -269,11 +269,12 @@ service: {}
 #      targetPort: 8080
 
 ingress:
-  enabled: false
+  enabled: true
+  className: ""
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: logstash-example.local
+      paths:
+        - path: /
+  tls: []
 #  annotations: {}
-#  hosts:
-#    - host: logstash.local
-#      paths:
-#        - path: /logs
-#          servicePort: 8080
-#  tls: []
