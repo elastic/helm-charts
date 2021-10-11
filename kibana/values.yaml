@@ -1,5 +1,5 @@
 ---
-elasticsearchHosts: "http://my-es-helm:9200"
+elasticsearchHosts: "http://elasticsearch-master:9200"
 
 replicas: 1
 
@@ -127,7 +127,7 @@ service:
   httpPortName: http
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   pathtype: ImplementationSpecific
   annotations: {}

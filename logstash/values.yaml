@@ -269,7 +269,7 @@ service: {}
 #      targetPort: 8080
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   pathtype: ImplementationSpecific
   hosts:
