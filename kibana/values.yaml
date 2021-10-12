@@ -81,6 +81,9 @@ securityContext:
 
 serviceAccount: ""
 
+# Whether or not to automount the service account token in the pod. Normally, Kibana does not need this
+automountToken: true
+
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
