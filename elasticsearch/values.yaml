@@ -236,7 +236,7 @@ imagePullSecrets: []
 nodeSelector: {}
 tolerations: []
 
-# Enabling this will publically expose your Elasticsearch instance.
+# Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:
   enabled: false
@@ -319,7 +319,7 @@ networkPolicy:
     #             - frontend
 
   transport:
-    ## Note that all Elasticsearch Pods can talks to themselves using transport port even if enabled.
+    ## Note that all Elasticsearch Pods can talk to themselves using transport port even if enabled.
     enabled: false
     # explicitNamespacesSelector:
     #   matchLabels:
