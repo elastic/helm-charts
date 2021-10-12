@@ -10,3 +10,17 @@ apmConfig:
 
     output.elasticsearch:
       hosts: ["http://upgrade-master:9200"]
+      username: "${ELASTICSEARCH_USERNAME}"
+      password: "${ELASTICSEARCH_PASSWORD}"
+
+extraEnvs:
+  - name: "ELASTICSEARCH_USERNAME"
+    valueFrom:
+      secretKeyRef:
+        name: upgrade-master-credentials
+        key: username
+  - name: "ELASTICSEARCH_PASSWORD"
+    valueFrom:
+      secretKeyRef:
+        name: upgrade-master-credentials
+        key: password
