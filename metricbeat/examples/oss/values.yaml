@@ -49,6 +49,8 @@ daemonset:
             system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
       output.elasticsearch:
         hosts: "elasticsearch-master:9200"
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
         index: "metricbeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
       setup.ilm.enabled: false
       setup.template.name: "metricbeat"
@@ -70,6 +72,8 @@ deployment:
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
       output.elasticsearch:
         hosts: "elasticsearch-master:9200"
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
         index: "metricbeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
       setup.ilm.enabled: false
       setup.template.name: "metricbeat"

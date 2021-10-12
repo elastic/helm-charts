@@ -72,9 +72,11 @@ upgrading to a new chart version.
 * The default Metricbeat configuration file for this chart is configured to use
 an Elasticsearch endpoint. Without any additional changes, Metricbeat will send
 documents to the service URL that the Elasticsearch Helm chart sets up by
-default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
-`extraEnvs` to override this endpoint or modify the default `metricbeatConfig`
-to change this behavior.
+default. The Elasticsearch credentials are also retrieved from
+`elasticsearch-master-credentials` Secret from Elasticsearch chart by default.
+You may either set the `ELASTICSEARCH_HOSTS`, `ELASTICSEARCH_USER` and
+`ELASTICSEARCH_PASSWORD` environment variables in `extraEnvs` to override this
+or modify the default `metricbeatConfig` to change this behavior.
 * This chart disables the [HostNetwork][] setting by default for compatibility
 reasons with the majority of kubernetes providers and scenarios. Some kubernetes
 providers may not allow enabling `hostNetwork` and deploying multiple Metricbeat
@@ -96,7 +98,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.affinity`           | Configurable [affinity][] for Metricbeat daemonset                                                                                                                           | `{}`                                 |
 | `daemonset.enabled`            | If true, enable daemonset                                                                                                                                                    | `true`                               |
 | `daemonset.envFrom`            | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to Metricbeat container for DaemonSet                             | `[]`                                 |
-| `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for DaemonSet                                                                                 | `[]`                                 |
+| `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to Metricbeat container for DaemonSet                                                                                 | see [values.yaml][]                  |
 | `daemonset.extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
 | `daemonset.extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function or DaemonSet                                                                                   | `[]`                                 |
 | `daemonset.hostAliases`        | Configurable [hostAliases][] for Metricbeat DaemonSet                                                                                                                        | `[]`                                 |
@@ -112,7 +114,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `deployment.affinity`          | Configurable [affinity][] for Metricbeat Deployment                                                                                                                          | `{}`                                 |
 | `deployment.enabled`           | If true, enable deployment                                                                                                                                                   | `true`                               |
 | `deployment.envFrom`           | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to Metricbeat container for Deployment                            | `[]`                                 |
-| `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to Metricbeat container for Deployment                                                                                | `[]`                                 |
+| `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to Metricbeat container for Deployment                                                                                | see [values.yaml][]                  |
 | `deployment.extraVolumeMounts` | Templatable string of additional `volumeMounts` to be passed to the `tpl` function or DaemonSet                                                                              | `[]`                                 |
 | `deployment.extraVolumes`      | Templatable string of additional `volumes` to be passed to the `tpl` function or Deployment                                                                                  | `[]`                                 |
 | `deployment.hostAliases`       | Configurable [hostAliases][] for Metricbeat Deployment                                                                                                                       | `[]`                                 |
