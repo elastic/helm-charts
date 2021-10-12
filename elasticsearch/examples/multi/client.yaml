@@ -2,6 +2,13 @@
 clusterName: "multi"
 nodeGroup: "client"
 
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: multi-master-credentials
+        key: password
+
 roles: []
 
 persistence:
@@ -12,3 +19,6 @@ persistence:
 esConfig:
   elasticsearch.yml: |
     node.roles: []
+
+secret:
+  enabled: false

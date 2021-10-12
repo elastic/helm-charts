@@ -157,6 +157,8 @@ support multiple versions with minimal changes.
 | `resources`                        | Allows you to set the [resources][] for the StatefulSet                                                                                                                                                                                                                                                           | see [values.yaml][]                              |
 | `roles`                            | A list with the specific [roles][] for the `nodeGroup`                                                                                                                                                                                                                                                            | see [values.yaml][]                              |
 | `schedulerName`                    | Name of the [alternate scheduler][]                                                                                                                                                                                                                                                                               | `""`                                             |
+| `secret.enabled`                   | Enable Secret creation for Elasticsearch credentials                                                                                                                                                                                                                                                              | `true`                                           |
+| `secret.password`                  | Initial password for the elastic user                                                                                                                                                                                                                                           | `""` (generated randomly)                        |
 | `secretMounts`                     | Allows you easily mount a secret as a file inside the StatefulSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                                                                                                                                                         | `[]`                                             |
 | `securityContext`                  | Allows you to set the [securityContext][] for the container                                                                                                                                                                                                                                                       | see [values.yaml][]                              |
 | `service.annotations`              | [LoadBalancer annotations][] that Kubernetes will use for the service. This will configure load balancer if `service.type` is `LoadBalancer`                                                                                                                                                                      | `{}`                                             |
@@ -260,9 +262,12 @@ sufficient.
 
 ### How to deploy clusters with security (authentication and TLS) enabled?
 
-This Helm chart can use existing [Kubernetes secrets][] to setup
-credentials or certificates for examples. These secrets should be created
-outside of this chart and accessed using [environment variables][] and volumes.
+This Helm chart can generate a [Kubernetes Secret][] or use an existing one to
+setup Elastic credentials.
+
+This Helm chart can use existing [Kubernetes Secret][] to setup Elastic
+certificates for example. These secrets should be created outside of this chart
+and accessed using [environment variables][] and volumes.
 
 An example of Elasticsearch cluster using security can be found in
 [examples/security][].
@@ -438,7 +443,7 @@ about our development and testing process.
 [jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [kind]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/kubernetes-kind
-[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
+[kubernetes secret]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [loadBalancer annotations]: https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws
