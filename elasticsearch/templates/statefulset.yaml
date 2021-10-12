@@ -238,11 +238,6 @@ spec:
                   exit 1
                 fi
 
-                # Set ELASTIC_USERNAME to "elastic" if unset
-                if [ -z "${ELASTIC_USERNAME}" ]; then
-                  export ELASTIC_USERNAME=elastic
-                fi
-
                 # If the node is starting up wait for the cluster to be ready (request params: "{{ .Values.clusterHealthCheckParams }}" )
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
@@ -260,7 +255,7 @@ spec:
                     set -- "$@" $args
                   fi
 
-                  set -- "$@" -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
+                  set -- "$@" -u "elastic:${ELASTIC_PASSWORD}"
 
                   curl --output /dev/null -k "$@" "{{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}${path}"
                 }
@@ -329,11 +324,6 @@ spec:
               secretKeyRef:
                 name: {{ template "elasticsearch.uname" . }}-credentials
                 key: password
-          - name: ELASTIC_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "elasticsearch.uname" . }}-credentials
-                key: username
           {{- end }}
           {{- if .Values.esJavaOpts  }}
           - name: ES_JAVA_OPTS

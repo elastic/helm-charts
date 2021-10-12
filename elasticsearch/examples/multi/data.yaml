@@ -8,11 +8,6 @@ extraEnvs:
       secretKeyRef:
         name: multi-master-credentials
         key: password
-  - name: ELASTIC_USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: multi-master-credentials
-        key: username
 
 roles:
   - data
