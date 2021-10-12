@@ -73,9 +73,11 @@ upgrading to a new chart version.
 * The default Filebeat configuration file for this chart is configured to use an
 Elasticsearch endpoint. Without any additional changes, Filebeat will send
 documents to the service URL that the Elasticsearch Helm chart sets up by
-default. You may either set the `ELASTICSEARCH_HOSTS` environment variable in
-`extraEnvs` to override this endpoint or modify the default `filebeatConfig` to
-change this behavior.
+default. The Elasticsearch credentials are also retrieved from
+`elasticsearch-master-credentials` Secret from Elasticsearch chart by default.
+You may either set the `ELASTICSEARCH_HOSTS`, `ELASTICSEARCH_USER` and
+`ELASTICSEARCH_PASSWORD` environment variables in `extraEnvs` to override this
+or modify the default `filebeatConfig` to change this behavior.
 * The default Filebeat configuration file is also configured to capture
 container logs and enrich them with Kubernetes metadata by default. This will
 capture all container logs in the cluster.
@@ -100,7 +102,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `daemonset.affinity`           | Configurable [affinity][] for filebeat daemonset                                                                                                                             | `{}`                               |
 | `daemonset.enabled`            | If true, enable daemonset                                                                                                                                                    | `true`                             |
 | `daemonset.envFrom`            | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to filebeat container for DaemonSet                               | `[]`                               |
-| `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to filebeat container for DaemonSet                                                                                   | `[]`                               |
+| `daemonset.extraEnvs`          | Extra [environment variables][] which will be appended to filebeat container for DaemonSet                                                                                   | see [values.yaml][]                |
 | `daemonset.extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function for DaemonSet                                                                             | `[]`                               |
 | `daemonset.extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function for DaemonSet                                                                                  | `[]`                               |
 | `daemonset.hostAliases`        | Configurable [hostAliases][] for filebeat DaemonSet                                                                                                                          | `[]`                               |
@@ -117,7 +119,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `deployment.affinity`          | Configurable [affinity][] for filebeat Deployment                                                                                                                            | `{}`                               |
 | `deployment.enabled`           | If true, enable deployment                                                                                                                                                   | `false`                            |
 | `deployment.envFrom`           | Templatable string of `envFrom` to be passed to the  [environment from variables][] which will be appended to filebeat container for Deployment                              | `[]`                               |
-| `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to filebeat container for Deployment                                                                                  | `[]`                               |
+| `deployment.extraEnvs`         | Extra [environment variables][] which will be appended to filebeat container for Deployment                                                                                  | see [values.yaml][]                |
 | `deployment.extraVolumeMounts` | Templatable string of additional `volumeMounts` to be passed to the `tpl` function for DaemonSet                                                                             | `[]`                               |
 | `deployment.extraVolumes`      | Templatable string of additional `volumes` to be passed to the `tpl` function for Deployment                                                                                 | `[]`                               |
 | `daemonset.hostAliases`        | Configurable [hostAliases][] for filebeat Deployment                                                                                                                         | `[]`                               |
