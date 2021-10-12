@@ -2,13 +2,19 @@ http:
   http://localhost:5601/api/status:
     status: 200
     timeout: 2000
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
       - '"number":"8.0.0"'
 
   http://localhost:5601/app/kibana:
     status: 200
     timeout: 2000
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
 
   http://helm-kibana-default-kibana:5601/app/kibana:
     status: 200
     timeout: 2000
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
