@@ -3,7 +3,7 @@ http:
     status: 200
     timeout: 2000
     allow-insecure: true
-    username: "{{ .Env.ELASTIC_USERNAME }}"
+    username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
       - "green"
@@ -14,7 +14,7 @@ http:
     status: 200
     timeout: 2000
     allow-insecure: true
-    username: "{{ .Env.ELASTIC_USERNAME }}"
+    username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
       - '"cluster_name" : "security"'
@@ -24,7 +24,7 @@ http:
     status: 200
     timeout: 2000
     allow-insecure: true
-    username: "{{ .Env.ELASTIC_USERNAME }}"
+    username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
       - "active"
