@@ -158,8 +158,8 @@ autoscaling:
   averageCpuUtilization: 50
 
 ingress:
-  enabled: true
-  className: ""
+  enabled: false
+  className: "nginx"
   pathtype: ImplementationSpecific
   annotations: {}
     # kubernetes.io/ingress.class: nginx

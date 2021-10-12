@@ -8,6 +8,10 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels: {{ include "kibana.labels" . | nindent 4 }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className | quote }}

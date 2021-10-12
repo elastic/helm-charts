@@ -128,7 +128,7 @@ service:
 
 ingress:
   enabled: false
-  className: ""
+  className: "nginx"
   pathtype: ImplementationSpecific
   annotations: {}
     # kubernetes.io/ingress.class: nginx

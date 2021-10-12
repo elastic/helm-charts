@@ -270,7 +270,7 @@ service: {}
 
 ingress:
   enabled: false
-  className: ""
+  className: "nginx"
   pathtype: ImplementationSpecific
   hosts:
     - host: logstash-example.local

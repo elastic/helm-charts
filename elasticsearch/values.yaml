@@ -245,6 +245,8 @@ tolerations: []
 # Only enable this if you have security enabled on your cluster
 ingress:
   enabled: false
+  className: "nginx"
+  pathtype: ImplementationSpecific
   annotations: {}
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"

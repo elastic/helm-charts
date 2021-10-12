@@ -3,11 +3,7 @@
 {{- $httpPort := .Values.httpPort -}}
 {{- $pathtype := .Values.ingress.pathtype -}}
 {{- $ingressPath := .Values.ingress.path -}}
-{{- if semverCompare "<1.19-0" .Capabilities.KubeVersion.Version }}
-apiVersion: networking.k8s.io/v1beta1
-{{- else }}
 apiVersion: networking.k8s.io/v1
-{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -15,10 +11,12 @@ metadata:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
-  {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className | quote }}
-  {{- end }}
 {{- if .Values.ingress.tls }}
   tls:
   {{- if .ingressPath }}
