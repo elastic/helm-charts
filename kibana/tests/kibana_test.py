@@ -261,18 +261,30 @@ ingress:
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"] == 5601
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
     assert i["rules"][0]["http"]["paths"][1]["path"] == "/testpath"
     assert i["rules"][0]["http"]["paths"][1]["backend"]["service"]["name"] == name
-    assert i["rules"][0]["http"]["paths"][1]["backend"]["service"]["port"]["number"] == 8888
+    assert (
+        i["rules"][0]["http"]["paths"][1]["backend"]["service"]["port"]["number"]
+        == 8888
+    )
     assert i["rules"][1]["host"] == None
     assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][1]["http"]["paths"][0]["backend"]["service"]["name"] == name
-    assert i["rules"][1]["http"]["paths"][0]["backend"]["service"]["port"]["number"] == 5601
+    assert (
+        i["rules"][1]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
     assert i["rules"][2]["host"] == "kibana.hello.there"
     assert i["rules"][2]["http"]["paths"][0]["path"] == "/mypath"
     assert i["rules"][2]["http"]["paths"][0]["backend"]["service"]["name"] == name
-    assert i["rules"][2]["http"]["paths"][0]["backend"]["service"]["port"]["number"] == 9999
+    assert (
+        i["rules"][2]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9999
+    )
 
 
 def test_adding_a_deprecated_ingress_rule():
@@ -299,7 +311,10 @@ ingress:
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"] == 5601
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
 
 
 def test_adding_an_ingress_rule_wildcard():
@@ -327,7 +342,10 @@ ingress:
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"] == 5601
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
 
 
 def test_adding_a_deprecated_ingress_rule_wildcard():
@@ -354,7 +372,10 @@ ingress:
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"] == 5601
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
 
 
 def test_override_the_default_update_strategy():
