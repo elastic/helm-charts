@@ -30,6 +30,7 @@ daemonset:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
+        protocol: https
       ssl.certificate_authorities:
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
   secretMounts:
