@@ -11,16 +11,25 @@ daemonset:
   envFrom: []
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: []
-  #  - name: MY_ENVIRONMENT_VAR
-  #    value: the_value_goes_here
+  extraEnvs:
+    - name: "ELASTICSEARCH_USERNAME"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: username
+    - name: "ELASTICSEARCH_PASSWORD"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: password
+  # Allows you to add any config files in /usr/share/filebeat
   extraVolumes: []
-    # - name: extras
-    #   emptyDir: {}
+  # - name: extras
+  #   emptyDir: {}
   extraVolumeMounts: []
-    # - name: extras
-    #   mountPath: /usr/share/extras
-    #   readOnly: true
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
   hostNetworking: false
   # Allows you to add any config files in /usr/share/filebeat
   # such as filebeat.yml for daemonset
@@ -40,6 +49,8 @@ daemonset:
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
   # Only used when updateStrategy is set to "RollingUpdate"
   maxUnavailable: 1
   nodeSelector: {}
@@ -77,9 +88,17 @@ deployment:
   envFrom: []
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: []
-  #  - name: MY_ENVIRONMENT_VAR
-  #    value: the_value_goes_here
+  extraEnvs:
+    - name: "ELASTICSEARCH_USERNAME"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: username
+    - name: "ELASTICSEARCH_PASSWORD"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: password
   # Allows you to add any config files in /usr/share/filebeat
   extraVolumes: []
   # - name: extras
@@ -92,13 +111,15 @@ deployment:
   filebeatConfig:
     filebeat.yml: |
       filebeat.inputs:
-      - type: tcp
-        max_message_size: 10MiB
-        host: "localhost:9000"
+        - type: log
+          paths:
+            - /usr/share/filebeat/logs/filebeat
 
       output.elasticsearch:
-        host: '${NODE_NAME}'
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        host: "${NODE_NAME}"
+        hosts: "${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}"
+        username: "${ELASTICSEARCH_USERNAME}"
+        password: "${ELASTICSEARCH_PASSWORD}"
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
@@ -180,27 +201,26 @@ readinessProbe:
 managedServiceAccount: true
 
 clusterRoleRules:
-- apiGroups:
-  - ""
-  resources:
-  - namespaces
-  - nodes
-  - pods
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - nodes
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
 
 podAnnotations: {}
-  # iam.amazonaws.com/role: es-cluster
+# iam.amazonaws.com/role: es-cluster
 
 # Custom service account override that the pod will use
 serviceAccount: ""
 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
 serviceAccountAnnotations: {}
-
-  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+# eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 
 # How long to wait for Filebeat pods to stop gracefully
 terminationGracePeriod: 30

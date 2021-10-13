@@ -28,13 +28,13 @@ secretMounts:
     path: /usr/share/logstash/config/certs
 
 extraEnvs:
-  - name: 'ELASTICSEARCH_USERNAME'
+  - name: "ELASTICSEARCH_USERNAME"
     valueFrom:
       secretKeyRef:
-        name: elastic-credentials
+        name: security-master-credentials
         key: username
-  - name: 'ELASTICSEARCH_PASSWORD'
+  - name: "ELASTICSEARCH_PASSWORD"
     valueFrom:
       secretKeyRef:
-        name: elastic-credentials
+        name: security-master-credentials
         key: password
