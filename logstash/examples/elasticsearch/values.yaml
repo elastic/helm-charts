@@ -9,4 +9,23 @@ logstashConfig:
 logstashPipeline:
   uptime.conf: |
     input { exec { command => "uptime" interval => 30 } }
-    output { elasticsearch { hosts => ["http://elasticsearch-master:9200"] index => "logstash" } }
+    output {
+      elasticsearch {
+        hosts => ["http://elasticsearch-master:9200"]
+        user => '${ELASTICSEARCH_USERNAME}'
+        password => '${ELASTICSEARCH_PASSWORD}'
+        index => "logstash"
+      }
+    }
+
+extraEnvs:
+  - name: "ELASTICSEARCH_USERNAME"
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: username
+  - name: "ELASTICSEARCH_PASSWORD"
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: password
