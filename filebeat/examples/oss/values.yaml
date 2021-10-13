@@ -16,6 +16,8 @@ daemonset:
       output.elasticsearch:
         host: '${NODE_NAME}'
         hosts: "elasticsearch-master:9200"
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
         index: "filebeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
       setup.ilm.enabled: false
       setup.template.name: "filebeat"
