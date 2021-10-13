@@ -22,6 +22,6 @@ This example deploy APM Server 8.0.0-SNAPSHOT using [default values][].
 You can also run [goss integration tests][] using `make test`
 
 
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/default/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/default/test/goss.yaml
-[default values]: https://github.com/elastic/helm-charts/tree/master/apm-server/values.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/default/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples/default/test/goss.yaml
+[default values]: https://github.com/elastic/helm-charts/tree/main/apm-server/values.yaml

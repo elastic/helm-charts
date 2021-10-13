@@ -1,6 +1,6 @@
 # Logstash Helm Chart
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+main.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+main/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
 
 This Helm chart is a lightweight way to configure and run our official
 [Logstash Docker image][].
@@ -17,17 +17,18 @@ SLA of official GA features (see [supported configurations][] for more details).
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Requirements](#requirements)
-- [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using master branch](#install-development-version-using-master-branch)
-- [Upgrading](#upgrading)
-- [Usage notes](#usage-notes)
-- [Configuration](#configuration)
-- [FAQ](#faq)
-  - [How to install OSS version of Logstash?](#how-to-install-oss-version-of-logstash)
-  - [How to install plugins?](#how-to-install-plugins)
-- [Contributing](#contributing)
+- [Logstash Helm Chart](#logstash-helm-chart)
+  - [Requirements](#requirements)
+  - [Installing](#installing)
+    - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+    - [Install development version using main branch](#install-development-version-using-main-branch)
+  - [Upgrading](#upgrading)
+  - [Usage notes](#usage-notes)
+  - [Configuration](#configuration)
+  - [FAQ](#faq)
+    - [How to install OSS version of Logstash?](#how-to-install-oss-version-of-logstash)
+    - [How to install plugins?](#how-to-install-plugins)
+  - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
@@ -53,7 +54,7 @@ See [supported configurations][] for more details.
   - with Helm 2 (deprecated): `helm install --name logstash elastic/logstash`
 
 
-### Install development version using master branch
+### Install development version using main branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -194,9 +195,9 @@ about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
 [7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/logstash/README.md
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -204,8 +205,8 @@ about our development and testing process.
 [custom docker image]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/master/logstash/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/oss
+[examples]: https://github.com/elastic/helm-charts/tree/main/logstash/examples
+[examples/oss]: https://github.com/elastic/helm-charts/tree/main/logstash/examples/oss
 [helm]: https://helm.sh
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [http input plugin]: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html
@@ -226,8 +227,8 @@ about our development and testing process.
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
-[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
+[supported configurations]: https://github.com/elastic/helm-charts/tree/main/README.md#supported-configurations
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[values.yaml]: https://github.com/elastic/helm-charts/tree/master/logstash/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/main/logstash/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage
