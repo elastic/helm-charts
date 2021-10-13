@@ -16,7 +16,9 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
+  {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
 {{- if .Values.ingress.tls }}
   tls:
   {{- if .ingressPath }}
@@ -30,7 +32,7 @@ spec:
 {{- else }}
 {{ toYaml .Values.ingress.tls | indent 4 }}
   {{- end }}
-{{end}}
+{{- end}}
   rules:
   {{- range .Values.ingress.hosts }}
     {{- if $ingressPath }}
