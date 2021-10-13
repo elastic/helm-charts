@@ -31,7 +31,7 @@ daemonset:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         protocol: https
-      ssl.certificate_authorities:
+        ssl.certificate_authorities:
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
   secretMounts:
     - name: elastic-certificate-pem
