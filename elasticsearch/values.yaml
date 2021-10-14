@@ -246,6 +246,8 @@ tolerations: []
 ingress:
   enabled: false
   annotations: {}
+  className: "nginx"
+  pathtype: ImplementationSpecific
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   hosts:

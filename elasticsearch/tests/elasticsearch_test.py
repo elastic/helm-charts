@@ -644,19 +644,31 @@ ingress:
 
     assert i["rules"][0]["host"] == "elasticsearch.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == uname
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == uname
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9200
+    )
     assert i["rules"][1]["host"] == None
     assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == uname
-    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["service"]["name"] == uname
+    assert (
+        i["rules"][1]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9200
+    )
     assert i["rules"][1]["http"]["paths"][1]["path"] == "/mypath"
-    assert i["rules"][1]["http"]["paths"][1]["backend"]["serviceName"] == uname
-    assert i["rules"][1]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["service"]["name"] == uname
+    assert (
+        i["rules"][1]["http"]["paths"][1]["backend"]["service"]["port"]["number"]
+        == 8888
+    )
     assert i["rules"][2]["host"] == "elasticsearch.hello.there"
     assert i["rules"][2]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == uname
-    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["service"]["name"] == uname
+    assert (
+        i["rules"][2]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9999
+    )
 
 
 def test_adding_a_deprecated_ingress_rule():
@@ -682,8 +694,11 @@ ingress:
 
     assert i["rules"][0]["host"] == "elasticsearch.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == uname
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 9200
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == uname
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9200
+    )
 
 
 def test_changing_the_protocol():

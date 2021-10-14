@@ -270,10 +270,11 @@ service: {}
 
 ingress:
   enabled: false
+  className: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: logstash-example.local
+      paths:
+        - path: /
+  tls: []
 #  annotations: {}
-#  hosts:
-#    - host: logstash.local
-#      paths:
-#        - path: /logs
-#          servicePort: 8080
-#  tls: []

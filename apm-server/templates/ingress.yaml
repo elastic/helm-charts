@@ -1,8 +1,9 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "apm.fullname" . -}}
 {{- $servicePort := .Values.service.port -}}
+{{- $pathtype := .Values.ingress.pathtype -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "apm.fullname" . }}
@@ -17,18 +18,24 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
 {{- if .Values.ingress.tls }}
   tls:
 {{ toYaml .Values.ingress.tls | indent 4 }}
 {{- end }}
   rules:
   {{- range .Values.ingress.hosts }}
-    - host: {{ . }}
-      http:
-        paths:
-          - path: {{ $ingressPath }}
-            backend:
-              serviceName: {{ $fullName }}
-              servicePort: {{ $servicePort }}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: {{ $ingressPath }}
+        pathType: {{ $pathtype }}
+        backend:
+          service:
+            name: {{ $fullName }}
+            port:
+              number: {{ $servicePort }}
   {{- end }}
 {{- end }}
