@@ -27,3 +27,32 @@ spec:
   ports:
 {{ toYaml .Values.service.ports | indent 4 }}
 {{- end }}
+---
+{{- if .Values.udpservice.enabled -}}
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ template "logstash.fullname" . }}-udp"
+  labels:
+    app: "{{ template "logstash.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.udpservice.type }}
+{{- if .Values.udpservice.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.udpservice.loadBalancerIP }}
+{{- end }}
+{{- with .Values.udpservice.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  selector:
+    app: "{{ template "logstash.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    release: {{ .Release.Name | quote }}
+  ports:
+{{ toYaml .Values.udpservice.ports | indent 4 }}
+{{- end }}

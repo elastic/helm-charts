@@ -907,6 +907,33 @@ service:
     assert "loadBalancerIP" not in s["spec"]
 
 
+def test_adding_udp_service():
+    config = """
+service:
+  annotations: {}
+  type: ClusterIP
+  ports:
+    - name: udp
+      port: 1234
+      protocol: UDP
+      targetPort: 1234
+"""
+    r = helm_template(config)
+    s = r["service"][name]
+    assert s["metadata"]["name"] == name
+    assert s["metadata"]["annotations"] == {}
+    assert s["spec"]["type"] == "ClusterIP"
+    assert len(s["spec"]["ports"]) == 1
+    assert s["spec"]["ports"][0] == {
+        "name": "udp",
+        "port": 1234,
+        "protocol": "UDP",
+        "targetPort": 1234,
+    }
+    # Make sure that the default 'loadBalancerIP' string is empty
+    assert "loadBalancerIP" not in s["spec"]
+
+
 def test_setting_fullnameOverride():
     config = """
 fullnameOverride: 'logstash-custom'
