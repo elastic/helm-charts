@@ -3,21 +3,20 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Contributing to the Elastic Helm charts](#contributing-to-the-elastic-helm-charts)
-  - [Adding new features](#adding-new-features)
-  - [Requirements for submiting a pull request](#requirements-for-submiting-a-pull-request)
-  - [CLA (Contributor License Agreement)](#cla-contributor-license-agreement)
-  - [How We Use Git and GitHub](#how-we-use-git-and-github)
-    - [Forking](#forking)
-    - [Branching](#branching)
-    - [Commits and Merging](#commits-and-merging)
-      - [Rebasing and fixing merge conflicts](#rebasing-and-fixing-merge-conflicts)
-    - [What Goes Into a Pull Request](#what-goes-into-a-pull-request)
-  - [Submitting a Pull Request](#submitting-a-pull-request)
-  - [Releases](#releases)
-  - [Testing](#testing)
-    - [Templating tests](#templating-tests)
-    - [Integration tests](#integration-tests)
+- [Adding new features](#adding-new-features)
+- [Requirements for submiting a pull request](#requirements-for-submiting-a-pull-request)
+- [CLA (Contributor License Agreement)](#cla-contributor-license-agreement)
+- [How We Use Git and GitHub](#how-we-use-git-and-github)
+  - [Forking](#forking)
+  - [Branching](#branching)
+  - [Commits and Merging](#commits-and-merging)
+    - [Rebasing and fixing merge conflicts](#rebasing-and-fixing-merge-conflicts)
+  - [What Goes Into a Pull Request](#what-goes-into-a-pull-request)
+- [Submitting a Pull Request](#submitting-a-pull-request)
+- [Releases](#releases)
+- [Testing](#testing)
+  - [Templating tests](#templating-tests)
+  - [Integration tests](#integration-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
