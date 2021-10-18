@@ -17,18 +17,17 @@ SLA of official GA features (see [supported configurations][] for more details).
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Logstash Helm Chart](#logstash-helm-chart)
-  - [Requirements](#requirements)
-  - [Installing](#installing)
-    - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-    - [Install development version using main branch](#install-development-version-using-main-branch)
-  - [Upgrading](#upgrading)
-  - [Usage notes](#usage-notes)
-  - [Configuration](#configuration)
-  - [FAQ](#faq)
-    - [How to install OSS version of Logstash?](#how-to-install-oss-version-of-logstash)
-    - [How to install plugins?](#how-to-install-plugins)
-  - [Contributing](#contributing)
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using main branch](#install-development-version-using-main-branch)
+- [Upgrading](#upgrading)
+- [Usage notes](#usage-notes)
+- [Configuration](#configuration)
+- [FAQ](#faq)
+  - [How to install OSS version of Logstash?](#how-to-install-oss-version-of-logstash)
+  - [How to install plugins?](#how-to-install-plugins)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->

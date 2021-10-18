@@ -12,22 +12,21 @@ This Helm chart is a lightweight way to configure and run our official
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Metricbeat Helm Chart](#metricbeat-helm-chart)
-  - [Requirements](#requirements)
-  - [Installing](#installing)
-    - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-    - [Install development version using main branch](#install-development-version-using-main-branch)
-  - [Upgrading](#upgrading)
-  - [Usage notes](#usage-notes)
-  - [Configuration](#configuration)
-    - [Deprecated](#deprecated)
-  - [FAQ](#faq)
-    - [How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-metricbeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
-    - [How to install OSS version of Metricbeat?](#how-to-install-oss-version-of-metricbeat)
-    - [How to use Kubelet read-only port instead of secure port?](#how-to-use-kubelet-read-only-port-instead-of-secure-port)
-    - [Why is Metricbeat host.name field set to Kubernetes pod name?](#why-is-metricbeat-hostname-field-set-to-kubernetes-pod-name)
-    - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
-  - [Contributing](#contributing)
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using main branch](#install-development-version-using-main-branch)
+- [Upgrading](#upgrading)
+- [Usage notes](#usage-notes)
+- [Configuration](#configuration)
+  - [Deprecated](#deprecated)
+- [FAQ](#faq)
+  - [How to use Metricbeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-metricbeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of Metricbeat?](#how-to-install-oss-version-of-metricbeat)
+  - [How to use Kubelet read-only port instead of secure port?](#how-to-use-kubelet-read-only-port-instead-of-secure-port)
+  - [Why is Metricbeat host.name field set to Kubernetes pod name?](#why-is-metricbeat-hostname-field-set-to-kubernetes-pod-name)
+  - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->

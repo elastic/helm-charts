@@ -11,24 +11,22 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version. 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [APM Server Helm Chart](#apm-server-helm-chart)
-  - [Requirements](#requirements)
-  - [Installing](#installing)
-    - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-    - [Install development version using main branch](#install-development-version-using-main-branch)
-  - [Upgrading](#upgrading)
-  - [Usage notes](#usage-notes)
-  - [Configuration](#configuration)
-  - [FAQ](#faq)
-    - [How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-apm-server-with-elasticsearch-with-security-authentication-and-tls-enabled)
-    - [How to install OSS version of APM Server?](#how-to-install-oss-version-of-apm-server)
-  - [Contributing](#contributing)
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using main branch](#install-development-version-using-main-branch)
+- [Upgrading](#upgrading)
+- [Usage notes](#usage-notes)
+- [Configuration](#configuration)
+- [FAQ](#faq)
+  - [How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-apm-server-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of APM Server?](#how-to-install-oss-version-of-apm-server)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->

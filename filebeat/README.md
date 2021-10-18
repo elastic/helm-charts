@@ -12,22 +12,21 @@ This Helm chart is a lightweight way to configure and run our official
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Filebeat Helm Chart](#filebeat-helm-chart)
-  - [Requirements](#requirements)
-  - [Installing](#installing)
-    - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-    - [Install development version using main branch](#install-development-version-using-main-branch)
-  - [Upgrading](#upgrading)
-  - [Usage notes](#usage-notes)
-  - [Configuration](#configuration)
-    - [Deprecated](#deprecated)
-  - [FAQ](#faq)
-    - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
-    - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
-    - [Why is Filebeat host.name field set to Kubernetes pod name?](#why-is-filebeat-hostname-field-set-to-kubernetes-pod-name)
-    - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
-    - [How to change readinessProbe for outputs which don't support testing](#how-to-change-readinessprobe-for-outputs-which-dont-support-testing)
-  - [Contributing](#contributing)
+- [Requirements](#requirements)
+- [Installing](#installing)
+  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
+  - [Install development version using main branch](#install-development-version-using-main-branch)
+- [Upgrading](#upgrading)
+- [Usage notes](#usage-notes)
+- [Configuration](#configuration)
+  - [Deprecated](#deprecated)
+- [FAQ](#faq)
+  - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
+  - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
+  - [Why is Filebeat host.name field set to Kubernetes pod name?](#why-is-filebeat-hostname-field-set-to-kubernetes-pod-name)
+  - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
+  - [How to change readinessProbe for outputs which don't support testing](#how-to-change-readinessprobe-for-outputs-which-dont-support-testing)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
