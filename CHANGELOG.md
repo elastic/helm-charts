@@ -1,5 +1,138 @@
 # Changelog
 
+## 7.15.0
+
+* 7.15.0 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1294](https://github.com/elastic/helm-charts/pull/1294) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.20  |
+| [#1232](https://github.com/elastic/helm-charts/pull/1232) | [@jmlrt](https://github.com/jmlrt) | [meta] add helm 3.6.2 support |
+| [#1116](https://github.com/elastic/helm-charts/pull/1116) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable tests  |
+| [#1115](https://github.com/elastic/helm-charts/pull/1115) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable service |
+| [#1105](https://github.com/elastic/helm-charts/pull/1105) | [@moritazy](https://github.com/moritazy) | [elasticsearch] Add namespace to helm test command in NOTES.txt |
+| [#1361](https://github.com/elastic/helm-charts/pull/1361) | [@jmlrt](https://github.com/jmlrt) | [meta] remove contributing file from 7.15 branch  |
+| [#1357](https://github.com/elastic/helm-charts/pull/1357) | [@ygel](https://github.com/ygel) | [meta] Initiate 7.15 branch  |
+| [#1337](https://github.com/elastic/helm-charts/pull/1337) | [@jmlrt](https://github.com/jmlrt) | [meta] remove support matrix + nit doc changes |
+| [#1316](https://github.com/elastic/helm-charts/pull/1316) | [@jmlrt](https://github.com/jmlrt) |  [meta] bump 7.x branch to 7.15.0-SNAPSHOT  |
+
+
+## 7.14.0
+
+* 7.14.0 as default version.
+
+
+## 6.8.18
+
+* 6.8.18 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1269](https://github.com/elastic/helm-charts/pull/1269) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add tests for k8s 1.19 (#1231)  |
+| [#1306](https://github.com/elastic/helm-charts/pull/1306) | [@jmlrt](https://github.com/jmlrt) | [meta] update support matrix (#1305)  |
+| [#1292](https://github.com/elastic/helm-charts/pull/1292) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 6.8.18-SNAPSHOT  |
+
+
+## 7.13.4
+
+* 7.13.4 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1293](https://github.com/elastic/helm-charts/pull/1293) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.4-SNAPSHOT  |
+
+
+## 7.13.3
+
+* 7.13.3 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1288](https://github.com/elastic/helm-charts/pull/1288) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.17 tests (#1286)  |
+| [#1279](https://github.com/elastic/helm-charts/pull/1279) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
+| [#1276](https://github.com/elastic/helm-charts/pull/1276) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
+| [#1273](https://github.com/elastic/helm-charts/pull/1273) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatibility (#1058)  |
+| [#1270](https://github.com/elastic/helm-charts/pull/1270) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.19 (#1231)  |
+| [#1252](https://github.com/elastic/helm-charts/pull/1252) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.3-SNAPSHOT  |
+
+
+## 6.8.17
+
+* 6.8.17 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1278](https://github.com/elastic/helm-charts/pull/1278) | [@jmlrt](https://github.com/jmlrt) | [kibana] adding extra volumes and extra volume mounts (#557) (#1264)  |
+| [#1275](https://github.com/elastic/helm-charts/pull/1275) | [@jmlrt](https://github.com/jmlrt) | [logstash] feat: add podAffinity settings (#1257)  |
+| [#1272](https://github.com/elastic/helm-charts/pull/1272) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] Added health pod name override for compatibility (#1058)  |
+| [#1216](https://github.com/elastic/helm-charts/pull/1216) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix statefulset to rollout in upgrade test (#1189)  |
+| [#1227](https://github.com/elastic/helm-charts/pull/1227) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 6.8.17-SNAPSHOT  |
+| [#1210](https://github.com/elastic/helm-charts/pull/1210) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] only configure ES_JAVA_OPTS when value is set (#1089)  |
+| [#1207](https://github.com/elastic/helm-charts/pull/1207) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix network policies http additional rules (#1111)  |
+
+
+## 7.13.2
+
+* 7.13.2 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1220](https://github.com/elastic/helm-charts/pull/1220) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove unused sidecarResources value (#1185)  |
+| [#1217](https://github.com/elastic/helm-charts/pull/1217) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix statefulset to rollout in upgrade test (#1189)  |
+| [#1214](https://github.com/elastic/helm-charts/pull/1214) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove masterTerminationFix (#1183)  |
+| [#1238](https://github.com/elastic/helm-charts/pull/1238) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.2-SNAPSHOT  |
+
+
+## 7.13.1
+
+* 7.13.1 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1211](https://github.com/elastic/helm-charts/pull/1211) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] only configure ES_JAVA_OPTS when value is set (#1089)  |
+| [#1208](https://github.com/elastic/helm-charts/pull/1208) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix network policies http additional rules (#1111)  |
+| [#1228](https://github.com/elastic/helm-charts/pull/1228) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.13.1-SNAPSHOT  |
+
+
+## 7.13.0
+
+* 7.13.0 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1205](https://github.com/elastic/helm-charts/pull/1205) | [@jmlrt](https://github.com/jmlrt) | [meta] update backport config for 7.13 branch (#1198)  |
+| [#1197](https://github.com/elastic/helm-charts/pull/1197) | [@jmlrt](https://github.com/jmlrt) | [meta] Initiate 7.13 branch  |
+| [#1194](https://github.com/elastic/helm-charts/pull/1194) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.16 tests (#1184)  |
+| [#1175](https://github.com/elastic/helm-charts/pull/1175) | [@nittyy](https://github.com/nittyy) | [7.x][logstash] Add option loadBalancerIP to service (#1099)  |
+
+
+## 6.8.16
+
+* 6.8.16 as default version.
+
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1192](https://github.com/elastic/helm-charts/pull/1192) | [@jmlrt](https://github.com/jmlrt) | [meta] remove gke 1.16 tests (#1184)  |
+| [#1176](https://github.com/elastic/helm-charts/pull/1176) | [@nittyy](https://github.com/nittyy) | [6.8][logstash] Add option loadBalancerIP to service (#1099)  |
+| [#1172](https://github.com/elastic/helm-charts/pull/1172) | [@jmlrt](https://github.com/jmlrt) | [6.8] Bump py from 1.8.0 to 1.10.0 (#1155)  |
+| [#1169](https://github.com/elastic/helm-charts/pull/1169) | [@jmlrt](https://github.com/jmlrt) | [6.8] Bump py from 1.8.0 to 1.10.0 in /helpers/helm-tester (#1154)  |
+| [#1160](https://github.com/elastic/helm-charts/pull/1160) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add helm 3.5.3 support (#1128)  |
+| [#1166](https://github.com/elastic/helm-charts/pull/1166) | [@jmlrt](https://github.com/jmlrt) | [6.8] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
+| [#1163](https://github.com/elastic/helm-charts/pull/1163) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] update backport config for 7.12 branch (#1112)  |
+| [#1157](https://github.com/elastic/helm-charts/pull/1157) | [@jmlrt](https://github.com/jmlrt) | [6.8] [elasticsearch] heap size is no longer defaulted to 1g (#1135)  |
+| [#1145](https://github.com/elastic/helm-charts/pull/1145) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] update PyYAML dependencies (#1140)  |
+| [#1142](https://github.com/elastic/helm-charts/pull/1142) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add tests for k8s 1.18 and remove 1.15 (#1141)  |
+
+
 ## 7.12.1
 
 * 7.12.1 as default version.
@@ -712,7 +845,7 @@
 | PR                                                      | Author                                           | Title                                                                     |
 |---------------------------------------------------------|--------------------------------------------------|---------------------------------------------------------------------------|
 | [#330](https://github.com/elastic/helm-charts/pull/330) | [@tusciucalecs](https://github.com/tusciucalecs) | Support fullnameOverride                                                  |
-| [#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node informations  |
+| [#321](https://github.com/elastic/helm-charts/pull/321) | [@pbecotte](https://github.com/pbecotte)         | Use host networking so that the stats have the correct node information  |
 | [#322](https://github.com/elastic/helm-charts/pull/322) | [@pbecotte](https://github.com/pbecotte)         | Use a list for extra volume mounts to match the comments and other values |
 
 ### Kibana

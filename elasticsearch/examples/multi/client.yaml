@@ -1,14 +1,24 @@
 ---
-
 clusterName: "multi"
 nodeGroup: "client"
 
-roles:
-  master: "false"
-  ingest: "false"
-  data: "false"
-  ml: "false"
-  remote_cluster_client: "false"
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: multi-master-credentials
+        key: password
+
+roles: []
 
 persistence:
+  enabled: false
+
+# For client nodes, we also need to add an empty node.roles in elasticsearch.yml
+# This is due to https://github.com/elastic/helm-charts/pull/1186#discussion_r631225687
+esConfig:
+  elasticsearch.yml: |
+    node.roles: []
+
+secret:
   enabled: false

@@ -2,11 +2,16 @@
   "upstream": "elastic/helm-charts",
   "targetBranchChoices": [
     "6.8",
-    "7.12",
+    "7.14",
+    "7.15",
     "7.x"
   ],
   "all": true,
   "prFilter": "label:need-backport",
-  "targetPRLabels": ["backport"],
-  "sourcePRLabels": ["backported"]
+  "targetPRLabels": [
+    "backport"
+  ],
+  "sourcePRLabels": [
+    "backported"
+  ]
 }

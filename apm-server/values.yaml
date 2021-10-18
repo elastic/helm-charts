@@ -9,10 +9,8 @@ apmConfig:
 
     output.elasticsearch:
       hosts: ["http://elasticsearch-master:9200"]
-      ## If you have security enabled- you'll need to add the credentials
-      ## as environment variables
-      # username: "${ELASTICSEARCH_USERNAME}"
-      # password: "${ELASTICSEARCH_PASSWORD}"
+      username: "${ELASTICSEARCH_USERNAME}"
+      password: "${ELASTICSEARCH_PASSWORD}"
       ## If SSL is enabled
       # protocol: https
       # ssl.certificate_authorities:
@@ -33,17 +31,17 @@ extraInitContainers: ""
 # Extra environment variables to append to the DaemonSet pod spec.
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
-  #  - name: 'ELASTICSEARCH_USERNAME'
-  #    valueFrom:
-  #      secretKeyRef:
-  #        name: elastic-credentials
-  #        key: username
-  #  - name: 'ELASTICSEARCH_PASSWORD'
-  #    valueFrom:
-  #      secretKeyRef:
-  #        name: elastic-credentials
-  #        key: password
+extraEnvs:
+  - name: "ELASTICSEARCH_USERNAME"
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: username
+  - name: "ELASTICSEARCH_PASSWORD"
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: password
 
 # Allows you to load environment variables from kubernetes secret or config map
 envFrom: []
@@ -53,13 +51,13 @@ envFrom: []
 #     name: config-map
 
 extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
+# - name: extras
+#   mountPath: /usr/share/extras
+#   readOnly: true
 
 extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
+# - name: extras
+#   emptyDir: {}
 
 hostAliases: []
 #- ip: "127.0.0.1"
@@ -76,7 +74,7 @@ imagePullSecrets: []
 managedServiceAccount: true
 
 podAnnotations: {}
-  # iam.amazonaws.com/role: es-cluster
+# iam.amazonaws.com/role: es-cluster
 
 # additionals labels
 labels: {}
@@ -111,19 +109,19 @@ readinessProbe:
   timeoutSeconds: 5
 
 resources:
-    requests:
-      cpu: "100m"
-      memory: "100Mi"
-    limits:
-      cpu: "1000m"
-      memory: "512Mi"
+  requests:
+    cpu: "100m"
+    memory: "100Mi"
+  limits:
+    cpu: "1000m"
+    memory: "512Mi"
 
 # Custom service account override that the pod will use
 serviceAccount: ""
 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
 serviceAccountAnnotations: {}
-  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+# eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []
@@ -159,9 +157,11 @@ autoscaling:
 
 ingress:
   enabled: false
+  className: "nginx"
+  pathtype: ImplementationSpecific
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
     - chart-example.local
@@ -176,16 +176,16 @@ service:
   port: 8200
   nodePort: ""
   annotations: {}
-    # cloud.google.com/load-balancer-type: "Internal"
-    # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
-    # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
+  # cloud.google.com/load-balancer-type: "Internal"
+  # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+  # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+  # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
 
 lifecycle: {}
-  # preStop:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-  # postStart:
-  #   exec:
-  #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+# preStop:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+# postStart:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]

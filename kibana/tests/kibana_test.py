@@ -107,6 +107,29 @@ envFrom:
     assert secretRef == {"name": "secret-name"}
 
 
+def test_adding_an_extra_volume_with_volume_mount():
+    config = """
+extraVolumes:
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts:
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+"""
+    r = helm_template(config)
+    extraVolume = r["deployment"][name]["spec"]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "emptyDir": {}} in extraVolume
+    extraVolumeMounts = r["deployment"][name]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["volumeMounts"]
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } in extraVolumeMounts
+
+
 def test_adding_image_pull_secrets():
     config = """
 imagePullSecrets:
@@ -237,19 +260,31 @@ ingress:
 
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
     assert i["rules"][0]["http"]["paths"][1]["path"] == "/testpath"
-    assert i["rules"][0]["http"]["paths"][1]["backend"]["serviceName"] == name
-    assert i["rules"][0]["http"]["paths"][1]["backend"]["servicePort"] == 8888
+    assert i["rules"][0]["http"]["paths"][1]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][0]["http"]["paths"][1]["backend"]["service"]["port"]["number"]
+        == 8888
+    )
     assert i["rules"][1]["host"] == None
     assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][1]["http"]["paths"][0]["backend"]["serviceName"] == name
-    assert i["rules"][1]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][1]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
     assert i["rules"][2]["host"] == "kibana.hello.there"
     assert i["rules"][2]["http"]["paths"][0]["path"] == "/mypath"
-    assert i["rules"][2]["http"]["paths"][0]["backend"]["serviceName"] == name
-    assert i["rules"][2]["http"]["paths"][0]["backend"]["servicePort"] == 9999
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][2]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9999
+    )
 
 
 def test_adding_a_deprecated_ingress_rule():
@@ -275,8 +310,11 @@ ingress:
 
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
 
 
 def test_adding_an_ingress_rule_wildcard():
@@ -303,8 +341,11 @@ ingress:
 
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
 
 
 def test_adding_a_deprecated_ingress_rule_wildcard():
@@ -330,8 +371,11 @@ ingress:
 
     assert i["rules"][0]["host"] == "kibana.elastic.co"
     assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["serviceName"] == name
-    assert i["rules"][0]["http"]["paths"][0]["backend"]["servicePort"] == 5601
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 5601
+    )
 
 
 def test_override_the_default_update_strategy():
@@ -733,3 +777,28 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_default_automount_sa_token():
+    config = """
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"][
+            "automountServiceAccountToken"
+        ]
+        == True
+    )
+
+
+def test_disable_automount_sa_token():
+    config = """
+automountToken: false
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"][
+            "automountServiceAccountToken"
+        ]
+        == False
+    )

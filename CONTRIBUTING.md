@@ -192,7 +192,7 @@ Just like with the rest of the stack, all versions in this helm-charts repo are
 bumped and released at the same time. There is no need to bump the version in
 your pull request.
 
-Charts are released from version branchs (example `7.7` branch).
+Charts are released from version branches (example `7.7` branch).
 
 [Elastic Helm repository][] is updated only during releases.
 
@@ -219,7 +219,7 @@ YAML being generated:
 It is possible to run all of the tests and linting inside of a Docker container
 using `make test`
 
-Note that templating tests are formated using [Black][], you should run
+Note that templating tests are formatted using [Black][], you should run
 `make lint-python` (equivalent to `black --diff --check .` ) to validate them or
 `black .` to apply formatting before submitting a pull request which will modify
 them.

@@ -1,5 +1,4 @@
 ---
-
 daemonset:
   # Annotations to apply to the daemonset
   annotations: {}
@@ -12,7 +11,17 @@ daemonset:
   envFrom: []
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: []
+  extraEnvs:
+    - name: "ELASTICSEARCH_USERNAME"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: username
+    - name: "ELASTICSEARCH_PASSWORD"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: password
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
   extraVolumes: []
@@ -78,6 +87,8 @@ daemonset:
             system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
@@ -113,7 +124,17 @@ deployment:
   envFrom: []
   # - configMapRef:
   #     name: config-secret
-  extraEnvs: []
+  extraEnvs:
+    - name: "ELASTICSEARCH_USERNAME"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: username
+    - name: "ELASTICSEARCH_PASSWORD"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: password
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
   # Allows you to add any config files in /usr/share/metricbeat
@@ -145,6 +166,8 @@ deployment:
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
       output.elasticsearch:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
@@ -215,37 +238,37 @@ readinessProbe:
 managedServiceAccount: true
 
 clusterRoleRules:
-- apiGroups: [""]
-  resources:
-  - nodes
-  - namespaces
-  - events
-  - pods
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["extensions"]
-  resources:
-  - replicasets
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["apps"]
-  resources:
-  - statefulsets
-  - deployments
-  - replicasets
-  verbs: ["get", "list", "watch"]
-- apiGroups: [""]
-  resources:
-  - nodes/stats
-  verbs: ["get"]
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - namespaces
+      - events
+      - pods
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["extensions"]
+    resources:
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources:
+      - statefulsets
+      - deployments
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources:
+      - nodes/stats
+    verbs: ["get"]
 
 podAnnotations: {}
-  # iam.amazonaws.com/role: es-cluster
+# iam.amazonaws.com/role: es-cluster
 
 # Custom service account override that the pod will use
 serviceAccount: ""
 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
 serviceAccountAnnotations: {}
-  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
+# eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 
 # How long to wait for metricbeat pods to stop gracefully
 terminationGracePeriod: 30

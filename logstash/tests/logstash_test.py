@@ -557,6 +557,28 @@ nodeAffinity:
     }
 
 
+def test_adding_a_pod_affinity_rule():
+    config = """
+podAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+  - labelSelector:
+      matchExpressions:
+      - key: app
+        operator: In
+        values:
+        - elasticsearch
+    topologyKey: kubernetes.io/hostname
+"""
+
+    r = helm_template(config)
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["affinity"]["podAffinity"][
+            "requiredDuringSchedulingIgnoredDuringExecution"
+        ][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
+
+
 def test_adding_in_logstash_config():
     config = """
 logstashConfig:
@@ -910,20 +932,22 @@ ingress:
     - host: logstash.local
       paths:
         - path: /logs
-          servicePort: 8080
+          servicePort: 9600
 """
     r = helm_template(config)
     s = r["ingress"][name]
     assert s["metadata"]["name"] == name
-    assert len(s["spec"]["rules"]) == 1
-    assert s["spec"]["rules"][0] == {
-        "host": "logstash.local",
-        "http": {
-            "paths": [
-                {"path": "/logs", "backend": {"serviceName": name, "servicePort": 8080}}
-            ]
-        },
-    }
+    assert s["spec"]["rules"][0]["host"] == "logstash.local"
+    assert s["spec"]["rules"][0]["http"]["paths"][0]["path"] == "/logs"
+    assert (
+        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    )
+    assert (
+        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"][
+            "number"
+        ]
+        == 9600
+    )
 
 
 def test_hostaliases():

@@ -74,6 +74,7 @@ spec:
       {{- else if not (eq .Values.rbac.serviceAccountName "") }}
       serviceAccountName: {{ .Values.rbac.serviceAccountName | quote }}
       {{- end }}
+      automountServiceAccountToken: {{ .Values.rbac.automountToken }}
       {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 6 }}
@@ -230,6 +231,13 @@ spec:
               - -c
               - |
                 #!/usr/bin/env bash -e
+
+                # Exit if ELASTIC_PASSWORD in unset
+                if [ -z "${ELASTIC_PASSWORD}" ]; then
+                  echo "ELASTIC_PASSWORD variable is missing, exiting"
+                  exit 1
+                fi
+
                 # If the node is starting up wait for the cluster to be ready (request params: "{{ .Values.clusterHealthCheckParams }}" )
                 # Once it has started only check that the node itself is responding
                 START_FILE=/tmp/.es_start_file
@@ -247,9 +255,7 @@ spec:
                     set -- "$@" $args
                   fi
 
-                  if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
-                    set -- "$@" -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
-                  fi
+                  set -- "$@" -u "elastic:${ELASTIC_PASSWORD}"
 
                   curl --output /dev/null -k "$@" "{{ .Values.protocol }}://127.0.0.1:{{ .Values.httpPort }}${path}"
                 }
@@ -295,15 +301,12 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          {{- if eq .Values.roles.master "true" }}
-          {{- if ge (int (include "elasticsearch.esMajorVersion" .)) 7 }}
+          {{- if has "master" .Values.roles }}
           - name: cluster.initial_master_nodes
             value: "{{ template "elasticsearch.endpoints" . }}"
-          {{- else }}
-          - name: discovery.zen.minimum_master_nodes
-            value: "{{ .Values.minimumMasterNodes }}"
           {{- end }}
-          {{- end }}
+          - name: node.roles
+            value: "{{ template "elasticsearch.roles" . }}"
           {{- if lt (int (include "elasticsearch.esMajorVersion" .)) 7 }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ template "elasticsearch.masterService" . }}-headless"
@@ -315,13 +318,16 @@ spec:
             value: "{{ .Values.clusterName }}"
           - name: network.host
             value: "{{ .Values.networkHost }}"
+          {{- if .Values.secret.enabled }}
+          - name: ELASTIC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "elasticsearch.uname" . }}-credentials
+                key: password
+          {{- end }}
           {{- if .Values.esJavaOpts  }}
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
-          {{- end }}
-          {{- range $role, $enabled := .Values.roles }}
-          - name: node.{{ $role }}
-            value: "{{ $enabled }}"
           {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
@@ -362,64 +368,6 @@ spec:
 {{ toYaml .Values.extraVolumeMounts | indent 10 }}
         {{- end }}
         {{- end }}
-      {{- if .Values.masterTerminationFix }}
-      {{- if eq .Values.roles.master "true" }}
-      # This sidecar will prevent slow master re-election
-      # https://github.com/elastic/helm-charts/issues/63
-      - name: elasticsearch-master-graceful-termination-handler
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-        command:
-        - "sh"
-        - -c
-        - |
-          #!/usr/bin/env bash
-          set -eo pipefail
-
-          http () {
-              local path="${1}"
-              if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
-                BASIC_AUTH="-u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
-              else
-                BASIC_AUTH=''
-              fi
-              curl -XGET -s -k --fail ${BASIC_AUTH} {{ .Values.protocol }}://{{ template "elasticsearch.masterService" . }}:{{ .Values.httpPort }}${path}
-          }
-
-          cleanup () {
-            while true ; do
-              local master="$(http "/_cat/master?h=node" || echo "")"
-              if [[ $master == "{{ template "elasticsearch.masterService" . }}"* && $master != "${NODE_NAME}" ]]; then
-                echo "This node is not master."
-                break
-              fi
-              echo "This node is still master, waiting gracefully for it to step down"
-              sleep 1
-            done
-
-            exit 0
-          }
-
-          trap cleanup SIGTERM
-
-          sleep infinity &
-          wait $!
-        resources:
-{{ toYaml .Values.sidecarResources | indent 10 }}
-        env:
-          - name: NODE_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-        {{- if .Values.extraEnvs }}
-{{ toYaml .Values.extraEnvs | indent 10 }}
-        {{- end }}
-        {{- if .Values.envFrom }}
-        envFrom:
-{{ toYaml .Values.envFrom | indent 10 }}
-        {{- end }}
-      {{- end }}
-      {{- end }}
 {{- if .Values.lifecycle }}
         lifecycle:
 {{ toYaml .Values.lifecycle | indent 10 }}

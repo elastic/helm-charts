@@ -1,11 +1,22 @@
 ---
-
 clusterName: "multi"
 nodeGroup: "data"
 
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: multi-master-credentials
+        key: password
+
 roles:
-  master: "false"
-  ingest: "true"
-  data: "true"
-  ml: "false"
-  remote_cluster_client: "false"
+  - data
+  - data_content
+  - data_hot
+  - data_warm
+  - data_cold
+  - data_frozen
+  - ingest
+
+secret:
+  enabled: false

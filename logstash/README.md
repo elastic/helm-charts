@@ -93,7 +93,7 @@ modified in place while using ConfigMap bind-mount the same file (more details
 in this [note][]).
 * When overriding `logstash.yml`, `http.host: 0.0.0.0` should always be included
 to make default probes work. If restricting HTTP API to 127.0.0.1 is required by
-using `http.host: 127.0.0.1`, default probes should be disabled or overrided
+using `http.host: 127.0.0.1`, default probes should be disabled or overridden
 (see [values.yaml][] for the good syntax).
 * An ingress is provided that can be used to expose the HTTP port. This can be
 useful for the [http input plugin][], for instance.
@@ -126,11 +126,12 @@ useful for the [http input plugin][], for instance.
 | `logstashConfig`          | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties` See [values.yaml][] for an example of the formatting                                                              | `{}`                                  |
 | `logstashJavaOpts`        | Java options for Logstash. This is where you should configure the JVM heap size                                                                                                                                                      | `-Xmx1g -Xms1g`                       |
 | `logstashPipeline`        | Allows you to add any pipeline files in `/usr/share/logstash/pipeline/`                                                                                                                                                              | `{}`                                  |
-| `logstashPatternDir`      | Allows you to define a custom directory to store patten files | `/usr/share/logstash/patterns/` |
+| `logstashPatternDir`      | Allows you to define a custom directory to store pattern files | `/usr/share/logstash/patterns/` |
 | `logstashPattern`        | Allows you to add any pattern files in `logstashPatternDir` | `{}` |
 | `maxUnavailable`          | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                          | `1`                                   |
 | `nameOverride`            | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                                                                            | `""`                                  |
 | `nodeAffinity`            | Value for the [node affinity settings][]                                                                                                                                                                                             | `{}`                                  |
+| `podAffinity`             | Value for the [pod affinity settings][]                                                                                                                                                                                             | `{}`                                  |
 | `nodeSelector`            | Configurable [nodeSelector][] so that you can target specific nodes for your Logstash cluster                                                                                                                                        | `{}`                                  |
 | `persistence`             | Enables a persistent volume for Logstash data                                                                                                                                                                                        | see [values.yaml][]                   |
 | `podAnnotations`          | Configurable [annotations][] applied to all Logstash pods                                                                                                                                                                            | `{}`                                  |
@@ -218,7 +219,8 @@ about our development and testing process.
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
 [logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-[node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
+[node affinity settings]: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
+[pod affinity settings]: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#docker-env-config
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
