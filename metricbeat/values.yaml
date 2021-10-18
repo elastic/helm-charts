@@ -259,6 +259,10 @@ clusterRoleRules:
     resources:
       - nodes/stats
     verbs: ["get"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources:
+      - leases
+    verbs: ["create", "get", "list", "update"]
 
 podAnnotations: {}
 # iam.amazonaws.com/role: es-cluster
