@@ -35,6 +35,11 @@ daemonset:
   # such as filebeat.yml for daemonset
   filebeatConfig:
     filebeat.yml: |
+      filebeat.config:
+        modules:
+          enabled: true
+          path: ${path.config}/modules.d/*.yml
+
       filebeat.inputs:
       - type: container
         paths:
@@ -51,6 +56,15 @@ daemonset:
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
+
+  filebeatModules: {}
+  #  system.yml: |
+  #    - module: system
+  #      syslog:
+  #        enabled: true
+  #      auth:
+  #        enabled: true
+
   # Only used when updateStrategy is set to "RollingUpdate"
   maxUnavailable: 1
   nodeSelector: {}
@@ -110,6 +124,11 @@ deployment:
   # such as filebeat.yml for deployment
   filebeatConfig:
     filebeat.yml: |
+      filebeat.config:
+        modules:
+          enabled: true
+          path: ${path.config}/modules.d/*.yml
+
       filebeat.inputs:
         - type: log
           paths:
@@ -120,6 +139,20 @@ deployment:
         hosts: "${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}"
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
+
+  filebeatModules: {} 
+  #  system.yml: |
+  #    - module: system
+  #      syslog:
+  #        enabled: true
+  #      auth:
+  #        enabled: true
+ 
+  #  elasticsearch.yml: |
+  #    - module: elasticsearch
+  #      server:
+  #        enabled: true    
+
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values

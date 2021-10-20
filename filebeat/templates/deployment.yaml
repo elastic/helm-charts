@@ -82,6 +82,12 @@ spec:
         configMap:
           defaultMode: 0600
           name: {{ template "filebeat.fullname" . }}-deployment-config
+      {{- end}}
+      {{- if .Values.deployment.filebeatModules }}
+      - name: filebeat-modules
+        configMap:
+          defaultMode: 0600
+          name: {{ template "filebeat.fullname" . }}-deployment-modules-config
       {{- end }}
       {{- if .Values.extraVolumes | default .Values.deployment.extraVolumes }}
 {{ toYaml ( .Values.extraVolumes | default .Values.deployment.extraVolumes ) | indent 6 }}
@@ -146,6 +152,11 @@ spec:
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
+        {{- end}}
+        {{- if .Values.deployment.filebeatModules }}
+        - name: filebeat-modules
+          mountPath: /usr/share/filebeat/modules.d
+          readOnly: true
         {{- end }}
         {{- end }}
         {{- if .Values.extraVolumeMounts | default .Values.deployment.extraVolumeMounts }}

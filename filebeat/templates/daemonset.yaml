@@ -96,6 +96,12 @@ spec:
           defaultMode: 0600
           name: {{ template "filebeat.fullname" . }}-daemonset-config
       {{- end }}
+      {{- if .Values.daemonset.filebeatModules }}
+      - name: filebeat-modules
+        configMap:
+          defaultMode: 0600
+          name: {{ template "filebeat.fullname" . }}-daemonset-modules-config
+      {{- end }}
       - name: data
         hostPath:
           path: {{ .Values.hostPathRoot }}/{{ template "filebeat.fullname" . }}-{{ .Release.Namespace }}-data
@@ -177,6 +183,11 @@ spec:
           mountPath: /usr/share/filebeat/{{ $path }}
           readOnly: true
           subPath: {{ $path }}
+        {{- end }}
+        {{- if .Values.daemonset.filebeatModules }}
+        - name: filebeat-modules
+          mountPath: /usr/share/filebeat/modules.d
+          readOnly: true
         {{- end }}
         {{- end }}
         - name: data
