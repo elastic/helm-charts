@@ -23,5 +23,5 @@ You can also run [goss integration tests][] using `make test`
 
 
 [apm server oss]: https://www.elastic.co/downloads/apm-oss
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/default/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/oss/test/goss.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/default/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples/oss/test/goss.yaml

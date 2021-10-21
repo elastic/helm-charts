@@ -18,4 +18,4 @@ then upgrade it.
 You can also run [goss integration tests][] using `make test`.
 
 
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples/upgrade/test/goss.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/filebeat/examples/upgrade/test/goss.yaml
