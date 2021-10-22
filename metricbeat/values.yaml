@@ -24,6 +24,9 @@ daemonset:
           key: password
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
+  extraArgs:
+  # - --d
+  # - "*"
   extraVolumes: []
   # - name: extras
   #   emptyDir: {}
@@ -137,6 +140,9 @@ deployment:
           key: password
   #  - name: MY_ENVIRONMENT_VAR
   #    value: the_value_goes_here
+  extraArgs:
+  # - --d
+  # - "*"
   # Allows you to add any config files in /usr/share/metricbeat
   extraVolumes: []
   # - name: extras

@@ -122,6 +122,9 @@ spec:
         - "-E"
         - "http.enabled=true"
         - "--system.hostfs=/hostfs"
+      {{- range .Values.daemonset.extraArgs }}
+        - {{ . | quote }}
+      {{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:

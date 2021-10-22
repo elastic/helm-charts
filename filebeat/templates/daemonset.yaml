@@ -138,6 +138,9 @@ spec:
         - "-e"
         - "-E"
         - "http.enabled=true"
+        {{- range .Values.daemonset.extraArgs }}
+          - {{ . | quote }}
+        {{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:

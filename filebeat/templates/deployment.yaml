@@ -112,6 +112,9 @@ spec:
           - "-e"
           - "-E"
           - "http.enabled=true"
+        {{- range .Values.deployment.extraArgs }}
+          - {{ . | quote }}
+        {{- end }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:

@@ -22,6 +22,10 @@ daemonset:
         secretKeyRef:
           name: elasticsearch-master-credentials
           key: password
+  # Allows you to add extra arguments to execute beats
+  extraArgs: 
+  # - --d
+  # - "*"
   # Allows you to add any config files in /usr/share/filebeat
   extraVolumes: []
   # - name: extras
@@ -83,7 +87,7 @@ deployment:
   labels: {}
   affinity: {}
   # Include the deployment
-  enabled: false
+  enabled: true
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
@@ -99,6 +103,10 @@ deployment:
         secretKeyRef:
           name: elasticsearch-master-credentials
           key: password
+  # Allows you to add extra arguments
+  extraArgs:
+  # - --d
+  # - "*"
   # Allows you to add any config files in /usr/share/filebeat
   extraVolumes: []
   # - name: extras
