@@ -1,5 +1,5 @@
 dependencies:
   - name: 'kube-state-metrics'
-    version: '2.4.1'
-    repository: '@stable'
+    version: '3.4.2'
+    repository: '@prometheus-community'
     condition: kube_state_metrics.enabled
