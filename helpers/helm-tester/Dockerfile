@@ -6,7 +6,7 @@ RUN wget --no-verbose https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.
     tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     mv linux-amd64/helm /usr/local/bin/ && \
     mkdir --parents --mode=777 /.config/helm && \
-    HOME=/ helm repo add stable https://charts.helm.sh/stable && \
+    HOME=/ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
     rm -rf helm-v${HELM_VERSION}-linux-amd64.tar.gz linux-amd64
 
 COPY requirements.txt /usr/src/app/

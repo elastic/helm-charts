@@ -49,8 +49,7 @@ See [supported configurations][] for more details.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - Add the Prometheus Community Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-`
+  - Add the Prometheus Community Helm charts repo (required for kube-state-metrics chart dependency): `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
   - with Helm 3: `helm install metricbeat elastic/metricbeat`
   - with Helm 2 (deprecated): `helm install --name metricbeat elastic/metricbeat`
 
@@ -134,7 +133,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
 | `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `8.0.0-SNAPSHOT`                     |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
-| `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/helm/charts/tree/main/stable/kube-state-metrics) as a dependency                                                             | `true`                               |
+| `kube_state_metrics.enabled`   | Install [kube-state-metrics](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics) as a dependency                                                             | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                  |
 | `managedServiceAccount`        | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles                         | `true`                               |
