@@ -4,6 +4,7 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: "{{ template "logstash.fullname" . }}-pdb"
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"

@@ -4,6 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: "{{ template "logstash.fullname" . }}"
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"

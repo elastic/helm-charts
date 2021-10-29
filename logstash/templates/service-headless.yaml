@@ -3,6 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: "{{ template "logstash.fullname" . }}-headless"
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"
