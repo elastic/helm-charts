@@ -3,6 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ template "filebeat.serviceAccount" . }}-cluster-role
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

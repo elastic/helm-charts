@@ -5,6 +5,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "filebeat.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

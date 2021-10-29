@@ -4,6 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "filebeat.fullname" . }}-config
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -22,6 +23,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "filebeat.fullname" . }}-daemonset-config
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -40,6 +42,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "filebeat.fullname" . }}-deployment-config
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "filebeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
