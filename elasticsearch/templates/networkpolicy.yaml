@@ -3,6 +3,7 @@ kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
   name: {{ template "elasticsearch.uname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

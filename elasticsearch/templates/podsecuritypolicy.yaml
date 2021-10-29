@@ -4,6 +4,7 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ default $fullName .Values.podSecurityPolicy.name | quote }}
+  namespace: {{ .Release.Namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

@@ -8,6 +8,7 @@ metadata:
 {{- else }}
   name: {{ template "elasticsearch.uname" . }}
 {{- end }}
+  namespace: {{ .Release.Namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
