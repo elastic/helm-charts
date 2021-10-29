@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ template "metricbeat.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

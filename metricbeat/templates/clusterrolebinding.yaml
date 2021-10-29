@@ -3,6 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ template "metricbeat.serviceAccount" . }}-cluster-role-binding
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

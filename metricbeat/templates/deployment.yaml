@@ -5,6 +5,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: '{{ template "metricbeat.fullname" . }}-metrics'
+  namespace: {{ .Release.Namespace }}
   labels:
     app: '{{ template "metricbeat.fullname" . }}-metrics'
     chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
