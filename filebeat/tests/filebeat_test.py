@@ -1357,3 +1357,48 @@ deployment:
     assert "hostAliases" not in r["daemonset"][name]["spec"]["template"]["spec"]
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_adding_in_filebeat_config_with_variables():
+    config = """
+helloValue: world
+keyValue: "sample value"
+daemonset:
+  filebeatConfig:
+    filebeat.yml: |
+      key: {{ .Values.keyValue | quote }}
+    daemonset-config.yml: |
+      hello = {{ .Values.helloValue | quote }}
+
+deployment:
+  enabled: true
+  filebeatConfig:
+    filebeat.yml: |
+      key: {{ .Values.keyValue | quote }}
+    deployment-config.yml: |
+      hello = {{ .Values.helloValue | quote }}
+
+filebeatConfig:
+  filebeat.yml: |
+    key: {{ .Values.keyValue | quote }}
+"""
+    r = helm_template(config)
+    cfg = r["configmap"]
+
+    assert 'key: "sample value"' in cfg[name + "-config"]["data"]["filebeat.yml"]
+    assert (
+        'key: "sample value"' in cfg[name + "-daemonset-config"]["data"]["filebeat.yml"]
+    )
+    assert (
+        'key: "sample value"'
+        in cfg[name + "-deployment-config"]["data"]["filebeat.yml"]
+    )
+
+    assert (
+        'hello = "world"'
+        in cfg[name + "-daemonset-config"]["data"]["daemonset-config.yml"]
+    )
+    assert (
+        'hello = "world"'
+        in cfg[name + "-deployment-config"]["data"]["deployment-config.yml"]
+    )

@@ -12,7 +12,7 @@ metadata:
 data:
 {{- range $path, $config := .Values.filebeatConfig }}
   {{ $path }}: |
-{{ $config | indent 4 -}}
+{{ tpl $config $ | indent 4 -}}
 {{- end -}}
 {{- end -}}
 
@@ -30,7 +30,7 @@ metadata:
 data:
 {{- range $path, $config := .Values.daemonset.filebeatConfig }}
   {{ $path }}: |
-{{ $config | indent 4 -}}
+{{ tpl $config $ | indent 4 -}}
 {{- end -}}
 {{- end -}}
 
@@ -48,6 +48,6 @@ metadata:
 data:
 {{- range $path, $config := .Values.deployment.filebeatConfig }}
   {{ $path }}: |
-{{ $config | indent 4 -}}
+{{ tpl $config $ | indent 4 -}}
 {{- end -}}
 {{- end -}}
