@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "kibana.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels: {{ include "kibana.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicas }}
