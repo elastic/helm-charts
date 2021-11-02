@@ -136,6 +136,12 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+{{- if semverCompare ">=1.7.0-alpha.1" .Capabilities.KubeVersion.GitVersion }}
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+                fieldPath: status.hostIP
+{{- end }}              
 {{- if .Values.extraEnvs | default .Values.daemonset.extraEnvs }}
 {{ toYaml ( .Values.extraEnvs | default .Values.daemonset.extraEnvs ) | indent 8 }}
 {{- end }}
