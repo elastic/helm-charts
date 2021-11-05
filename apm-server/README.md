@@ -1,6 +1,6 @@
 # APM Server Helm Chart
 
-[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+master.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+master/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
+[![Build Status](https://img.shields.io/jenkins/s/https/devops-ci.elastic.co/job/elastic+helm-charts+main.svg)](https://devops-ci.elastic.co/job/elastic+helm-charts+main/) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/elastic)](https://artifacthub.io/packages/search?repo=elastic)
 
 This Helm chart is a lightweight way to configure and run our official
 [APM Server Docker image][].
@@ -11,22 +11,20 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+**Warning**: This branch is used for development, please use the latest [7.x][] release for released version. 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using master branch](#install-development-version-using-master-branch)
+  - [Install development version using main branch](#install-development-version-using-main-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
 - [FAQ](#faq)
   - [How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-apm-server-with-elasticsearch-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of APM Server?](#how-to-install-oss-version-of-apm-server)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -54,7 +52,7 @@ See [supported configurations][] for more details.
   - with Helm 2 (deprecated): `helm install --name apm-server elastic/apm-server`
 
 
-### Install development version using master branch
+### Install development version using main branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
@@ -133,14 +131,6 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of APM Server?
-
-Deploying OSS version of APM Server can be done by setting `image` value to
-[APM Server OSS Docker image][]
-
-An example of APM Server deployment using OSS version can be found in
-[examples/oss][].
-
 
 ## Contributing
 
@@ -149,19 +139,17 @@ about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
 [7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/apm-server/README.md
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
-[apm server oss docker image]: https://www.docker.elastic.co/r/apm/apm-server-oss
-[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/oss
-[examples/security]: https://github.com/elastic/helm-charts/tree/master/apm-server/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples
+[examples/security]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples/security
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
@@ -178,7 +166,7 @@ about our development and testing process.
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
+[supported configurations]: https://github.com/elastic/helm-charts/tree/main/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-[values.yaml]: https://github.com/elastic/helm-charts/tree/master/apm-server/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/main/apm-server/values.yaml

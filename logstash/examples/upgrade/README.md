@@ -16,4 +16,4 @@ then upgrade it.
 You can also run [goss integration tests][] using `make test`.
 
 
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/upgrade/test/goss.yaml
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/logstash/examples/upgrade/test/goss.yaml

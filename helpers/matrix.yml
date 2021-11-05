@@ -34,7 +34,6 @@ LOGSTASH_SUITE:
   - upgrade
 APM_SERVER_SUITE:
   - default
-  - oss
   - security
   - upgrade
 KUBERNETES_VERSION:
