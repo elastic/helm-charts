@@ -69,7 +69,7 @@ official helm-charts repo, which we'll refer to in later code snippets.
 
 ### Branching
 
-* All work on the next major release (`8.0.0`) goes into master.
+* All work on the next major release (`8.0.0`) goes into main.
 * Past major release branches are named `{majorVersion}.x`. They contain work
 that will go into the next minor release. For example, if the next minor release
 is `7.8.0`, work for it should go into the `7.x` branch.
@@ -96,24 +96,24 @@ push a rebased branch remotely will be rejected by git, and you'll be prompted
 to do a `pull`, which is not at all what you should do (this will really mess up
 your branch's history).
 
-Here's how you should rebase master onto your branch, and how to fix merge
+Here's how you should rebase main onto your branch, and how to fix merge
 conflicts when they arise.
 
-First, make sure master is up-to-date.
+First, make sure main is up-to-date.
 
 ```shell
-git checkout master
+git checkout main
 git fetch upstream
-git rebase upstream/master
+git rebase upstream/main
 ```
 
-Then, check out your branch and rebase master on top of it, which will apply all
-of the new commits on master to your branch, and then apply all of your branch's
+Then, check out your branch and rebase main on top of it, which will apply all
+of the new commits on main to your branch, and then apply all of your branch's
 new commits after that.
 
 ```shell
 git checkout name-of-your-branch
-git rebase master
+git rebase main
 ```
 
 You want to make sure there are no merge conflicts. If there are merge
@@ -124,7 +124,7 @@ You can use `git status` to see which files contain conflicts. They'll be the
 ones that aren't staged for commit. Open those files, and look for where git has
 marked the conflicts. Resolve the conflicts so that the changes you want to make
 to the code have been incorporated in a way that doesn't destroy work that's
-been done in master. Refer to master's commit history on GitHub if you need to
+been done in main. Refer to main's commit history on GitHub if you need to
 gain a better understanding of how code is conflicting and how best to resolve
 it.
 
@@ -176,8 +176,8 @@ Push your local changes to your forked copy of the repository and submit a Pull
 Request. In the Pull Request, describe what your changes do and mention the
 number of the issue where discussion has taken place, e.g., `Closes #123`.
 
-Always submit your pull request against `master` unless the bug is only present in an
-older version. If the bug affects both master and another branch say so in your
+Always submit your pull request against `main` unless the bug is only present in an
+older version. If the bug affects both main and another branch say so in your
 pull request.
 
 Then sit back and wait. There will probably be discussion about the Pull Request
@@ -259,11 +259,11 @@ make goss
 [elastic helm repository]: https://helm.elastic.co
 [github forking model]: https://help.github.com/articles/fork-a-repo/
 [goss]: https://github.com/aelsabbahy/goss/blob/master/docs/manual.md
-[integration test example]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/default/test/goss.yaml
+[integration test example]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/default/test/goss.yaml
 [integration tests section]: #integration-tests
 [pytest]: https://docs.pytest.org/en/latest/
 [serverspec]: https://serverspec.org
-[templating test example]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/tests/elasticsearch_test.py
+[templating test example]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/tests/elasticsearch_test.py
 [templating tests section]: #templating-tests
 [releases section]: #releases
-[requirements.txt]: https://github.com/elastic/helm-charts/blob/master/requirements.txt
+[requirements.txt]: https://github.com/elastic/helm-charts/blob/main/requirements.txt

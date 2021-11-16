@@ -23,6 +23,6 @@ This example deploy Logstash 8.0.0-SNAPSHOT which connects to Elasticsearch usin
 You can also run [goss integration tests][] using `make test`
 
 
-[elasticsearch helm chart with security]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/security/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/security/test/goss.yaml
-[values]: https://github.com/elastic/helm-charts/tree/master/logstash/examples/security/values.yaml
+[elasticsearch helm chart with security]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/security/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/logstash/examples/security/test/goss.yaml
+[values]: https://github.com/elastic/helm-charts/tree/main/logstash/examples/security/values.yaml
