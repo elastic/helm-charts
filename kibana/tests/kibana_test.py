@@ -802,3 +802,15 @@ automountToken: false
         ]
         == False
     )
+
+
+def test_adding_annotations():
+    config = """
+ annotations:
+   iam.amazonaws.com/role: es-role
+ """
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["metadata"]["annotations"]["iam.amazonaws.com/role"]
+        == "es-role"
+    )
