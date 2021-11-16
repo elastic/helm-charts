@@ -6,7 +6,7 @@ daemonset:
   labels: {}
   affinity: {}
   # Include the daemonset
-  enabled: true
+  enabled: false
   # Extra environment variables for Filebeat container.
   envFrom: []
   # - configMapRef:
