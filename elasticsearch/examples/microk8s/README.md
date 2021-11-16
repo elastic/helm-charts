@@ -28,5 +28,5 @@ The following MicroK8S [addons][] need to be enabled:
 
 
 [addons]: https://microk8s.io/docs/addons
-[custom values]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/microk8s/values.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/microk8s/values.yaml
 [MicroK8S]: https://microk8s.io

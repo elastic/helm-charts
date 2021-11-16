@@ -570,7 +570,7 @@
 * Kibana chart is moving to GA
 * Filebeat chart is moving to GA
 * Metricbeat chart is moving to GA
-* Using [new branching model](https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md#branching) in [#541](https://github.com/elastic/helm-charts/pull/541) [@mgreau](https://github.com/mgreau)
+* Using [new branching model](https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md#branching) in [#541](https://github.com/elastic/helm-charts/pull/541) [@mgreau](https://github.com/mgreau)
 * Helm 2.16.7 support in [#607](https://github.com/elastic/helm-charts/pull/607) [@jmlrt](https://github.com/jmlrt)
 * Docs improvements in [#593](https://github.com/elastic/helm-charts/pull/593) and [#598](https://github.com/elastic/helm-charts/pull/598) [@jmlrt](https://github.com/jmlrt)
 * Tests with SNAPSHOT Docker images in [#581](https://github.com/elastic/helm-charts/pull/581) [@mgreau](https://github.com/mgreau)
@@ -1107,7 +1107,7 @@
 ## 7.0.1-alpha1 - 2019/05/01
 
 * 7.0.1 as the default stack version
-* [Contributing guide](https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md), [release process](https://github.com/elastic/helm-charts/blob/master/helpers/release.md), [changelog](https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md) and [issue templates](https://github.com/elastic/helm-charts/tree/master/.github/ISSUE_TEMPLATE) added in [#111](https://github.com/elastic/helm-charts/pull/111)
+* [Contributing guide](https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md), [release process](https://github.com/elastic/helm-charts/blob/main/helpers/release.md), [changelog](https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md) and [issue templates](https://github.com/elastic/helm-charts/tree/main/.github/ISSUE_TEMPLATE) added in [#111](https://github.com/elastic/helm-charts/pull/111)
 * Automated testing for Kubernetes 1.10 dropped because it is no longer available in GKE
 * Helm client version bumped to 2.13.1
 
