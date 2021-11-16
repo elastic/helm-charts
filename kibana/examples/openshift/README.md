@@ -20,7 +20,7 @@ This example deploy Kibana 8.0.0-SNAPSHOT on [OpenShift][] using [custom values]
 You can also run [goss integration tests][] using `make test`
 
 
-[custom values]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift/values.yaml
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/openshift/test/goss.yaml
+[custom values]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/openshift/values.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/openshift/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/openshift/test/goss.yaml
 [openshift]: https://www.openshift.com/

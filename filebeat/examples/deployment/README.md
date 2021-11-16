@@ -22,6 +22,6 @@ This example deploy Filebeat 8.0.0-SNAPSHOT using [default values][] as a Kubern
 You can also run [goss integration tests][] using `make test`
 
 
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/examples/default/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/master/filebeat/examples/deployment/test/goss.yaml
-[default values]: https://github.com/elastic/helm-charts/tree/master/filebeat/values.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/default/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/main/filebeat/examples/deployment/test/goss.yaml
+[default values]: https://github.com/elastic/helm-charts/tree/main/filebeat/values.yaml

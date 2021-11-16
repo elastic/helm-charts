@@ -160,8 +160,8 @@ client nodes:
 working correctly you can cleanup leftover resources from your old cluster.
 
 [basic license]: https://www.elastic.co/subscriptions
-[data.yaml]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/migration/data.yaml
+[data.yaml]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/migration/data.yaml
 [helm/charts]: https://github.com/helm/charts/tree/master/stable/elasticsearch
-[master.yaml]: https://github.com/elastic/helm-charts/blob/master/elasticsearch/examples/migration/master.yaml
+[master.yaml]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/migration/master.yaml
 [restoring to a different cluster guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-snapshots.html#_restoring_to_a_different_cluster
 [rolling upgrades guide]: https://www.elastic.co/guide/en/elasticsearch/reference/6.8/rolling-upgrades.html
