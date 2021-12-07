@@ -69,10 +69,10 @@ spec:
         {{- if .Values.fsGroup }}
         fsGroup: {{ .Values.fsGroup }} # Deprecated value, please use .Values.podSecurityContext.fsGroup
         {{- end }}
-      {{- if .Values.rbac.create }}
-      serviceAccountName: "{{ template "elasticsearch.uname" . }}"
-      {{- else if not (eq .Values.rbac.serviceAccountName "") }}
+      {{- if not (eq .Values.rbac.serviceAccountName "") }}
       serviceAccountName: {{ .Values.rbac.serviceAccountName | quote }}
+      {{- else if .Values.rbac.create }}
+      serviceAccountName: "{{ template "elasticsearch.uname" . }}"
       {{- end }}
       automountServiceAccountToken: {{ .Values.rbac.automountToken }}
       {{- with .Values.tolerations }}
