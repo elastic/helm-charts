@@ -227,7 +227,7 @@ spec:
         readinessProbe:
           exec:
             command:
-              - sh
+              - bash
               - -c
               - |
                 #!/usr/bin/env bash -e
