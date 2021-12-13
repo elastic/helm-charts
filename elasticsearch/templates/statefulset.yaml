@@ -175,10 +175,9 @@ spec:
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command:
-        - sh
+        - bash
         - -c
         - |
-          #!/usr/bin/env bash
           set -euo pipefail
 
           elasticsearch-keystore create
@@ -230,7 +229,7 @@ spec:
               - bash
               - -c
               - |
-                #!/usr/bin/env bash -e
+                #!set -e
 
                 # Exit if ELASTIC_PASSWORD in unset
                 if [ -z "${ELASTIC_PASSWORD}" ]; then
