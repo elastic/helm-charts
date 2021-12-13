@@ -229,7 +229,7 @@ spec:
               - bash
               - -c
               - |
-                #!set -e
+                set -e
 
                 # Exit if ELASTIC_PASSWORD in unset
                 if [ -z "${ELASTIC_PASSWORD}" ]; then
