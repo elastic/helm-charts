@@ -188,7 +188,7 @@ spec:
           mountPath: /var/log
           readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
-        # See: https://www.elastic.co/guide/en/beats/filebeat/7.x/configuration-autodiscover.html
+        # See: https://www.elastic.co/guide/en/beats/filebeat/7.16/configuration-autodiscover.html
         - name: varrundockersock
           mountPath: /var/run/docker.sock
           readOnly: true

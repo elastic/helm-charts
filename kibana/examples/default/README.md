@@ -22,6 +22,6 @@ This example deploy Kibana 7.16.0-SNAPSHOT using [default values][].
 You can also run [goss integration tests][] using `make test`
 
 
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/default/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/kibana/examples/default/test/goss.yaml
-[default values]: https://github.com/elastic/helm-charts/tree/7.x/kibana/values.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.16/elasticsearch/examples/default/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.16/kibana/examples/default/test/goss.yaml
+[default values]: https://github.com/elastic/helm-charts/tree/7.16/kibana/values.yaml
