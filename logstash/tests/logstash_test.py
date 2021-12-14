@@ -932,20 +932,22 @@ ingress:
     - host: logstash.local
       paths:
         - path: /logs
-          servicePort: 8080
+          servicePort: 9600
 """
     r = helm_template(config)
     s = r["ingress"][name]
     assert s["metadata"]["name"] == name
-    assert len(s["spec"]["rules"]) == 1
-    assert s["spec"]["rules"][0] == {
-        "host": "logstash.local",
-        "http": {
-            "paths": [
-                {"path": "/logs", "backend": {"serviceName": name, "servicePort": 8080}}
-            ]
-        },
-    }
+    assert s["spec"]["rules"][0]["host"] == "logstash.local"
+    assert s["spec"]["rules"][0]["http"]["paths"][0]["path"] == "/logs"
+    assert (
+        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    )
+    assert (
+        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"][
+            "number"
+        ]
+        == 9600
+    )
 
 
 def test_hostaliases():
