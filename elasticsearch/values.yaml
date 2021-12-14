@@ -246,10 +246,10 @@ tolerations: []
 ingress:
   enabled: false
   annotations: {}
-  className: "nginx"
-  pathtype: ImplementationSpecific
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
+  className: "nginx"
+  pathtype: ImplementationSpecific
   hosts:
     - host: chart-example.local
       paths:
