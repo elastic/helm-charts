@@ -2,7 +2,7 @@
   "upstream": "elastic/helm-charts",
   "targetBranchChoices": [
     "6.8",
-    "7.13",
+    "7.16",
     "7.x"
   ],
   "all": true,
