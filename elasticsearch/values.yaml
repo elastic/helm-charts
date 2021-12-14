@@ -20,11 +20,13 @@ minimumMasterNodes: 2
 
 esMajorVersion: ""
 
+clusterDeprecationIndexing: "false"
+
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
-esConfig: 
-  elasticsearch.yml: |
-    cluster.deprecation_indexing.enabled: false
+esConfig: {} 
+#  elasticsearch.yml: |
+#    cluster.deprecation_indexing.enabled: false
 #    key:
 #      nestedkey: value
 #  log4j2.properties: |
