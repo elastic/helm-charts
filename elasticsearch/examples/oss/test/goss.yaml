@@ -11,6 +11,6 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"number" : "6.8.19"'
+      - '"number" : "6.8.21"'
       - '"cluster_name" : "oss"'
       - 'You Know, for Search'
