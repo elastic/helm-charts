@@ -1,5 +1,26 @@
 # Changelog
 
+## 7.16.1
+
+* 7.16.1 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1382](https://github.com/elastic/helm-charts/pull/1382) | [@piglovesyou](https://github.com/piglovesyou) | [elasticsearch] fix typo  |
+| [#1386](https://github.com/elastic/helm-charts/pull/1386) | [@jmlrt](https://github.com/jmlrt) | [meta] fail make test on error  |
+| [#1409](https://github.com/elastic/helm-charts/pull/1409) | [@framsouza](https://github.com/framsouza) | [all] add support to ingress networking.k8s.io/v1 & ingressClassName  |
+| [#1410](https://github.com/elastic/helm-charts/pull/1410) | [@jmlrt](https://github.com/jmlrt) | [meta] add support for K8S 1.21 and remove 1.18  |
+| [#1458](https://github.com/elastic/helm-charts/pull/1458) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] use bash for readiness script  |
+| [#1460](https://github.com/elastic/helm-charts/pull/1460) | [@jmlrt](https://github.com/jmlrt) | [meta] download goss outside of pods  |
+| [#1464](https://github.com/elastic/helm-charts/pull/1464) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] use bash for keystore init container  |
+| [#1466](https://github.com/elastic/helm-charts/pull/1466) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix a typo in 4e31e0cf3d025f9ce877ac52d218f49d72e26447  |
+| [#1469](https://github.com/elastic/helm-charts/pull/1469) | [@jmlrt](https://github.com/jmlrt) | [metricbeat] remove es metricset search query for oss example  |
+| [#1474](https://github.com/elastic/helm-charts/pull/1474) | [@framsouza](https://github.com/framsouza) | [elasticsearch] disabling deprecation logs to be indexed  |
+| [#1475](https://github.com/elastic/helm-charts/pull/1475) | [@jmlrt](https://github.com/jmlrt) | [meta] initiate 7.16 branch  |
+| [#1476](https://github.com/elastic/helm-charts/pull/1476) | [@jmlrt](https://github.com/jmlrt) | [meta] update backport config for 7.16 branch  |
+| [#1480](https://github.com/elastic/helm-charts/pull/1480) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix a lines order in example values  |
+
+
 ## 7.15.0
 
 * 7.15.0 as default version.
