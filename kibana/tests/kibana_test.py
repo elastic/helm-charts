@@ -777,3 +777,28 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+
+def test_default_automount_sa_token():
+    config = """
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"][
+            "automountServiceAccountToken"
+        ]
+        == True
+    )
+
+
+def test_disable_automount_sa_token():
+    config = """
+automountToken: false
+"""
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["spec"]["template"]["spec"][
+            "automountServiceAccountToken"
+        ]
+        == False
+    )
