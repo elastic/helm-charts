@@ -45,6 +45,7 @@ def test_defaults():
         {"name": "discovery.seed_hosts", "value": uname + "-headless"},
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
+        {"name": "cluster.deprecation_indexing.enabled", "value": "false"},
         {"name": "node.master", "value": "true"},
         {"name": "node.data", "value": "true"},
         {"name": "node.ingest", "value": "true"},
@@ -1512,3 +1513,13 @@ rbac:
         ]
         == False
     )
+
+
+def test_enable_deprecation_indexing():
+    config = """
+clusterDeprecationIndexing: "true"
+"""
+    r = helm_template(config)
+    assert {"name": "cluster.deprecation_indexing.enabled", "value": "true"} in r[
+        "statefulset"
+    ][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
