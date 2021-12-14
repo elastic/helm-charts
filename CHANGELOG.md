@@ -21,6 +21,27 @@
 | [#1480](https://github.com/elastic/helm-charts/pull/1480) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] fix a lines order in example values  |
 
 
+## 6.8.21
+
+* 6.8.21 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1410](https://github.com/elastic/helm-charts/pull/1410) | [@jmlrt](https://github.com/jmlrt) | [meta] add support for K8S 1.21 and remove 1.18  |
+| [#1300](https://github.com/elastic/helm-charts/pull/1300) | [@jonkerj](https://github.com/jonkerj) | [elasticsearch]: optionally disable SA token automount  |
+| [#1382](https://github.com/elastic/helm-charts/pull/1382) | [@piglovesyou](https://github.com/piglovesyou) | Fix typo  |
+| [#1386](https://github.com/elastic/helm-charts/pull/1386) | [@jmlrt](https://github.com/jmlrt) | [meta] fail make test on error  |
+| [#1319](https://github.com/elastic/helm-charts/pull/1319) | [@cclausss](https://github.com/cclausss) | Fix typos discovered by codespell  |
+| [#1105](https://github.com/elastic/helm-charts/pull/1105) | [@moritazi](https://github.com/moritazi) | [elasticsearch] Add namespace to helm test command in NOTES.txt  |
+| [#1362](https://github.com/elastic/helm-charts/pull/1362) | [@jmlrt](https://github.com/jmlrt) | [meta] remove contributing file from 6.8 branch  |
+| [#1321](https://github.com/elastic/helm-charts/pull/1321) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 6.8.19-SNAPSHOT  |
+| [#1294](https://github.com/elastic/helm-charts/pull/1294) | [@jmlrt](https://github.com/jmlrt) | [meta] add tests for k8s 1.20  |
+| [#1232](https://github.com/elastic/helm-charts/pull/1232) | [@jmlrt](https://github.com/jmlrt) | [meta] add helm 3.6.2 support  |
+| [#1116](https://github.com/elastic/helm-charts/pull/1116) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable tests  |
+| [#1115](https://github.com/elastic/helm-charts/pull/1115) | [@nflaig](https://github.com/nflaig) | [elasticsearch] add value to disable service  |
+| [#1337](https://github.com/elastic/helm-charts/pull/1337) | [@jmlrt](https://github.com/jmlrt) | [meta] remove support matrix + nit doc changes  |
+
+
 ## 7.15.0
 
 * 7.15.0 as default version.
