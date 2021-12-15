@@ -172,6 +172,8 @@ spec:
       {{- end }}
 {{ if .Values.keystore }}
       - name: keystore
+        securityContext:
+{{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command:
