@@ -35,7 +35,7 @@ esConfig: {}
 #  log4j2.properties: |
 #    key = value
 
-esJVMOptions: {}
+esJvmOptions: {}
 #  processors.options: |
 #    -XX:ActiveProcessorCount=3
 

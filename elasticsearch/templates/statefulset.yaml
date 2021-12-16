@@ -57,7 +57,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if or .Values.esConfig .Values.esJVMOptions }}
+        {{- if or .Values.esConfig .Values.esJvmOptions }}
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
@@ -131,7 +131,7 @@ spec:
           configMap:
             name: {{ template "elasticsearch.uname" . }}-config
         {{- end }}
-        {{- if .Values.esJVMOptions }}
+        {{- if .Values.esJvmOptions }}
         - name: esjvmoptions
           configMap:
             name: {{ template "elasticsearch.uname" . }}-jvm-options
@@ -362,7 +362,7 @@ spec:
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
-          {{- range $path, $config := .Values.esJVMOptions }}
+          {{- range $path, $config := .Values.esJvmOptions }}
           - name: esjvmoptions
             mountPath: /usr/share/elasticsearch/config/jvm.options.d/{{ $path }}
             subPath: {{ $path }}

@@ -15,7 +15,7 @@ data:
 {{ $config | indent 4 -}}
 {{- end -}}
 {{- end -}}
-{{- if .Values.esJVMOptions }}
+{{- if .Values.esJvmOptions }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -27,7 +27,7 @@ metadata:
     chart: "{{ .Chart.Name }}"
     app: "{{ template "elasticsearch.uname" . }}"
 data:
-{{- range $path, $config := .Values.esJVMOptions }}
+{{- range $path, $config := .Values.esJvmOptions }}
   {{ $path }}: |
 {{ $config | indent 4 -}}
 {{- end -}}

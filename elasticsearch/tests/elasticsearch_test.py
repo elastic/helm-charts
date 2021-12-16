@@ -769,7 +769,7 @@ esConfig:
 
 def test_adding_in_jvm_options():
     config = """
-esJVMOptions:
+esJvmOptions:
     processors.options: |
         -XX:ActiveProcessorCount=3
 """
@@ -791,7 +791,7 @@ esJVMOptions:
         "name": "esjvmoptions",
         "subPath": "processors.options",
     } in s["containers"][0]["volumeMounts"]
-   
+
     assert (
         "configchecksum"
         in r["statefulset"][uname]["spec"]["template"]["metadata"]["annotations"]
