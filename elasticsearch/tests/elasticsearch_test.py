@@ -767,6 +767,37 @@ esConfig:
     )
 
 
+def test_adding_in_jvm_options():
+    config = """
+esJvmOptions:
+    processors.options: |
+        -XX:ActiveProcessorCount=3
+"""
+    r = helm_template(config)
+    c = r["configmap"][uname + "-jvm-options"]["data"]
+
+    assert "processors.options" in c
+
+    assert "-XX:ActiveProcessorCount=3" in c["processors.options"]
+
+    s = r["statefulset"][uname]["spec"]["template"]["spec"]
+
+    assert {
+        "configMap": {"name": "elasticsearch-master-jvm-options"},
+        "name": "esjvmoptions",
+    } in s["volumes"]
+    assert {
+        "mountPath": "/usr/share/elasticsearch/config/jvm.options.d/processors.options",
+        "name": "esjvmoptions",
+        "subPath": "processors.options",
+    } in s["containers"][0]["volumeMounts"]
+
+    assert (
+        "configchecksum"
+        in r["statefulset"][uname]["spec"]["template"]["metadata"]["annotations"]
+    )
+
+
 def test_dont_add_data_volume_when_persistance_is_disabled():
     config = """
 persistence:
