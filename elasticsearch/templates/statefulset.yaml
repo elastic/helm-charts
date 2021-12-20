@@ -210,6 +210,9 @@ spec:
           - name: keystore-{{ .secretName }}
             mountPath: /tmp/keystoreSecrets/{{ .secretName }}
           {{- end }}
+          {{- with .Values.initExtraVolumeMounts }}
+{{ toYaml . | indent 10 }}
+          {{- end }}
 {{ end }}
       {{- if .Values.extraInitContainers }}
       # Currently some extra blocks accept strings

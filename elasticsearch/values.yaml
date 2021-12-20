@@ -101,6 +101,11 @@ initResources: {}
 #   cpu: "25m"
 #   memory: "128Mi"
 
+initExtraVolumeMounts: []
+#  - name: extras
+#    mountPath: /usr/share/extras
+#    readOnly: true
+
 networkHost: "0.0.0.0"
 
 volumeClaimTemplate:

@@ -581,7 +581,28 @@ initResources:
         "limits": {"cpu": "25m", "memory": "128Mi"},
     }
 
+def test_adding_extravolumemounts_to_initcontainer():
+    config = """
+sysctlInitContainer:
+  enabled: false
+keystore:
+- secretName: s3-access
+initExtraVolumeMounts:
+- name: tmp
+  mountPath: /tmp
+- name: tmp
+  mountPath: /usr/share/elasticsearch/config
+"""
+    r = helm_template(config)
+    i = r["statefulset"][uname]["spec"]["template"]["spec"]["initContainers"][0]
 
+    assert i["volumeMounts"] == [
+        {'mountPath': '/tmp/keystore', 'name': 'keystore'},
+        {'mountPath': '/tmp/keystoreSecrets/s3-access', 'name': 'keystore-s3-access'},
+        {'mountPath': '/tmp', 'name': 'tmp'},
+        {'mountPath': '/usr/share/elasticsearch/config', 'name': 'tmp'}
+    ]
+    
 def test_adding_a_node_affinity():
     config = """
 nodeAffinity:
