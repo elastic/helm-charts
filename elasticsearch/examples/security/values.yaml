@@ -26,11 +26,6 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
-  - name: ELASTIC_USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: username
 
 secretMounts:
   - name: elastic-certificates
