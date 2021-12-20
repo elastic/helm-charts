@@ -2,7 +2,7 @@ http:
   http://localhost:9200/_cluster/health:
     status: 200
     timeout: 2000
-    username: "{{ .Env.ELASTIC_USERNAME }}"
+    username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
       - "green"
@@ -12,7 +12,7 @@ http:
   http://localhost:9200:
     status: 200
     timeout: 2000
-    username: "{{ .Env.ELASTIC_USERNAME }}"
+    username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
       - '"cluster_name" : "config"'
