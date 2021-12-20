@@ -128,6 +128,14 @@ persistence:
   enabled: false
   annotations: {}
 
+# Settings to inform the scheduler how to place Logstash nodes in the cluster:
+# https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+topologySpreadConstraints:
+  enabled: false
+  # maxSkew: 1                            # Maximum number of pods to un on each node matching the topologyKey
+  # topologyKey: "kubernetes.io/hostname" # Must match a lable on the Kubernetes hosts in your cluster
+  # whenUnsatisfiable: "ScheduleAnyway"   # Must be one of "DoNotSchedule" or "ScheduleAnyway"
+
 extraVolumes: ""
   # - name: extras
   #   emptyDir: {}
