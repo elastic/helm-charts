@@ -1,9 +1,18 @@
 # Changelog
 
+## 7.16.2
+
+* 7.16.2 as default version.
+
+| PR | Author | Title |
+| --- | --- | --- |
+| [#1507](https://github.com/elastic/helm-charts/pull/1507) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] remove usage of ELASTIC_USERNAME (#1506)  |
+| [#1499](https://github.com/elastic/helm-charts/pull/1499) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.16.2-SNAPSHOT  |
+
+
 ## 6.8.22
 
 * 6.8.22 as default version.
-
 
 | PR | Author | Title |
 | --- | --- | --- |
