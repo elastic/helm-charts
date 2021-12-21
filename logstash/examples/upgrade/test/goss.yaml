@@ -9,7 +9,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"version" : "6.8.22"'
+      - '"version" : "6.8.23"'
       - '"http_address" : "0.0.0.0:9600"'
 
 file:
