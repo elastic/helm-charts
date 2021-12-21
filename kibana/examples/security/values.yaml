@@ -28,6 +28,7 @@ kibanaConfig:
     elasticsearch.ssl:
       certificateAuthorities: /usr/share/kibana/config/certs/elastic-certificate.pem
       verificationMode: certificate
+    status.allowAnonymous: true
 
 protocol: https
 
