@@ -31,6 +31,8 @@ kibanaConfig:
 
 protocol: https
 
+healthCheckPath: /api/status
+
 secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
