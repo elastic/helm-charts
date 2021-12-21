@@ -35,6 +35,10 @@ esConfig: {}
 #  log4j2.properties: |
 #    key = value
 
+esJvmOptions: {}
+#  processors.options: |
+#    -XX:ActiveProcessorCount=3
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
@@ -246,10 +250,10 @@ tolerations: []
 ingress:
   enabled: false
   annotations: {}
-  className: "nginx"
-  pathtype: ImplementationSpecific
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
+  className: "nginx"
+  pathtype: ImplementationSpecific
   hosts:
     - host: chart-example.local
       paths:
