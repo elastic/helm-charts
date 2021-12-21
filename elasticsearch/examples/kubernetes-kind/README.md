@@ -1,6 +1,6 @@
 # KIND
 
-This example deploy a 3 nodes Elasticsearch 6.8.22 cluster on [Kind][]
+This example deploy a 3 nodes Elasticsearch 6.8.23-SNAPSHOT cluster on [Kind][]
 using [custom values][].
 
 Note that this configuration should be used for test only and isn't recommended
