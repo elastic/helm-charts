@@ -1,6 +1,6 @@
 # Config
 
-This example deploy a single node Elasticsearch 7.16.2 with authentication and
+This example deploy a single node Elasticsearch 7.16.3-SNAPSHOT with authentication and
 custom [values][].
 
 
