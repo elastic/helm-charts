@@ -7,6 +7,7 @@ http:
     status: 200
     timeout: 2000
     username: elastic
+    allow-insecure: true
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
       - "green"
@@ -16,6 +17,7 @@ http:
   https://localhost:9200:
     status: 200
     timeout: 2000
+    allow-insecure: true
     username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:

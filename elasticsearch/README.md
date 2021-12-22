@@ -272,7 +272,7 @@ This Helm chart can use existing [Kubernetes Secret][] to setup Elastic
 certificates for example. These secrets should be created outside of this chart
 and accessed using [environment variables][] and volumes.
 
-The certificates are created by default, but you can provide your own certs using this [example](https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/security).
+This chart is setting TLS and creating a certificate by default, but you can also provide your own certs as a K8S secret. An example of configuration for providing existing certificates can be found in [examples/security][].
 
 An example of Elasticsearch cluster using security can be found in
 [examples/security][].
