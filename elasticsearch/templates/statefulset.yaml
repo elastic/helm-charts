@@ -136,6 +136,9 @@ spec:
           configMap:
             name: {{ template "elasticsearch.uname" . }}-jvm-options
         {{- end }}
+        - name: elasticsearch-certs
+          secret:
+           secretName: {{ template "elasticsearch.name" . }}-certs
 {{- if .Values.keystore }}
         - name: keystore
           emptyDir: {}
@@ -345,6 +348,9 @@ spec:
           - name: "{{ template "elasticsearch.uname" . }}"
             mountPath: /usr/share/elasticsearch/data
           {{- end }}
+          - name: elasticsearch-certs
+            mountPath: /usr/share/elasticsearch/config/certs
+            readOnly: true
 {{ if .Values.keystore }}
           - name: keystore
             mountPath: /usr/share/elasticsearch/config/elasticsearch.keystore
