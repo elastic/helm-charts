@@ -188,7 +188,7 @@
 | [#1172](https://github.com/elastic/helm-charts/pull/1172) | [@dependabot](https://github.com/dependabot) | [6.8] Bump py from 1.8.0 to 1.10.0 (#1155)  |
 | [#1169](https://github.com/elastic/helm-charts/pull/1169) | [@dependabot](https://github.com/dependabot) | [6.8] Bump py from 1.8.0 to 1.10.0 in /helpers/helm-tester (#1154)  |
 | [#1160](https://github.com/elastic/helm-charts/pull/1160) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] add helm 3.5.3 support (#1128)  |
-| [#1166](https://github.com/elastic/helm-charts/pull/1166) | [@dependabot](https://github.com/dependabot) | [6.8] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
+| [#1166](https://github.com/elastic/helm-charts/pull/1166) | [@karolinepauls](https://github.com/karolinepauls) | [6.8] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
 | [#1163](https://github.com/elastic/helm-charts/pull/1163) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] update backport config for 7.12 branch (#1112)  |
 | [#1157](https://github.com/elastic/helm-charts/pull/1157) | [@AndreasChristianson](https://github.com/AndreasChristianson) | [6.8] [elasticsearch] heap size is no longer defaulted to 1g (#1135)  |
 | [#1145](https://github.com/elastic/helm-charts/pull/1145) | [@jmlrt](https://github.com/jmlrt) | [6.8] [meta] update PyYAML dependencies (#1140)  |
@@ -205,7 +205,7 @@
 | [#1173](https://github.com/elastic/helm-charts/pull/1173) | [@dependabot](https://github.com/dependabot) | [7.12] Bump py from 1.8.0 to 1.10.0 (#1155)  |
 | [#1170](https://github.com/elastic/helm-charts/pull/1170) | [@dependabot](https://github.com/dependabot) | [7.12] Bump py from 1.8.0 to 1.10.0 in /helpers/helm-tester (#1154)  |
 | [#1161](https://github.com/elastic/helm-charts/pull/1161) | [@jmlrt](https://github.com/jmlrt) | [7.12] [meta] add helm 3.5.3 support (#1128)  |
-| [#1167](https://github.com/elastic/helm-charts/pull/1167) | [@dependabot](https://github.com/dependabot) | [7.12] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
+| [#1167](https://github.com/elastic/helm-charts/pull/1167) | [@karolinepauls](https://github.com/karolinepauls) | [7.12] [elasticsearch] Mark esMajorVersion as deprecated (#1109)  |
 | [#1164](https://github.com/elastic/helm-charts/pull/1164) | [@jmlrt](https://github.com/jmlrt) | [7.12] [meta] update backport config for 7.12 branch (#1112)  |
 | [#1158](https://github.com/elastic/helm-charts/pull/1158) | [@AndreasChristianson](https://github.com/AndreasChristianson) | [7.12] [elasticsearch] heap size is no longer defaulted to 1g (#1135)  |
 | [#1146](https://github.com/elastic/helm-charts/pull/1146) | [@jmlrt](https://github.com/jmlrt) | [7.12] [meta] update PyYAML dependencies (#1140)  |
