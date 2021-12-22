@@ -274,9 +274,6 @@ and accessed using [environment variables][] and volumes.
 
 This chart is setting TLS and creating a certificate by default, but you can also provide your own certs as a K8S secret. An example of configuration for providing existing certificates can be found in [examples/security][].
 
-An example of Elasticsearch cluster using security can be found in
-[examples/security][].
-
 ### How to migrate from helm/charts stable chart?
 
 If you currently have a cluster deployed with the [helm/charts stable][] chart
