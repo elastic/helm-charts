@@ -72,7 +72,7 @@ def test_defaults():
     assert c["readinessProbe"]["timeoutSeconds"] == 5
 
     assert "curl" in c["readinessProbe"]["exec"]["command"][-1]
-    assert "http://127.0.0.1:9200" in c["readinessProbe"]["exec"]["command"][-1]
+    assert "https://127.0.0.1:9200" in c["readinessProbe"]["exec"]["command"][-1]
 
     # Resources
     assert c["resources"] == {
