@@ -451,9 +451,10 @@ secretMounts:
         "mountPath": "/usr/share/elasticsearch/config/certs",
         "name": "elastic-certificates",
     }
-    assert s["volumes"] == [
-        {"name": "elastic-certificates", "secret": {"secretName": "elastic-certs"}}
-    ]
+    assert {
+        "name": "elastic-certificates",
+        "secret": {"secretName": "elastic-certs"},
+    } in s["volumes"]
 
 
 def test_adding_a_secret_mount_with_subpath():
@@ -806,10 +807,10 @@ persistence:
     r = helm_template(config)
     assert "volumeClaimTemplates" not in r["statefulset"][uname]["spec"]
     assert (
-        r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
+        {"name": "elasticsearch-master", "mountPath": "/usr/share/elasticsearch/data"}
+        not in r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
             "volumeMounts"
         ]
-        == None
     )
 
 
@@ -1117,13 +1118,6 @@ labels:
 
 
 def test_keystore_enable():
-    config = ""
-
-    r = helm_template(config)
-    s = r["statefulset"][uname]["spec"]["template"]["spec"]
-
-    assert s["volumes"] == None
-
     config = """
 keystore:
   - secretName: test
