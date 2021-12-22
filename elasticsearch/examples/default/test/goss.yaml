@@ -3,7 +3,7 @@ kernel-param:
     value: "262144"
 
 http:
-  http://elasticsearch-master:9200/_cluster/health:
+  https://elasticsearch-master:9200/_cluster/health:
     status: 200
     timeout: 2000
     username: elastic
@@ -13,7 +13,7 @@ http:
       - '"number_of_nodes":3'
       - '"number_of_data_nodes":3'
 
-  http://localhost:9200:
+  https://localhost:9200:
     status: 200
     timeout: 2000
     username: elastic
