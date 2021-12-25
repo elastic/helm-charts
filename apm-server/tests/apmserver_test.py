@@ -268,7 +268,7 @@ labels:
 """
     r = helm_template(config)
     assert (
-        r["deployment"][name]["metadata"]["labels"]["app.kubernetes.io/name"]
+        r["deployment"][name]["spec"]["template"]["metadata"]["labels"]["app.kubernetes.io/name"]
         == "apm-server"
     )
 
