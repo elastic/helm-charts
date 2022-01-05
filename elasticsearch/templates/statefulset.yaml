@@ -139,7 +139,7 @@ spec:
         {{- if .Values.createCert }}
         - name: elasticsearch-certs
           secret:
-           secretName: {{ template "elasticsearch.name" . }}-certs
+           secretName: {{ template "elasticsearch.uname" . }}-certs
         {{- end }}
 {{- if .Values.keystore }}
         - name: keystore
