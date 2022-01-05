@@ -17,7 +17,8 @@ user:
     gid: 1000
 
 http:
-  http://localhost:9600?pretty:
+  https://localhost:9600?pretty:
+    allow-insecure: true
     status: 200
     timeout: 2000
     body:

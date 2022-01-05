@@ -17,8 +17,9 @@ user:
     gid: 1000
 
 http:
-  http://localhost:9600?pretty:
+  https://localhost:9600?pretty:
     status: 200
+    allow-insecure: true
     timeout: 2000
     body:
       - '"version" : "8.0.0"'
@@ -27,8 +28,9 @@ http:
       - '"workers" : 1'
       - '"batch_size" : 125'
       - '"batch_delay" : 50'
-  http://elasticsearch-master:9200/_cat/indices:
+  https://elasticsearch-master:9200/_cat/indices:
     status: 200
+    allow-insecure: true
     timeout: 2000
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
@@ -53,5 +55,5 @@ file:
     filetype: file
     contains:
       - 'input { exec { command => "uptime" interval => 30 } }'
-      - 'hosts => ["http://elasticsearch-master:9200"]'
+      - 'hosts => ["https://elasticsearch-master:9200"]'
       - 'index => "logstash"'
