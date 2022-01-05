@@ -1,6 +1,8 @@
 http:
   https://localhost:9200/_cluster/health:
     status: 200
+    username: elastic
+    password: "{{ .Env.ELASTIC_PASSWORD }}"
     allow-insecure: true
     timeout: 2000
     body:
@@ -10,9 +12,12 @@ http:
 
   https://localhost:9200:
     status: 200
+    username: elastic
+    password: "{{ .Env.ELASTIC_PASSWORD }}"
+    allow-insecure: true
     timeout: 2000
     allow-insecure: true
     body:
-      - '"number" : "7.15.0"'
+      - '"number" : "8.0.0-SNAPSHOT"'
       - '"cluster_name" : "upgrade"'
       - "You Know, for Search"
