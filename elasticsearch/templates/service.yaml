@@ -24,6 +24,7 @@ spec:
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
     app: "{{ template "elasticsearch.uname" . }}"
+  publishNotReadyAddresses: {{ .Values.service.publishNotReadyAddresses }}
   ports:
   - name: {{ .Values.service.httpPortName | default "http" }}
     protocol: TCP

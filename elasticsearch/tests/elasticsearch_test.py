@@ -118,6 +118,7 @@ def test_defaults():
     assert s["metadata"]["name"] == uname
     assert s["metadata"]["annotations"] == {}
     assert s["spec"]["type"] == "ClusterIP"
+    assert s["spec"]["publishNotReadyAddresses"] == False
     assert len(s["spec"]["ports"]) == 2
     assert s["spec"]["ports"][0] == {"name": "http", "port": 9200, "protocol": "TCP"}
     assert s["spec"]["ports"][1] == {
@@ -860,6 +861,17 @@ service:
     r = helm_template(config)
 
     assert uname not in r["service"]
+
+
+def test_enabling_service_publishNotReadyAddresses():
+    config = """
+    service:
+      publishNotReadyAddresses: true
+    """
+
+    r = helm_template(config)
+
+    assert r["service"][uname]["spec"]["publishNotReadyAddresses"] == True
 
 
 def test_adding_a_nodePort():
