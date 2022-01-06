@@ -108,7 +108,7 @@ spec:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
             command:
-              - sh
+              - bash
               - -c
               - |
                 #!/usr/bin/env bash -e
