@@ -7,8 +7,8 @@ replicas: 1
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
 extraEnvs:
-  - name: "NODE_OPTIONS"
-    value: "--max-old-space-size=1800"
+  #- name: "NODE_OPTIONS"
+  #  value: "--max-old-space-size=1800"
   - name: "ELASTICSEARCH_USERNAME"
     valueFrom:
       secretKeyRef:
@@ -45,7 +45,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "8.0.0-SNAPSHOT"
+imageTag: "7.16.2"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
@@ -56,8 +56,8 @@ podAnnotations: {}
 
 resources:
   requests:
-    cpu: "1000m"
-    memory: "2Gi"
+    cpu: "500m"
+    memory: "1Gi"
   limits:
     cpu: "1000m"
     memory: "2Gi"
@@ -124,10 +124,10 @@ updateStrategy:
   type: "Recreate"
 
 service:
-  type: ClusterIP
+  type: NodePort
   loadBalancerIP: ""
   port: 5601
-  nodePort: ""
+  nodePort: "30002"
   labels: {}
   annotations: {}
   # cloud.google.com/load-balancer-type: "Internal"

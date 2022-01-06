@@ -6,7 +6,7 @@ maintainers:
   name: Elastic
 name: elasticsearch
 version: 8.0.0-SNAPSHOT
-appVersion: 8.0.0-SNAPSHOT
+appVersion: "7.16.2"
 sources:
   - https://github.com/elastic/elasticsearch
 icon: https://helm.elastic.co/icons/elasticsearch.png
