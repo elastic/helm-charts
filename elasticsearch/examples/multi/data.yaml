@@ -20,3 +20,9 @@ roles:
 
 secret:
   enabled: false
+
+createCert: false
+secretMounts:
+  - name: elastic-certificates
+    secretName: multi-master-certs
+    path: /usr/share/elasticsearch/config/certs

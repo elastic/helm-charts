@@ -5,7 +5,7 @@ user:
     gid: 1000
 
 http:
-  https://localhost:9600?pretty:
+  http://localhost:9600?pretty:
     status: 200
     allow-insecure: true
     timeout: 2000
@@ -26,7 +26,7 @@ file:
     filetype: file
     contains:
       - 'http.host: "0.0.0.0"'
-      - 'xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]'
+      - 'xpack.monitoring.elasticsearch.hosts: [ "https://elasticsearch:9200" ]'
       - "xpack.monitoring.elasticsearch.ssl.certificate_authority: /usr/share/logstash/config/certs/elastic-certificate.crt"
   /usr/share/logstash/pipeline/logstash.conf:
     exists: true

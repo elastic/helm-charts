@@ -1,5 +1,5 @@
 http:
-  https://localhost:8200?pretty:
+  http://localhost:8200?pretty:
     status: 200
     allow-insecure: true
     timeout: 2000
