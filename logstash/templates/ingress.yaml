@@ -46,7 +46,7 @@ spec:
           service:
             name: {{ $fullName }}
             port:
-              number: {{ $httpPort }}
+              number: {{ .servicePort | default $httpPort  }}
     {{- end }}
   {{- end }}
 {{- end }}
