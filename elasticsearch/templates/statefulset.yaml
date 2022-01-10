@@ -320,8 +320,10 @@ spec:
             value: "{{ .Values.clusterName }}"
           - name: network.host
             value: "{{ .Values.networkHost }}"
+          {{- if eq .Values.clusterDeprecationIndexing "true" }}
           - name: cluster.deprecation_indexing.enabled
             value: "{{ .Values.clusterDeprecationIndexing }}"
+          {{- end }}
           {{- if .Values.esJavaOpts  }}
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
