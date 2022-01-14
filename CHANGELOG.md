@@ -7,9 +7,9 @@
 
 | PR | Author | Title |
 | --- | --- | --- |
-| [#1533](https://github.com/elastic/helm-charts/pull/1533) | [@jmlrt](https://github.com/jmlrt) | [tests] fix yaml load warning (#1522)  |
+| [#1533](https://github.com/elastic/helm-charts/pull/1533) | [@ebuildy](https://github.com/ebuildy) | [tests] fix yaml load warning (#1522)  |
 | [#1517](https://github.com/elastic/helm-charts/pull/1517) | [@elasticmachine](https://github.com/elasticmachine) | Bump version to 7.16.3-SNAPSHOT  |
-| [#1502](https://github.com/elastic/helm-charts/pull/1502) | [@jmlrt](https://github.com/jmlrt) | [elasticsearch] #1495 Configure JVM options files (#1496)  |
+| [#1502](https://github.com/elastic/helm-charts/pull/1502) | [@ebuildy](https://github.com/ebuildy) | [elasticsearch] #1495 Configure JVM options files (#1496)  |
 
 
 ## 7.16.2
