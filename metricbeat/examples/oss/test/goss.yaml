@@ -25,7 +25,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "metricbeat-oss-7.16.3"
+      - "metricbeat-oss-7.16.4"
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
