@@ -19,7 +19,6 @@ user:
 http:
   http://localhost:9600?pretty:
     status: 200
-    allow-insecure: true
     timeout: 2000
     body:
       - '"version" : "8.0.0"'
