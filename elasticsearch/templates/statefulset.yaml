@@ -89,6 +89,12 @@ spec:
       {{- end }}
       affinity:
       {{- end }}
+      {{- if .Values.customAntiAffinity }}
+      {{- with .Values.customAntiAffinity }}
+        podAntiAffinity:
+{{ toYaml . | indent 10 }}
+      {{- end }}
+      {{- else }}
       {{- if eq .Values.antiAffinity "hard" }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -111,6 +117,7 @@ spec:
                   operator: In
                   values:
                   - "{{ template "elasticsearch.uname" . }}"
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeAffinity }}
         nodeAffinity:

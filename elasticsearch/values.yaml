@@ -172,6 +172,10 @@ antiAffinityTopologyKey: "kubernetes.io/hostname"
 # and that they will never end up on the same node. Setting this to soft will do this "best effort"
 antiAffinity: "hard"
 
+# Allows you to define custom pod antiaffinity settings in case the default antiAffinity settings are not suitable for
+# your setup. If this field is defined, the antiAffinity and antiAffinityTopologyKey values are not used.
+customAntiAffinity: {}
+
 # This is the node affinity settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
 nodeAffinity: {}

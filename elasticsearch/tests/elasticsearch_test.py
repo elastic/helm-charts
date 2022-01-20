@@ -1492,3 +1492,30 @@ rbac:
         ]
         == False
     )
+
+
+def test_adding_a_custom_anti_affinity():
+    config = """
+customAntiAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+  - labelSelector:
+      matchExpressions:
+      - key: customLabel
+        operator: In
+        values:
+        - "customValue"
+    topologyKey: kubernetes.io/hostname
+"""
+    r = helm_template(config)
+    assert r["statefulset"][uname]["spec"]["template"]["spec"]["affinity"][
+               "podAntiAffinity"
+           ] == {
+                    "requiredDuringSchedulingIgnoredDuringExecution": [
+                        {
+                            "labelSelector": {
+                                "matchExpressions": [{"key": "customLabel", "operator": "In", "values": ["customValue"]}]
+                            },
+                            "topologyKey": "kubernetes.io/hostname",
+                        }
+                    ]
+                }
