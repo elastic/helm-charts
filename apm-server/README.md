@@ -25,7 +25,6 @@ SLA of official GA features (see [supported configurations][] for more details).
 - [Configuration](#configuration)
 - [FAQ](#faq)
   - [How to use APM Server with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-apm-server-with-elasticsearch-with-security-authentication-and-tls-enabled)
-  - [How to install OSS version of APM Server?](#how-to-install-oss-version-of-apm-server)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -132,14 +131,6 @@ outside of this chart and accessed using [environment variables][] and volumes.
 
 An example can be found in [examples/security][].
 
-### How to install OSS version of APM Server?
-
-Deploying OSS version of APM Server can be done by setting `image` value to
-[APM Server OSS Docker image][]
-
-An example of APM Server deployment using OSS version can be found in
-[examples/oss][].
-
 
 ## Contributing
 
@@ -154,12 +145,10 @@ about our development and testing process.
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
-[apm server oss docker image]: https://www.docker.elastic.co/r/apm/apm-server-oss
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples
-[examples/oss]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples/security
 [helm]: https://helm.sh
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/

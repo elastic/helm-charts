@@ -57,7 +57,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.esConfig }}
+        {{- if or .Values.esConfig .Values.esJvmOptions }}
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
@@ -131,6 +131,11 @@ spec:
           configMap:
             name: {{ template "elasticsearch.uname" . }}-config
         {{- end }}
+        {{- if .Values.esJvmOptions }}
+        - name: esjvmoptions
+          configMap:
+            name: {{ template "elasticsearch.uname" . }}-jvm-options
+        {{- end }}
 {{- if .Values.keystore }}
         - name: keystore
           emptyDir: {}
@@ -175,10 +180,9 @@ spec:
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         command:
-        - sh
+        - bash
         - -c
         - |
-          #!/usr/bin/env bash
           set -euo pipefail
 
           elasticsearch-keystore create
@@ -227,10 +231,10 @@ spec:
         readinessProbe:
           exec:
             command:
-              - sh
+              - bash
               - -c
               - |
-                #!/usr/bin/env bash -e
+                set -e
 
                 # Exit if ELASTIC_PASSWORD in unset
                 if [ -z "${ELASTIC_PASSWORD}" ]; then
@@ -356,6 +360,11 @@ spec:
           {{- range $path, $config := .Values.esConfig }}
           - name: esconfig
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
+            subPath: {{ $path }}
+          {{- end -}}
+          {{- range $path, $config := .Values.esJvmOptions }}
+          - name: esjvmoptions
+            mountPath: /usr/share/elasticsearch/config/jvm.options.d/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
         {{- if .Values.extraVolumeMounts }}
