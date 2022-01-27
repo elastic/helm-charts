@@ -151,6 +151,9 @@ deployment:
   #  hostnames:
   #  - "foo.local"
   #  - "bar.local"
+  hostNetworking: false
+  # Allows you to add any config files in /usr/share/metricbeat
+  # such as metricbeat.yml for daemonset
   metricbeatConfig:
     metricbeat.yml: |
       metricbeat.modules:
