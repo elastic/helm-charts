@@ -282,6 +282,8 @@ def test_adding_host_networking():
     config = """
 daemonset:
   hostNetworking: true
+deployment
+  hostNetworking: true
 """
     r = helm_template(config)
     assert r["daemonset"][name]["spec"]["template"]["spec"]["hostNetwork"] is True
@@ -289,13 +291,10 @@ daemonset:
         r["daemonset"][name]["spec"]["template"]["spec"]["dnsPolicy"]
         == "ClusterFirstWithHostNet"
     )
+    assert r["deployment"][name + "-metrics"]["spec"]["template"]["spec"] is True
     assert (
-        "hostNetwork"
-        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
-    )
-    assert (
-        "dnsPolicy"
-        not in r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]
+        r["deployment"][name + "-metrics"]["spec"]["template"]["spec"]["dnsPolicy"]
+        == "ClusterFirstWithHostNet"
     )
 
 
