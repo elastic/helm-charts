@@ -643,6 +643,45 @@ logstashPipeline:
         in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
     )
 
+def test_adding_in_index_templates():
+    config = """
+logstashIndexTemplates:
+  my-template.json: |
+    {
+      "index_patterns": "my-template-*",
+      "settings" : {},
+      "mappings" : {}
+    }
+"""
+    r = helm_template(config)
+    c = r["configmap"][name + "-index-templates"]["data"]
+
+    assert "my-template-*" in c["my-template.json"]
+
+    assert (
+        "indextemplateschecksum"
+        in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
+
+
+def test_adding_in_pattern():
+    config = """
+logstashPattern:
+  pattern.conf: |
+    DPKG_VERSION [-+~<>\.0-9a-zA-Z]+
+"""
+    r = helm_template(config)
+    c = r["configmap"][name + "-pattern"]["data"]
+
+    assert "pattern.conf" in c
+
+    assert "DPKG_VERSION [-+~<>\.0-9a-zA-Z]+" in c["pattern.conf"]
+
+    assert (
+        "patternchecksum"
+        in r["statefulset"][name]["spec"]["template"]["metadata"]["annotations"]
+    )
+
 
 def test_adding_in_pattern():
     config = """

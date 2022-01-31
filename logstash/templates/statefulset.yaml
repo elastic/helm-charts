@@ -58,6 +58,9 @@ spec:
         {{- if .Values.logstashPattern }}
         patternchecksum: {{ include (print .Template.BasePath "/configmap-pattern.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
+        {{- if .Values.logstashIndexTemplates }}
+        indextemplateschecksum: {{ include (print .Template.BasePath "/configmap-index-templates.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
         {{- if .Values.secrets }}
         secretschecksum: {{ include (print .Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
@@ -139,6 +142,11 @@ spec:
           configMap:
             name: {{ template "logstash.fullname" . }}-pattern
         {{- end }}
+        {{- if .Values.logstashIndexTemplates }}
+        - name: logstashindextemplates
+          configMap:
+            name: {{ template "logstash.fullname" . }}-index-templates
+        {{- end }}
       {{- if .Values.extraVolumes }}
 {{ tpl .Values.extraVolumes . | indent 8 }}
       {{- end }}
@@ -208,6 +216,14 @@ spec:
           {{- range $path, $config := .Values.logstashPattern }}
           - name: logstashpattern
             mountPath: {{ $logstashPatternDir }}{{ $path }}
+            subPath: {{ $path }}
+          {{- end -}}
+          {{- end -}}
+          {{- if .Values.logstashIndexTemplates }}
+          {{- $logstashIndexTemplatesDir := .Values.logstashIndexTemplatesDir -}}
+          {{- range $path, $config := .Values.logstashIndexTemplates }}
+          - name: logstashindextemplates
+            mountPath: {{ $logstashIndexTemplatesDir }}{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
           {{- end -}}
