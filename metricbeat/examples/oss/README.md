@@ -23,5 +23,5 @@ You can also run [goss integration tests][] using `make test`
 
 
 [metricbeat oss]: https://www.elastic.co/downloads/beats/metricbeat-oss
-[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.x/elasticsearch/examples/oss/
-[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.x/metricbeat/examples/oss/test/goss.yaml
+[elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.17/elasticsearch/examples/oss/
+[goss integration tests]: https://github.com/elastic/helm-charts/tree/7.17/metricbeat/examples/oss/test/goss.yaml
