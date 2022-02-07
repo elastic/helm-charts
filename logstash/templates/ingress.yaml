@@ -44,7 +44,7 @@ spec:
         pathType: {{ $pathtype }}
         backend:
           service:
-            name: {{ $fullName }}
+            name: {{ $fullName }}-headless
             port:
               number: {{ $httpPort }}
     {{- end }}

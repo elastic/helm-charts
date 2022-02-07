@@ -940,7 +940,7 @@ ingress:
     assert s["spec"]["rules"][0]["host"] == "logstash.local"
     assert s["spec"]["rules"][0]["http"]["paths"][0]["path"] == "/logs"
     assert (
-        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name + "-headless"
     )
     assert (
         s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"][
