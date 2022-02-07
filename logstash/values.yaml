@@ -31,6 +31,29 @@ logstashPattern: {}
 #    pattern.conf: |
 #      DPKG_VERSION [-+~<>\.0-9a-zA-Z]+
 
+# Allows you to add any index templates files in your custom templates dir
+logstashIndexTemplatesDir: "/usr/share/logstash/templates/"
+logstashIndexTemplates: {}
+#  my-template.json: |
+#    {
+#      "index_patterns": "my-template-*",
+#      "template": {
+#        "settings" : {
+#          "index" : {
+#            "number_of_shards" : "1",
+#            "number_of_replicas" : "1"
+#          }
+#        },
+#        "mappings" : {
+#          "properties" : {
+#            "@timestamp" : {
+#              "type" : "date"
+#            }
+#          }
+#        }
+#      }
+#    }
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
