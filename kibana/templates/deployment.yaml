@@ -103,7 +103,6 @@ spec:
 {{- if .Values.envFrom }}
         envFrom:
 {{ toYaml .Values.envFrom | indent 10 }}
-{{- end }}
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:

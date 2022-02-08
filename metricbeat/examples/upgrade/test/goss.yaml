@@ -21,7 +21,7 @@ user:
     gid: 1000
 
 http:
-  https://upgrade-master:9200/_cat/indices:
+  http://upgrade-master:9200/_cat/indices:
     status: 200
     allow-insecure: true
     timeout: 2000
@@ -44,4 +44,4 @@ command:
   cd /usr/share/metricbeat && metricbeat test output:
     exit-status: 0
     stdout:
-      - "elasticsearch: https://upgrade-master:9200"
+      - "elasticsearch: http://upgrade-master:9200"
