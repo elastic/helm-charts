@@ -23,6 +23,9 @@ file:
     owner: logstash
     group: root
     filetype: file
+    contains:
+      - 'http.host: "0.0.0.0"'
+      - 'xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]'
   /usr/share/logstash/pipeline/logstash.conf:
     exists: true
     mode: "0644"
