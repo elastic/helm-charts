@@ -113,6 +113,7 @@ support multiple versions with minimal changes.
 | `antiAffinity`                     | Setting this to hard enforces the [anti-affinity][] rules. If it is set to soft it will be done "best effort". Other values will be ignored                                                                                                                                                                       | `hard`                                           |
 | `clusterHealthCheckParams`         | The [Elasticsearch cluster health status params][] that will be used by readiness [probe][] command                                                                                                                                                                                                               | `wait_for_status=green&timeout=1s`               |
 | `clusterName`                      | This will be used as the Elasticsearch [cluster.name][] and should be unique per cluster in the namespace                                                                                                                                                                                                         | `elasticsearch`                                  |
+| `createCert`                       | This will automatically create the SSL certificates                                                                                                                                                                                                                                                               | `true`                                           |
 | `enableServiceLinks`               | Set to false to disabling service links, which can cause slow pod startup times when there are many services in the current namespace.                                                                                                                                                                            | `true`                                           |
 | `envFrom`                          | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                                                                                                                                                                       | `[]`                                             |
 | `esConfig`                         | Allows you to add any config files in `/usr/share/elasticsearch/config/` such as `elasticsearch.yml` and `log4j2.properties`. See [values.yaml][] for an example of the formatting                                                                                                                                | `{}`                                             |
@@ -265,14 +266,13 @@ sufficient.
 ### How to deploy clusters with security (authentication and TLS) enabled?
 
 This Helm chart can generate a [Kubernetes Secret][] or use an existing one to
-setup Elastic credentials.
+setup Elastic credentials. 
 
 This Helm chart can use existing [Kubernetes Secret][] to setup Elastic
 certificates for example. These secrets should be created outside of this chart
 and accessed using [environment variables][] and volumes.
 
-An example of Elasticsearch cluster using security can be found in
-[examples/security][].
+This chart is setting TLS and creating a certificate by default, but you can also provide your own certs as a K8S secret. An example of configuration for providing existing certificates can be found in [examples/security][].
 
 ### How to migrate from helm/charts stable chart?
 
