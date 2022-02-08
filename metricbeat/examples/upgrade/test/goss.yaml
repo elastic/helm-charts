@@ -23,11 +23,10 @@ user:
 http:
   http://upgrade-master:9200/_cat/indices:
     status: 200
-    allow-insecure: true
     timeout: 2000
     body:
       - "metricbeat-8.0.0"
-  ? "https://upgrade-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat"
+  ? "http://upgrade-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat"
   : status: 200
     timeout: 2000
     body:

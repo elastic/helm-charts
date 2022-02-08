@@ -27,7 +27,6 @@ user:
 http:
   http://upgrade-master:9200/_cat/indices:
     status: 200
-    allow-insecure: true
     timeout: 2000
     body:
       - "filebeat-8.0.0"
