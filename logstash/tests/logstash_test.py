@@ -204,7 +204,10 @@ extraPorts:
     extraPorts = r["statefulset"][name]["spec"]["template"]["spec"]["containers"][0][
         "ports"
     ]
-    assert {"name": "foo", "containerPort": 30000,} in extraPorts
+    assert {
+        "name": "foo",
+        "containerPort": 30000,
+    } in extraPorts
 
 
 def test_adding_a_extra_init_container():
@@ -603,9 +606,10 @@ logstashConfig:
 
     s = r["statefulset"][name]["spec"]["template"]["spec"]
 
-    assert {"configMap": {"name": name + "-config"}, "name": "logstashconfig",} in s[
-        "volumes"
-    ]
+    assert {
+        "configMap": {"name": name + "-config"},
+        "name": "logstashconfig",
+    } in s["volumes"]
     assert {
         "mountPath": "/usr/share/logstash/config/logstash.yml",
         "name": "logstashconfig",
@@ -923,29 +927,92 @@ fullnameOverride: 'logstash-custom'
     )
 
 
-def test_adding_an_ingress():
+def test_adding_an_ingress_rule():
     config = """
 ingress:
   enabled: true
-  annotations: {}
+  annotations:
+    kubernetes.io/ingress.class: nginx
   hosts:
-    - host: logstash.local
+    - host: logstash.elastic.co
       paths:
-        - path: /logs
+        - path: /
+    - host: ''
+      paths:
+        - path: /
+        - path: /logz
           servicePort: 9600
+    - host: logstash.hello.there
+      paths:
+        - path: /
+          servicePort: 9601
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - logstash.elastic.co
 """
+
     r = helm_template(config)
-    s = r["ingress"][name]
-    assert s["metadata"]["name"] == name
-    assert s["spec"]["rules"][0]["host"] == "logstash.local"
-    assert s["spec"]["rules"][0]["http"]["paths"][0]["path"] == "/logs"
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "logstash.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "logstash.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
     assert (
-        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9600
     )
+    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][1]["http"]["paths"][0]["backend"]["service"]["name"] == name
     assert (
-        s["spec"]["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"][
-            "number"
-        ]
+        i["rules"][1]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9600
+    )
+    assert i["rules"][1]["http"]["paths"][1]["path"] == "/logz"
+    assert i["rules"][1]["http"]["paths"][1]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][1]["http"]["paths"][1]["backend"]["service"]["port"]["number"]
+        == 9600
+    )
+    assert i["rules"][2]["host"] == "logstash.hello.there"
+    assert i["rules"][2]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][2]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][2]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
+        == 9601
+    )
+
+
+def test_adding_a_deprecated_ingress_rule():
+    config = """
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  path: /
+  hosts:
+    - logstash.elastic.co
+  tls:
+  - secretName: elastic-co-wildcard
+    hosts:
+     - logstash.elastic.co
+"""
+
+    r = helm_template(config)
+    assert name in r["ingress"]
+    i = r["ingress"][name]["spec"]
+    assert i["tls"][0]["hosts"][0] == "logstash.elastic.co"
+    assert i["tls"][0]["secretName"] == "elastic-co-wildcard"
+
+    assert i["rules"][0]["host"] == "logstash.elastic.co"
+    assert i["rules"][0]["http"]["paths"][0]["path"] == "/"
+    assert i["rules"][0]["http"]["paths"][0]["backend"]["service"]["name"] == name
+    assert (
+        i["rules"][0]["http"]["paths"][0]["backend"]["service"]["port"]["number"]
         == 9600
     )
 
