@@ -43,12 +43,12 @@ Note that only the released charts coming from [Elastic Helm repo][] or
 
 | Chart                                      | Latest 7 Version                             | Latest 6 Version                   |
 |--------------------------------------------|----------------------------------------------|------------------------------------|
-| [APM-Server](./apm-server/README.md)       | [`7.16.2`][apm-7] (Beta since 7.7.0)         | [`6.8.22`][apm-6] (Alpha)          |
-| [Elasticsearch](./elasticsearch/README.md) | [`7.16.2`][elasticsearch-7] (GA since 7.7.0) | [`6.8.22`][elasticsearch-6] (Beta) |
-| [Filebeat](./filebeat/README.md)           | [`7.16.2`][filebeat-7] (GA since 7.7.0)      | [`6.8.22`][filebeat-6] (Beta)      |
-| [Kibana](./kibana/README.md)               | [`7.16.2`][kibana-7] (GA since 7.7.0)        | [`6.8.22`][kibana-6] (Beta)        |
-| [Logstash](./logstash/README.md)           | [`7.16.2`][logstash-7] (Beta since 7.5.0)    | [`6.8.22`][logstash-6] (Beta)      |
-| [Metricbeat](./metricbeat/README.md)       | [`7.16.2`][metricbeat-7] (GA since 7.7.0)    | [`6.8.22`][metricbeat-6] (Beta)    |
+| [APM-Server](./apm-server/README.md)       | [`7.16.3`][apm-7] (Beta since 7.7.0)         | [`6.8.22`][apm-6] (Alpha)          |
+| [Elasticsearch](./elasticsearch/README.md) | [`7.16.3`][elasticsearch-7] (GA since 7.7.0) | [`6.8.22`][elasticsearch-6] (Beta) |
+| [Filebeat](./filebeat/README.md)           | [`7.16.3`][filebeat-7] (GA since 7.7.0)      | [`6.8.22`][filebeat-6] (Beta)      |
+| [Kibana](./kibana/README.md)               | [`7.16.3`][kibana-7] (GA since 7.7.0)        | [`6.8.22`][kibana-6] (Beta)        |
+| [Logstash](./logstash/README.md)           | [`7.16.3`][logstash-7] (Beta since 7.5.0)    | [`6.8.22`][logstash-6] (Beta)      |
+| [Metricbeat](./metricbeat/README.md)       | [`7.16.3`][metricbeat-7] (GA since 7.7.0)    | [`6.8.22`][metricbeat-6] (Beta)    |
 
 ### Kubernetes Versions
 

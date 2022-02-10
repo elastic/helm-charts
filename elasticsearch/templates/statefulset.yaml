@@ -136,6 +136,11 @@ spec:
           configMap:
             name: {{ template "elasticsearch.uname" . }}-jvm-options
         {{- end }}
+        {{- if .Values.createCert }}
+        - name: elasticsearch-certs
+          secret:
+           secretName: {{ template "elasticsearch.uname" . }}-certs
+        {{- end }}
 {{- if .Values.keystore }}
         - name: keystore
           emptyDir: {}
@@ -333,6 +338,28 @@ spec:
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
           {{- end }}
+          {{- if .Values.createCert }}
+          - name: xpack.security.enabled
+            value: "true"
+          - name: xpack.security.transport.ssl.enabled
+            value: "true"
+          - name: xpack.security.http.ssl.enabled
+            value: "true"
+          - name: xpack.security.transport.ssl.verification_mode
+            value: "certificate"
+          - name: xpack.security.transport.ssl.key
+            value: "/usr/share/elasticsearch/config/certs/tls.key"
+          - name: xpack.security.transport.ssl.certificate
+            value: "/usr/share/elasticsearch/config/certs/tls.crt"
+          - name: xpack.security.transport.ssl.certificate_authorities
+            value: "/usr/share/elasticsearch/config/certs/ca.crt"
+          - name: xpack.security.http.ssl.key
+            value: "/usr/share/elasticsearch/config/certs/tls.key"
+          - name: xpack.security.http.ssl.certificate
+            value: "/usr/share/elasticsearch/config/certs/tls.crt"
+          - name: xpack.security.http.ssl.certificate_authorities
+            value: "/usr/share/elasticsearch/config/certs/ca.crt"
+          {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
@@ -344,6 +371,11 @@ spec:
           {{- if .Values.persistence.enabled }}
           - name: "{{ template "elasticsearch.uname" . }}"
             mountPath: /usr/share/elasticsearch/data
+          {{- end }}
+          {{- if .Values.createCert }}
+          - name: elasticsearch-certs
+            mountPath: /usr/share/elasticsearch/config/certs
+            readOnly: true
           {{- end }}
 {{ if .Values.keystore }}
           - name: keystore
