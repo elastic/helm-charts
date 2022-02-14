@@ -312,16 +312,16 @@ spec:
                 fieldPath: metadata.name
           {{- if has "master" .Values.roles }}
           - name: cluster.initial_master_nodes
-            value: "{{ template "elasticsearch.endpoints" . }}"
+            value: "{{- tpl .Values.initial_master_nodes . -}}"
           {{- end }}
           - name: node.roles
             value: "{{ template "elasticsearch.roles" . }}"
           {{- if lt (int (include "elasticsearch.esMajorVersion" .)) 7 }}
           - name: discovery.zen.ping.unicast.hosts
-            value: "{{ template "elasticsearch.masterService" . }}-headless"
+            value: "{{- tpl .Values.seed_hosts . -}}"
           {{- else }}
           - name: discovery.seed_hosts
-            value: "{{ template "elasticsearch.masterService" . }}-headless"
+            value: "{{- tpl .Values.seed_hosts . -}}"
           {{- end }}
           - name: cluster.name
             value: "{{ .Values.clusterName }}"
