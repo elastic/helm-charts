@@ -126,7 +126,7 @@ spec:
                     fi
 
                     STATUS=$(curl --output /dev/null --write-out "%{http_code}" -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}")
-                    if [[ "${STATUS}" -eq 200 ]]; then
+                    if [ "${STATUS}" -eq 200 ]; then
                       exit 0
                     fi
 
