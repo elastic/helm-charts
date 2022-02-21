@@ -217,6 +217,19 @@ roles:
     for e in env:
         assert e["name"] != "discovery.zen.ping.unicast.hosts"
 
+def test_override_seed_hosts_template():
+    config = """
+seedHosts: "customHost"
+"""
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["env"]
+    assert {
+        "name": "cluster.seed_hosts",
+        "value": "customHost",
+    } in env
+
 
 def test_adding_extra_env_vars():
     config = """
@@ -1366,6 +1379,19 @@ fullnameOverride: "customfullName"
         "value": "customfullName-0," + "customfullName-1," + "customfullName-2,",
     } in env
 
+
+def test_override_initial_master_node_template():
+    config = """
+initialMasterNodes: "customNode"
+"""
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][
+        0
+    ]["env"]
+    assert {
+        "name": "cluster.initial_master_nodes",
+        "value": "customNode",
+    } in env
 
 def test_hostaliases():
     config = """
