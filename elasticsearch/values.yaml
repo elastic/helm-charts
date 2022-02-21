@@ -39,10 +39,10 @@ esConfig: {}
 # This is an advanced setup.
 # It is advised to create a master setup in one cluster and a non-master cluster connecting to this one
 # using "masterService".
-initial_master_nodes: |-
+initialMasterNodes: |-
   {{ template "elasticsearch.endpoints" . }}
 
-seed_hosts: |-
+seedHosts: |-
   {{ template "elasticsearch.masterService" . }}-headless
 
 
