@@ -273,22 +273,20 @@ service:
   #     port: 8080
   #     protocol: TCP
   #     targetPort: 8080
-  #   - name: admin
-  #     port: 9600
-  #     protocol: TCP
-  #     targetPort: 9600
 
 ingress:
   enabled: false
   annotations: {}
-  # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
+    # kubernetes.io/tls-acme: "true"
   className: "nginx"
   pathtype: ImplementationSpecific
   hosts:
     - host: logstash-example.local
       paths:
-        - path: /
+        - path: /beats
+          servicePort: 5044
+        - path: /http
+          servicePort: 8080
   tls: []
   #  - secretName: logstash-example-tls
   #    hosts:
