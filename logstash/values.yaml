@@ -260,7 +260,7 @@ lifecycle:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 
-service:
+service: {}
   # annotations: {}
   # type: ClusterIP
   # loadBalancerIP: ""
