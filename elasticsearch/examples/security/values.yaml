@@ -2,6 +2,8 @@
 clusterName: "security"
 nodeGroup: "master"
 
+createCert: false
+
 roles:
   - master
   - ingest
