@@ -110,12 +110,13 @@ extraVolumeMounts:
   #   mountPath: /usr/share/extras
   #   readOnly: true
   #
-extraContainers: ""
+
+extraContainers: []
 # - name: dummy-init
 #   image: busybox
 #   command: ['echo', 'hey']
 
-extraInitContainers: ""
+extraInitContainers: []
 # - name: dummy-init
 #   image: busybox
 #   command: ['echo', 'hey']
