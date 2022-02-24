@@ -67,10 +67,8 @@ spec:
       {{- end }}
       securityContext:
 {{ toYaml .Values.podSecurityContext | indent 8 }}
-      {{- if .Values.rbac.create }}
-      serviceAccountName: "{{ template "logstash.fullname" . }}"
-      {{- else if not (eq .Values.rbac.serviceAccountName "") }}
-      serviceAccountName: {{ .Values.rbac.serviceAccountName | quote }}
+      {{- if or .Values.rbac.create .Values.rbac.serviceAccountName }}
+      serviceAccountName: "{{ template "logstash.serviceAccount" . }}"
       {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
