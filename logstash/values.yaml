@@ -128,25 +128,21 @@ persistence:
   enabled: false
   annotations: {}
 
-extraVolumes:
-  ""
+extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts:
-  ""
+extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraContainers:
-  ""
+extraContainers: []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
 
-extraInitContainers:
-  ""
+extraInitContainers: []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']

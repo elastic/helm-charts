@@ -178,9 +178,48 @@ extraVolumeMounts: |
     } in extraVolumeMounts
 
 
+def test_adding_a_extra_volume_with_volume_mount_as_yaml():
+    config = """
+extraVolumes:
+  - name: extras
+    emptyDir: {}
+extraVolumeMounts:
+  - name: extras
+    mountPath: /usr/share/extras
+    readOnly: true
+"""
+    r = helm_template(config)
+    extraVolume = r["statefulset"][name]["spec"]["template"]["spec"]["volumes"]
+    assert {"name": "extras", "emptyDir": {}} in extraVolume
+    extraVolumeMounts = r["statefulset"][name]["spec"]["template"]["spec"][
+        "containers"
+    ][0]["volumeMounts"]
+    assert {
+        "name": "extras",
+        "mountPath": "/usr/share/extras",
+        "readOnly": True,
+    } in extraVolumeMounts
+
+
 def test_adding_a_extra_container():
     config = """
 extraContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraContainer = r["statefulset"][name]["spec"]["template"]["spec"]["containers"]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraContainer
+
+
+def test_adding_a_extra_container_as_yaml():
+    config = """
+extraContainers:
   - name: do-something
     image: busybox
     command: ['do', 'something']
@@ -210,6 +249,24 @@ extraPorts:
 def test_adding_a_extra_init_container():
     config = """
 extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraInitContainer = r["statefulset"][name]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraInitContainer
+
+
+def test_adding_a_extra_init_container_as_yaml():
+    config = """
+extraInitContainers:
   - name: do-something
     image: busybox
     command: ['do', 'something']
