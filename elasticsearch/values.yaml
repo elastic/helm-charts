@@ -35,6 +35,12 @@ esConfig: {}
 #  log4j2.properties: |
 #    key = value
 
+createCert: true
+
+esJvmOptions: {}
+#  processors.options: |
+#    -XX:ActiveProcessorCount=3
+
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
@@ -181,7 +187,7 @@ podManagementPolicy: "Parallel"
 # If you experience slow pod startups you probably want to set this to `false`.
 enableServiceLinks: true
 
-protocol: http
+protocol: https
 httpPort: 9200
 transportPort: 9300
 
@@ -190,6 +196,9 @@ service:
   labels: {}
   labelsHeadless: {}
   type: ClusterIP
+  # Consider that all endpoints are considered "ready" even if the Pods themselves are not
+  # https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/#ServiceSpec
+  publishNotReadyAddresses: false
   nodePort: ""
   annotations: {}
   httpPortName: http
@@ -246,10 +255,10 @@ tolerations: []
 ingress:
   enabled: false
   annotations: {}
-  className: "nginx"
-  pathtype: ImplementationSpecific
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
+  className: "nginx"
+  pathtype: ImplementationSpecific
   hosts:
     - host: chart-example.local
       paths:
