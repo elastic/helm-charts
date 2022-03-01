@@ -27,6 +27,18 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 {{- end -}}
 
+{{/*
+Generate certificates
+*/}}
+{{- define "elasticsearch.gen-certs" -}}
+{{- $altNames := list ( printf "%s.%s" (include "elasticsearch.name" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "elasticsearch.name" .) .Release.Namespace ) -}}
+{{- $ca := genCA "elasticsearch-ca" 365 -}}
+{{- $cert := genSignedCert ( include "elasticsearch.name" . ) nil $altNames 365 $ca -}}
+tls.crt: {{ $cert.Cert | toString | b64enc }}
+tls.key: {{ $cert.Key | toString | b64enc }}
+ca.crt: {{ $ca.Cert | toString | b64enc }}
+{{- end -}}
+
 {{- define "elasticsearch.masterService" -}}
 {{- if empty .Values.masterService -}}
 {{- if empty .Values.fullnameOverride -}}
@@ -62,4 +74,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 7
   {{- end -}}
 {{- end -}}
+{{- end -}}
+
+{{/*
+Use the fullname if the serviceAccount value is not set
+*/}}
+{{- define "elasticsearch.serviceAccount" -}}
+{{- .Values.rbac.serviceAccountName | default (include "elasticsearch.uname" .) -}}
 {{- end -}}
