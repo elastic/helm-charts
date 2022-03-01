@@ -1,4 +1,3 @@
----
 {{- if .Values.maxUnavailable }}
 {{- if .Capabilities.APIVersions.Has "policy/v1" -}}
 apiVersion: policy/v1
