@@ -6,7 +6,7 @@ RELEASE := helm-metricbeat-oss
 GOSS_SELECTOR = release=$(RELEASE),app=helm-metricbeat-oss-metricbeat
 
 install:
-	helm repo add stable https://charts.helm.sh/stable
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm dependency update ../../
 	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
 
