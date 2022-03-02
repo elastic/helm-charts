@@ -128,21 +128,25 @@ persistence:
   enabled: false
   annotations: {}
 
-extraVolumes: []
+extraVolumes:
+  []
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: []
+extraVolumeMounts:
+  []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraContainers: []
+extraContainers:
+  []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
 
-extraInitContainers: []
+extraInitContainers:
+  []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
@@ -256,7 +260,8 @@ lifecycle:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 
-service: {}
+service:
+  {}
   # annotations: {}
   # type: ClusterIP
   # loadBalancerIP: ""
@@ -272,7 +277,8 @@ service: {}
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/tls-acme: "true"
   className: "nginx"
   pathtype: ImplementationSpecific
