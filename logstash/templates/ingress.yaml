@@ -30,12 +30,27 @@ spec:
     {{- end }}
     secretName: {{ .secretName }}
   {{- end }}
-{{- else }}
+  {{- else }}
 {{ toYaml .Values.ingress.tls | indent 4 }}
   {{- end }}
 {{- end}}
   rules:
-  {{- range $.Values.ingress.hosts }}
+  {{- range .Values.ingress.hosts }}
+    {{- /*
+    TODO: deprecate $ingressPath for Logstash 8.0.0
+    */}}
+    {{- if $ingressPath }}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: {{ $ingressPath }}
+        pathType: {{ $pathtype }}
+        backend:
+          service:
+            name: {{ $fullName }}
+            port:
+              number: {{ $httpPort }}
+    {{- else }}
   - host: {{ .host }}
     http:
       paths:
@@ -46,7 +61,8 @@ spec:
           service:
             name: {{ $fullName }}
             port:
-              number: {{ $httpPort }}
+              number: {{ .servicePort | default $httpPort }}
+      {{- end }}
     {{- end }}
   {{- end }}
 {{- end }}
