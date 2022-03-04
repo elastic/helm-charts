@@ -1,4 +1,0 @@
-- [ ] Chart version *not* bumped (the versions are all bumped and released at the same time)
-- [ ] README.md updated with any new values or changes
-- [ ] Updated template tests in `${CHART}/tests/*.py` 
-- [ ] Updated integration tests in `${CHART}/examples/*/test/goss.yaml`

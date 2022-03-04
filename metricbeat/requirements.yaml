@@ -1,5 +1,0 @@
-dependencies:
-  - name: "kube-state-metrics"
-    version: "4.7.0"
-    repository: "https://prometheus-community.github.io/helm-charts"
-    condition: kube_state_metrics.enabled
