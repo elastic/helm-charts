@@ -1,6 +1,6 @@
 GOOGLE_PROJECT := elastic-ci-prod
 CLUSTER_NAME := helm-elasticsearch-test
-KUBERNETES_VERSION := 1.19
+KUBERNETES_VERSION := 1.21
 CHART := elasticsearch
 SUITE := default
 NAMESPACE := helm-charts-testing

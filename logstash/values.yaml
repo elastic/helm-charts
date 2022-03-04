@@ -61,7 +61,6 @@ secrets: []
 #      cert.crt: "LS0tLS1CRUdJTiBlRJRklDQVRFLS0tLS0K"
 #      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
 
-
 # A list of secrets and their paths to mount inside the pod
 secretMounts: []
 
@@ -92,7 +91,7 @@ resources:
     memory: "1536Mi"
 
 volumeClaimTemplate:
-  accessModes: [ "ReadWriteOnce" ]
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 1Gi
@@ -101,7 +100,8 @@ rbac:
   create: false
   serviceAccountAnnotations: {}
   serviceAccountName: ""
-  annotations: {}
+  annotations:
+    {}
     #annotation1: "value1"
     #annotation2: "value2"
     #annotation3: "value3"
@@ -128,21 +128,25 @@ persistence:
   enabled: false
   annotations: {}
 
-extraVolumes: ""
+extraVolumes:
+  []
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: ""
+extraVolumeMounts:
+  []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-extraContainers: ""
+extraContainers:
+  []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
 
-extraInitContainers: ""
+extraInitContainers:
+  []
   # - name: do-something
   #   image: busybox
   #   command: ['do', 'something']
@@ -174,7 +178,8 @@ podManagementPolicy: "Parallel"
 httpPort: 9600
 
 # Custom ports to add to logstash
-extraPorts: []
+extraPorts:
+  []
   # - name: beats
   #   containerPort: 5001
 
@@ -192,7 +197,7 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   # readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -246,7 +251,8 @@ tolerations: []
 nameOverride: ""
 fullnameOverride: ""
 
-lifecycle: {}
+lifecycle:
+  {}
   # preStop:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
@@ -254,27 +260,36 @@ lifecycle: {}
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 
-service: {}
-#  annotations: {}
-#  type: ClusterIP
-#  loadBalancerIP: ""
-#  ports:
-#    - name: beats
-#      port: 5044
-#      protocol: TCP
-#      targetPort: 5044
-#    - name: http
-#      port: 8080
-#      protocol: TCP
-#      targetPort: 8080
+service:
+  {}
+  # annotations: {}
+  # type: ClusterIP
+  # loadBalancerIP: ""
+  # ports:
+  #   - name: beats
+  #     port: 5044
+  #     protocol: TCP
+  #     targetPort: 5044
+  #   - name: http
+  #     port: 8080
+  #     protocol: TCP
+  #     targetPort: 8080
 
 ingress:
   enabled: false
+  annotations:
+    {}
+    # kubernetes.io/tls-acme: "true"
   className: "nginx"
   pathtype: ImplementationSpecific
   hosts:
     - host: logstash-example.local
       paths:
-        - path: /
+        - path: /beats
+          servicePort: 5044
+        - path: /http
+          servicePort: 8080
   tls: []
-#  annotations: {}
+  #  - secretName: logstash-example-tls
+  #    hosts:
+  #      - logstash-example.local

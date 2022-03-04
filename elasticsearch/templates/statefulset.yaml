@@ -57,7 +57,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
         {{/* This forces a restart if the configmap has changed */}}
-        {{- if .Values.esConfig }}
+        {{- if or .Values.esConfig .Values.esJvmOptions }}
         configchecksum: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum | trunc 63 }}
         {{- end }}
     spec:
@@ -69,10 +69,8 @@ spec:
         {{- if .Values.fsGroup }}
         fsGroup: {{ .Values.fsGroup }} # Deprecated value, please use .Values.podSecurityContext.fsGroup
         {{- end }}
-      {{- if .Values.rbac.create }}
-      serviceAccountName: "{{ template "elasticsearch.uname" . }}"
-      {{- else if not (eq .Values.rbac.serviceAccountName "") }}
-      serviceAccountName: {{ .Values.rbac.serviceAccountName | quote }}
+      {{- if or .Values.rbac.create .Values.rbac.serviceAccountName }}
+      serviceAccountName: "{{ template "elasticsearch.serviceAccount" . }}"
       {{- end }}
       automountServiceAccountToken: {{ .Values.rbac.automountToken }}
       {{- with .Values.tolerations }}
@@ -130,6 +128,16 @@ spec:
         - name: esconfig
           configMap:
             name: {{ template "elasticsearch.uname" . }}-config
+        {{- end }}
+        {{- if .Values.esJvmOptions }}
+        - name: esjvmoptions
+          configMap:
+            name: {{ template "elasticsearch.uname" . }}-jvm-options
+        {{- end }}
+        {{- if .Values.createCert }}
+        - name: elasticsearch-certs
+          secret:
+           secretName: {{ template "elasticsearch.uname" . }}-certs
         {{- end }}
 {{- if .Values.keystore }}
         - name: keystore
@@ -330,6 +338,28 @@ spec:
           - name: ES_JAVA_OPTS
             value: "{{ .Values.esJavaOpts }}"
           {{- end }}
+          {{- if .Values.createCert }}
+          - name: xpack.security.enabled
+            value: "true"
+          - name: xpack.security.transport.ssl.enabled
+            value: "true"
+          - name: xpack.security.http.ssl.enabled
+            value: "true"
+          - name: xpack.security.transport.ssl.verification_mode
+            value: "certificate"
+          - name: xpack.security.transport.ssl.key
+            value: "/usr/share/elasticsearch/config/certs/tls.key"
+          - name: xpack.security.transport.ssl.certificate
+            value: "/usr/share/elasticsearch/config/certs/tls.crt"
+          - name: xpack.security.transport.ssl.certificate_authorities
+            value: "/usr/share/elasticsearch/config/certs/ca.crt"
+          - name: xpack.security.http.ssl.key
+            value: "/usr/share/elasticsearch/config/certs/tls.key"
+          - name: xpack.security.http.ssl.certificate
+            value: "/usr/share/elasticsearch/config/certs/tls.crt"
+          - name: xpack.security.http.ssl.certificate_authorities
+            value: "/usr/share/elasticsearch/config/certs/ca.crt"
+          {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
@@ -341,6 +371,11 @@ spec:
           {{- if .Values.persistence.enabled }}
           - name: "{{ template "elasticsearch.uname" . }}"
             mountPath: /usr/share/elasticsearch/data
+          {{- end }}
+          {{- if .Values.createCert }}
+          - name: elasticsearch-certs
+            mountPath: /usr/share/elasticsearch/config/certs
+            readOnly: true
           {{- end }}
 {{ if .Values.keystore }}
           - name: keystore
@@ -357,6 +392,11 @@ spec:
           {{- range $path, $config := .Values.esConfig }}
           - name: esconfig
             mountPath: /usr/share/elasticsearch/config/{{ $path }}
+            subPath: {{ $path }}
+          {{- end -}}
+          {{- range $path, $config := .Values.esJvmOptions }}
+          - name: esjvmoptions
+            mountPath: /usr/share/elasticsearch/config/jvm.options.d/{{ $path }}
             subPath: {{ $path }}
           {{- end -}}
         {{- if .Values.extraVolumeMounts }}

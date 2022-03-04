@@ -209,9 +209,43 @@ extraContainers: |
     } in extraContainer
 
 
+def test_adding_a_extra_container_as_yaml():
+    config = """
+extraContainers:
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraContainer = r["deployment"][name]["spec"]["template"]["spec"]["containers"]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraContainer
+
+
 def test_adding_a_extra_init_container():
     config = """
 extraInitContainers: |
+  - name: do-something
+    image: busybox
+    command: ['do', 'something']
+"""
+    r = helm_template(config)
+    extraInitContainer = r["deployment"][name]["spec"]["template"]["spec"][
+        "initContainers"
+    ]
+    assert {
+        "name": "do-something",
+        "image": "busybox",
+        "command": ["do", "something"],
+    } in extraInitContainer
+
+
+def test_adding_a_extra_init_container_as_yaml():
+    config = """
+extraInitContainers:
   - name: do-something
     image: busybox
     command: ['do', 'something']
@@ -801,4 +835,16 @@ automountToken: false
             "automountServiceAccountToken"
         ]
         == False
+    )
+
+
+def test_adding_annotations():
+    config = """
+ annotations:
+   iam.amazonaws.com/role: es-role
+ """
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["metadata"]["annotations"]["iam.amazonaws.com/role"]
+        == "es-role"
     )

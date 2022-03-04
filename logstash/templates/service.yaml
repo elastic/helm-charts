@@ -20,6 +20,9 @@ spec:
   loadBalancerSourceRanges:
 {{ toYaml . | indent 4 }}
 {{- end }}
+{{- if .Values.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+{{- end }}
   selector:
     app: "{{ template "logstash.fullname" . }}"
     chart: "{{ .Chart.Name }}"

@@ -3,6 +3,12 @@ kind: Deployment
 metadata:
   name: {{ template "kibana.fullname" . }}
   labels: {{ include "kibana.labels" . | nindent 4 }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
@@ -108,7 +114,7 @@ spec:
 {{ toYaml .Values.readinessProbe | indent 10 }}
           exec:
             command:
-              - sh
+              - bash
               - -c
               - |
                 #!/usr/bin/env bash -e
