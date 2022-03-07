@@ -1,6 +1,10 @@
-FROM python:3.7
+FROM python:3.10.2-slim
 
 ENV HELM_VERSION=3.8.0
+
+RUN apt-get update && apt-get upgrade -y && \
+  apt-get install --no-install-recommends -y make wget && \
+  rm -rf /var/lib/apt/lists/*
 
 RUN wget --no-verbose https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
   tar xfv helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
