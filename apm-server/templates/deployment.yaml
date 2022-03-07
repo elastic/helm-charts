@@ -9,7 +9,9 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
+  {{- if or (not .Values.autoscaling) (eq .Values.autoscaling.enabled false) }}
   replicas: {{ .Values.replicas }}
+  {{- end }}
   strategy:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   selector:
