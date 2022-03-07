@@ -807,12 +807,12 @@ persistence:
 """
     r = helm_template(config)
     assert "volumeClaimTemplates" not in r["statefulset"][uname]["spec"]
-    assert (
-        {"name": "elasticsearch-master", "mountPath": "/usr/share/elasticsearch/data"}
-        not in r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
-            "volumeMounts"
-        ]
-    )
+    assert {
+        "name": "elasticsearch-master",
+        "mountPath": "/usr/share/elasticsearch/data",
+    } not in r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0][
+        "volumeMounts"
+    ]
 
 
 def test_priority_class_name():
@@ -1471,7 +1471,11 @@ networkPolicy:
         {"podSelector": {"matchLabels": {"app": "elasticsearch-master"}}},
     ]
     assert transport["ports"][0]["port"] == 9300
-    assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
+    assert pod_selector == {
+        "matchLabels": {
+            "app": "elasticsearch-master",
+        }
+    }
 
 
 def test_default_automount_sa_token():
