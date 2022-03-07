@@ -216,7 +216,7 @@ You can also use `make template` (equivalent to `helm template` ) to look at the
 YAML being generated:
 
 It is possible to run all of the tests and linting inside of a Docker container
-using `make test`
+using `make build test`
 
 Note that templating tests are formatted using [Black][], you should run
 `make lint-python` (equivalent to `black --diff --check .` ) to validate them or
