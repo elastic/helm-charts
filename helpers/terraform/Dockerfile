@@ -15,8 +15,9 @@ RUN curl -O  https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-c
   tar xvf google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz && \
   ./google-cloud-sdk/install.sh --quiet --usage-reporting=false --path-update=true && \
   rm -fr google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz && \
-  /google-cloud-sdk/bin/gcloud config set component_manager/disable_update_check true && \
-  /google-cloud-sdk/bin/gcloud version
+  ln -s /google-cloud-sdk/bin/gcloud /usr/local/bin/gcloud && \
+  gcloud config set component_manager/disable_update_check true && \
+  gcloud version
 
 RUN curl -O https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
   unzip vault_${VAULT_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \
