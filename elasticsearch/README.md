@@ -6,7 +6,6 @@ This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.17][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -53,7 +52,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.17.0-SNAPSHOT version.
+This chart is tested with the latest 7.17.1 version.
 
 ### Install released version using Helm repository
 
@@ -71,8 +70,8 @@ This chart is tested with the latest 7.17.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.17`
 
 * Install it:
-  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.17.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.17.0-SNAPSHOT`
+  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=7.17.1`
+  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=7.17.1`
 
 
 ## Upgrading
@@ -119,7 +118,7 @@ support multiple versions with minimal changes.
 | `envFrom`                          | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                                                                                                                                                                       | `[]`                                             |
 | `esConfig`                         | Allows you to add any config files in `/usr/share/elasticsearch/config/` such as `elasticsearch.yml` and `log4j2.properties`. See [values.yaml][] for an example of the formatting                                                                                                                                | `{}`                                             |
 | `esJavaOpts`                       | [Java options][] for Elasticsearch. This is where you could configure the [jvm heap size][]                                                                                                                                                                                                                       | `""`                                             |
-| `esJvmOptions`                       | [Java options][] for Elasticsearch. Override the default JVM options by adding custom options files .  See [values.yaml][] for an example of the formatting                                                                                                                                                                                                                        | `{}`                                             |
+| `esJvmOptions`                     | [Java options][] for Elasticsearch. Override the default JVM options by adding custom options files .  See [values.yaml][] for an example of the formatting                                                                                                                                                       | `{}`                                             |
 | `esMajorVersion`                   | Deprecated. Instead, use the version of the chart corresponding to your ES minor version. Used to set major version specific configuration. If you are using a custom image and not running the default Elasticsearch version you will need to set this to the version you are running (e.g. `esMajorVersion: 6`) | `""`                                             |
 | `extraContainers`                  | Templatable string of additional `containers` to be passed to the `tpl` function                                                                                                                                                                                                                                  | `""`                                             |
 | `extraEnvs`                        | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                                                                                                                                                                 | `[]`                                             |
@@ -132,7 +131,7 @@ support multiple versions with minimal changes.
 | `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                                                                            | `9200`                                           |
 | `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                                                                          | `IfNotPresent`                                   |
 | `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                                                                                      | `[]`                                             |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                                                                                | `7.17.0-SNAPSHOT`                                |
+| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                                                                                | `7.17.1`                                         |
 | `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                                                                                    | `docker.elastic.co/elasticsearch/elasticsearch`  |
 | `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                                                                                  | see [values.yaml][]                              |
 | `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                                                                                    | `{}`                                             |

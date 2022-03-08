@@ -11,7 +11,6 @@ provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.17][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -44,7 +43,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.17.0-SNAPSHOT version.
+This chart is tested with the latest 7.17.1 version.
 
 ### Install released version using Helm repository
 
@@ -62,8 +61,8 @@ This chart is tested with the latest 7.17.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.17`
 
 * Install it:
-  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.17.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.17.0-SNAPSHOT`
+  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=7.17.1`
+  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=7.17.1`
 
 
 ## Upgrading
@@ -120,7 +119,7 @@ useful for the [http input plugin][], for instance.
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.17.0-SNAPSHOT`                     |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `7.17.1`                              |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `ingress`                 | Configurable [ingress][] for external access to Logstash HTTP port.                                                                                                                                                                  | see [values.yaml][]                   |
@@ -129,8 +128,8 @@ useful for the [http input plugin][], for instance.
 | `logstashConfig`          | Allows you to add any config files in `/usr/share/logstash/config/` such as `logstash.yml` and `log4j2.properties` See [values.yaml][] for an example of the formatting                                                              | `{}`                                  |
 | `logstashJavaOpts`        | Java options for Logstash. This is where you should configure the JVM heap size                                                                                                                                                      | `-Xmx1g -Xms1g`                       |
 | `logstashPipeline`        | Allows you to add any pipeline files in `/usr/share/logstash/pipeline/`                                                                                                                                                              | `{}`                                  |
-| `logstashPatternDir`      | Allows you to define a custom directory to store pattern files | `/usr/share/logstash/patterns/` |
-| `logstashPattern`        | Allows you to add any pattern files in `logstashPatternDir` | `{}` |
+| `logstashPatternDir`      | Allows you to define a custom directory to store pattern files                                                                                                                                                                       | `/usr/share/logstash/patterns/`       |
+| `logstashPattern`         | Allows you to add any pattern files in `logstashPatternDir`                                                                                                                                                                          | `{}`                                  |
 | `maxUnavailable`          | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                          | `1`                                   |
 | `nameOverride`            | Overrides the chart name for resources. If not set the name will default to `.Chart.Name`                                                                                                                                            | `""`                                  |
 | `nodeAffinity`            | Value for the [node affinity settings][]                                                                                                                                                                                             | `{}`                                  |

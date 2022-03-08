@@ -6,7 +6,6 @@ This Helm chart is a lightweight way to configure and run our official
 [Metricbeat Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.17][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -25,6 +24,7 @@ This Helm chart is a lightweight way to configure and run our official
   - [How to install OSS version of Metricbeat?](#how-to-install-oss-version-of-metricbeat)
   - [How to use Kubelet read-only port instead of secure port?](#how-to-use-kubelet-read-only-port-instead-of-secure-port)
   - [Why is Metricbeat host.name field set to Kubernetes pod name?](#why-is-metricbeat-hostname-field-set-to-kubernetes-pod-name)
+  - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -41,7 +41,7 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-This chart is tested with the latest 7.17.0-SNAPSHOT version.
+This chart is tested with the latest 7.17.1 version.
 
 ### Install released version using Helm repository
 
@@ -60,8 +60,8 @@ This chart is tested with the latest 7.17.0-SNAPSHOT version.
 * Checkout the branch : `git checkout 7.17`
 
 * Install it:
-  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=7.17.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=7.17.0-SNAPSHOT`
+  - with Helm 3: `helm install metricbeat ./helm-charts/metricbeat --set imageTag=7.17.1`
+  - with Helm 2 (deprecated): `helm install --name metricbeat ./helm-charts/metricbeat --set imageTag=7.17.1`
 
 
 ## Upgrading
@@ -131,7 +131,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist Metricbeat registry data                                                                                           | `/var/lib`                           |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                       |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                                 |
-| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.17.0-SNAPSHOT`                    |
+| `imageTag`                     | The Metricbeat Docker image tag                                                                                                                                              | `7.17.1`                             |
 | `image`                        | The Metricbeat Docker image                                                                                                                                                  | `docker.elastic.co/beats/metricbeat` |
 | `kube_state_metrics.enabled`   | Install [kube-state-metrics][] chart as a dependency                                                                                                                         | `true`                               |
 | `kube_state_metrics.host`      | Define kube-state-metrics endpoint for an existing deployment. Works only if `kube_state_metrics.enabled: false`                                                             | `""`                                 |
