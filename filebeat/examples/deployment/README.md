@@ -1,6 +1,6 @@
 # Default
 
-This example deploy Filebeat 7.17.0-SNAPSHOT using [default values][] as a Kubernetes Deployment.
+This example deploy Filebeat 7.17.1 using [default values][] as a Kubernetes Deployment.
 
 
 ## Usage
