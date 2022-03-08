@@ -1544,7 +1544,11 @@ networkPolicy:
         {"podSelector": {"matchLabels": {"app": "elasticsearch-master"}}},
     ]
     assert transport["ports"][0]["port"] == 9300
-    assert pod_selector == {"matchLabels": {"app": "elasticsearch-master",}}
+    assert pod_selector == {
+        "matchLabels": {
+            "app": "elasticsearch-master",
+        }
+    }
 
 
 def test_default_automount_sa_token():
