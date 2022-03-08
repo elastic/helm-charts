@@ -220,6 +220,7 @@ clusterRoleRules:
       - namespaces
       - events
       - pods
+      - services
     verbs: ["get", "list", "watch"]
   - apiGroups: ["extensions"]
     resources:
@@ -235,10 +236,16 @@ clusterRoleRules:
     resources:
       - nodes/stats
     verbs: ["get"]
-  - apiGroups: ["coordination.k8s.io"]
+  - apiGroups:
+    - ""
     resources:
-      - leases
-    verbs: ["create", "get", "list", "update"]
+    - nodes/stats
+    verbs:
+    - get
+  - nonResourceURLs:
+    - "/metrics"
+    verbs:
+    - get
 
 podAnnotations:
   {}
