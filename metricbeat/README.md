@@ -24,6 +24,7 @@ This Helm chart is a lightweight way to configure and run our official
   - [How to install OSS version of Metricbeat?](#how-to-install-oss-version-of-metricbeat)
   - [How to use Kubelet read-only port instead of secure port?](#how-to-use-kubelet-read-only-port-instead-of-secure-port)
   - [Why is Metricbeat host.name field set to Kubernetes pod name?](#why-is-metricbeat-hostname-field-set-to-kubernetes-pod-name)
+  - [How do I get multiple beats agents working with hostNetworking enabled?](#how-do-i-get-multiple-beats-agents-working-with-hostnetworking-enabled)
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
