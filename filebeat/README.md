@@ -30,7 +30,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
-<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+<!-- docker run --entrypoint doctoc --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc README.md --github --no-title -->
 
 
 ## Requirements
