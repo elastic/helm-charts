@@ -5,15 +5,17 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Elastic Stack Kubernetes Helm Charts](#elastic-stack-kubernetes-helm-charts)
-  - [Charts](#charts)
-  - [Supported Configurations](#supported-configurations)
-    - [Stack Versions](#stack-versions)
-    - [Kubernetes Versions](#kubernetes-versions)
-    - [Helm Versions](#helm-versions)
-  - [ECK](#eck)
+
+- [Charts](#charts)
+- [Supported Configurations](#supported-configurations)
+  - [Stack Versions](#stack-versions)
+  - [Kubernetes Versions](#kubernetes-versions)
+  - [Helm Versions](#helm-versions)
+- [ECK](#eck)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- Use this to update TOC: -->
+<!-- docker run --entrypoint doctoc --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc README.md --github --no-title -->
 
 
 ## Charts
