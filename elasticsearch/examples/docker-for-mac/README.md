@@ -1,6 +1,6 @@
 # Docker for Mac
 
-This example deploy a 3 nodes Elasticsearch 8.0.0-SNAPSHOT cluster on [Docker for Mac][]
+This example deploy a 3 nodes Elasticsearch 8.1.0 cluster on [Docker for Mac][]
 using [custom values][].
 
 Note that this configuration should be used for test only and isn't recommended

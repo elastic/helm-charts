@@ -31,7 +31,7 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - "filebeat-8.0.0"
+      - "filebeat-8.1.0"
 
 file:
   /usr/share/filebeat/filebeat.yml:

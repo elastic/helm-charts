@@ -2,7 +2,7 @@ port:
   tcp:5066:
     listening: true
     ip:
-    - '127.0.0.1'
+      - "127.0.0.1"
 
 mount:
   /usr/share/metricbeat/metricbeat.yml:
@@ -21,27 +21,27 @@ http:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-8.0.0'
+      - "metricbeat-8.1.0"
     allow-insecure: true
-    username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
-    password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
   https://security-master:9200/_search?q=metricset.name:state_deployment:
     status: 200
     timeout: 2000
     body:
-      - 'metricbeat-8.0.0'
+      - "metricbeat-8.1.0"
     allow-insecure: true
-    username: '{{ .Env.ELASTICSEARCH_USERNAME }}'
-    password: '{{ .Env.ELASTICSEARCH_PASSWORD }}'
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
     exists: true
     contains:
-      - 'output.elasticsearch'
+      - "output.elasticsearch"
 
 command:
   cd /usr/share/metricbeat && metricbeat test output:
     exit-status: 0
     stdout:
-      - 'elasticsearch: https://security-master:9200'
+      - "elasticsearch: https://security-master:9200"

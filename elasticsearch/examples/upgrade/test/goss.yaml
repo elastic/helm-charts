@@ -16,8 +16,7 @@ http:
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     allow-insecure: true
     timeout: 2000
-    allow-insecure: true
     body:
-      - '"number" : "8.0.0-SNAPSHOT"'
+      - '"number" : "8.1.0"'
       - '"cluster_name" : "upgrade"'
       - "You Know, for Search"
