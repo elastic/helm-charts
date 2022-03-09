@@ -5,7 +5,7 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - '"number":"8.0.0"'
+      - '"number":"8.1.0"'
 
   http://localhost:5601/app/kibana:
     status: 200

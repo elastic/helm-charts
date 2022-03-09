@@ -21,4 +21,4 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - "filebeat-oss-8.0.0"
+      - "filebeat-oss-8.1.0"

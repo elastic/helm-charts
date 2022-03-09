@@ -58,8 +58,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.0.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.1.0`
+  - with Helm 2 (deprecated): `helm install --name apm-server ./helm-charts/apm-server --set imageTag=8.1.0`
 
 
 ## Upgrading
@@ -98,7 +98,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.0.0-SNAPSHOT`                   |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.1.0`                            |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
