@@ -257,6 +257,8 @@ ingress:
   annotations: {}
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
+  ## Enable backend protocol when security is enabled to ensure that nginx redirect to https instead of http
+  # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   className: "nginx"
   pathtype: ImplementationSpecific
   hosts:
