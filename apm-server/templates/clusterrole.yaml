@@ -5,7 +5,7 @@ metadata:
   name: {{ template "apm.serviceAccount" . }}-cluster-role
   labels:
     app: "{{ template "apm.fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 rules:

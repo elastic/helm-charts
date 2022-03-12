@@ -5,7 +5,7 @@ metadata:
   name: {{ template "filebeat.serviceAccount" . }}-cluster-role-binding
   labels:
     app: "{{ template "filebeat.fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 roleRef:

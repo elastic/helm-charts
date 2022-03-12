@@ -6,7 +6,7 @@ metadata:
   name: {{ template "filebeat.fullname" . }}
   labels:
     app: "{{ template "filebeat.fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     {{- if .Values.daemonset.labels }}
@@ -48,7 +48,7 @@ spec:
       name: "{{ template "filebeat.fullname" . }}"
       labels:
         app: "{{ template "filebeat.fullname" . }}"
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         {{- if .Values.daemonset.labels }}

@@ -6,7 +6,7 @@ metadata:
   name: {{ template "metricbeat.fullname" . }}-config
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
@@ -24,7 +24,7 @@ metadata:
   name: {{ template "metricbeat.fullname" . }}-daemonset-config
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
@@ -42,7 +42,7 @@ metadata:
   name: {{ template "metricbeat.fullname" . }}-deployment-config
   labels:
     app: "{{ template "metricbeat.fullname" . }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 data:
