@@ -71,7 +71,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/logstash/logstash"
-imageTag: "8.0.0-SNAPSHOT"
+imageTag: "8.1.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 

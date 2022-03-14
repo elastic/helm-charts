@@ -32,7 +32,7 @@ template: ## Render chart templates
 	helm template ./
 
 .PHONY: test
-test: build ## Run all tests in a docker container
+test: ## Run all tests in a docker container
 	docker run --rm -i --user "$$(id -u):$$(id -g)" -v $$(pwd)/../:/app -w /app/$$(basename $$(pwd)) helm-tester make test-all
 
 .PHONY: test-all ## Run all tests

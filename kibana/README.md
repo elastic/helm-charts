@@ -28,7 +28,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
-<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+<!-- docker run --entrypoint doctoc --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc README.md --github --no-title -->
 
 
 ## Requirements
@@ -56,8 +56,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=8.0.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=8.1.0`
+  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=8.1.0`
 
 
 ## Upgrading
@@ -95,7 +95,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `httpPort`            | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                    | `5601`                             |
 | `imagePullPolicy`     | The Kubernetes [imagePullPolicy][]value                                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`    | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                   | `[]`                               |
-| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `8.0.0-SNAPSHOT`                   |
+| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `8.1.0`                            |
 | `image`               | The Kibana Docker image                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`  |
 | `ingress`             | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                |
 | `kibanaConfig`        | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                               |

@@ -9,7 +9,7 @@ http:
     status: 200
     timeout: 2000
     body:
-      - '"version" : "8.0.0"'
+      - '"version" : "8.1.0"'
       - '"http_address" : "0.0.0.0:9600"'
       - '"status" : "green"'
       - '"workers" : 1'

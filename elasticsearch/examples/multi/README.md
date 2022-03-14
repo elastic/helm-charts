@@ -1,6 +1,6 @@
 # Multi
 
-This example deploy an Elasticsearch 8.0.0-SNAPSHOT cluster composed of 3 different Helm
+This example deploy an Elasticsearch 8.1.0 cluster composed of 3 different Helm
 releases:
 
 - `helm-es-multi-master` for the 3 master nodes using [master values][]
