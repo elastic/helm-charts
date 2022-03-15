@@ -3,6 +3,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+  - [7.17.1](#7171)
+    - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
   - [7.11.1](#7111)
     - [License update for Elasticsearch & Kibana](#license-update-for-elasticsearch--kibana)
   - [6.8.14](#6814)
@@ -40,13 +42,28 @@
   - [7.6.0 - 2020/02/11](#760---20200211)
     - [Elasticsearch default resources](#elasticsearch-default-resources)
   - [7.5.0 - 2019/12/02](#750---20191202)
-    - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
+    - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade-1)
   - [7.0.0-alpha1 - 2019/04/17](#700-alpha1---20190417)
     - [Elasticsearch upgrade from 6.x](#elasticsearch-upgrade-from-6x)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
-<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+<!-- docker run --entrypoint doctoc --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc BREAKING_CHANGES.md --github --no-title -->
+
+## 7.17.1
+
+### Metricbeat kube-state-metrics upgrade
+
+[kube-state-metrics][] chart dependency is upgraded from 2.4.1 to 4.7.0 in
+[#1524][]. This is causing Metricbeat chart upgrade from versions < 7.17.1 failing
+with the following error:
+
+```
+UPGRADE FAILED
+Error: UPGRADE FAILED: cannot patch "helm-metricbeat-default-kube-state-metrics" with kind Deployment: Deployment.apps "helm-metricbeat-default-kube-state-metrics" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/instance":"helm-metricbeat-default", "app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+```
+
+Unfortunately `helm upgrade --force` is also failing. The workaround is to uninstall the previous chart version and reinstall it.
 
 ## 7.11.1
 
@@ -414,6 +431,7 @@ volumeClaimTemplate:
 [#807]: https://github.com/elastic/helm-charts/issues/807
 [#839]: https://github.com/elastic/helm-charts/issues/839
 [#916]: https://github.com/elastic/helm-charts/pull/916
+[#1524]: https://github.com/elastic/helm-charts/pull/1524
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic blog post]: https://www.elastic.co/blog/licensing-change

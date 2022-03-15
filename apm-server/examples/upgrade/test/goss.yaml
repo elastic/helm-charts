@@ -3,4 +3,4 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "8.0.0"
+      - "8.1.0"

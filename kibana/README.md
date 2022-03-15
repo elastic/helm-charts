@@ -28,7 +28,7 @@ This Helm chart is a lightweight way to configure and run our official
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
-<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+<!-- docker run --entrypoint doctoc --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc README.md --github --no-title -->
 
 
 ## Requirements
@@ -56,8 +56,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=8.0.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=8.1.0`
+  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=8.1.0`
 
 
 ## Upgrading
@@ -80,21 +80,22 @@ as a reference. They are also used in the automated testing of this chart.
 | Parameter             | Description                                                                                                                                                                                    | Default                            |
 |-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | `affinity`            | Configurable [affinity][]                                                                                                                                                                      | `{}`                               |
+| `annotations`         | Configurable [annotations][] on the deployment object                                                                                                                                          | `{}`                               |
 | `automountToken`      | Whether or not to automount the service account token in the Pod                                                                                                                               | `true`                             |
 | `elasticsearchHosts`  | The URLs used to connect to Elasticsearch                                                                                                                                                      | `http://elasticsearch-master:9200` |
 | `envFrom`             | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                                                    | `[]`                               |
-| `extraContainers`     | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                 | `""`                               |
+| `extraContainers`     | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                 | `[]`                               |
 | `extraEnvs`           | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                                              | see [values.yaml][]                |
-| `extraInitContainers` | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                 | `""`                               |
-| `extraVolumeMounts`   | Configuration for additional `volumeMounts`                                                                                                                                                   | see [values.yaml][]                |
-| `extraVolumes`        | Configuration for additional `volumes`                                                                                                                                                       | see [values.yaml][]                |
+| `extraInitContainers` | Templatable string of additional containers to be passed to the `tpl` function                                                                                                                 | `[]`                               |
+| `extraVolumeMounts`   | Configuration for additional `volumeMounts`                                                                                                                                                    | `[]`                               |
+| `extraVolumes`        | Configuration for additional `volumes`                                                                                                                                                         | `[]`                               |
 | `fullnameOverride`    | Overrides the full name of the resources. If not set the name will default to " `.Release.Name` - `.Values.nameOverride orChart.Name` "                                                        | `""`                               |
 | `healthCheckPath`     | The path used for the readinessProbe to check that Kibana is ready. If you are setting `server.basePath` you will also need to update this to `/${basePath}/app/kibana`                        | `/app/kibana`                      |
 | `hostAliases`         | Configurable [hostAliases][]                                                                                                                                                                   | `[]`                               |
 | `httpPort`            | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                    | `5601`                             |
 | `imagePullPolicy`     | The Kubernetes [imagePullPolicy][]value                                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`    | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                   | `[]`                               |
-| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `8.0.0-SNAPSHOT`                   |
+| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `8.1.0`                            |
 | `image`               | The Kibana Docker image                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`  |
 | `ingress`             | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                |
 | `kibanaConfig`        | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                               |

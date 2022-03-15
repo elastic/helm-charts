@@ -204,7 +204,7 @@ extraInitContainers: ""
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "8.0.0-SNAPSHOT"
+imageTag: "8.1.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -244,6 +244,7 @@ clusterRoleRules:
       - namespaces
       - events
       - pods
+      - services
     verbs: ["get", "list", "watch"]
   - apiGroups: ["extensions"]
     resources:
@@ -259,6 +260,16 @@ clusterRoleRules:
     resources:
       - nodes/stats
     verbs: ["get"]
+  - apiGroups:
+    - ""
+    resources:
+    - nodes/stats
+    verbs:
+    - get
+  - nonResourceURLs:
+    - "/metrics"
+    verbs:
+    - get
 
 podAnnotations: {}
 # iam.amazonaws.com/role: es-cluster
