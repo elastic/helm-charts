@@ -180,6 +180,10 @@ spec:
         env:
           - name: LS_JAVA_OPTS
             value: "{{ .Values.logstashJavaOpts }}"
+          - name: xpack.http.ssl.truststore.path
+            value: /usr/share/logstash/config/certs/tls.crt
+          - name: xpack.http.ssl.verification_mode
+            value: "certificate"
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
