@@ -4,8 +4,8 @@ include ../../../helpers/examples.mk
 
 CHART := metricbeat
 RELEASE := helm-metricbeat-upgrade
-FROM := 7.10.0	# upgrade from version < 7.10.0 is failing due to selector
-								# breaking change in https://github.com/elastic/helm-charts/pull/516
+FROM := 7.17.1	# upgrade from version < 7.17.1 is failing due to kube-state-metrics
+								# dependency upgrade in https://github.com/elastic/helm-charts/pull/1524
 
 install:
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
