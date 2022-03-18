@@ -46,6 +46,12 @@ logstashPattern: {}
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
 extraEnvs: 
+  - name: xpack.monitoring.elasticsearch.hosts
+    value: "https://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@elasticsearch-master:9200"
+  - name: xpack.monitoring.elasticsearch.ssl.certificate_authority
+    value: "/usr/share/logstash/config/certs/ca.crt"
+  - name: xpack.monitoring.enabled
+    value: "true"
   - name: "ELASTICSEARCH_USERNAME"
     valueFrom:
       secretKeyRef:
