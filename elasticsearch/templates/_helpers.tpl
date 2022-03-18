@@ -31,9 +31,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Generate certificates
 */}}
 {{- define "elasticsearch.gen-certs" -}}
-{{- $altNames := list ( printf "%s.%s" (include "elasticsearch.name" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "elasticsearch.name" .) .Release.Namespace ) -}}
+{{- $altNames := list ( printf "%s.%s" (include "elasticsearch.masterService" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "elasticsearch.masterService" .) .Release.Namespace ) -}}
 {{- $ca := genCA "elasticsearch-ca" 365 -}}
-{{- $cert := genSignedCert ( include "elasticsearch.name" . ) nil $altNames 365 $ca -}}
+{{- $cert := genSignedCert ( include "elasticsearch.masterService" . ) nil $altNames 365 $ca -}}
 tls.crt: {{ $cert.Cert | toString | b64enc }}
 tls.key: {{ $cert.Key | toString | b64enc }}
 ca.crt: {{ $ca.Cert | toString | b64enc }}
