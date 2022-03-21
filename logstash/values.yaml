@@ -15,18 +15,7 @@ logstashConfig: {}
 
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
-logstashPipeline:  
-  logstash.conf: |
-    input { exec { command => "uptime" interval => 30 } }
-    output {
-      elasticsearch {
-        hosts => ["https://elasticsearch-master:9200"]
-        cacert => '/usr/share/logstash/config/certs/ca.crt'
-        user => '${ELASTICSEARCH_USERNAME}'
-        password => '${ELASTICSEARCH_PASSWORD}'
-        index => "logstash"
-      }
-    }
+logstashPipeline:  {}
 #  logstash.conf: |
 #    input {
 #      exec {
@@ -45,23 +34,7 @@ logstashPattern: {}
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: 
-  - name: xpack.monitoring.elasticsearch.hosts
-    value: "https://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@elasticsearch-master:9200"
-  - name: xpack.monitoring.elasticsearch.ssl.certificate_authority
-    value: "/usr/share/logstash/config/certs/ca.crt"
-  - name: xpack.monitoring.enabled
-    value: "true"
-  - name: "ELASTICSEARCH_USERNAME"
-    valueFrom:
-      secretKeyRef:
-        name: elasticsearch-master-credentials
-        key: username
-  - name: "ELASTICSEARCH_PASSWORD"
-    valueFrom:
-      secretKeyRef:
-        name: elasticsearch-master-credentials
-        key: password
+extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
@@ -89,11 +62,7 @@ secrets: []
 #      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
 
 # A list of secrets and their paths to mount inside the pod
-secretMounts: 
-  - name: elasticsearch-master-certs
-    secretName: elasticsearch-master-certs
-    path: /usr/share/logstash/config/certs
-
+secretMounts: [] 
 
 hostAliases: []
 #- ip: "127.0.0.1"
