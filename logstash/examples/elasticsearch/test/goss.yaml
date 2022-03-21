@@ -27,7 +27,8 @@ http:
       - '"workers" : 1'
       - '"batch_size" : 125'
       - '"batch_delay" : 50'
-  http://elasticsearch-master:9200/_cat/indices:
+  https://elasticsearch-master:9200/_cat/indices:
+    allow-insecure: true
     status: 200
     timeout: 2000
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
@@ -53,5 +54,5 @@ file:
     filetype: file
     contains:
       - 'input { exec { command => "uptime" interval => 30 } }'
-      - 'hosts => ["http://elasticsearch-master:9200"]'
+      - 'hosts => ["https://elasticsearch-master:9200"]'
       - 'index => "logstash"'

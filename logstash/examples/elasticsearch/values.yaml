@@ -11,8 +11,9 @@ logstashPipeline:
     input { exec { command => "uptime" interval => 30 } }
     output {
       elasticsearch {
-        hosts => ["http://elasticsearch-master:9200"]
+        hosts => ["https://elasticsearch-master:9200"]
         user => '${ELASTICSEARCH_USERNAME}'
+        cacert => '/usr/share/logstash/config/certs/ca.crt'
         password => '${ELASTICSEARCH_PASSWORD}'
         index => "logstash"
       }
@@ -29,3 +30,8 @@ extraEnvs:
       secretKeyRef:
         name: elasticsearch-master-credentials
         key: password
+
+secretMounts: 
+  - name: elasticsearch-master-certs
+    secretName: elasticsearch-master-certs
+    path: /usr/share/logstash/config/certs
