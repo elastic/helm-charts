@@ -62,7 +62,7 @@ secrets: []
 #      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
 
 # A list of secrets and their paths to mount inside the pod
-secretMounts: [] 
+secretMounts: []
 
 hostAliases: []
 #- ip: "127.0.0.1"
