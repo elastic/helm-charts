@@ -86,13 +86,18 @@ daemonset:
         - drop_event.when.regexp:
             system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
       output.elasticsearch:
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        hosts: '["https://${ELASTICSEARCH_HOSTS:elasticsearch-master:9200"}]'
+        ssl.enabled: true
+        ssl.certificate_authorities: ["/usr/share/metricbeat/certs/ca.crt"]
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
-  secretMounts: []
+  secretMounts:
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/metricbeat/certs/
   #  - name: metricbeat-certificates
   #    secretName: metricbeat-certificates
   #    path: /usr/share/metricbeat/certs
@@ -165,13 +170,18 @@ deployment:
         period: 10s
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
       output.elasticsearch:
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        hosts: '["https://${ELASTICSEARCH_HOSTS:elasticsearch-master:9200"}]'
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
+        ssl.enabled: true
+        ssl.certificate_authorities: ["/usr/share/metricbeat/certs/ca.crt"]
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
-  secretMounts: []
+  secretMounts:
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/metricbeat/certs/
   #  - name: metricbeat-certificates
   #    secretName: metricbeat-certificates
   #    path: /usr/share/metricbeat/certs
