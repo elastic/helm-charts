@@ -21,11 +21,14 @@ http:
     allow-insecure: true
     status: 200
     timeout: 2000
-
-  ? "https://upgrade-master:9200/_search?q=metricset.name:state_container%20AND%20kubernetes.container.name:metricbeat"
-  : status: 200
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
+  https://upgrade-master:9200/_search?q=metricset.name:state_container%20AND%20kubernetes.container.name:metricbeat:
+    status: 200
     timeout: 2000
     allow-insecure: true
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
 
 file:
   /usr/share/metricbeat/metricbeat.yml:

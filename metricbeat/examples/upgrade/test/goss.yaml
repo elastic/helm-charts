@@ -23,11 +23,15 @@ user:
 http:
   https://upgrade-master:9200/_cat/indices:
     allow-insecure: true
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     status: 200
     timeout: 2000
-  ? "https://upgrade-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat"
-  : status: 200
+  https://upgrade-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat:
     allow-insecure: true
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
+    status: 200
     timeout: 2000
 
 file:
