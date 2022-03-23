@@ -60,7 +60,7 @@ daemonset:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         protocol: https
-        hosts: ["upgrade-master:9200"]
+        hosts: ["https://upgrade-master:9200"]
         ssl.certificate_authorities:
           - /usr/share/metricbeat/certs/ca.crt
   secretMounts:
@@ -97,7 +97,7 @@ deployment:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         protocol: https
-        hosts: ["upgrade-master:9200"]
+        hosts: ["https://upgrade-master:9200"]
         ssl.certificate_authorities:
           - /usr/share/metricbeat/certs/ca.crt
   secretMounts:
