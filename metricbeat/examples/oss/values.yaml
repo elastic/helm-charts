@@ -59,8 +59,8 @@ daemonset:
       setup.template.name: "metricbeat"
       setup.template.pattern: "metricbeat-oss-*"
   secretMounts:
-    - name: elastic-certificate-pem
-      secretName: elastic-certificate-pem
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
       path: /usr/share/metricbeat/config/certs
 
 deployment:
@@ -89,6 +89,6 @@ deployment:
       setup.template.name: "metricbeat"
       setup.template.pattern: "metricbeat-oss-*"
   secretMounts:
-    - name: elastic-certificate-pem
-      secretName: elastic-certificate-pem
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
       path: /usr/share/metricbeat/config/certs

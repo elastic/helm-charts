@@ -14,6 +14,6 @@ extraEnvs:
         key: password
 
 secretMounts:
-  - name: elastic-certificate-pem
-    secretName: elastic-certificate-pem
-    path: /usr/share/metricbeat/config/certs
+  - name: upgrade-master-certs
+    secretName: upgrade-master-certs
+    path: /usr/share/metricbeat/certs
