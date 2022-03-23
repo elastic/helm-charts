@@ -4,3 +4,8 @@ clusterName: upgrade
 # This is because nodes with security enabled can't join a cluster with security disabled.
 # Every nodes need to be recreated at the same time so they can recreate a cluster with security enabled
 updateStrategy: OnDelete
+
+secretMounts:
+  - name: upgrade-master-certs
+    secretName: upgrade-master-certs
+    path: /usr/share/elasticsearch/config/certs
