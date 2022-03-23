@@ -13,3 +13,7 @@ daemonset:
         secretKeyRef:
           name: upgrade-master-credentials
           key: password
+  secretMounts:
+    - name: elastic-certificate-pem
+      secretName: elastic-certificate-pem
+      path: /usr/share/filebeat/certs

@@ -19,6 +19,13 @@ daemonset:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         index: "filebeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
+        protocol: https
+        ssl.certificate_authorities:
+          - /usr/share/filebeat/certs/ca.crt
       setup.ilm.enabled: false
       setup.template.name: "filebeat"
       setup.template.pattern: "filebeat-oss-*"
+  secretMounts:
+    - name: elastic-certificate-pem
+      secretName: elastic-certificate-pem
+      path: /usr/share/filebeat/certs

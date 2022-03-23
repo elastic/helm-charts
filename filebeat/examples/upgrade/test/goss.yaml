@@ -25,8 +25,9 @@ user:
     gid: 1000
 
 http:
-  http://upgrade-master:9200/_cat/indices:
+  https://upgrade-master:9200/_cat/indices:
     status: 200
+    allow-insecure: true
     timeout: 2000
     body:
       - "filebeat-8.1.0"
@@ -42,4 +43,4 @@ command:
   cd /usr/share/filebeat && filebeat test output:
     exit-status: 0
     stdout:
-      - "elasticsearch: http://upgrade-master:9200"
+      - "elasticsearch: https://upgrade-master:9200"
