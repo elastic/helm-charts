@@ -48,7 +48,7 @@ daemonset:
 
       output.elasticsearch:
         host: '${NODE_NAME}'
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        hosts: '["https://${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}"]'
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         protocol: https
@@ -122,7 +122,7 @@ deployment:
 
       output.elasticsearch:
         host: "${NODE_NAME}"
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        hosts: '["https://${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}"]'
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
         protocol: https
