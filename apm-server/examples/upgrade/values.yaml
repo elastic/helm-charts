@@ -9,9 +9,17 @@ apmConfig:
       enabled: false
 
     output.elasticsearch:
-      hosts: ["http://upgrade-master:9200"]
+      hosts: ["https://upgrade-master:9200"]
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
+      protocol: https
+      ssl.certificate_authorities:
+       - /usr/share/apm-server/config/certs/ca.crt
+
+secretMounts:
+  - name: elasticsearch-master-certs
+    secretName: elasticsearch-master-certs
+    path: /usr/share/apm-server/config/certs
 
 extraEnvs:
   - name: "ELASTICSEARCH_USERNAME"
@@ -24,3 +32,4 @@ extraEnvs:
       secretKeyRef:
         name: upgrade-master-credentials
         key: password
+

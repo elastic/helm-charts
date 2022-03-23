@@ -8,13 +8,12 @@ apmConfig:
     queue: {}
 
     output.elasticsearch:
-      hosts: ["http://elasticsearch-master:9200"]
+      hosts: ["https://elasticsearch-master:9200"]
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
-      ## If SSL is enabled
-      # protocol: https
-      # ssl.certificate_authorities:
-      #  - /usr/share/apm-server/config/certs/elastic-ca.pem
+      protocol: https
+      ssl.certificate_authorities:
+       - /usr/share/apm-server/config/certs/ca.crt
 
 replicas: 1
 
@@ -124,7 +123,10 @@ serviceAccountAnnotations: {}
 # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
 
 # A list of secrets and their paths to mount inside the pod
-secretMounts: []
+secretMounts:
+  - name: elasticsearch-master-certs
+    secretName: elasticsearch-master-certs
+    path: /usr/share/apm-server/config/certs
 #  - name: elastic-certificate-pem
 #    secretName: elastic-certificates
 #    path: /usr/share/apm-server/config/certs
