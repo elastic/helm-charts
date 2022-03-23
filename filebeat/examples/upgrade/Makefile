@@ -4,7 +4,7 @@ include ../../../helpers/examples.mk
 
 CHART := filebeat
 RELEASE := helm-filebeat-upgrade
-FROM := 7.15.0 # registry file version 1 not supported error with previous version
+FROM := 7.17.1	# upgrade from versions before 7.17.1 isn't compatible with 8.x
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)

@@ -29,6 +29,10 @@ http:
     status: 200
     allow-insecure: true
     timeout: 2000
+    body:
+      - "filebeat-8.1.0"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
 
 file:
   /usr/share/filebeat/filebeat.yml:
