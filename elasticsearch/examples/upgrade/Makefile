@@ -4,7 +4,7 @@ include ../../../helpers/examples.mk
 
 CHART := elasticsearch
 RELEASE := helm-es-upgrade
-FROM := 7.4.0	# versions before 7.4.O aren't compatible with Kubernetes >= 1.16.0
+FROM := 7.17.1	# upgrade from versions before 7.17.1 isn't compatible with 8.x
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)

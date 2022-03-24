@@ -52,9 +52,16 @@ daemonset:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         index: "metricbeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
+        protocol: https
+        ssl.certificate_authorities:
+          - /usr/share/metricbeat/config/certs/ca.crt
       setup.ilm.enabled: false
       setup.template.name: "metricbeat"
       setup.template.pattern: "metricbeat-oss-*"
+  secretMounts:
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/metricbeat/config/certs
 
 deployment:
   metricbeatConfig:
@@ -75,6 +82,13 @@ deployment:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         index: "metricbeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
+        protocol: https
+        ssl.certificate_authorities:
+          - /usr/share/metricbeat/config/certs/ca.crt
       setup.ilm.enabled: false
       setup.template.name: "metricbeat"
       setup.template.pattern: "metricbeat-oss-*"
+  secretMounts:
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/metricbeat/config/certs

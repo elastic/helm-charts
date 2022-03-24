@@ -21,16 +21,20 @@ user:
     gid: 1000
 
 http:
-  http://upgrade-master:9200/_cat/indices:
+  https://upgrade-master:9200/_cat/indices:
+    allow-insecure: true
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     status: 200
     timeout: 2000
     body:
       - "metricbeat-8.1.0"
-  ? "http://upgrade-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat"
-  : status: 200
+  https://upgrade-master:9200/_search?q=metricset.name:container%20AND%20kubernetes.container.name:metricbeat:
+    allow-insecure: true
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
+    status: 200
     timeout: 2000
-    body:
-      - "metricbeat-8.1.0"
 
 file:
   /usr/share/metricbeat/metricbeat.yml:
@@ -43,4 +47,4 @@ command:
   cd /usr/share/metricbeat && metricbeat test output:
     exit-status: 0
     stdout:
-      - "elasticsearch: http://upgrade-master:9200"
+      - "elasticsearch: https://upgrade-master:9200"
