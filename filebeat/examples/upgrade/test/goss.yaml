@@ -31,8 +31,8 @@ http:
     timeout: 2000
     body:
       - "filebeat-8.1.0"
-    username: '${ELASTICSEARCH_USERNAME}'
-    password: '${ELASTICSEARCH_PASSWORD}'
+    username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
+    password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
 
 file:
   /usr/share/filebeat/filebeat.yml:
