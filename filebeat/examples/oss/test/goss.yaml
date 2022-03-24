@@ -15,7 +15,8 @@ user:
     gid: 1000
 
 http:
-  http://elasticsearch-master:9200/_cat/indices:
+  https://elasticsearch-master:9200/_cat/indices:
+    allow-insecure: true
     status: 200
     timeout: 2000
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"

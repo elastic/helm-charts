@@ -15,10 +15,16 @@ daemonset:
                 logs_path: "/var/log/containers/"
       output.elasticsearch:
         host: '${NODE_NAME}'
-        hosts: "elasticsearch-master:9200"
+        hosts: ["https://elasticsearch-master:9200"]
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         index: "filebeat-oss-%{[agent.version]}-%{+yyyy.MM.dd}"
+        ssl.certificate_authorities:
+          - /usr/share/filebeat/certs/ca.crt
       setup.ilm.enabled: false
       setup.template.name: "filebeat"
       setup.template.pattern: "filebeat-oss-*"
+  secretMounts:
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/filebeat/certs

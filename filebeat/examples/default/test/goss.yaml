@@ -25,9 +25,10 @@ user:
     gid: 1000
 
 http:
-  http://elasticsearch-master:9200/_cat/indices:
+  https://elasticsearch-master:9200/_cat/indices:
     status: 200
     timeout: 2000
+    allow-insecure: true
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
@@ -45,4 +46,4 @@ command:
   cd /usr/share/filebeat && filebeat test output:
     exit-status: 0
     stdout:
-      - "elasticsearch: http://elasticsearch-master:9200"
+      - "elasticsearch: https://elasticsearch-master:9200"
