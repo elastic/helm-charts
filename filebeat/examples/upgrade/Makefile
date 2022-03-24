@@ -4,7 +4,8 @@ include ../../../helpers/examples.mk
 
 CHART := filebeat
 RELEASE := helm-filebeat-upgrade
-FROM := 7.9.0 # registry file version 1 not supported error with previous version
+# K8S 1.22 doesn't support anymore rbac.authorization.k8s.io/v1beta1 used in 7.9.0
+FROM := 7.10.0
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
