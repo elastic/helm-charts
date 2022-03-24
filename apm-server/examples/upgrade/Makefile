@@ -4,7 +4,8 @@ include ../../../helpers/examples.mk
 
 CHART := apm-server
 RELEASE := helm-apm-server-upgrade
-FROM := 7.6.0	# 7.6.0 is the first release for apm-server
+# K8S 1.22 doesn't support anymore rbac.authorization.k8s.io/v1beta1 used in 7.9.0
+FROM := 7.10.0
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
