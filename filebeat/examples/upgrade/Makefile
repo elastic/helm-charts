@@ -4,7 +4,8 @@ include ../../../helpers/examples.mk
 
 CHART := filebeat
 RELEASE := helm-filebeat-upgrade
-FROM := 7.17.1	# upgrade from versions before 7.17.1 isn't compatible with 8.x
+# upgrade from versions before 7.17.1 isn't compatible with 8.x
+FROM := 7.17.1
 
 install:
 	../../../helpers/upgrade.sh --chart $(CHART) --release $(RELEASE) --from $(FROM)
