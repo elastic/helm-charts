@@ -40,7 +40,9 @@ spec:
 {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
 {{- end }}
+{{- if or (.Values.managedServiceAccount) (ne .Values.serviceAccount "") }}
       serviceAccountName: {{ template "apm.serviceAccount" . }}
+{{- end }}
       {{- if .Values.hostAliases }}
       hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
       {{- end }}
