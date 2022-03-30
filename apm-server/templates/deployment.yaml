@@ -81,7 +81,7 @@ spec:
       {{- end }}
       containers:
       - name: apm-server
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        image: "{{ .Values.image }}{{- if .Values.imageDigest -}}@{{ .Values.imageDigest }}{{ else }}:{{  .Values.imageTag }}{{- end -}}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
         {{- with .Values.extraEnvs }}
         env:

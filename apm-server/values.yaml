@@ -67,6 +67,7 @@ hostAliases: []
 
 image: "docker.elastic.co/apm/apm-server"
 imageTag: "8.1.0"
+imageDigest: ""
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
