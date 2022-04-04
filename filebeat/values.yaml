@@ -156,7 +156,7 @@ deployment:
 # Replicas being used for the filebeat deployment
 replicas: 1
 
-extraContainers: ""
+extraContainers: []
 # - name: dummy-init
 #   image: busybox
 #   command: ['echo', 'hey']
