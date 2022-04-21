@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.17.3
+
+* 7.17.3 as default version.
+
+
+| PR                                                        | Author                             | Title                                    |
+|-----------------------------------------------------------|------------------------------------|------------------------------------------|
+| [#1632](https://github.com/elastic/helm-charts/pull/1632) | [@jmlrt](https://github.com/jmlrt) | [meta] update upgrade tests base version |
+| [#1622](https://github.com/elastic/helm-charts/pull/1622) | [@jmlrt](https://github.com/jmlrt) | [metricbeat] fix upgrade test            |
+
+
 ## 7.17.1
 
 * 7.17.1 as default version.
