@@ -3,9 +3,9 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "7.17.2"
+      - "7.17.3"
   http://elasticsearch-master:9200/_cat/indices:
     status: 200
     timeout: 2000
     body:
-      - "apm-oss-7.17.2"
+      - "apm-oss-7.17.3"

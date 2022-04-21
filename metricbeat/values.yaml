@@ -180,7 +180,7 @@ extraInitContainers: ""
 hostPathRoot: /var/lib
 
 image: "docker.elastic.co/beats/metricbeat"
-imageTag: "7.17.2-SNAPSHOT"
+imageTag: "7.17.3"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
@@ -237,15 +237,15 @@ clusterRoleRules:
       - nodes/stats
     verbs: ["get"]
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - nodes/stats
+      - nodes/stats
     verbs:
-    - get
+      - get
   - nonResourceURLs:
-    - "/metrics"
+      - "/metrics"
     verbs:
-    - get
+      - get
 
 podAnnotations:
   {}
