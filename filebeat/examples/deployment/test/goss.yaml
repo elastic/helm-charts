@@ -3,4 +3,4 @@ http:
     status: 200
     timeout: 2000
     body:
-      - "filebeat-7.17.2"
+      - "filebeat-7.17.3"
