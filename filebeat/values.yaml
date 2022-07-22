@@ -53,6 +53,8 @@ daemonset:
         password: '${ELASTICSEARCH_PASSWORD}'
         protocol: https
         ssl.certificate_authorities: ["/usr/share/filebeat/certs/ca.crt"]
+  # Mount Docker socket /var/run/docker.sock
+  dockerSockMount: true
   # Only used when updateStrategy is set to "RollingUpdate"
   maxUnavailable: 1
   nodeSelector: {}
