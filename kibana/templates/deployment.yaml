@@ -150,6 +150,9 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
+          - name: elasticsearch-certs
+            mountPath: /usr/share/kibana/config/certs
+            readOnly: true
           - name: kibana-tokens
             mountPath: /usr/share/kibana/config/tokens
             readOnly: true
@@ -210,3 +213,8 @@ spec:
         - name: elasticsearch-certs
           secret:
             secretName: {{ .Values.elasticsearchRelease }}-certs
+        {{- if .Values.kibanaConfig }}
+        - name: kibanaconfig
+          configMap:
+            name: {{ template "kibana.fullname" . }}-config
+        {{- end }}
