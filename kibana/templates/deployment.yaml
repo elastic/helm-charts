@@ -175,3 +175,35 @@ spec:
 {{ toYaml .Values.extraContainers | indent 6 }}
       {{- end }}
       {{- end }}
+      initContainers:
+        - name: configure-kibana-token
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          # TODO add retries
+          command:
+            - sh
+            - -c
+            - curl --output /usr/share/kibana/config/tokens/{{ template "kibana.fullname" . }} --fail -XPOST --cacert /usr/share/kibana/config/certs/tls.crt -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
+          env:
+            - name: "ELASTICSEARCH_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-master-credentials
+                  key: username
+            - name: "ELASTICSEARCH_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-master-credentials
+                  key: password
+          volumeMounts:
+            - name: elasticsearch-certs
+              mountPath: /usr/share/kibana/config/certs
+              readOnly: true
+            - name: kibana-tokens
+              mountPath: /usr/share/kibana/config/tokens
+      volumes:
+        - name: kibana-tokens
+          emptyDir: {}
+        - name: elasticsearch-certs
+          secret:
+            secretName: {{ .Values.elasticsearchRelease }}-certs
