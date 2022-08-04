@@ -150,6 +150,9 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
+          - name: kibana-tokens
+            mountPath: /usr/share/kibana/config/tokens
+            readOnly: true
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
