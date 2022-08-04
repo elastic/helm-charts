@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "kibana.fullname" . }}-post-delete
+  labels: {{ include "kibana.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-delete
+    # TODO
+    #"helm.sh/hook-delete-policy": hook-succeeded
+    {{- if .Values.annotations }}
+    {{- range $key, $value := .Values.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- end }}
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: clean-kibana-token
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          command: ["curl"]
+          args:
+            - --fail
+            - -XDELETE
+            - --cacert
+            - /usr/share/kibana/config/certs/tls.crt
+            - -u
+            - "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)"
+            - "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}"
+          env:
+            - name: "ELASTICSEARCH_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-master-credentials
+                  key: username
+            - name: "ELASTICSEARCH_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-master-credentials
+                  key: password
+          volumeMounts:
+            - name: elasticsearch-certs
+              mountPath: /usr/share/kibana/config/certs
+              readOnly: true
+      volumes:
+        - name: elasticsearch-certs
+          secret:
+            secretName: {{ .Values.elasticsearchRelease }}-certs
