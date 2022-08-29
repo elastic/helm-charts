@@ -20,6 +20,12 @@ spec:
 {{- else }}
   - name: "{{ .Release.Name }}-{{ randAlpha 5 | lower }}-test"
 {{- end }}
+    env:
+      - name: ELASTIC_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: {{ template "elasticsearch.uname" . }}-credentials
+            key: password
     image: "{{ .Values.image }}:{{ .Values.imageTag }}"
     imagePullPolicy: "{{ .Values.imagePullPolicy }}"
     command:
@@ -27,10 +33,18 @@ spec:
       - "-c"
       - |
         #!/usr/bin/env bash -e
-        curl -XGET --fail '{{ template "elasticsearch.uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
+        curl -XGET --fail --cacert /usr/share/elasticsearch/config/certs/tls.crt -u "elastic:${ELASTIC_PASSWORD}" https://'{{ template "elasticsearch.uname" . }}:{{ .Values.httpPort }}/_cluster/health?{{ .Values.clusterHealthCheckParams }}'
+    volumeMounts:
+      - name: elasticsearch-certs
+        mountPath: /usr/share/elasticsearch/config/certs
+        readOnly: true
   {{- if .Values.imagePullSecrets }}
   imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 4 }}
   {{- end }}
   restartPolicy: Never
+  volumes:
+    - name: elasticsearch-certs
+      secret:
+        secretName: {{ template "elasticsearch.uname" . }}-certs
 {{- end -}}
