@@ -68,6 +68,7 @@ kibanaConfig:
   kibana.yml: |
     elasticsearch.ssl.certificate: /usr/share/kibana/config/certs/tls.crt
     elasticsearch.ssl.key: /usr/share/kibana/config/certs/tls.key
+    elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/ca.crt"]
 
 # If Pod Security Policy in use it may be required to specify security context as well as service account
 
