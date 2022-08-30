@@ -37,7 +37,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/kibana/kibana"
-imageTag: "8.1.0"
+imageTag: "8.4.0"
 imagePullPolicy: "IfNotPresent"
 
 # additionals labels
