@@ -93,6 +93,8 @@ spec:
 {{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        command: ["/bin/bash"]
+        args: ["-c","/usr/share/kibana/helm-scripts/kibana-entrypoint.sh"]
         env:
           {{- if .Values.elasticsearchURL }}
           - name: ELASTICSEARCH_URL
@@ -156,6 +158,8 @@ spec:
           - name: kibana-tokens
             mountPath: /usr/share/kibana/config/tokens
             readOnly: true
+          - name: kibana-helm-scripts
+            mountPath: /usr/share/kibana/helm-scripts
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
@@ -189,7 +193,7 @@ spec:
           command:
             - sh
             - -c
-            - curl --output /usr/share/kibana/config/tokens/{{ template "kibana.fullname" . }} --fail -XPOST --cacert /usr/share/kibana/config/certs/tls.crt -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
+            - curl --output /usr/share/kibana/config/tokens/{{ template "kibana.fullname" . }}.json --fail -XPOST --cacert /usr/share/kibana/config/certs/tls.crt -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
           env:
             - name: "ELASTICSEARCH_USERNAME"
               valueFrom:
@@ -210,6 +214,10 @@ spec:
       volumes:
         - name: kibana-tokens
           emptyDir: {}
+        - name: kibana-helm-scripts
+          configMap:
+            name: {{ template "kibana.fullname" . }}-helm-scripts
+            defaultMode: 0755
         - name: elasticsearch-certs
           secret:
             secretName: {{ .Values.elasticsearchRelease }}-certs
