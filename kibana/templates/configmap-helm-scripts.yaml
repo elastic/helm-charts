@@ -6,11 +6,11 @@ metadata:
   labels: {{ include "kibana.labels" . | nindent 4 }}
 data:
   kibana-entrypoint.sh: |
-    export ELASTICSEARCH_SERVICEACCOUNTTOKEN=$(/usr/share/kibana/node/bin/node /usr/share/kibana/helm-scripts/parse-token.js)
+    export ELASTICSEARCH_SERVICEACCOUNTTOKEN=$({{ template "kibana.home_dir" . }}/node/bin/node {{ template "kibana.home_dir" . }}/helm-scripts/parse-token.js {{ template "kibana.home_dir" . }}/config/tokens/kb-kibana.json)
 
     # https://github.com/elastic/dockerfiles/blob/a405a4d692031b72cefcb8523bd464aa3221ec47/kibana/Dockerfile#L131
     exec /bin/tini -- /usr/local/bin/kibana-docker "$@"
 
   parse-token.js: |
-    let dataFile = require('/usr/share/kibana/config/tokens/kb-kibana.json');
+    let dataFile = require(arguments[0]);
     console.log(dataFile.token.value);

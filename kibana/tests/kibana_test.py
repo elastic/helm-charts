@@ -1,10 +1,8 @@
 import os
 import sys
 
-from helpers import helm_template
-
 sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
-
+from helpers import helm_template
 
 name = "release-name-kibana"
 elasticsearchHosts = "https://elasticsearch-master:9200"

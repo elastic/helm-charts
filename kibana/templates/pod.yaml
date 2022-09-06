@@ -7,6 +7,7 @@ metadata:
     "helm.sh/hook": post-delete
     # TODO
     #"helm.sh/hook-delete-policy": hook-succeeded
+    # TODO after upgrade also
     {{- if .Values.annotations }}
     {{- range $key, $value := .Values.annotations }}
     {{ $key }}: {{ $value | quote }}
@@ -26,7 +27,7 @@ spec:
             - --fail
             - -XDELETE
             - --cacert
-            - /usr/share/kibana/config/certs/tls.crt
+            - {{ template "kibana.home_dir" . }}/config/certs/tls.crt
             - -u
             - "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)"
             - "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}"
@@ -43,7 +44,7 @@ spec:
                   key: password
           volumeMounts:
             - name: elasticsearch-certs
-              mountPath: /usr/share/kibana/config/certs
+              mountPath: {{ template "kibana.home_dir" . }}/config/certs
               readOnly: true
       volumes:
         - name: elasticsearch-certs
