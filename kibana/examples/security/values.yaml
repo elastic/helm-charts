@@ -7,16 +7,6 @@ extraEnvs:
       secretKeyRef:
         name: kibana
         key: encryptionkey
-  - name: "ELASTICSEARCH_USERNAME"
-    valueFrom:
-      secretKeyRef:
-        name: security-master-credentials
-        key: username
-  - name: "ELASTICSEARCH_PASSWORD"
-    valueFrom:
-      secretKeyRef:
-        name: security-master-credentials
-        key: password
 
 kibanaConfig:
   kibana.yml: |
