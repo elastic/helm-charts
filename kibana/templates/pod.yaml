@@ -4,10 +4,8 @@ metadata:
   name: {{ template "kibana.fullname" . }}-post-delete
   labels: {{ include "kibana.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": post-delete
-    # TODO
-    #"helm.sh/hook-delete-policy": hook-succeeded
-    # TODO after upgrade also
+    "helm.sh/hook": post-delete,post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
     {{- if .Values.annotations }}
     {{- range $key, $value := .Values.annotations }}
     {{ $key }}: {{ $value | quote }}
