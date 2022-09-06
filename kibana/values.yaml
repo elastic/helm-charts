@@ -151,12 +151,12 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-# readinessProbe:
-#   failureThreshold: 3
-#   initialDelaySeconds: 10
-#   periodSeconds: 10
-#   successThreshold: 3
-#   timeoutSeconds: 5
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 3
+  timeoutSeconds: 5
 
 imagePullSecrets: []
 nodeSelector: {}

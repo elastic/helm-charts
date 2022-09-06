@@ -47,19 +47,28 @@ spec:
       hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
       {{- end }}
       volumes:
-        {{- range .Values.secretMounts }}
-        - name: {{ .name }}
+        - name: kibana-tokens
+          emptyDir: {}
+        - name: kibana-helm-scripts
+          configMap:
+            name: {{ template "kibana.fullname" . }}-helm-scripts
+            defaultMode: 0755
+        - name: elasticsearch-certs
           secret:
-            secretName: {{ .secretName }}
-        {{- end }}
+            secretName: {{ .Values.elasticsearchRelease }}-certs
         {{- if .Values.kibanaConfig }}
         - name: kibanaconfig
           configMap:
             name: {{ template "kibana.fullname" . }}-config
         {{- end }}
-      {{- if .Values.extraVolumes }}
+        {{- range .Values.secretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+        {{- end }}
+        {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 8 }}
-      {{- end }}
+        {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
@@ -76,11 +85,36 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
     {{- end }}
+      initContainers:
+      - name: configure-kibana-token
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        # TODO add retries
+        command:
+          - sh
+          - -c
+          - curl --output /usr/share/kibana/config/tokens/{{ template "kibana.fullname" . }}.json --fail -XPOST --cacert /usr/share/kibana/config/certs/tls.crt -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
+        env:
+          - name: "ELASTICSEARCH_USERNAME"
+            valueFrom:
+              secretKeyRef:
+                name: elasticsearch-master-credentials
+                key: username
+          - name: "ELASTICSEARCH_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: elasticsearch-master-credentials
+                key: password
+        volumeMounts:
+          - name: elasticsearch-certs
+            mountPath: /usr/share/kibana/config/certs
+            readOnly: true
+          - name: kibana-tokens
+            mountPath: /usr/share/kibana/config/tokens
       {{- if .Values.extraInitContainers }}
       # Currently some extra blocks accept strings
       # to continue with backwards compatibility this is being kept
       # whilst also allowing for yaml to be specified too.
-      initContainers:
       {{- if eq "string" (printf "%T" .Values.extraInitContainers) }}
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- else }}
@@ -112,37 +146,37 @@ spec:
         envFrom:
 {{ toYaml .Values.envFrom | indent 10 }}
 {{- end }}
-#         readinessProbe:
-# {{ toYaml .Values.readinessProbe | indent 10 }}
-#           exec:
-#             command:
-#               - bash
-#               - -c
-#               - |
-#                 #!/usr/bin/env bash -e
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}
+          exec:
+            command:
+              - bash
+              - -c
+              - |
+                #!/usr/bin/env bash -e
 
-#                 # Disable nss cache to avoid filling dentry cache when calling curl
-#                 # This is required with Kibana Docker using nss < 3.52
-#                 export NSS_SDB_USE_CACHE=no
+                # Disable nss cache to avoid filling dentry cache when calling curl
+                # This is required with Kibana Docker using nss < 3.52
+                export NSS_SDB_USE_CACHE=no
 
-#                 http () {
-#                     local path="${1}"
-#                     set -- -XGET -s --fail -L
+                http () {
+                    local path="${1}"
+                    set -- -XGET -s --fail -L
 
-#                     if [ -n "${ELASTICSEARCH_USERNAME}" ] && [ -n "${ELASTICSEARCH_PASSWORD}" ]; then
-#                       set -- "$@" -u "${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}"
-#                     fi
+                    if [ -n "${ELASTICSEARCH_USERNAME}" ] && [ -n "${ELASTICSEARCH_PASSWORD}" ]; then
+                      set -- "$@" -u "${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}"
+                    fi
 
-#                     STATUS=$(curl --output /dev/null --write-out "%{http_code}" -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}")
-#                     if [[ "${STATUS}" -eq 200 ]]; then
-#                       exit 0
-#                     fi
+                    STATUS=$(curl --output /dev/null --write-out "%{http_code}" -k "$@" "{{ .Values.protocol }}://localhost:{{ .Values.httpPort }}${path}")
+                    if [[ "${STATUS}" -eq 200 ]]; then
+                      exit 0
+                    fi
 
-#                     echo "Error: Got HTTP code ${STATUS} but expected a 200"
-#                     exit 1
-#                 }
+                    echo "Error: Got HTTP code ${STATUS} but expected a 200"
+                    exit 1
+                }
 
-#                 http "{{ .Values.healthCheckPath }}"
+                http "{{ .Values.healthCheckPath }}"
         ports:
         - containerPort: {{ .Values.httpPort }}
 {{- if .Values.lifecycle }}
@@ -185,44 +219,3 @@ spec:
 {{ toYaml .Values.extraContainers | indent 6 }}
       {{- end }}
       {{- end }}
-      initContainers:
-        - name: configure-kibana-token
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-          # TODO add retries
-          command:
-            - sh
-            - -c
-            - curl --output /usr/share/kibana/config/tokens/{{ template "kibana.fullname" . }}.json --fail -XPOST --cacert /usr/share/kibana/config/certs/tls.crt -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
-          env:
-            - name: "ELASTICSEARCH_USERNAME"
-              valueFrom:
-                secretKeyRef:
-                  name: elasticsearch-master-credentials
-                  key: username
-            - name: "ELASTICSEARCH_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: elasticsearch-master-credentials
-                  key: password
-          volumeMounts:
-            - name: elasticsearch-certs
-              mountPath: /usr/share/kibana/config/certs
-              readOnly: true
-            - name: kibana-tokens
-              mountPath: /usr/share/kibana/config/tokens
-      volumes:
-        - name: kibana-tokens
-          emptyDir: {}
-        - name: kibana-helm-scripts
-          configMap:
-            name: {{ template "kibana.fullname" . }}-helm-scripts
-            defaultMode: 0755
-        - name: elasticsearch-certs
-          secret:
-            secretName: {{ .Values.elasticsearchRelease }}-certs
-        {{- if .Values.kibanaConfig }}
-        - name: kibanaconfig
-          configMap:
-            name: {{ template "kibana.fullname" . }}-config
-        {{- end }}

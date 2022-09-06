@@ -1,12 +1,13 @@
 import os
 import sys
 
-sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
 from helpers import helm_template
-import yaml
+
+sys.path.insert(1, os.path.join(sys.path[0], "../../helpers"))
+
 
 name = "release-name-kibana"
-elasticsearchHosts = "http://elasticsearch-master:9200"
+elasticsearchHosts = "https://elasticsearch-master:9200"
 
 
 def test_defaults():
@@ -305,7 +306,7 @@ ingress:
         i["rules"][0]["http"]["paths"][1]["backend"]["service"]["port"]["number"]
         == 8888
     )
-    assert i["rules"][1]["host"] == None
+    assert i["rules"][1]["host"] is None
     assert i["rules"][1]["http"]["paths"][0]["path"] == "/"
     assert i["rules"][1]["http"]["paths"][0]["backend"]["service"]["name"] == name
     assert (
@@ -722,11 +723,11 @@ secretMounts:
 """
     r = helm_template(config)
     d = r["deployment"][name]["spec"]["template"]["spec"]
-    assert d["containers"][0]["volumeMounts"][-1] == {
+    assert {
         "mountPath": "/usr/share/elasticsearch/config/certs",
         "subPath": "cert.crt",
         "name": "elastic-certificates",
-    }
+    } in d["containers"][0]["volumeMounts"]
 
 
 def test_adding_a_secret_mount_without_subpath():
@@ -738,10 +739,10 @@ secretMounts:
 """
     r = helm_template(config)
     d = r["deployment"][name]["spec"]["template"]["spec"]
-    assert d["containers"][0]["volumeMounts"][-1] == {
+    assert {
         "mountPath": "/usr/share/elasticsearch/config/certs",
         "name": "elastic-certificates",
-    }
+    } in d["containers"][0]["volumeMounts"]
 
 
 def test_adding_lifecycle_events():
@@ -821,7 +822,7 @@ def test_default_automount_sa_token():
         r["deployment"][name]["spec"]["template"]["spec"][
             "automountServiceAccountToken"
         ]
-        == True
+        is True
     )
 
 
@@ -834,7 +835,7 @@ automountToken: false
         r["deployment"][name]["spec"]["template"]["spec"][
             "automountServiceAccountToken"
         ]
-        == False
+        is False
     )
 
 
