@@ -2,11 +2,11 @@ apiVersion: v1
 description: Official Elastic helm chart for Elasticsearch
 home: https://github.com/elastic/helm-charts
 maintainers:
-- email: helm-charts@elastic.co
-  name: Elastic
+  - email: helm-charts@elastic.co
+    name: Elastic
 name: elasticsearch
-version: 8.1.0
-appVersion: 8.1.0
+version: 8.4.1
+appVersion: 8.4.1
 sources:
   - https://github.com/elastic/elasticsearch
 icon: https://helm.elastic.co/icons/elasticsearch.png
