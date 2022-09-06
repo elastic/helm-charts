@@ -98,12 +98,12 @@ spec:
           - name: "ELASTICSEARCH_USERNAME"
             valueFrom:
               secretKeyRef:
-                name: elasticsearch-master-credentials
+                name: {{ .Values.elasticsearchRelease }}-credentials
                 key: username
           - name: "ELASTICSEARCH_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: elasticsearch-master-credentials
+                name: {{ .Values.elasticsearchRelease }}-credentials
                 key: password
         volumeMounts:
           - name: elasticsearch-certs
