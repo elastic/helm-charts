@@ -17,6 +17,6 @@ http:
     allow-insecure: true
     timeout: 2000
     body:
-      - '"number" : "8.1.0"'
+      - '"number" : "8.4.1"'
       - '"cluster_name" : "upgrade"'
       - "You Know, for Search"
