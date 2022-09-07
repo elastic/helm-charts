@@ -5,19 +5,19 @@
     description: Pull request - lint python
     concurrent: true
     scm:
-    - git:
-        refspec: +refs/pull/*:refs/remotes/origin/pr/*
+      - git:
+          refspec: +refs/pull/*:refs/remotes/origin/pr/*
     axes:
-    - axis:
-        type: slave
-        name: label
-        values:
-        - docker&&virtual&&ubuntu-18.04
+      - axis:
+          type: slave
+          name: label
+          values:
+            - ubuntu-18.04
     builders:
-    - shell: |-
-        #!/usr/local/bin/runbld
-        set -euo pipefail
+      - shell: |-
+          #!/usr/local/bin/runbld
+          set -euo pipefail
 
-        virtualenv -p python3 venv && source venv/bin/activate
-        pip install -r requirements.txt
-        make lint-python
+          virtualenv -p python3 venv && source venv/bin/activate
+          pip install -r requirements.txt
+          make lint-python
