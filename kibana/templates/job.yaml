@@ -25,7 +25,7 @@ spec:
             - --fail
             - -XDELETE
             - --cacert
-            - {{ template "kibana.home_dir" . }}/config/certs/tls.crt
+            - {{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateFile }}
             - -u
             - "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)"
             - "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}"
