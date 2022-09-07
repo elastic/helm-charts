@@ -31,8 +31,11 @@ def test_defaults():
     assert c["env"][0]["name"] == "ELASTICSEARCH_HOSTS"
     assert c["env"][0]["value"] == elasticsearchHosts
 
-    assert c["env"][1]["name"] == "SERVER_HOST"
-    assert c["env"][1]["value"] == "0.0.0.0"
+    assert c["env"][1]["name"] == "ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES"
+    assert c["env"][1]["value"] == "/usr/share/kibana/config/certs/ca.crt"
+
+    assert c["env"][2]["name"] == "SERVER_HOST"
+    assert c["env"][2]["value"] == "0.0.0.0"
 
     assert 'http "/app/kibana"' in c["readinessProbe"]["exec"]["command"][-1]
 
@@ -634,8 +637,8 @@ def test_override_the_serverHost():
     r = helm_template(config)
 
     c = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]
-    assert c["env"][1]["name"] == "SERVER_HOST"
-    assert c["env"][1]["value"] == "localhost"
+    assert c["env"][2]["name"] == "SERVER_HOST"
+    assert c["env"][2]["value"] == "localhost"
 
 
 def test_adding_pod_annotations():
