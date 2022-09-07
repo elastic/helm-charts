@@ -1,6 +1,6 @@
 FROM python:3.10.2-slim
 
-ENV HELM_VERSION=3.8.0
+ENV HELM_VERSION=3.9.4
 
 RUN apt-get update && apt-get upgrade -y && \
   apt-get install --no-install-recommends -y make wget && \
