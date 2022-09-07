@@ -12,8 +12,6 @@ file:
   /usr/share/kibana/config/kibana.yml:
     exists: true
     contains:
-      - 'elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/elastic-certificate.pem"]'
-      - "elasticsearch.ssl.verificationMode: certificate"
       - "server.ssl.certificate: /usr/share/kibana/config/certs/elastic-certificate.pem"
       - "server.ssl.enabled: true"
       - "server.ssl.key: /usr/share/kibana/config/certs/elastic-certificate.pem"

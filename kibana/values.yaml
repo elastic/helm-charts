@@ -1,7 +1,7 @@
 ---
 elasticsearchHosts: "https://elasticsearch-master:9200"
 elasticsearchCertificateSecret: elasticsearch-master-certs
-elasticsearchCertificateFile: tls.crt
+elasticsearchCertificateAuthoritiesFile: ca.crt
 elasticsearchCredentialSecret: elasticsearch-master-credentials
 
 replicas: 1
@@ -65,11 +65,10 @@ healthCheckPath: "/app/kibana"
 
 # Allows you to add any config files in /usr/share/kibana/config/
 # such as kibana.yml
-kibanaConfig:
-  kibana.yml: |
-    elasticsearch.ssl.certificate: /usr/share/kibana/config/certs/tls.crt
-    elasticsearch.ssl.key: /usr/share/kibana/config/certs/tls.key
-    elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/ca.crt"]
+kibanaConfig: {}
+#   kibana.yml: |
+#     key:
+#       nestedkey: value
 
 # If Pod Security Policy in use it may be required to specify security context as well as service account
 
