@@ -30,7 +30,7 @@ http:
     allow-insecure: true
     timeout: 2000
     body:
-      - "filebeat-8.1.0"
+      - "filebeat-8.4.1"
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
 

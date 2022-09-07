@@ -28,12 +28,12 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - "metricbeat-8.1.0"
+      - "metricbeat-8.4.1"
   https://elasticsearch-master:9200/_search?q=metricset.name:container:
     status: 200
     timeout: 2000
     body:
-      - "metricbeat-8.1.0"
+      - "metricbeat-8.4.1"
     allow-insecure: true
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
