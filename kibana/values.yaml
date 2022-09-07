@@ -1,7 +1,7 @@
 ---
 elasticsearchHosts: "https://elasticsearch-master:9200"
-
-elasticsearchRelease: "elasticsearch-master"
+elasticsearchCertificateSecret: elasticsearch-master-certs
+elasticsearchCredentialSecret: elasticsearch-master-credentials
 
 replicas: 1
 
