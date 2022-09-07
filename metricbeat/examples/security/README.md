@@ -1,6 +1,6 @@
 # Security
 
-This example deploy Metricbeat 8.1.0 using authentication and TLS to connect to
+This example deploy Metricbeat 8.4.1 using authentication and TLS to connect to
 Elasticsearch (see [values][]).
 
 
