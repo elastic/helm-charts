@@ -1,0 +1,4 @@
+1. Watch all containers come up.
+  $ kubectl get pods --namespace={{ .Release.Namespace }} -l release={{ .Release.Name }} -w
+2. Retrieve the elastic user's password.
+  $ kubectl get secrets --namespace={{ .Release.Namespace }} {{ .Values.elasticsearchCredentialSecret }} -ojsonpath='{.data.password}' | base64 -d
