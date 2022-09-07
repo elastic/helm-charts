@@ -8,13 +8,15 @@ Elasticsearch (see [values][]).
 
 * Deploy [Elasticsearch Helm chart][].
 
-* Deploy Kibana chart with security: `make install`
+* Deploy Kibana chart with security: `make secrets install`
 
-* You can now setup a port forward to query Kibana indices:
+* You can now retrieve the `elastic` user password and setup a port forward to connect Kibana:
 
   ```
-  kubectl port-forward svc/security-master 9200
-  curl -u elastic:changeme https://localhost:9200/_cat/indices
+  # Get elastic user password:
+  kubectl get secrets --namespace=default security-master-credentials -ojsonpath='{.data.password}' | base64 -d
+  # Setup port forward
+  kubectl port-forward svc/helm-kibana-security-kibana 5601
   ```
 
 
