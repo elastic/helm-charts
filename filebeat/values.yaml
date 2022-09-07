@@ -58,10 +58,10 @@ daemonset:
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
-  secretMounts: 
-   - name: elasticsearch-master-certs
-     secretName: elasticsearch-master-certs
-     path: /usr/share/filebeat/certs/
+  secretMounts:
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/filebeat/certs/
   #  - name: filebeat-certificates
   #    secretName: filebeat-certificates
   #    path: /usr/share/filebeat/certs
@@ -131,9 +131,9 @@ deployment:
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
   secretMounts:
-   - name: elasticsearch-master-certs
-     secretName: elasticsearch-master-certs
-     path: /usr/share/filebeat/certs/
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/filebeat/certs/
   #  - name: filebeat-certificates
   #    secretName: filebeat-certificates
   #    path: /usr/share/filebeat/certs
@@ -177,7 +177,7 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 image: "docker.elastic.co/beats/filebeat"
-imageTag: "8.1.0"
+imageTag: "8.4.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 

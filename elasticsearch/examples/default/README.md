@@ -1,6 +1,6 @@
 # Default
 
-This example deploy a 3 nodes Elasticsearch 8.1.0 cluster using
+This example deploy a 3 nodes Elasticsearch 8.4.1 cluster using
 [default values][].
 
 

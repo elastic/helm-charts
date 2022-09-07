@@ -21,7 +21,7 @@ http:
     username: elastic
     password: "{{ .Env.ELASTIC_PASSWORD }}"
     body:
-      - '"number" : "8.1.0"'
+      - '"number" : "8.4.1"'
       - '"cluster_name" : "elasticsearch"'
       - "You Know, for Search"
 

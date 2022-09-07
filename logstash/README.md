@@ -58,8 +58,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=8.1.0`
-  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=8.1.0`
+  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=8.4.1`
+  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=8.4.1`
 
 
 ## Upgrading
@@ -116,7 +116,7 @@ useful for the [http input plugin][], for instance.
 | `httpPort`                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                                                          | `9600`                                |
 | `imagePullPolicy`         | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                             | `IfNotPresent`                        |
 | `imagePullSecrets`        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                         | `[]`                                  |
-| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `8.1.0`                               |
+| `imageTag`                | The Logstash Docker image tag                                                                                                                                                                                                        | `8.4.1`                               |
 | `image`                   | The Logstash Docker image                                                                                                                                                                                                            | `docker.elastic.co/logstash/logstash` |
 | `labels`                  | Configurable [labels][] applied to all Logstash pods                                                                                                                                                                                 | `{}`                                  |
 | `ingress`                 | Configurable [ingress][] for external access to Logstash HTTP port.                                                                                                                                                                  | see [values.yaml][]                   |

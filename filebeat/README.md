@@ -58,8 +58,8 @@ See [supported configurations][] for more details.
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
 * Install it:
-  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.1.0`
-  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=8.1.0`
+  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.4.1`
+  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=8.4.1`
 
 
 ## Upgrading
@@ -136,7 +136,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist filebeat registry data                                                                                             | `/var/lib`                         |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                     |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                               |
-| `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `8.1.0`                            |
+| `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `8.4.1`                            |
 | `image`                        | The filebeat Docker image                                                                                                                                                    | `docker.elastic.co/beats/filebeat` |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                |
 | `managedServiceAccount`        | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles                         | `true`                             |

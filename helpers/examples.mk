@@ -2,7 +2,7 @@ SHELL := /bin/bash
 GOSS_VERSION := v0.3.6
 GOSS_FILE ?= goss.yaml
 GOSS_SELECTOR ?= release=$(RELEASE)
-STACK_VERSION := 8.1.0
+STACK_VERSION := 8.4.1
 TIMEOUT := 900s
 
 .PHONY: help
