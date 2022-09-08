@@ -35,6 +35,12 @@ esConfig: {}
 #  log4j2.properties: |
 #    key = value
 
+# Initial_master_nodes and seed_hosts can be overridden to allow custom multiple clusters setup
+initialMasterNodes: |-
+  {{ template "elasticsearch.endpoints" . }}
+seedHosts: |-
+  {{ template "elasticsearch.masterService" . }}-headless
+
 createCert: true
 
 esJvmOptions: {}
