@@ -11,7 +11,7 @@
           type: slave
           name: label
           values:
-            - docker&&virtual
+            - ubuntu
       - axis:
           type: yaml
           name: CHART
