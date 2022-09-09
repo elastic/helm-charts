@@ -252,19 +252,3 @@ updateStrategy: RollingUpdate
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
-
-# DEPRECATED
-affinity: {}
-envFrom: []
-extraEnvs: []
-extraVolumes: []
-extraVolumeMounts: []
-# Allows you to add any config files in /usr/share/filebeat
-# such as filebeat.yml for both daemonset and deployment
-filebeatConfig: {}
-nodeSelector: {}
-podSecurityContext: {}
-resources: {}
-secretMounts: []
-tolerations: []
-labels: {}

@@ -19,8 +19,8 @@ SLA of official GA features (see [supported configurations][] for more details).
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using main branch](#install-development-version-using-main-branch)
+  - [Install a released version using the Helm repository](#install-a-released-version-using-the-helm-repository)
+  - [Install a development version using the main branch](#install-a-development-version-using-the-main-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -36,30 +36,22 @@ SLA of official GA features (see [supported configurations][] for more details).
 
 ## Requirements
 
-* Kubernetes >= 1.14
-* [Helm][] >= 2.17.0
-
 See [supported configurations][] for more details.
 
 ## Installing
 
-### Install released version using Helm repository
+### Install a released version using the Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it:
-  - with Helm 3: `helm install logstash elastic/logstash`
-  - with Helm 2 (deprecated): `helm install --name logstash elastic/logstash`
+* Install it: `helm install logstash elastic/logstash`
 
-
-### Install development version using main branch
+### Install a development version using the main branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it:
-  - with Helm 3: `helm install logstash ./helm-charts/logstash --set imageTag=8.4.1`
-  - with Helm 2 (deprecated): `helm install --name logstash ./helm-charts/logstash --set imageTag=8.4.1`
+* Install it: `helm install logstash ./helm-charts/logstash --set imageTag=8.4.1`
 
 
 ## Upgrading
@@ -70,7 +62,7 @@ upgrading to a new chart version.
 
 ## Usage notes
 
-* This repo includes a number of [examples][] configurations which can be used
+* This repo includes several [examples][] of configurations that can be used
 as a reference. They are also used in the automated testing of this chart
 * Automated testing of this chart is currently only run against GKE (Google
 Kubernetes Engine).
@@ -194,7 +186,6 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
-[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/logstash/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
@@ -207,13 +198,11 @@ about our development and testing process.
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/main/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/main/logstash/examples/oss
-[helm]: https://helm.sh
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [http input plugin]: https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [logstash docker image]: https://www.elastic.co/guide/en/logstash/current/docker.html
 [logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
