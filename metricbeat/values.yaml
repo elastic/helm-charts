@@ -325,3 +325,9 @@ secrets: []
 #        LS0tLS1CRUdJT0K
 #      cert.crt: "LS0tLS1CRUdJTiBlRJRklDQVRFLS0tLS0K"
 #      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
+
+# DEPRECATED
+
+# Allows you to add any config files in /usr/share/metricbeat
+# such as metricbeat.yml for both daemonset and deployment
+metricbeatConfig: {}
