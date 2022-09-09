@@ -314,8 +314,10 @@ spec:
           - name: cluster.initial_master_nodes
             value: "{{ template "elasticsearch.endpoints" . }}"
           {{- end }}
+          {{- if gt (len (include "elasticsearch.roles" .)) 0 }}
           - name: node.roles
             value: "{{ template "elasticsearch.roles" . }}"
+          {{- end }}
           {{- if lt (int (include "elasticsearch.esMajorVersion" .)) 7 }}
           - name: discovery.zen.ping.unicast.hosts
             value: "{{ template "elasticsearch.masterService" . }}-headless"
