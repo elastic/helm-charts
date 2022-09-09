@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-GOSS_VERSION := v0.3.6
+GOSS_VERSION := v0.3.18
 GOSS_FILE ?= goss.yaml
 GOSS_SELECTOR ?= release=$(RELEASE)
 STACK_VERSION := 8.4.1
@@ -13,7 +13,7 @@ help: ## Display this help
 goss: ## Run goss tests
 	set -e; \
 	for i in $$(seq 1 5); do \
-		curl -s -L "https://github.com/aelsabbahy/goss/releases/download/v0.3.6/goss-linux-amd64" -o /tmp/goss; \
+		curl -s -L "https://github.com/aelsabbahy/goss/releases/download/$(GOSS_VERSION)/goss-linux-amd64" -o /tmp/goss; \
 		if [ -z "$$GOSS_CONTAINER" ]; then \
 			sleep 5; \
 			echo "Retrieving pod ($$i/5)"; \
@@ -22,7 +22,7 @@ goss: ## Run goss tests
 			echo "Testing with pod: $$GOSS_CONTAINER" && \
 			kubectl cp "test/$(GOSS_FILE)" "$$GOSS_CONTAINER:/tmp/$(GOSS_FILE)" && \
 			kubectl cp "/tmp/goss" "$$GOSS_CONTAINER:/tmp/goss" && \
-			kubectl exec "$$GOSS_CONTAINER" -- sh -c "chmod +rx /tmp/goss && /tmp/goss --gossfile \"/tmp/$(GOSS_FILE)\" validate --retry-timeout 300s --sleep 5s --color --format documentation"; \
+			kubectl exec "$$GOSS_CONTAINER" -- sh -c "chmod +rx /tmp/goss && if [ -f ~/.elasticsearch-serviceaccounttoken ]; then . ~/.elasticsearch-serviceaccounttoken; fi; /tmp/goss --gossfile \"/tmp/$(GOSS_FILE)\" validate --retry-timeout 300s --sleep 5s --color --format documentation"; \
 			break; \
 		fi; \
 	done
