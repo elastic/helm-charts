@@ -327,17 +327,7 @@ secrets: []
 #      cert.key.filepath: "secrets.crt" # The path to file should be relative to the `values.yaml` file.
 
 # DEPRECATED
-affinity: {}
-envFrom: []
-extraEnvs: []
-extraVolumes: []
-extraVolumeMounts: []
+
 # Allows you to add any config files in /usr/share/metricbeat
 # such as metricbeat.yml for both daemonset and deployment
 metricbeatConfig: {}
-nodeSelector: {}
-podSecurityContext: {}
-resources: {}
-secretMounts: []
-tolerations: []
-labels: {}

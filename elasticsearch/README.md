@@ -14,12 +14,11 @@ This Helm chart is a lightweight way to configure and run our official
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using main branch](#install-development-version-using-main-branch)
+  - [Install a released version using the Helm repository](#install-a-released-version-using-the-helm-repository)
+  - [Install a development version using the main branch](#install-a-development-version-using-the-main-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
-  - [Deprecated](#deprecated)
 - [FAQ](#faq)
   - [How to deploy this chart on a specific K8S distribution?](#how-to-deploy-this-chart-on-a-specific-k8s-distribution)
   - [How to deploy dedicated nodes types?](#how-to-deploy-dedicated-nodes-types)
@@ -43,8 +42,6 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Requirements
 
-* Kubernetes >= 1.14
-* [Helm][] >= 2.17.0
 * Minimum cluster requirements include the following to run this chart with
 default settings. All of these settings are configurable.
   * Three Kubernetes nodes to respect the default "hard" affinity settings
@@ -55,24 +52,18 @@ See [supported configurations][] for more details.
 
 ## Installing
 
-### Install released version using Helm repository
+### Install a released version using the Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it:
-  - with Helm 3: `helm install elasticsearch elastic/elasticsearch`
-  - with Helm 2 (deprecated): `helm install --name elasticsearch elastic/elasticsearch`
+* Install it: `helm install elasticsearch elastic/elasticsearch`
 
-
-### Install development version using main branch
+### Install a development version using the main branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it:
-  - with Helm 3: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=8.4.1`
-  - with Helm 2 (deprecated): `helm install --name elasticsearch ./helm-charts/elasticsearch --set imageTag=8.4.1`
-
+* Install it: `helm install elasticsearch ./helm-charts/elasticsearch --set imageTag=8.4.1`
 
 ## Upgrading
 
@@ -82,7 +73,7 @@ upgrading to a new chart version.
 
 ## Usage notes
 
-* This repo includes a number of [examples][] configurations which can be used
+* This repo includes several [examples][] of configurations that can be used
 as a reference. They are also used in the automated testing of this chart.
 * Automated testing of this chart is currently only run against GKE (Google
 Kubernetes Engine).
@@ -184,12 +175,6 @@ support multiple versions with minimal changes.
 | `transportPort`                    | The transport port that Kubernetes will use for the service. If you change this you will also need to set [transport port configuration][] in `extraEnvs`                                                                                                                                                         | `9300`                                           |
 | `updateStrategy`                   | The [updateStrategy][] for the StatefulSet. By default Kubernetes will wait for the cluster to be green after upgrading each pod. Setting this to `OnDelete` will allow you to manually delete each pod during upgrades                                                                                           | `RollingUpdate`                                  |
 | `volumeClaimTemplate`              | Configuration for the [volumeClaimTemplate for StatefulSets][]. You will want to adjust the storage (default `30Gi` ) and the `storageClassName` if you are using a different storage class                                                                                                                       | see [values.yaml][]                              |
-
-### Deprecated
-
-| Parameter | Description                                                                                                   | Default |
-|-----------|---------------------------------------------------------------------------------------------------------------|---------|
-| `fsGroup` | The Group ID (GID) for [securityContext][] so that the Elasticsearch user can read from the persistent volume | `""`    |
 
 
 ## FAQ
@@ -409,9 +394,7 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
-[#63]: https://github.com/elastic/helm-charts/issues/63
 [#1186 (comment)]: https://github.com/elastic/helm-charts/pull/1186#discussion_r631166442
-[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/elasticsearch/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
@@ -446,7 +429,6 @@ about our development and testing process.
 [jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [kind]: https://github.com/elastic/helm-charts/tree/main//elasticsearch/examples/kubernetes-kind
-[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [loadBalancer annotations]: https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws
@@ -459,7 +441,6 @@ about our development and testing process.
 [multi]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/multi/
 [network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/current/network.host.html
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
-[node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#node-certificates
 [nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
 [nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

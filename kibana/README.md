@@ -204,7 +204,6 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
-[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/kibana/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
@@ -231,7 +230,6 @@ about our development and testing process.
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/README.md#security
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 [server.host]: https://www.elastic.co/guide/en/kibana/current/settings.html
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/

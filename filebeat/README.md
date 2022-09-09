@@ -14,12 +14,11 @@ This Helm chart is a lightweight way to configure and run our official
 
 - [Requirements](#requirements)
 - [Installing](#installing)
-  - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using main branch](#install-development-version-using-main-branch)
+  - [Install a released version using the Helm repository](#install-a-released-version-using-the-helm-repository)
+  - [Install a development version using the main branch](#install-a-development-version-using-the-main-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
-  - [Deprecated](#deprecated)
 - [FAQ](#faq)
   - [How to use Filebeat with Elasticsearch with security (authentication and TLS) enabled?](#how-to-use-filebeat-with-elasticsearch-with-security-authentication-and-tls-enabled)
   - [How to install OSS version of Filebeat?](#how-to-install-oss-version-of-filebeat)
@@ -35,31 +34,24 @@ This Helm chart is a lightweight way to configure and run our official
 
 ## Requirements
 
-* Kubernetes >= 1.14
-* [Helm][] >= 2.17.0
-
 See [supported configurations][] for more details.
 
 
 ## Installing
 
-### Install released version using Helm repository
+### Install a released version using the Helm repository
 
 * Add the Elastic Helm charts repo:
 `helm repo add elastic https://helm.elastic.co`
 
-* Install it:
-  - with Helm 3: `helm install filebeat elastic/filebeat`
-  - with Helm 2 (deprecated): `helm install --name filebeat elastic/filebeat`
+* Install it: `helm install filebeat elastic/filebeat`
 
 
-### Install development version using main branch
+### Install a development version using the main branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it:
-  - with Helm 3: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.4.1`
-  - with Helm 2 (deprecated): `helm install --name filebeat ./helm-charts/filebeat --set imageTag=8.4.1`
+* Install it: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.4.1`
 
 
 ## Upgrading
@@ -88,7 +80,7 @@ pods on the same node isn't possible with `hostNetwork` However Filebeat does
 recommend activating it. If your kubernetes provider is compatible with
 `hostNetwork` and you don't need to run multiple Filebeat DaemonSets, you can
 activate it by setting `hostNetworking: true` in [values.yaml][].
-* This repo includes a number of [examples][] configurations which can be used
+* This repo includes several [examples][] of configurations that can be used
 as a reference. They are also used in the automated testing of this chart.
 
 
@@ -149,23 +141,6 @@ as a reference. They are also used in the automated testing of this chart.
 | `terminationGracePeriod`       | Termination period (in seconds) to wait before killing filebeat pod process on pod shutdown                                                                                  | `30`                               |
 | `updateStrategy`               | The [updateStrategy][] for the DaemonSet By default Kubernetes will kill and recreate pods on updates. Setting this to `OnDelete` will require that pods be deleted manually | `RollingUpdate`                    |
 
-### Deprecated
-
-| Parameter            | Description                                                                                                                                          | Default |
-|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| `affinity`           | Configurable [affinity][] for filebeat DaemonSet                                                                                                     | `{}`    |
-| `envFrom`            | Templatable string to be passed to the [environment from variables][] which will be appended to filebeat container for both DaemonSet and Deployment | `[]`    |
-| `extraEnvs`          | Extra [environment variables][] which will be appended to filebeat container for both DaemonSet and Deployment                                       | `[]`    |
-| `extraVolumeMounts`  | Templatable string of additional `volumeMounts` to be passed to the `tpl` function for both DaemonSet and Deployment                                 | `[]`    |
-| `extraVolumes`       | Templatable string of additional `volumes` to be passed to the `tpl` function for both DaemonSet and Deployment                                      | `[]`    |
-| `filebeatConfig`     | Allows you to add any config files in `/usr/share/filebeat` such as `filebeat.yml` for both filebeat DaemonSet and Deployment                        | `{}`    |
-| `hostAliases`        | Configurable [hostAliases][]                                                                                                                         | `[]`    |
-| `nodeSelector`       | Configurable [nodeSelector][] for filebeat DaemonSet                                                                                                 | `{}`    |
-| `podSecurityContext` | Configurable [securityContext][] for filebeat DaemonSet and Deployment pod execution environment                                                     | `{}`    |
-| `resources`          | Allows you to set the [resources][] for both filebeat DaemonSet and Deployment                                                                       | `{}`    |
-| `secretMounts`       | Allows you easily mount a secret as a file inside DaemonSet and Deployment Useful for mounting certificates and other secrets                        | `[]`    |
-| `tolerations`        | Configurable [tolerations][] for both filebeat DaemonSet and Deployment                                                                              | `[]`    |
-| `labels`             | Configurable [labels][] applied to all filebeat pods                                                                                                 | `{}`    |
 
 ## FAQ
 
@@ -235,15 +210,12 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
-[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/filebeat/README.md
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
-[default Elasticsearch Helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/README.md#default
-[dnsConfig]: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
 [examples]: https://github.com/elastic/helm-charts/tree/main/filebeat/examples
@@ -252,7 +224,6 @@ about our development and testing process.
 [filebeat docker image]: https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
 [filebeat oss docker image]: https://www.docker.elastic.co/r/beats/filebeat-oss
 [filebeat outputs]: https://www.elastic.co/guide/en/beats/filebeat/current/configuring-output.html
-[helm]: https://helm.sh
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [hostNetwork]: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
 [hostPath]: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath

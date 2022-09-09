@@ -354,7 +354,3 @@ networkPolicy:
 
 tests:
   enabled: true
-
-# Deprecated
-# please use the above podSecurityContext.fsGroup instead
-fsGroup: ""
