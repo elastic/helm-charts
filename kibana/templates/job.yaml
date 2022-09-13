@@ -4,7 +4,7 @@ metadata:
   name: {{ template "kibana.fullname" . }}-post-delete
   labels: {{ include "kibana.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": post-delete,post-upgrade
+    "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": hook-succeeded
     {{- if .Values.annotations }}
     {{- range $key, $value := .Values.annotations }}
@@ -22,7 +22,6 @@ spec:
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           command: ["curl"]
           args:
-            - --fail
             - -XDELETE
             - --cacert
             - {{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }}
