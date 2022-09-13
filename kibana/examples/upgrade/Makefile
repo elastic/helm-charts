@@ -8,6 +8,9 @@ ES_RELEASE := helm-kibana-upgrade-es
 RELEASE := helm-kibana-upgrade-kb
 FROM := 7.17.1
 
+repo:
+	helm repo add elastic https://helm.elastic.co
+
 install-es:
 	helm install $(ES_RELEASE) elastic/elasticsearch --wait --version $(FROM) --set clusterName=$(ES_CLUSTER)
 
@@ -23,7 +26,7 @@ upgrade-kb:
 	helm upgrade $(RELEASE) ../../ --wait --values values.yaml
 	kubectl rollout status deployment $(RELEASE)-kibana
 
-install: install-es install-kb upgrade-es upgrade-kb
+install: repo install-es install-kb upgrade-es upgrade-kb
 
 test: install goss
 
