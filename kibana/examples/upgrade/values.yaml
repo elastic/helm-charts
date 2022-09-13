@@ -1,5 +1,5 @@
 ---
-elasticsearchHosts: "https://upgrade-master:9200"
-elasticsearchCertificateSecret: upgrade-master-certs
+elasticsearchHosts: "https://kibana-upgrade-master:9200"
+elasticsearchCertificateSecret: kibana-upgrade-master-certs
 elasticsearchCertificateAuthoritiesFile: ca.crt
-elasticsearchCredentialSecret: upgrade-master-credentials
+elasticsearchCredentialSecret: kibana-upgrade-master-credentials
