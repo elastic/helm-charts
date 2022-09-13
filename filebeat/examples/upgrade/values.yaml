@@ -37,3 +37,7 @@ secretMounts:
   - name: upgrade-master-certs
     secretName: upgrade-master-certs
     path: /usr/share/filebeat/certs
+resources:
+  limits:
+    # Should avoid OOM (Error 137) when running goss tests into the pod
+    memory: "300Mi"

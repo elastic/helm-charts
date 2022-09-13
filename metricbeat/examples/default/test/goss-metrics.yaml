@@ -37,9 +37,3 @@ file:
     exists: true
     contains:
       - "output.elasticsearch"
-
-command:
-  cd /usr/share/metricbeat && metricbeat test output:
-    exit-status: 0
-    stdout:
-      - "elasticsearch: https://elasticsearch-master:9200"
