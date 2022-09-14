@@ -69,6 +69,10 @@ daemonset:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/metricbeat/config/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"
 
 deployment:
   extraEnvs:
@@ -108,3 +112,7 @@ deployment:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/metricbeat/config/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"

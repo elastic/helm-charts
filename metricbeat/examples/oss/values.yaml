@@ -53,6 +53,10 @@ daemonset:
       setup.ilm.enabled: false
       setup.template.name: "metricbeat"
       setup.template.pattern: "metricbeat-oss-*"
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"
 
 deployment:
   metricbeatConfig:
@@ -74,3 +78,7 @@ deployment:
       setup.ilm.enabled: false
       setup.template.name: "metricbeat"
       setup.template.pattern: "metricbeat-oss-*"
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"
