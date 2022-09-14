@@ -67,6 +67,10 @@ daemonset:
     - name: upgrade-master-certs
       secretName: upgrade-master-certs
       path: /usr/share/metricbeat/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"
 
 deployment:
   extraEnvs:
@@ -104,3 +108,7 @@ deployment:
     - name: upgrade-master-certs
       secretName: upgrade-master-certs
       path: /usr/share/metricbeat/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"

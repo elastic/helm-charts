@@ -37,3 +37,7 @@ daemonset:
     - name: elastic-certificate-pem
       secretName: elastic-certificate-pem
       path: /usr/share/filebeat/config/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"

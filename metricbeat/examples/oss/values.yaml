@@ -62,6 +62,10 @@ daemonset:
     - name: elasticsearch-master-certs
       secretName: elasticsearch-master-certs
       path: /usr/share/metricbeat/config/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"
 
 deployment:
   metricbeatConfig:
@@ -92,3 +96,7 @@ deployment:
     - name: elasticsearch-master-certs
       secretName: elasticsearch-master-certs
       path: /usr/share/metricbeat/config/certs
+  resources:
+    limits:
+      # Should avoid OOM (Error 137) when running goss tests into the pod
+      memory: "300Mi"

@@ -41,9 +41,3 @@ file:
       - "add_kubernetes_metadata"
       - "output.elasticsearch"
       - "elasticsearch-master:9200"
-
-command:
-  cd /usr/share/filebeat && filebeat test output:
-    exit-status: 0
-    stdout:
-      - "elasticsearch: https://elasticsearch-master:9200"
