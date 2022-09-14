@@ -5,7 +5,7 @@ filebeatConfig:
       paths:
         - /var/log/containers/*.log
       processors:
-      - add_kubernetes_metadata: 
+      - add_kubernetes_metadata:
           host: ${NODE_NAME}
           matchers:
           - logs_path:
@@ -25,13 +25,18 @@ secretMounts:
     path: /usr/share/filebeat/config/certs
 
 extraEnvs:
-  - name: 'ELASTICSEARCH_USERNAME'
+  - name: "ELASTICSEARCH_USERNAME"
     valueFrom:
       secretKeyRef:
         name: elastic-credentials
         key: username
-  - name: 'ELASTICSEARCH_PASSWORD'
+  - name: "ELASTICSEARCH_PASSWORD"
     valueFrom:
       secretKeyRef:
         name: elastic-credentials
         key: password
+
+resources:
+  limits:
+    # Should avoid OOM (Error 137) when running goss tests into the pod
+    memory: "300Mi"
