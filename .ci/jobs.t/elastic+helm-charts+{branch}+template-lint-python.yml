@@ -11,7 +11,7 @@
           type: slave
           name: label
           values:
-            - ubuntu&&ubuntu-18.04
+            - ubuntu-18.04
     builders:
       - shell: |-
           #!/usr/local/bin/runbld
