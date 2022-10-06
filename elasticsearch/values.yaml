@@ -76,7 +76,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "8.1.0"
+imageTag: "8.4.1"
 imagePullPolicy: "IfNotPresent"
 
 podAnnotations: {}
@@ -354,7 +354,3 @@ networkPolicy:
 
 tests:
   enabled: true
-
-# Deprecated
-# please use the above podSecurityContext.fsGroup instead
-fsGroup: ""

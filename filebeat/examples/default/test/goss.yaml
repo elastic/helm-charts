@@ -32,7 +32,7 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - "filebeat-8.1.0"
+      - "filebeat-8.4.1"
 
 file:
   /usr/share/filebeat/filebeat.yml:
@@ -41,9 +41,3 @@ file:
       - "add_kubernetes_metadata"
       - "output.elasticsearch"
       - "elasticsearch-master:9200"
-
-command:
-  cd /usr/share/filebeat && filebeat test output:
-    exit-status: 0
-    stdout:
-      - "elasticsearch: https://elasticsearch-master:9200"

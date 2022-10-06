@@ -28,12 +28,12 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - "metricbeat-8.1.0"
+      - "metricbeat-8.4.1"
   https://elasticsearch-master:9200/_search?q=metricset.name:container:
     status: 200
     timeout: 2000
     body:
-      - "metricbeat-8.1.0"
+      - "metricbeat-8.4.1"
     allow-insecure: true
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
@@ -45,9 +45,3 @@ file:
       - "add_kubernetes_metadata"
       - "output.elasticsearch"
       - "elasticsearch-master:9200"
-
-command:
-  cd /usr/share/metricbeat && metricbeat test output:
-    exit-status: 0
-    stdout:
-      - "elasticsearch: https://elasticsearch-master:9200"

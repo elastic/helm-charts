@@ -30,3 +30,7 @@ heritage: {{ .Release.Service }}
 {{ toYaml .Values.labels }}
 {{- end }}
 {{- end -}}
+
+{{- define "kibana.home_dir" -}}
+/usr/share/kibana
+{{- end -}}

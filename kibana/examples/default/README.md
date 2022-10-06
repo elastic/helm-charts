@@ -1,6 +1,6 @@
 # Default
 
-This example deploy Kibana 8.1.0 using [default values][].
+This example deploy Kibana 8.4.1 using [default values][].
 
 
 ## Usage
@@ -9,11 +9,13 @@ This example deploy Kibana 8.1.0 using [default values][].
 
 * Deploy Kibana chart with the default values: `make install`
 
-* You can now setup a port forward to query Kibana indices:
+* You can now retrieve the `elastic` user password and setup a port forward to connect Kibana:
 
   ```
-  kubectl port-forward svc/elasticsearch-master 9200
-  curl localhost:9200/_cat/indices
+  # Get elastic user password:
+  kubectl get secrets --namespace=default elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d
+  # Setup port forward
+  kubectl port-forward svc/helm-kibana-default-kibana 5601
   ```
 
 

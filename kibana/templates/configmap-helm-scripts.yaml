@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "kibana.fullname" . }}-helm-scripts
+  labels: {{ include "kibana.labels" . | nindent 4 }}
+data:
+  kibana-entrypoint.sh: |
+    #!/bin/bash
+    set -euo pipefail
+
+    echo "export ELASTICSEARCH_SERVICEACCOUNTTOKEN=$({{ template "kibana.home_dir" . }}/node/bin/node {{ template "kibana.home_dir" . }}/helm-scripts/parse-token.js {{ template "kibana.home_dir" . }}/config/tokens/{{ template "kibana.fullname" . }}.json)" > $HOME/.elasticsearch-serviceaccounttoken
+    source $HOME/.elasticsearch-serviceaccounttoken
+
+    # https://github.com/elastic/dockerfiles/blob/a405a4d692031b72cefcb8523bd464aa3221ec47/kibana/Dockerfile#L131
+    exec /bin/tini -- /usr/local/bin/kibana-docker "$@"
+
+  parse-token.js: |
+    let dataFile = process.argv[2];
+    let dataContent = require(dataFile.toString());
+    console.log(dataContent.token.value);
