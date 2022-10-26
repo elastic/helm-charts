@@ -83,10 +83,12 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-serviceAccount: ""
-
-# Whether or not to automount the service account token in the pod. Normally, Kibana does not need this
-automountToken: true
+rbac:
+  create: false
+  serviceAccountAnnotations: {}
+  serviceAccountName: ""
+  # Whether or not to automount the service account token in the pod. Normally, Kibana does not need this
+  automountToken: false
 
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
