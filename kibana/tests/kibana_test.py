@@ -443,11 +443,12 @@ nameOverride: overrider
 
 def test_setting_a_custom_service_account():
     config = """
-serviceAccount: notdefault
+rbac:
+  serviceAccountName: notdefault
 """
     r = helm_template(config)
     assert (
-        r["deployment"][name]["spec"]["template"]["spec"]["serviceAccount"]
+        r["deployment"][name]["spec"]["template"]["spec"]["serviceAccountName"]
         == "notdefault"
     )
 
