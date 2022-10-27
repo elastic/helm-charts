@@ -93,7 +93,9 @@ spec:
         command:
           - sh
           - -c
-          - curl --output {{ template "kibana.home_dir" . }}/config/tokens/{{ template "kibana.fullname" . }}.json --fail -XPOST --cacert {{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }} -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
+          - |
+            curl --output /dev/null --fail -XDELETE --cacert {{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }} -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
+            curl --output {{ template "kibana.home_dir" . }}/config/tokens/{{ template "kibana.fullname" . }}.json --fail -XPOST --cacert {{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }} -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
         env:
           - name: "ELASTICSEARCH_USERNAME"
             valueFrom:
