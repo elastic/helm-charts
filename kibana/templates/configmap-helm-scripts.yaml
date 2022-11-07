@@ -17,10 +17,8 @@ data:
     const fs = require('fs');
 
     // Elasticsearch API
-    //TODO: remove hardcoded host
-    const esHostname = "elasticsearch-master";
-    const esPort = process.env.ELASTICSEARCH_MASTER_SERVICE_PORT;
     const esPath = '_security/service/elastic/kibana/credential/token/kb-kibana';
+    const esUrl = '{{ .Values.elasticsearchHosts }}' + '/' + esPath
     const esUsername = process.env.ELASTICSEARCH_USERNAME;
     const esPassword = process.env.ELASTICSEARCH_PASSWORD;
     const esAuth = esUsername + ':' + esPassword;
@@ -31,16 +29,17 @@ data:
     const k8sHostname = process.env.KUBERNETES_SERVICE_HOST;
     const k8sPort = process.env.KUBERNETES_SERVICE_PORT_HTTPS;
     const k8sPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets';
+    const k8sUrl = 'https://' + k8sHostname + ':' + k8sPort + '/' + k8sPath
     const k8sBearer = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/token');
     const k8sCa = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/ca.crt');
 
     // With thanks to https://stackoverflow.com/questions/57332374/how-to-chain-http-request
-    function requestPromise(options, payload) {
+    function requestPromise(url, options, payload) {
       return new Promise((resolve, reject) => {
-        const request = https.request(options, response => {
+        const request = https.request(url, options, response => {
 
           console.log('statusCode:', response.statusCode);
-          console.log('headers:', response.headers);
+          // console.log('headers:', response.headers);
 
           // TODO: remove 404 and handle it during esToken deletion
           const isSuccess = response.statusCode >= 200 && response.statusCode < 300 || response.statusCode == 404;
@@ -65,70 +64,147 @@ data:
       });
     }
 
-    // delete kb-kibana token
+    // Delete kb-kibana token
     const esTokenDeleteOptions = {
-      hostname: esHostname,
-      port: esPort,
-      path: esPath,
       method: 'DELETE',
       auth: esAuth,
       ca: esCa,
     };
 
-    // create new kb-kibana token
+    // Create new kb-kibana token
     const esTokenCreateOptions = {
-      hostname: esHostname,
-      port: esPort,
-      path: esPath,
       method: 'POST',
       auth: esAuth,
       ca: esCa,
     };
 
-    // create new k8s secret
+    // Create new k8s secret
     const secretCreateOptions = {
-      hostname: k8sHostname,
-      port: k8sPort,
-      path: k8sPath,
       method: 'POST',
       ca: k8sCa,
       headers: {
-        'Authorization': 'Bearer' + k8sBearer,
+        'Authorization': 'Bearer ' + k8sBearer,
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     };
 
     // Chaining requests
-    requestPromise(esTokenDeleteOptions).then(() =>
-      requestPromise(esTokenCreateOptions).then(response => {
+    console.log('Cleaning previous token');
+    requestPromise(esUrl, esTokenDeleteOptions).then(() => {
+      console.log('Creating new token');
+      requestPromise(esUrl, esTokenCreateOptions).then(response => {
         const body = JSON.parse(response);
         const token = body.token.value
-        console.log('Token:', token);
 
-        // encode the token in base 64
-        const base64Token = Buffer.from(token, 'utf8').toString('base64')
-        console.log('Base64 Token:', base64Token);
+        // Encode the token in base64
+        const base64Token = Buffer.from(token, 'utf8').toString('base64');
 
-        // prepare the k8s secret
-        secretData = {
-          "apiVersion":"v1",
-          "kind" :"Secret",
-          "metadata" :{
-            "namespace" :"{{ .Release.Namespace }}",
-            "name":"{{ template "kibana.fullname" . }}-token"
+        // Prepare the k8s secret
+        secretData = JSON.stringify({
+          "apiVersion": "v1",
+          "kind": "Secret",
+          "metadata": {
+            "namespace": "{{ .Release.Namespace }}",
+            "name": "{{ template "kibana.fullname" . }}-es-token",
           },
           "type": "Opaque",
           "data": {
             "token": base64Token,
           }
-        }
+        })
 
-        // create the k8s secret
-        requestPromise(secretCreateOptions, secretData.toString())
-
+        // Create the k8s secret
+        console.log('Creating K8S secret');
+        requestPromise(k8sUrl, secretCreateOptions, secretData).then().catch(err => {
+          console.error(err)
+        });
         return;
       })
-    ).catch(err => {
+    }).catch(err => {
+      console.error(err);
+    });
+
+  clean-token.js: |
+    const https = require('https');
+    const fs = require('fs');
+
+    // Elasticsearch API
+    const esPath = '_security/service/elastic/kibana/credential/token/kb-kibana';
+    const esUrl = '{{ .Values.elasticsearchHosts }}' + '/' + esPath
+    const esUsername = process.env.ELASTICSEARCH_USERNAME;
+    const esPassword = process.env.ELASTICSEARCH_PASSWORD;
+    const esAuth = esUsername + ':' + esPassword;
+    const esCaFile = process.env.ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES;
+    const esCa = fs.readFileSync(esCaFile);
+
+    // Kubernetes API
+    const k8sHostname = process.env.KUBERNETES_SERVICE_HOST;
+    const k8sPort = process.env.KUBERNETES_SERVICE_PORT_HTTPS;
+    const k8sPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets/{{ template "kibana.fullname" . }}-es-token';
+    const k8sUrl = 'https://' + k8sHostname + ':' + k8sPort + '/' + k8sPath
+    const k8sBearer = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/token');
+    const k8sCa = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/ca.crt');
+
+    // With thanks to https://stackoverflow.com/questions/57332374/how-to-chain-http-request
+    function requestPromise(url, options, payload) {
+      return new Promise((resolve, reject) => {
+        const request = https.request(url, options, response => {
+
+          console.log('statusCode:', response.statusCode);
+          // console.log('headers:', response.headers);
+
+          // TODO: remove 404 and handle it during esToken deletion
+          const isSuccess = response.statusCode >= 200 && response.statusCode < 300 || response.statusCode == 404;
+
+          let data = '';
+          response.on('data', chunk => data += chunk); // accumulate data
+          response.once('end', () => isSuccess ? resolve(data) : reject(data));  // resolve promise here
+        });
+
+        request.once('error', err => {
+          // This won't log anything for e.g. an HTTP 404 or 500 response,
+          // since from HTTP's point-of-view we successfully received a
+          // response.
+          console.log(`${options.method} ${options.path} failed: `, err.message || err);
+          reject(err);  // if promise is not already resolved, then we can reject it here
+        });
+
+        if (payload) {
+          request.write(payload);
+        }
+        request.end();
+      });
+    }
+
+    // Delete kb-kibana token
+    const esTokenDeleteOptions = {
+      method: 'DELETE',
+      auth: esAuth,
+      ca: esCa,
+    };
+
+    // Create new k8s secret
+    const secretDeleteOptions = {
+      method: 'DELETE',
+      ca: k8sCa,
+      headers: {
+        'Authorization': 'Bearer ' + k8sBearer,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    };
+
+    // Chaining requests
+    console.log('Cleaning token');
+    requestPromise(esUrl, esTokenDeleteOptions).then(() => {
+      // Create the k8s secret
+      console.log('Delete K8S secret');
+      requestPromise(k8sUrl, secretDeleteOptions).then().catch(err => {
+          console.error(err)
+        });
+        return;
+      })
+    }).catch(err => {
       console.error(err);
     });
