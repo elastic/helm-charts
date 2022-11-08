@@ -5,7 +5,7 @@ metadata:
   name: {{ template "kibana.fullname" . }}-helm-scripts
   labels: {{ include "kibana.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-install,post-delete
+    "helm.sh/hook": pre-install,pre-upgrade,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded
     {{- if .Values.annotations }}
     {{- range $key, $value := .Values.annotations }}
