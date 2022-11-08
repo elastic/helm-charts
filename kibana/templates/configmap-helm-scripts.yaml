@@ -18,7 +18,7 @@ data:
     const fs = require('fs');
 
     // Elasticsearch API
-    const esPath = '_security/service/elastic/kibana/credential/token/kb-kibana';
+    const esPath = '_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}';
     const esUrl = '{{ .Values.elasticsearchHosts }}' + '/' + esPath
     const esUsername = process.env.ELASTICSEARCH_USERNAME;
     const esPassword = process.env.ELASTICSEARCH_PASSWORD;

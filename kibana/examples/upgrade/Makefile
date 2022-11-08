@@ -23,6 +23,7 @@ upgrade-es:
 	kubectl delete pod --selector=app=$(ES_CLUSTER)-master
 
 upgrade-kb:
+	sleep 120 # wait that ES pods are started
 	helm upgrade $(RELEASE) ../../ --wait --values values.yaml
 	kubectl rollout status deployment $(RELEASE)-kibana
 
