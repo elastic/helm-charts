@@ -17,18 +17,27 @@ data:
     const https = require('https');
     const fs = require('fs');
 
+    // Read environment variables
+    function getEnvVar(name) {
+      if (name in process.env) {
+        return process.env[name]
+      } else {
+        throw new Error(name + ' environment variable is missing')
+      }
+    }
+
     // Elasticsearch API
     const esPath = '_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}';
     const esUrl = '{{ .Values.elasticsearchHosts }}' + '/' + esPath
-    const esUsername = process.env.ELASTICSEARCH_USERNAME;
-    const esPassword = process.env.ELASTICSEARCH_PASSWORD;
+    const esUsername = getEnvVar('ELASTICSEARCH_USERNAME');
+    const esPassword = getEnvVar('ELASTICSEARCH_PASSWORD');
     const esAuth = esUsername + ':' + esPassword;
-    const esCaFile = process.env.ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES;
+    const esCaFile = getEnvVar('ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES');
     const esCa = fs.readFileSync(esCaFile);
 
     // Kubernetes API
-    const k8sHostname = process.env.KUBERNETES_SERVICE_HOST;
-    const k8sPort = process.env.KUBERNETES_SERVICE_PORT_HTTPS;
+    const k8sHostname = getEnvVar('KUBERNETES_SERVICE_HOST');
+    const k8sPort = getEnvVar('KUBERNETES_SERVICE_PORT_HTTPS');
     const k8sPostSecretPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets';
     const k8sDeleteSecretPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets/{{ template "kibana.fullname" . }}-es-token';
     const k8sPostSecretUrl = `https://${k8sHostname}:${k8sPort}/${k8sPostSecretPath}`;
