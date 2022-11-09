@@ -139,28 +139,18 @@ data:
 
           // Create the k8s secret
           console.log('Creating K8S secret');
-          requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData}).then().catch(err => {
-            console.error(err)
-          });
-          return;
-        })
-      }).catch(err => {
-        console.error(err);
+          requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData})
+        });
       });
     }
 
     function cleanEsToken() {
       // Chaining requests
       console.log('Cleaning token');
-      requestPromise(esUrl, esTokenDeleteOptions).then(() => {
+      return requestPromise(esUrl, esTokenDeleteOptions).then(() => {
         // Create the k8s secret
         console.log('Delete K8S secret');
-        requestPromise(k8sDeleteSecretUrl, secretDeleteOptions).then().catch(err => {
-          console.error(err)
-        });
-        return;
-      }).catch(err => {
-        console.error(err);
+        requestPromise(k8sDeleteSecretUrl, secretDeleteOptions)
       });
     }
 
@@ -168,11 +158,15 @@ data:
     switch (command) {
       case 'create':
         console.log('Creating a new Elasticsearch token for Kibana')
-        createEsToken();
+        createEsToken().catch(err => {
+          console.error(err);
+        });
         break;
       case 'clean':
         console.log('Cleaning the Kibana Elasticsearch token')
-        cleanEsToken();
+        cleanEsToken().catch(err => {
+          console.error(err);
+        });
         break;
       default:
         console.log('Unknown command');
