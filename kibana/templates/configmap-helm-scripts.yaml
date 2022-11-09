@@ -160,12 +160,14 @@ data:
         console.log('Creating a new Elasticsearch token for Kibana')
         createEsToken().catch(err => {
           console.error(err);
+          process.exit(1);
         });
         break;
       case 'clean':
         console.log('Cleaning the Kibana Elasticsearch token')
         cleanEsToken().catch(err => {
           console.error(err);
+          process.exit(1);
         });
         break;
       default:
