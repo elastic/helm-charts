@@ -2,3 +2,5 @@
   $ kubectl get pods --namespace={{ .Release.Namespace }} -l release={{ .Release.Name }} -w
 2. Retrieve the elastic user's password.
   $ kubectl get secrets --namespace={{ .Release.Namespace }} {{ .Values.elasticsearchCredentialSecret }} -ojsonpath='{.data.password}' | base64 -d
+3. Retrieve the kibana service account token.
+  $ kubectl get secrets --namespace={{ .Release.Namespace }} {{ template "kibana.fullname" . }}-es-token -ojsonpath='{.data.password}' | base64 -d
