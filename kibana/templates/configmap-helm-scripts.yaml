@@ -31,8 +31,8 @@ data:
     const k8sPort = process.env.KUBERNETES_SERVICE_PORT_HTTPS;
     const k8sPostSecretPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets';
     const k8sDeleteSecretPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets/{{ template "kibana.fullname" . }}-es-token';
-    const k8sPostSecretUrl = 'https://' + k8sHostname + ':' + k8sPort + '/' + k8sPostSecretPath;
-    const k8sDeleteSecretUrl = 'https://' + k8sHostname + ':' + k8sPort + '/' + k8sDeleteSecretPath;
+    const k8sPostSecretUrl = `https://${k8sHostname}:${k8sPort}/${k8sPostSecretPath}`;
+    const k8sDeleteSecretUrl = `https://${k8sHostname}:${k8sPort}/${k8sDeleteSecretPath}`;
     const k8sBearer = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/token');
     const k8sCa = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/ca.crt');
 
