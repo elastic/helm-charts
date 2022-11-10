@@ -157,6 +157,10 @@ readinessProbe:
   periodSeconds: 10
   successThreshold: 3
   timeoutSeconds: 5
+# exec: {}
+# httpGet:
+#   path: /app/kibana
+#   port: 5601
 
 imagePullSecrets: []
 nodeSelector: {}

@@ -149,7 +149,26 @@ spec:
 {{ toYaml .Values.envFrom | indent 10 }}
 {{- end }}
         readinessProbe:
-{{ toYaml .Values.readinessProbe | indent 10 }}
+{{- if .Values.readinessProbe.failureThreshold }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+{{- end }}
+{{- if .Values.readinessProbe.initialDelaySeconds }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+{{- end }}
+{{- if .Values.readinessProbe.periodSeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+{{- end }}
+{{- if .Values.readinessProbe.successThreshold }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+{{- end }}
+{{- if .Values.readinessProbe.timeoutSeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+{{- end }}
+{{- if .Values.readinessProbe.httpGet }}
+          httpGet:
+{{ toYaml .Values.readinessProbe.httpGet | indent 12 }}
+{{- end }}
+{{- if and (empty .Values.readinessProbe.exec) (empty .Values.readinessProbe.httpGet) }}
           exec:
             command:
               - bash
@@ -179,6 +198,11 @@ spec:
                 }
 
                 http "{{ .Values.healthCheckPath }}"
+{{- end }}
+{{- if .Values.readinessProbe.exec }}
+          exec:
+{{ toYaml .Values.readinessProbe.exec | indent 12 }}
+{{- end }}
         ports:
         - containerPort: {{ .Values.httpPort }}
 {{- if .Values.lifecycle }}

@@ -850,3 +850,28 @@ def test_adding_annotations():
         r["deployment"][name]["metadata"]["annotations"]["iam.amazonaws.com/role"]
         == "es-role"
     )
+
+
+def test_httpget_readinessprobe():
+    config = """
+readinessProbe:
+   httpGet:
+     path: /app/kibana
+     port: 5601
+"""
+    r = helm_template(config)
+    httpGet = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]["readinessProbe"]
+    assert dict({'httpGet': {'path': '/app/kibana', 'port': 5601}}).items() <= httpGet.items()
+
+def test_exec_readinessprobe_custom():
+    config = """
+readinessProbe:
+   exec:
+     command:
+       - echo
+       - 'ok'
+"""
+    r = helm_template(config)
+    exec = r["deployment"][name]["spec"]["template"]["spec"]["containers"][0]["readinessProbe"]
+    assert dict({'exec': {'command': ['echo', 'ok']}}).items() <= exec.items()
+
