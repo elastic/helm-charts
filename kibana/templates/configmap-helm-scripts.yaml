@@ -171,4 +171,5 @@ data:
         break;
       default:
         console.log('Unknown command');
+        process.exit(1);
     }
