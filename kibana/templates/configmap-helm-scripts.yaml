@@ -19,11 +19,10 @@ data:
 
     // Read environment variables
     function getEnvVar(name) {
-      if (name in process.env) {
-        return process.env[name]
-      } else {
+      if (!process.env[name]) {
         throw new Error(name + ' environment variable is missing')
       }
+      return process.env[name]
     }
 
     // Elasticsearch API
