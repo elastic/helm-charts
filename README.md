@@ -34,6 +34,14 @@ work with the version of the product, you are installing.
 For example, if you want to deploy an Elasticsearch `7.7.1` cluster, use the
 corresponding `7.7.1` [tag][elasticsearch-771].
 
+However, we are not releasing new charts versions for each new patch version of
+the Elastic products, so if a chart for the latest patch version doesn't exist,
+you can use the latest chart with the same **MAJOR.MINOR** version and override
+the Docker image tag to the latest patch version with the `imageTag` value.
+
+For example, if you want to deploy an Elasticsearch `7.17.5` cluster, use the
+corresponding `7.17.3` [tag][elasticsearch-7173], with `imageTag=7.17.5` value.
+
 The `master` version of these charts is intended to support the latest
 pre-release versions of our products, and therefore may or may not work with
 current released versions.
@@ -82,6 +90,7 @@ Kubernetes. There is a dedicated Helm chart for ECK which can be found
 [helm-tester Dockerfile]: https://github.com/elastic/helm-charts/blob/main/helpers/helm-tester/Dockerfile
 [helpers/matrix.yml]: https://github.com/elastic/helm-charts/blob/main/helpers/matrix.yml
 [operator pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
+[elasticsearch-7173]: https://github.com/elastic/helm-charts/tree/7.17.3/elasticsearch/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 [apm-7]: https://github.com/elastic/helm-charts/tree/7.17/apm-server/README.md
 [apm-6]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/README.md
