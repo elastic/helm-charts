@@ -115,7 +115,7 @@ data:
       // 404 status code is accepted if there is no previous token to clean
       return requestPromise(esUrl, esTokenDeleteOptions, {extraStatusCode: 404}).then(() => {
         console.log('Creating new token');
-        requestPromise(esUrl, esTokenCreateOptions).then(response => {
+        return requestPromise(esUrl, esTokenCreateOptions).then(response => {
           const body = JSON.parse(response);
           const token = body.token.value
 
@@ -123,7 +123,7 @@ data:
           const base64Token = Buffer.from(token, 'utf8').toString('base64');
 
           // Prepare the k8s secret
-          secretData = JSON.stringify({
+          const secretData = JSON.stringify({
             "apiVersion": "v1",
             "kind": "Secret",
             "metadata": {
@@ -138,7 +138,7 @@ data:
 
           // Create the k8s secret
           console.log('Creating K8S secret');
-          requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData})
+          return requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData})
         });
       });
     }
@@ -149,7 +149,7 @@ data:
       return requestPromise(esUrl, esTokenDeleteOptions).then(() => {
         // Create the k8s secret
         console.log('Delete K8S secret');
-        requestPromise(k8sDeleteSecretUrl, secretDeleteOptions)
+        return requestPromise(k8sDeleteSecretUrl, secretDeleteOptions)
       });
     }
 
