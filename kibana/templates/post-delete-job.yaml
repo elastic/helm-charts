@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: post-delete-{{ template "kibana.fullname" . }}
+  labels: {{ include "kibana.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-delete-policy": hook-succeeded
+    {{- if .Values.annotations }}
+    {{- range $key, $value := .Values.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- end }}
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: clean-kibana-token
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          command: ["{{ template "kibana.home_dir" . }}/node/bin/node"]
+          args:
+           - {{ template "kibana.home_dir" . }}/helm-scripts/manage-es-token.js
+           - clean
+          env:
+            - name: "ELASTICSEARCH_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.elasticsearchCredentialSecret }}
+                  key: username
+            - name: "ELASTICSEARCH_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.elasticsearchCredentialSecret }}
+                  key: password
+            - name: ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES
+              value: "{{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }}"
+          volumeMounts:
+            - name: elasticsearch-certs
+              mountPath: {{ template "kibana.home_dir" . }}/config/certs
+              readOnly: true
+            - name: kibana-helm-scripts
+              mountPath: {{ template "kibana.home_dir" . }}/helm-scripts
+      serviceAccount: post-delete-{{ template "kibana.fullname" . }}
+      volumes:
+        - name: elasticsearch-certs
+          secret:
+            secretName: {{ .Values.elasticsearchCertificateSecret }}
+        - name: kibana-helm-scripts
+          configMap:
+            name: {{ template "kibana.fullname" . }}-helm-scripts
+            defaultMode: 0755

@@ -4,18 +4,172 @@ kind: ConfigMap
 metadata:
   name: {{ template "kibana.fullname" . }}-helm-scripts
   labels: {{ include "kibana.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade,post-delete
+    "helm.sh/hook-delete-policy": hook-succeeded
+    {{- if .Values.annotations }}
+    {{- range $key, $value := .Values.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- end }}
 data:
-  kibana-entrypoint.sh: |
-    #!/bin/bash
-    set -euo pipefail
+  manage-es-token.js: |
+    const https = require('https');
+    const fs = require('fs');
 
-    echo "export ELASTICSEARCH_SERVICEACCOUNTTOKEN=$({{ template "kibana.home_dir" . }}/node/bin/node {{ template "kibana.home_dir" . }}/helm-scripts/parse-token.js {{ template "kibana.home_dir" . }}/config/tokens/{{ template "kibana.fullname" . }}.json)" > $HOME/.elasticsearch-serviceaccounttoken
-    source $HOME/.elasticsearch-serviceaccounttoken
+    // Read environment variables
+    function getEnvVar(name) {
+      if (!process.env[name]) {
+        throw new Error(name + ' environment variable is missing')
+      }
+      return process.env[name]
+    }
 
-    # https://github.com/elastic/dockerfiles/blob/a405a4d692031b72cefcb8523bd464aa3221ec47/kibana/Dockerfile#L131
-    exec /bin/tini -- /usr/local/bin/kibana-docker "$@"
+    // Elasticsearch API
+    const esPath = '_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}';
+    const esUrl = '{{ .Values.elasticsearchHosts }}' + '/' + esPath
+    const esUsername = getEnvVar('ELASTICSEARCH_USERNAME');
+    const esPassword = getEnvVar('ELASTICSEARCH_PASSWORD');
+    const esAuth = esUsername + ':' + esPassword;
+    const esCaFile = getEnvVar('ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES');
+    const esCa = fs.readFileSync(esCaFile);
 
-  parse-token.js: |
-    let dataFile = process.argv[2];
-    let dataContent = require(dataFile.toString());
-    console.log(dataContent.token.value);
+    // Kubernetes API
+    const k8sHostname = getEnvVar('KUBERNETES_SERVICE_HOST');
+    const k8sPort = getEnvVar('KUBERNETES_SERVICE_PORT_HTTPS');
+    const k8sPostSecretPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets';
+    const k8sDeleteSecretPath = 'api/v1/namespaces/{{ .Release.Namespace }}/secrets/{{ template "kibana.fullname" . }}-es-token';
+    const k8sPostSecretUrl = `https://${k8sHostname}:${k8sPort}/${k8sPostSecretPath}`;
+    const k8sDeleteSecretUrl = `https://${k8sHostname}:${k8sPort}/${k8sDeleteSecretPath}`;
+    const k8sBearer = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/token');
+    const k8sCa = fs.readFileSync('/run/secrets/kubernetes.io/serviceaccount/ca.crt');
+
+    // Post Data
+    const esTokenDeleteOptions = {
+      method: 'DELETE',
+      auth: esAuth,
+      ca: esCa,
+    };
+    const esTokenCreateOptions = {
+      method: 'POST',
+      auth: esAuth,
+      ca: esCa,
+    };
+    const secretCreateOptions = {
+      method: 'POST',
+      ca: k8sCa,
+      headers: {
+        'Authorization': 'Bearer ' + k8sBearer,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    };
+    const secretDeleteOptions = {
+      method: 'DELETE',
+      ca: k8sCa,
+      headers: {
+        'Authorization': 'Bearer ' + k8sBearer,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    };
+
+    // With thanks to https://stackoverflow.com/questions/57332374/how-to-chain-http-request
+    function requestPromise(url, httpsOptions, extraOptions = {}) {
+      return new Promise((resolve, reject) => {
+        const request = https.request(url, httpsOptions, response => {
+
+          console.log('statusCode:', response.statusCode);
+
+          let isSuccess = undefined;
+
+          if (typeof(extraOptions.extraStatusCode) != "undefined" && extraOptions.extraStatusCode != null) {
+            isSuccess = response.statusCode >= 200 && response.statusCode < 300 || response.statusCode == extraOptions.extraStatusCode;
+          } else {
+            isSuccess = response.statusCode >= 200 && response.statusCode < 300;
+          }
+
+          let data = '';
+          response.on('data', chunk => data += chunk); // accumulate data
+          response.once('end', () => isSuccess ? resolve(data) : reject(data));  // resolve promise here
+        });
+
+        request.once('error', err => {
+          // This won't log anything for e.g. an HTTP 404 or 500 response,
+          // since from HTTP's point-of-view we successfully received a
+          // response.
+          console.log(`${httpsOptions.method} ${httpsOptions.path} failed: `, err.message || err);
+          reject(err);  // if promise is not already resolved, then we can reject it here
+        });
+
+        if (typeof(extraOptions.payload) != "undefined") {
+          request.write(extraOptions.payload);
+        }
+        request.end();
+      });
+    }
+
+    function createEsToken() {
+      // Chaining requests
+      console.log('Cleaning previous token');
+      // 404 status code is accepted if there is no previous token to clean
+      return requestPromise(esUrl, esTokenDeleteOptions, {extraStatusCode: 404}).then(() => {
+        console.log('Creating new token');
+        requestPromise(esUrl, esTokenCreateOptions).then(response => {
+          const body = JSON.parse(response);
+          const token = body.token.value
+
+          // Encode the token in base64
+          const base64Token = Buffer.from(token, 'utf8').toString('base64');
+
+          // Prepare the k8s secret
+          secretData = JSON.stringify({
+            "apiVersion": "v1",
+            "kind": "Secret",
+            "metadata": {
+              "namespace": "{{ .Release.Namespace }}",
+              "name": "{{ template "kibana.fullname" . }}-es-token",
+            },
+            "type": "Opaque",
+            "data": {
+              "token": base64Token,
+            }
+          })
+
+          // Create the k8s secret
+          console.log('Creating K8S secret');
+          requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData})
+        });
+      });
+    }
+
+    function cleanEsToken() {
+      // Chaining requests
+      console.log('Cleaning token');
+      return requestPromise(esUrl, esTokenDeleteOptions).then(() => {
+        // Create the k8s secret
+        console.log('Delete K8S secret');
+        requestPromise(k8sDeleteSecretUrl, secretDeleteOptions)
+      });
+    }
+
+    const command = process.argv[2];
+    switch (command) {
+      case 'create':
+        console.log('Creating a new Elasticsearch token for Kibana')
+        createEsToken().catch(err => {
+          console.error(err);
+          process.exit(1);
+        });
+        break;
+      case 'clean':
+        console.log('Cleaning the Kibana Elasticsearch token')
+        cleanEsToken().catch(err => {
+          console.error(err);
+          process.exit(1);
+        });
+        break;
+      default:
+        console.log('Unknown command');
+        process.exit(1);
+    }

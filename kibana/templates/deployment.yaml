@@ -49,10 +49,6 @@ spec:
       volumes:
         - name: kibana-tokens
           emptyDir: {}
-        - name: kibana-helm-scripts
-          configMap:
-            name: {{ template "kibana.fullname" . }}-helm-scripts
-            defaultMode: 0755
         - name: elasticsearch-certs
           secret:
             secretName: {{ .Values.elasticsearchCertificateSecret }}
@@ -86,31 +82,6 @@ spec:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
     {{- end }}
       initContainers:
-      - name: configure-kibana-token
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-        # TODO add retries
-        command:
-          - sh
-          - -c
-          - curl --output {{ template "kibana.home_dir" . }}/config/tokens/{{ template "kibana.fullname" . }}.json --fail -XPOST --cacert {{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }} -u "$(ELASTICSEARCH_USERNAME):$(ELASTICSEARCH_PASSWORD)" "{{ .Values.elasticsearchHosts }}/_security/service/elastic/kibana/credential/token/{{ template "kibana.fullname" . }}?pretty"
-        env:
-          - name: "ELASTICSEARCH_USERNAME"
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.elasticsearchCredentialSecret }}
-                key: username
-          - name: "ELASTICSEARCH_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.elasticsearchCredentialSecret }}
-                key: password
-        volumeMounts:
-          - name: elasticsearch-certs
-            mountPath: {{ template "kibana.home_dir" . }}/config/certs
-            readOnly: true
-          - name: kibana-tokens
-            mountPath: {{ template "kibana.home_dir" . }}/config/tokens
       {{- if .Values.extraInitContainers }}
       # Currently some extra blocks accept strings
       # to continue with backwards compatibility this is being kept
@@ -127,8 +98,6 @@ spec:
 {{ toYaml .Values.securityContext | indent 10 }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-        command: ["/bin/bash"]
-        args: ["-c","{{ template "kibana.home_dir" . }}/helm-scripts/kibana-entrypoint.sh"]
         env:
           {{- if .Values.elasticsearchURL }}
           - name: ELASTICSEARCH_URL
@@ -141,6 +110,12 @@ spec:
             value: "{{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }}"
           - name: SERVER_HOST
             value: "{{ .Values.serverHost }}"
+          - name: ELASTICSEARCH_SERVICEACCOUNTTOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "kibana.fullname" . }}-es-token
+                key: token
+                optional: false
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
 {{- end }}
@@ -194,8 +169,6 @@ spec:
           - name: kibana-tokens
             mountPath: {{ template "kibana.home_dir" . }}/config/tokens
             readOnly: true
-          - name: kibana-helm-scripts
-            mountPath: {{ template "kibana.home_dir" . }}/helm-scripts
           {{- range .Values.secretMounts }}
           - name: {{ .name }}
             mountPath: {{ .path }}
