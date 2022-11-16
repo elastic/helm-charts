@@ -42,6 +42,8 @@ official Docker images.
 > Helm charts will currently be maintained for ECK Enterprise-tier customers,
 > however, we encourage the community to engage with the existing Helm charts
 > for the Elastic Stack and continue supporting their ongoing maintenance.
+>
+> See https://github.com/elastic/helm-charts/issues/1731 for more details.
 
 
 ## Supported Configurations

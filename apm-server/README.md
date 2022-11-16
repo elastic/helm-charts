@@ -29,6 +29,8 @@ This Helm chart is a lightweight way to configure and run our official
 > Helm charts will currently be maintained for ECK Enterprise-tier customers,
 > however, we encourage the community to engage with the existing Helm charts
 > for the Elastic Stack and continue supporting their ongoing maintenance.
+>
+> See <https://github.com/elastic/helm-charts/issues/1731> for more details.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -148,7 +150,6 @@ An example can be found in [examples/security][].
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
