@@ -6,7 +6,7 @@ http:
     request-headers:
       - "Authorization: Bearer {{ .Env.ELASTICSEARCH_SERVICEACCOUNTTOKEN}}"
     body:
-      - '"number":"8.4.1"'
+      - '"number":"8.5.1"'
 
 file:
   /usr/share/kibana/config/kibana.yml:

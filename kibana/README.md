@@ -5,8 +5,32 @@
 This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
-<!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+> **Warning**
+> When it comes to running the Elastic on Kubernetes infrastructure, we
+> recommend [Elastic Cloud on Kubernetes][] (ECK) as the best way to run and manage
+> the Elastic Stack.
+>
+> ECK offers many operational benefits for both our basic-tier and our
+> enterprise-tier customers, such as spinning up cluster nodes that were lost on
+> failed infrastructure, seamless upgrades, rolling cluster changes, and much
+> much more.
+>
+> With the release of the Elastic Stack Helm charts for Elastic version 8.5.1,
+> we are handing over the ongoing maintenance of our Elastic Stack Helm charts
+> to the community and contributors. This repository will finally be archived
+> after 6 months time. Elastic Stacks deployed on Kubernetes through Helm charts
+> will still be fully supported under EOL limitations.
+>
+> Since we want to provide an even better experience for our customers by
+> running the Elastic Stack on Kubernetes, we will continue maintaining the
+> Helm charts applicable to ECK Custom Resources. These charts can be found in
+> the [ECK repository][eck-charts].
+>
+> Helm charts will currently be maintained for ECK Enterprise-tier customers,
+> however, we encourage the community to engage with the existing Helm charts
+> for the Elastic Stack and continue supporting their ongoing maintenance.
+>
+> See <https://github.com/elastic/helm-charts/issues/1731> for more details.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -50,7 +74,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install kibana ./helm-charts/kibana --set imageTag=8.4.1`
+* Install it: `helm install kibana ./helm-charts/kibana --set imageTag=8.5.1`
 
 ## Upgrading
 
@@ -90,7 +114,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `httpPort`                                | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                    | `5601`                              |
 | `imagePullPolicy`                         | The Kubernetes [imagePullPolicy][]value                                                                                                                                                        | `IfNotPresent`                      |
 | `imagePullSecrets`                        | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                   | `[]`                                |
-| `imageTag`                                | The Kibana Docker image tag                                                                                                                                                                    | `8.4.1`                             |
+| `imageTag`                                | The Kibana Docker image tag                                                                                                                                                                    | `8.5.1`                             |
 | `image`                                   | The Kibana Docker image                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`   |
 | `ingress`                                 | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                 |
 | `kibanaConfig`                            | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                                |
@@ -203,16 +227,17 @@ lifecycle:
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [chart notes]: https://github.com/elastic/helm-charts/tree/main/kibana/templates/NOTES.txt
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/README.md#default
-[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[eck-charts]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/main/kibana/examples
 [examples/security]: https://github.com/elastic/helm-charts/tree/main/kibana/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine

@@ -5,8 +5,32 @@
 This Helm chart is a lightweight way to configure and run our official
 [Filebeat Docker image][].
 
-<!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+> **Warning**
+> When it comes to running the Elastic on Kubernetes infrastructure, we
+> recommend [Elastic Cloud on Kubernetes][] (ECK) as the best way to run and manage
+> the Elastic Stack.
+>
+> ECK offers many operational benefits for both our basic-tier and our
+> enterprise-tier customers, such as spinning up cluster nodes that were lost on
+> failed infrastructure, seamless upgrades, rolling cluster changes, and much
+> much more.
+>
+> With the release of the Elastic Stack Helm charts for Elastic version 8.5.1,
+> we are handing over the ongoing maintenance of our Elastic Stack Helm charts
+> to the community and contributors. This repository will finally be archived
+> after 6 months time. Elastic Stacks deployed on Kubernetes through Helm charts
+> will still be fully supported under EOL limitations.
+>
+> Since we want to provide an even better experience for our customers by
+> running the Elastic Stack on Kubernetes, we will continue maintaining the
+> Helm charts applicable to ECK Custom Resources. These charts can be found in
+> the [ECK repository][eck-charts].
+>
+> Helm charts will currently be maintained for ECK Enterprise-tier customers,
+> however, we encourage the community to engage with the existing Helm charts
+> for the Elastic Stack and continue supporting their ongoing maintenance.
+>
+> See <https://github.com/elastic/helm-charts/issues/1731> for more details.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -51,7 +75,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.4.1`
+* Install it: `helm install filebeat ./helm-charts/filebeat --set imageTag=8.5.1`
 
 
 ## Upgrading
@@ -128,7 +152,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `hostPathRoot`                 | Fully-qualified [hostPath][] that will be used to persist filebeat registry data                                                                                             | `/var/lib`                         |
 | `imagePullPolicy`              | The Kubernetes [imagePullPolicy][] value                                                                                                                                     | `IfNotPresent`                     |
 | `imagePullSecrets`             | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                 | `[]`                               |
-| `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `8.4.1`                            |
+| `imageTag`                     | The filebeat Docker image tag                                                                                                                                                | `8.5.1`                            |
 | `image`                        | The filebeat Docker image                                                                                                                                                    | `docker.elastic.co/beats/filebeat` |
 | `livenessProbe`                | Parameters to pass to liveness [probe][] checks for values such as timeouts and thresholds                                                                                   | see [values.yaml][]                |
 | `managedServiceAccount`        | Whether the `serviceAccount` should be managed by this helm chart. Set this to `false` in order to manage your own service account and related roles                         | `true`                             |
@@ -209,15 +233,16 @@ readinessProbe:
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [cluster role rules]: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole
-[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
+[eck-charts]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/main/filebeat/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/main/filebeat/examples/oss
 [examples/security]: https://github.com/elastic/helm-charts/tree/main/filebeat/examples/security
@@ -238,8 +263,8 @@ about our development and testing process.
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[supported configurations]: https://github.com/elastic/helm-charts/tree/main/README.md#supported-configurations
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+[supported configurations]: https://github.com/elastic/helm-charts/tree/main/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy
 [values.yaml]: https://github.com/elastic/helm-charts/tree/main/filebeat/values.yaml

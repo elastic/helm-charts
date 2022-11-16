@@ -24,7 +24,7 @@ http:
     username: "{{ .Env.ELASTICSEARCH_USERNAME }}"
     password: "{{ .Env.ELASTICSEARCH_PASSWORD }}"
     body:
-      - "metricbeat-8.4.1"
+      - "metricbeat-8.5.1"
   https://elasticsearch-master:9200/_search?q=metricset.name:state_deployment:
     status: 200
     allow-insecure: true

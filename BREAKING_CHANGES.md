@@ -3,6 +3,13 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+  - [8.5.1](#851)
+    - [Last Elastic Helm charts release](#last-elastic-helm-charts-release)
+    - [Security by default for Elasticsearch](#security-by-default-for-elasticsearch)
+    - [Kibana use a Service Account Token to connect to Elasticsearch](#kibana-use-a-service-account-token-to-connect-to-elasticsearch)
+    - [Elasticsearch new node.roles settings](#elasticsearch-new-noderoles-settings)
+    - [APM Server OSS removal](#apm-server-oss-removal)
+    - [Supported K8S versions](#supported-k8s-versions)
   - [7.17.1](#7171)
     - [Metricbeat kube-state-metrics upgrade](#metricbeat-kube-state-metrics-upgrade)
   - [7.11.1](#7111)
@@ -49,6 +56,86 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- Use this to update TOC: -->
 <!-- docker run --entrypoint doctoc --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc BREAKING_CHANGES.md --github --no-title -->
+
+## 8.5.1
+
+### Last Elastic Helm charts release
+
+8.5.1 is expected to be the last Elastic Helm chart release. This repository will stay active for 6
+months before being archived.
+
+See <https://github.com/elastic/helm-charts/issues/1731> for more details.
+
+### Security by default for Elasticsearch
+
+Starting with 8.0.0, Elasticsearch comes with security (TLS + authentication) enabled and
+auto-configured by default.
+Therefore, the Elasticsearch chart has been updated to generate credentials and TLS certificate by
+default.
+Similarly, all charts have been updated to connect to a secured Elasticsearch deployed by the
+Elasticsearch chart by default.
+
+Consequently, running the Elasticsearch chart with security disabled isn't anymore supported.
+The other charts are also not supporting anymore connection to an Elasticsearch without security.
+
+Note that in addition to the security configured by default, it is still possible to use your own
+TLS certificates, credentials and security configurations (see the `security` examples for each
+chart).
+
+See the related PRs for more details:
+
+- <https://github.com/elastic/helm-charts/pull/1384>
+- <https://github.com/elastic/helm-charts/pull/1399>
+- <https://github.com/elastic/helm-charts/pull/1400>
+- <https://github.com/elastic/helm-charts/pull/1401>
+- <https://github.com/elastic/helm-charts/pull/1402>
+- <https://github.com/elastic/helm-charts/pull/1403>
+- <https://github.com/elastic/helm-charts/pull/1519>
+- <https://github.com/elastic/helm-charts/pull/1623>
+- <https://github.com/elastic/helm-charts/pull/1624>
+- <https://github.com/elastic/helm-charts/pull/1625>
+- <https://github.com/elastic/helm-charts/pull/1627>
+- <https://github.com/elastic/helm-charts/pull/1628>
+- <https://github.com/elastic/helm-charts/pull/1677>
+- <https://github.com/elastic/helm-charts/pull/1691>
+
+### Kibana use a Service Account Token to connect to Elasticsearch
+
+In addition to the changes related to security by default, starting with 8.0.0, Kibana can't anymore
+use the `elastic` super user to connect to Elasticsearch but needs to use service account token
+instead. The Kibana chart is now using a `pre-install` Helm chart hook to request the creation of
+this service account and register it in a K8S Secret that can be used by the Kibana pods.
+
+See the related PRs for more details:
+
+- <https://github.com/elastic/helm-charts/pull/1679>
+- <https://github.com/elastic/helm-charts/pull/1695>
+- <https://github.com/elastic/helm-charts/pull/1720>
+- <https://github.com/elastic/helm-charts/pull/1727>
+
+### Elasticsearch new node.roles settings
+
+Starting with 8.5.1, the `roles` values in Elasticsearch chart support a simple list of the roles
+to configure, instead of a dictionnary. All roles defined in the [Elasticsearch node roles doc][]
+are now supported.
+
+See the related PRs for more details:
+
+- <https://github.com/elastic/helm-charts/pull/1186>
+- <https://github.com/elastic/helm-charts/pull/1693>
+
+### APM Server OSS removal
+
+Starting with 8.0.0, APM Server doesn't provide anymore OSS version. Consequently this option
+is removed from the APM Server chart.
+
+See <https://github.com/elastic/helm-charts/pull/1442> for more details.
+
+### Supported K8S versions
+
+This release remove the support of K8S 1.19 and 1.20, and add the support of 1.23 and 1.24.
+
+See <https://github.com/elastic/helm-charts/pull/1703> for more details.
 
 ## 7.17.1
 
@@ -413,7 +500,7 @@ volumeClaimTemplate:
 ```
 
 
-[#94]: https://github.com/elastic/helm-charts/pull/94
+[#1524]: https://github.com/elastic/helm-charts/pull/1524
 [#352]: https://github.com/elastic/helm-charts/pull/352
 [#437]: https://github.com/elastic/helm-charts/pull/437
 [#458]: https://github.com/elastic/helm-charts/pull/458
@@ -431,16 +518,17 @@ volumeClaimTemplate:
 [#807]: https://github.com/elastic/helm-charts/issues/807
 [#839]: https://github.com/elastic/helm-charts/issues/839
 [#916]: https://github.com/elastic/helm-charts/pull/916
-[#1524]: https://github.com/elastic/helm-charts/pull/1524
+[#94]: https://github.com/elastic/helm-charts/pull/94
 [container input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-container.html
 [docker input]: https://www.elastic.co/guide/en/beats/filebeat/7.7/filebeat-input-docker.html
 [elastic blog post]: https://www.elastic.co/blog/licensing-change
 [elastic elasticsearch chart]: https://github.com/elastic/helm-charts/tree/main/elasticsearch
 [elastic helm repo]: https://helm.elastic.co
+[elasticsearch node roles doc]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#node-roles
 [github releases]: https://github.com/elastic/helm-charts/releases
 [helm 2to3]: https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/
+[kube-state-metrics]: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
 [migration guide]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/migration/README.md
 [new branching model]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md#branching
-[kube-state-metrics]: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
-[stable elasticsearch chart]: https://github.com/helm/charts/tree/master/stable/elasticsearch
 [stable elasticsearch chart notice]: https://github.com/helm/charts/tree/master/stable#elasticsearch#this-helm-chart-is-deprecated
+[stable elasticsearch chart]: https://github.com/helm/charts/tree/master/stable/elasticsearch

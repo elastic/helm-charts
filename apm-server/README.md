@@ -5,13 +5,32 @@
 This Helm chart is a lightweight way to configure and run our official
 [APM Server Docker image][].
 
-**Warning**: This functionality is in alpha and is subject to change.
-The design and code is less mature than official GA features and is being
-provided as-is with no warranties. Alpha features are not subject to the support
-SLA of official GA features (see [supported configurations][] for more details).
-
-<!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
+> **Warning**
+> When it comes to running the Elastic on Kubernetes infrastructure, we
+> recommend [Elastic Cloud on Kubernetes][] (ECK) as the best way to run and manage
+> the Elastic Stack.
+>
+> ECK offers many operational benefits for both our basic-tier and our
+> enterprise-tier customers, such as spinning up cluster nodes that were lost on
+> failed infrastructure, seamless upgrades, rolling cluster changes, and much
+> much more.
+>
+> With the release of the Elastic Stack Helm charts for Elastic version 8.5.1,
+> we are handing over the ongoing maintenance of our Elastic Stack Helm charts
+> to the community and contributors. This repository will finally be archived
+> after 6 months time. Elastic Stacks deployed on Kubernetes through Helm charts
+> will still be fully supported under EOL limitations.
+>
+> Since we want to provide an even better experience for our customers by
+> running the Elastic Stack on Kubernetes, we will continue maintaining the
+> Helm charts applicable to ECK Custom Resources. These charts can be found in
+> the [ECK repository][eck-charts].
+>
+> Helm charts will currently be maintained for ECK Enterprise-tier customers,
+> however, we encourage the community to engage with the existing Helm charts
+> for the Elastic Stack and continue supporting their ongoing maintenance.
+>
+> See <https://github.com/elastic/helm-charts/issues/1731> for more details.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -52,7 +71,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.4.1`
+* Install it: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.5.1`
 
 
 ## Upgrading
@@ -91,7 +110,7 @@ reference. They are also used in the automated testing of this chart.
 | `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.4.1`                            |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.5.1`                            |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |
@@ -131,15 +150,16 @@ An example can be found in [examples/security][].
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [apm server docker image]: https://www.elastic.co/guide/en/apm/server/current/running-on-docker.html
-[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
+[eck-charts]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples
 [examples/security]: https://github.com/elastic/helm-charts/tree/main/apm-server/examples/security
 [horizontal pod autoscaler]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/

@@ -5,8 +5,8 @@ maintainers:
   - email: helm-charts@elastic.co
     name: Elastic
 name: elasticsearch
-version: 8.4.1
-appVersion: 8.4.1
+version: 8.5.1
+appVersion: 8.5.1
 sources:
   - https://github.com/elastic/elasticsearch
 icon: https://helm.elastic.co/icons/elasticsearch.png
