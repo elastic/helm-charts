@@ -570,7 +570,7 @@ topologySpreadConstraints:
         == "DoNotSchedule"
     )
     assert (
-        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["labelSelector"]["matchLabels"]["foo"]
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["labelSelector"]["matchLabels"]["app"]
         == "logstash"
     )
 
