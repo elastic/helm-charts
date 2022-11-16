@@ -550,9 +550,10 @@ def test_adding_topology_spread_constraints():
 topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: "kubernetes.io/hostname"
-    whenUnsatisfiable: DoNotSchedule
-    matchLabelKeys:
-      - "app"
+    whenUnsatisfiable: "DoNotSchedule"
+    labelSelector:
+      matchLabels:
+        app: "logstash"
 """
 
     r = helm_template(config)
@@ -565,8 +566,12 @@ topologySpreadConstraints:
         == "kubernetes.io/hostname"
     )
     assert (
-        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["whenUnsatisfiable"][0]
-        == "app"
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["whenUnsatisfiable"]
+        == "DoNotSchedule"
+    )
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["labelSelector"]["matchLabels"]["foo"]
+        == "logstash"
     )
 
 def test_adding_pod_annotations():
