@@ -5,6 +5,31 @@
 This Helm chart is a lightweight way to configure and run our official
 [Elasticsearch Docker image][].
 
+> **Warning**
+> When it comes to running the Elastic on Kubernetes infrastructure, we
+> recommend [Elastic Cloud on Kubernetes][] (ECK) as the best way to run and manage
+> the Elastic Stack.
+>
+> ECK offers many operational benefits for both our basic-tier and our
+> enterprise-tier customers, such as spinning up cluster nodes that were lost on
+> failed infrastructure, seamless upgrades, rolling cluster changes, and much
+> much more.
+>
+> With the release of the Elastic Stack Helm charts for Elastic version 8.5.1,
+> we are handing over the ongoing maintenance of our Elastic Stack Helm charts
+> to the community and contributors. This repository will finally be archived
+> after 6 months time. Elastic Stacks deployed on Kubernetes through Helm charts
+> will still be fully supported under EOL limitations.
+>
+> Since we want to provide an even better experience for our customers by
+> running the Elastic Stack on Kubernetes, we will continue maintaining the
+> Helm charts applicable to ECK Custom Resources. These charts can be found in
+> the [ECK repository][eck-charts].
+>
+> Helm charts will currently be maintained for ECK Enterprise-tier customers,
+> however, we encourage the community to engage with the existing Helm charts
+> for the Elastic Stack and continue supporting their ongoing maintenance.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -390,32 +415,35 @@ lifecycle:
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
 [#1186 (comment)]: https://github.com/elastic/helm-charts/pull/1186#discussion_r631166442
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
+[7.x]: https://github.com/elastic/helm-charts/releases
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
 [cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.name.html
 [clustering and node discovery]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/README.md#clustering-and-node-discovery
 [config example]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/config/values.yaml
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [curator]: https://www.elastic.co/guide/en/elasticsearch/client/curator/current/snapshot.html
 [custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_c_customized_image
 [deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
 [discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/current/discovery-settings.html#minimum_master_nodes
 [docker for mac]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/docker-for-mac
+[eck-charts]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params
 [elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/
 [examples/multi]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/multi
 [examples/security]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
 [helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
+[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [how to install plugins guide]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/README.md#how-to-install-plugins
 [how to use the keystore]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/README.md#how-to-use-the-keystore
 [http.port]: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#_settings
@@ -424,7 +452,6 @@ about our development and testing process.
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
 [java options]: https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html
 [jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
-[hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [kind]: https://github.com/elastic/helm-charts/tree/main//elasticsearch/examples/kubernetes-kind
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
@@ -432,9 +459,9 @@ about our development and testing process.
 [loadBalancer externalTrafficPolicy]: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
 [loadBalancer]: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
+[microk8s]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/microk8s
 [migration guide]: https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/migration/README.md
 [minikube]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/minikube
-[microk8s]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/microk8s
 [multi]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/examples/multi/
 [network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/current/network.host.html
 [node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature

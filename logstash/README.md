@@ -5,10 +5,30 @@
 This Helm chart is a lightweight way to configure and run our official
 [Logstash Docker image][].
 
-**Warning**: This functionality is in beta and is subject to change.
-The design and code is less mature than official GA features and is being
-provided as-is with no warranties. Alpha features are not subject to the support
-SLA of official GA features (see [supported configurations][] for more details).
+> **Warning**
+> When it comes to running the Elastic on Kubernetes infrastructure, we
+> recommend [Elastic Cloud on Kubernetes][] (ECK) as the best way to run and manage
+> the Elastic Stack.
+>
+> ECK offers many operational benefits for both our basic-tier and our
+> enterprise-tier customers, such as spinning up cluster nodes that were lost on
+> failed infrastructure, seamless upgrades, rolling cluster changes, and much
+> much more.
+>
+> With the release of the Elastic Stack Helm charts for Elastic version 8.5.1,
+> we are handing over the ongoing maintenance of our Elastic Stack Helm charts
+> to the community and contributors. This repository will finally be archived
+> after 6 months time. Elastic Stacks deployed on Kubernetes through Helm charts
+> will still be fully supported under EOL limitations.
+>
+> Since we want to provide an even better experience for our customers by
+> running the Elastic Stack on Kubernetes, we will continue maintaining the
+> Helm charts applicable to ECK Custom Resources. These charts can be found in
+> the [ECK repository][eck-charts].
+>
+> Helm charts will currently be maintained for ECK Enterprise-tier customers,
+> however, we encourage the community to engage with the existing Helm charts
+> for the Elastic Stack and continue supporting their ongoing maintenance.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -183,16 +203,18 @@ Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
 [7.x]: https://github.com/elastic/helm-charts/releases
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 [anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-[deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/main/BREAKING_CHANGES.md
+[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/main/CHANGELOG.md
+[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/main/CONTRIBUTING.md
 [custom docker image]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#_custom_images
-[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
+[deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+[eck-charts]: https://github.com/elastic/cloud-on-k8s/tree/master/deploy
+[elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [examples]: https://github.com/elastic/helm-charts/tree/main/logstash/examples
 [examples/oss]: https://github.com/elastic/helm-charts/tree/main/logstash/examples/oss
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
@@ -205,17 +227,17 @@ about our development and testing process.
 [logstash oss docker image]: https://www.docker.elastic.co/r/logstash/logstash-oss
 [maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
 [node affinity settings]: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
-[pod affinity settings]: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 [note]: https://www.elastic.co/guide/en/logstash/current/docker-config.html#docker-env-config
+[pod affinity settings]: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [supported configurations]: https://github.com/elastic/helm-charts/tree/main/README.md#supported-configurations
 [terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+[updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 [values.yaml]: https://github.com/elastic/helm-charts/tree/main/logstash/values.yaml
 [volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage
