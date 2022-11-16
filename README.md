@@ -86,7 +86,7 @@ exact versions are defined under `KUBERNETES_VERSIONS` in
 ### Helm Versions
 
 While we are checking backward compatibility, the charts are only tested with
-Helm version mentioned in [helm-tester Dockerfile][] (currently 3.9.4).
+Helm version mentioned in [helm-tester Dockerfile][] (currently 3.10.2).
 
 [apm-6]: https://github.com/elastic/helm-charts/tree/6.8/apm-server/README.md
 [apm-7]: https://github.com/elastic/helm-charts/tree/7.17/apm-server/README.md
