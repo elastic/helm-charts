@@ -1,5 +1,12 @@
 # Changelog
 
+## 8.5.1
+
+* 8.5.1 as default version
+* See the [Breaking changes](./BREAKING_CHANGES.md) for a detailed list of changes.
+* Thanks for everyone that contributed to this release, especially [@framsouza](https://github.com/framsouza), [@jmlrt](https://github.com/jmlrt),[@ebuildy](https://github.com/ebuildy), [@pjaak](https://github.com/pjaak), [@azasypkin](https://github.com/azasypkin),[@jbudz](https://github.com/jbudz),[@jkakavas](https://github.com/jkakavas), [@mark-vieira](https://github.com/mark-vieira), [@mgreau](https://github.com/mgreau), [@nkammah](https://github.com/nkammah), [@pugnascotia](https://github.com/pugnascotia), [@rjernst](https://github.com/rjernst), and everyone else who wasn't mentionned here...
+
+
 ## 7.17.3
 
 * 7.17.3 as default version.
