@@ -10,9 +10,6 @@ The design and code is less mature than official GA features and is being
 provided as-is with no warranties. Alpha features are not subject to the support
 SLA of official GA features (see [supported configurations][] for more details).
 
-<!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -52,7 +49,7 @@ See [supported configurations][] for more details.
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
-* Install it: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.4.1`
+* Install it: `helm install apm-server ./helm-charts/apm-server --set imageTag=8.5.1`
 
 
 ## Upgrading
@@ -91,7 +88,7 @@ reference. They are also used in the automated testing of this chart.
 | `hostAliases`               | Configurable [hostAliases][]                                                                                                                               | `[]`                               |
 | `imagePullPolicy`           | The Kubernetes [imagePullPolicy][] value                                                                                                                   | `IfNotPresent`                     |
 | `imagePullSecrets`          | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                               | `[]`                               |
-| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.4.1`                            |
+| `imageTag`                  | The APM Server Docker image tag                                                                                                                            | `8.5.1`                            |
 | `image`                     | The APM Server Docker image                                                                                                                                | `docker.elastic.co/apm/apm-server` |
 | `ingress`                   | Configurable [ingress][] to expose the APM Server service                                                                                                  | see [values.yaml][]                |
 | `labels`                    | Configurable [labels][] applied to all APM server pods                                                                                                     | `{}`                               |

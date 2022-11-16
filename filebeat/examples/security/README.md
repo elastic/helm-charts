@@ -1,6 +1,6 @@
 # Security
 
-This example deploy Filebeat 8.4.1 using authentication and TLS to connect to
+This example deploy Filebeat 8.5.1 using authentication and TLS to connect to
 Elasticsearch (see [values][]).
 
 

@@ -16,7 +16,7 @@ import fileinput
 
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
-version = "8.4.1"
+version = "8.5.1"
 major = "8"
 
 chart_version = version
