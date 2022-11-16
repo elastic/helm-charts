@@ -34,3 +34,10 @@ heritage: {{ .Release.Service }}
 {{- define "kibana.home_dir" -}}
 /usr/share/kibana
 {{- end -}}
+
+{{/*
+Use the fullname if the serviceAccount value is not set
+*/}}
+{{- define "kibana.serviceAccount" -}}
+{{- .Values.rbac.serviceAccountName | default (include "kibana.fullname" .) -}}
+{{- end -}}
