@@ -545,6 +545,34 @@ tolerations:
         == "key1"
     )
 
+def test_adding_topology_spread_constraints():
+    config = """
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: "kubernetes.io/hostname"
+    whenUnsatisfiable: "DoNotSchedule"
+    labelSelector:
+      matchLabels:
+        app: "logstash"
+"""
+
+    r = helm_template(config)
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["maxSkew"]
+        == 1
+    )
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["topologyKey"]
+        == "kubernetes.io/hostname"
+    )
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["whenUnsatisfiable"]
+        == "DoNotSchedule"
+    )
+    assert (
+        r["statefulset"][name]["spec"]["template"]["spec"]["topologySpreadConstraints"][0]["labelSelector"]["matchLabels"]["app"]
+        == "logstash"
+    )
 
 def test_adding_pod_annotations():
     config = """
