@@ -25,6 +25,16 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: {{ template "logstash.fullname" . }}
+      {{- if .Values.persistence.labels.enabled }}
+      labels:
+        app: "{{ template "logstash.fullname" . }}"
+        chart: "{{ .Chart.Name }}"
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end }}
     {{- with .Values.persistence.annotations  }}
       annotations:
 {{ toYaml . | indent 8 }}

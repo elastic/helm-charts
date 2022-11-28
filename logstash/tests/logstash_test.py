@@ -301,6 +301,19 @@ persistence:
     assert v["spec"]["resources"]["requests"]["storage"] == "1Gi"
 
 
+def test_adding_persistence_label_in_volumeclaimtemplate():
+    config = """
+persistence:
+  enabled: true
+  labels:
+    enabled: true
+"""
+    r = helm_template(config)
+    v = r["statefulset"][name]["spec"]["volumeClaimTemplates"][0]["metadata"]["labels"]
+    sts = r["statefulset"][name]["metadata"]["labels"]
+    assert v == sts
+
+
 def test_adding_storageclass_annotation_to_volumeclaimtemplate():
     config = """
 persistence:
