@@ -9,10 +9,10 @@ esJavaOpts: "-Xmx128m -Xms128m"
 resources:
   requests:
     cpu: "100m"
-    memory: "512M"
+    memory: "1028M"
   limits:
     cpu: "1000m"
-    memory: "512M"
+    memory: "1028M"
 
 # Request smaller persistent volumes.
 volumeClaimTemplate:
