@@ -14,6 +14,7 @@ metadata:
     {{- end }}
 data:
   manage-es-token.js: |
+    const http = require('http');
     const https = require('https');
     const fs = require('fs');
 
@@ -31,8 +32,8 @@ data:
     const esUsername = getEnvVar('ELASTICSEARCH_USERNAME');
     const esPassword = getEnvVar('ELASTICSEARCH_PASSWORD');
     const esAuth = esUsername + ':' + esPassword;
-    const esCaFile = getEnvVar('ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES');
-    const esCa = fs.readFileSync(esCaFile);
+    const esCaFile = process.env['ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES'];
+    const esCa = esCaFile ? fs.readFileSync(esCaFile) : null;
 
     // Kubernetes API
     const k8sHostname = getEnvVar('KUBERNETES_SERVICE_HOST');
@@ -75,9 +76,9 @@ data:
     };
 
     // With thanks to https://stackoverflow.com/questions/57332374/how-to-chain-http-request
-    function requestPromise(url, httpsOptions, extraOptions = {}) {
+    function requestPromise(url, httpOptions, extraOptions = {}) {
       return new Promise((resolve, reject) => {
-        const request = https.request(url, httpsOptions, response => {
+        const request = (/^https:/.test(url) ? https : http).request(url, httpOptions, response => {
 
           console.log('statusCode:', response.statusCode);
 

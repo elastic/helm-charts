@@ -49,9 +49,11 @@ spec:
       volumes:
         - name: kibana-tokens
           emptyDir: {}
+        {{- if .Values.elasticsearchCertificateSecret }}
         - name: elasticsearch-certs
           secret:
             secretName: {{ .Values.elasticsearchCertificateSecret }}
+        {{- end }}
         {{- if .Values.kibanaConfig }}
         - name: kibanaconfig
           configMap:
@@ -163,9 +165,11 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
+          {{- if .Values.elasticsearchCertificateSecret }}
           - name: elasticsearch-certs
             mountPath: {{ template "kibana.home_dir" . }}/config/certs
             readOnly: true
+          {{- end }}
           - name: kibana-tokens
             mountPath: {{ template "kibana.home_dir" . }}/config/tokens
             readOnly: true

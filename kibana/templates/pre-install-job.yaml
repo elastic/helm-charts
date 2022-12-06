@@ -35,19 +35,25 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.elasticsearchCredentialSecret }}
                   key: password
+            {{- if .Values.elasticsearchCertificateSecret }}
             - name: ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES
               value: "{{ template "kibana.home_dir" . }}/config/certs/{{ .Values.elasticsearchCertificateAuthoritiesFile }}"
+            {{- end }}
           volumeMounts:
+            {{- if .Values.elasticsearchCertificateSecret }}
             - name: elasticsearch-certs
               mountPath: {{ template "kibana.home_dir" . }}/config/certs
               readOnly: true
+            {{- end }}
             - name: kibana-helm-scripts
               mountPath: {{ template "kibana.home_dir" . }}/helm-scripts
       serviceAccount: pre-install-{{ template "kibana.fullname" . }}
       volumes:
+        {{- if .Values.elasticsearchCertificateSecret }}
         - name: elasticsearch-certs
           secret:
             secretName: {{ .Values.elasticsearchCertificateSecret }}
+        {{- end }}
         - name: kibana-helm-scripts
           configMap:
             name: {{ template "kibana.fullname" . }}-helm-scripts
