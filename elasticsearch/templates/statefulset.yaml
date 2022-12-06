@@ -361,6 +361,9 @@ spec:
             value: "/usr/share/elasticsearch/config/certs/tls.crt"
           - name: xpack.security.http.ssl.certificate_authorities
             value: "/usr/share/elasticsearch/config/certs/ca.crt"
+          {{- else }}
+          - name: xpack.security.enabled
+            value: "false"
           {{- end }}
 {{- if .Values.extraEnvs }}
 {{ toYaml .Values.extraEnvs | indent 10 }}
