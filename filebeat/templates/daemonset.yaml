@@ -106,9 +106,11 @@ spec:
       - name: varlog
         hostPath:
           path: /var/log
+      {{- if .Values.daemonset.dockerSockMount }}
       - name: varrundockersock
         hostPath:
           path: /var/run/docker.sock
+      {{- end }}
       {{- if .Values.extraVolumes | default .Values.daemonset.extraVolumes }}
 {{ toYaml ( .Values.extraVolumes | default .Values.daemonset.extraVolumes )  | indent 6 }}
       {{- end }}
@@ -189,9 +191,11 @@ spec:
           readOnly: true
         # Necessary when using autodiscovery; avoid mounting it otherwise
         # See: https://www.elastic.co/guide/en/beats/filebeat/master/configuration-autodiscover.html
+        {{- if .Values.daemonset.dockerSockMount }}
         - name: varrundockersock
           mountPath: /var/run/docker.sock
           readOnly: true
+        {{- end }}
         {{- if .Values.extraVolumeMounts | default .Values.daemonset.extraVolumeMounts }}
 {{ toYaml (.Values.extraVolumeMounts | default .Values.daemonset.extraVolumeMounts ) | indent 8 }}
         {{- end }}
