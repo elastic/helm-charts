@@ -14,12 +14,12 @@ spec:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   selector:
     matchLabels:
-      app: apm-server
+      app: {{ .Chart.Name }}
       release: {{ .Release.Name | quote }}
   template:
     metadata:
       labels:
-        app: apm-server
+        app: {{ .Chart.Name }}
         release: {{ .Release.Name | quote }}
         {{- range $key, $value := .Values.labels }}
         {{ $key }}: {{ $value | quote }}
