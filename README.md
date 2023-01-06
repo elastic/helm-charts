@@ -96,7 +96,7 @@ Helm version mentioned in [helm-tester Dockerfile][] (currently 3.10.2).
 [elastic cloud on kubernetes]: https://github.com/elastic/cloud-on-k8s
 [elasticsearch-6]: https://github.com/elastic/helm-charts/tree/6.8/elasticsearch/README.md
 [elasticsearch-7]: https://github.com/elastic/helm-charts/tree/7.17/elasticsearch/README.md
-[elasticsearch-7173]: https://github.com/elastic/helm-charts/tree/7.17.3/elasticsearch/
+[elasticsearch-7173]: https://github.com/elastic/helm-charts/tree/v7.17.3/elasticsearch/
 [elasticsearch-771]: https://github.com/elastic/helm-charts/tree/7.7.1/elasticsearch/
 [elasticsearch-8]: https://github.com/elastic/helm-charts/tree/main/elasticsearch/README.md
 [filebeat-6]: https://github.com/elastic/helm-charts/tree/6.8/filebeat/README.md
