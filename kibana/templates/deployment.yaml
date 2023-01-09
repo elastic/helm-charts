@@ -3,6 +3,12 @@ kind: Deployment
 metadata:
   name: {{ template "kibana.fullname" . }}
   labels: {{ include "kibana.labels" . | nindent 4 }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   strategy:
