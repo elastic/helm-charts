@@ -756,3 +756,14 @@ hostAliases:
     r = helm_template(config)
     hostAliases = r["deployment"][name]["spec"]["template"]["spec"]["hostAliases"]
     assert {"ip": "127.0.0.1", "hostnames": ["foo.local", "bar.local"]} in hostAliases
+
+def test_adding_annotations():
+    config = """
+ annotations:
+   iam.amazonaws.com/role: es-role
+ """
+    r = helm_template(config)
+    assert (
+        r["deployment"][name]["metadata"]["annotations"]["iam.amazonaws.com/role"]
+        == "es-role"
+    )
