@@ -52,3 +52,7 @@ spec:
           configMap:
             name: {{ template "kibana.fullname" . }}-helm-scripts
             defaultMode: 0755
+      {{- if .Values.tolerations }}
+      tolerations:
+      {{- .Values.tolerations | toYaml | nindent 8 }}
+      {{- end }}
