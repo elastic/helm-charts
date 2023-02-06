@@ -9,7 +9,7 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: {{ template "metricbeat.serviceAccount" . }}-role
   apiGroup: rbac.authorization.k8s.io
 subjects:
