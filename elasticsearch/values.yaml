@@ -68,6 +68,9 @@ image: "docker.elastic.co/elasticsearch/elasticsearch"
 imageTag: "7.17.3"
 imagePullPolicy: "IfNotPresent"
 
+annotations:
+  {}
+  
 podAnnotations:
   {}
   # iam.amazonaws.com/role: es-cluster

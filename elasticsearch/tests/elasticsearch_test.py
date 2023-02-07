@@ -579,6 +579,19 @@ tolerations:
         == "key1"
     )
 
+def test_adding_annotations():
+    config = """
+annotations:
+  key: value
+"""
+    r = helm_template(config)
+    assert (
+        r["statefulset"][uname]["metadata"]["annotations"][
+            "key"
+        ]
+        == "value"
+    )
+
 
 def test_adding_pod_annotations():
     config = """
