@@ -82,6 +82,8 @@ imagePullPolicy: "IfNotPresent"
 podAnnotations: {}
 # iam.amazonaws.com/role: es-cluster
 
+annotations: {}
+
 # additionals labels
 labels: {}
 

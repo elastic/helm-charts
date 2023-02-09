@@ -13,6 +13,9 @@ metadata:
     {{- end }}
   annotations:
     esMajorVersion: "{{ include "elasticsearch.esMajorVersion" . }}"
+    {{- range $key, $value := .Values.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   serviceName: {{ template "elasticsearch.uname" . }}-headless
   selector:
