@@ -6,7 +6,7 @@ metadata:
   labels: {{ include "kibana.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,post-delete
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     {{- if .Values.annotations }}
     {{- range $key, $value := .Values.annotations }}
     {{ $key }}: {{ $value | quote }}
@@ -114,31 +114,35 @@ data:
       console.log('Cleaning previous token');
       // 404 status code is accepted if there is no previous token to clean
       return requestPromise(esUrl, esTokenDeleteOptions, {extraStatusCode: 404}).then(() => {
-        console.log('Creating new token');
-        return requestPromise(esUrl, esTokenCreateOptions).then(response => {
-          const body = JSON.parse(response);
-          const token = body.token.value
+        console.log('Deleting previous K8S secret');
+        // 404 status code is accepted if there is no previous k8s secret to delete
+        return requestPromise(k8sDeleteSecretUrl, secretDeleteOptions, {extraStatusCode: 404}).then(() => {
+          console.log('Creating new token');
+          return requestPromise(esUrl, esTokenCreateOptions).then(response => {
+            const body = JSON.parse(response);
+            const token = body.token.value
 
-          // Encode the token in base64
-          const base64Token = Buffer.from(token, 'utf8').toString('base64');
+            // Encode the token in base64
+            const base64Token = Buffer.from(token, 'utf8').toString('base64');
 
-          // Prepare the k8s secret
-          const secretData = JSON.stringify({
-            "apiVersion": "v1",
-            "kind": "Secret",
-            "metadata": {
-              "namespace": "{{ .Release.Namespace }}",
-              "name": "{{ template "kibana.fullname" . }}-es-token",
-            },
-            "type": "Opaque",
-            "data": {
-              "token": base64Token,
-            }
-          })
+            // Prepare the k8s secret
+            const secretData = JSON.stringify({
+              "apiVersion": "v1",
+              "kind": "Secret",
+              "metadata": {
+                "namespace": "{{ .Release.Namespace }}",
+                "name": "{{ template "kibana.fullname" . }}-es-token",
+              },
+              "type": "Opaque",
+              "data": {
+                "token": base64Token,
+              }
+            })
 
-          // Create the k8s secret
-          console.log('Creating K8S secret');
-          return requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData})
+            // Create the k8s secret
+            console.log('Creating K8S secret');
+            return requestPromise(k8sPostSecretUrl, secretCreateOptions, {payload: secretData})
+          });
         });
       });
     }
@@ -147,7 +151,7 @@ data:
       // Chaining requests
       console.log('Cleaning token');
       return requestPromise(esUrl, esTokenDeleteOptions).then(() => {
-        // Create the k8s secret
+        // Delete the k8s secret
         console.log('Delete K8S secret');
         return requestPromise(k8sDeleteSecretUrl, secretDeleteOptions)
       });
