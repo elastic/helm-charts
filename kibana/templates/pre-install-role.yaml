@@ -19,3 +19,4 @@ rules:
     verbs:
       - create
       - update
+      - delete
