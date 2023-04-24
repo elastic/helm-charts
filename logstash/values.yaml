@@ -75,6 +75,9 @@ imageTag: "8.5.1"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 
+# Statefulset annotations
+annotations: {}
+
 podAnnotations: {}
 
 # additionals labels
